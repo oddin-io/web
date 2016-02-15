@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Menu Administrador</title>
+
+  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/view/css/custom.css" />
+  <link rel="stylesheet" href="/view/css/custom_admin.css"/>
+</head>
+<body>
+  <!-- Inicio do cabecalho -->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!--Cabeçalho-->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Mirage</a>
+        </div>
+        <!--Navegação-->
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>  Usuário <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- -->
+    </nav>
+    <!-- fim Navbar -->
+
+    <!--Título Página-->
+    <div class="page-header container">
+      <h1>Menu Principal</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-offset-1 col-sm-2">
+          <a class="menu-link" href="#">
+            <div class="menu-box">
+              <span class="fa fa-institution fa-3x"></span>
+              <h4>Eventos</h4>
+            </div>
+          </a>
+        </div>
+        <div class="col-sm-2">
+          <a class="menu-link" href="#">
+            <div class="menu-box">
+              <span class="fa fa-book fa-3x"></span>
+              <h4>Palestras</h4>
+            </div>
+          </a>
+        </div>
+        <div class="col-sm-2">
+          <a class="menu-link" href="#">
+            <div class="menu-box">
+              <span class="fa fa-user fa-3x"></span>
+              <h4>Usuários</h4>
+            </div>
+          </a>
+        </div>
+        <div class="col-sm-2">
+          <a class="menu-link" href="#">
+            <div class="menu-box">
+                <span class="fa fa-building fa-3x"></span>
+              <h4>Prédios</h4>
+            </div>
+          </a>
+        </div>
+        <div class="col-sm-2">
+          <a class="menu-link" href="#">
+            <div class="menu-box">
+              <span class="fa fa-clock-o fa-3x"></span>
+              <h4>Horários</h4>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script> 
+</body>
+</html>

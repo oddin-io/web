@@ -1,0 +1,59 @@
+/* MENU PRINCIPAL */
+
+.menu-box {
+	padding: 12px 0;
+	margin-bottom: 12px;
+	text-align: center;
+
+	background-color: #f8f8f8;
+	color: #777;
+}
+
+.menu-box h4 {
+	margin-bottom: 0;
+}
+
+.menu-box:hover {
+	background-color: #bbb;
+	color: #fff;
+	text-decoration: none;
+}
+
+.menu-link:link {
+	text-decoration: none;
+}
+
+/* Page eventos */
+
+.evento-padding-top {
+	padding-top: 20px;
+}
+
+.novo_evento {
+	border: 1px solid #ddd;
+	padding: 15px;
+	margin-bottom: 20px;
+}
+
+.novo_evento h3 {
+	text-align: center;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+.list-group {
+	margin-top: 33px;
+	height: 400px;
+	overflow: auto;
+}
+
+.lista_eventos {
+	border: 1px solid #ddd;
+	padding: 15px;
+}
+
+.lista_eventos h3 {
+	text-align: center;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;	
+}
