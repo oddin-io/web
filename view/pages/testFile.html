@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html data-ng-app="Teste">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teste para envio de Arquivo</title>
+
+  <link rel="stylesheet" href="/view/vendor/animate.css/animate.min.css" />
+  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/view/css/style.min.css" />
+
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="/view/vendor/angular/angular.min.js"></script>
+  <script>
+    angular.module("Teste", []).controller("TesteCtrl", function ($scope, $http) {
+      $scope.teste = function () {
+        var arq = document.forms.arqForm.arquivo.files[0];
+        console.log(arq);
+        var fd = new FormData();
+        fd.append("file", arq);
+        fd.append("nome", "blablabla");
+        $http.post("/controller/ADS/BD1%20T2/2015-07-28/1/apresentacao/1/material", fd,
+        {headers: {"Content-Type": undefined}})
+          .success(function (data) {
+            console.log(data);
+          });
+      };
+    });
+  </script>
+</head>
+<body data-ng-controller="TesteCtrl">
+  <form enctype="multipart/form-data" name="arqForm">
+    <label>
+      Send this: <input type="file" name="arquivo" id="arq"/>
+    </label>
+    <input type="button" value="Submit!" data-ng-click="teste()" />
+  </form>
+</body>
+</html>

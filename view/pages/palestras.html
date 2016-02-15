@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="BossEdu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Disciplinas</title>
+
+  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/view/css/custom.css" />
+</head>
+<body ng-controller="lecturesCtrl">
+  <!-- Inicio do cabecalho -->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!--Cabeçalho-->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Mirage</a>
+        </div>
+        <!--Navegação-->
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>  Usuário <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- -->
+    </nav>
+    <!-- fim Navbar -->
+
+    <!--Título Página-->
+    <div class="page-header container">
+      <h1>Palestras</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="container" id="MainMenu">
+      <!-- inicio do list group das disciplinas -->
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-xs-12">
+
+          <div class="list-group panel">
+            <a href="#1sem2015" class="list-group-item collapsed" data-toggle="collapse" data-parent="#MainMenu" aria-expanded="false">Disciplinas Correntes</a>
+            <div class="collapse" id="1sem2015" aria-expanded="false" style="height: 0px;">
+              <a href="#" class="list-group-item" data-ng-attr-href="{{buildURI(lecture, '/app', '/historic')}}" data-ng-repeat="lecture in lectures">
+                <span class="glyphicon glyphicon-book"></span>
+                {{lecture.name}} - Turma: {{lecture.class}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- fim do list group das disciplinas -->
+    </div>
+  </main>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+
+  <script src="/view/js/utils.js"></script>
+
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/js/app.js"></script>
+  <script src="/view/js/controller/lecturesCtrl.js"></script>
+</body>
+</html>

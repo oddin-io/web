@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html data-ng-app="BossEdu" data-ng-controller="lectureCtrl">
+<head>
+  <!-- From Bootstrap basic template -->
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apresentações - {{lecture.code}}</title>
+
+  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/view/css/custom.css" />
+</head>
+
+<body>
+  <!-- Cabeçalho -->
+  <header>
+    <!--Navbar-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/" class="navbar-brand">Mirage</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="fa fa-user"></span>  Usuário <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li><a href="/app/lectures"><span class="glyphicon glyphicon-chevron-left"></span>Disciplinas</a></li>
+            <li><a href="./presentation/current">Apresentação Atual</a></li>
+            <li><a href="./material">Material</a></li>
+            <li><a href="./participants">Participantes</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!--Título Página-->
+    <div class="page-header container">
+      <h1>Apresentações - {{lecture.name}}</h1>
+    </div>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main class="container" data-ng-init="getHistoric()">
+    <!-- Formulário nova apresentação -->
+    <section class="bordered-section">
+      <div class="section-header">
+        <h2>Nova apresentação</h2>
+      </div>
+      <form data-ng-submit="newPresentation(lecture, presentation)">
+        <div class="row">
+          <div class="form-group">
+            <div class="col-sm-12">
+              <label for="presentation-subject">Tema:</label>
+              <input id="presentation-subject" type="text" class="form-control" data-ng-model="presentation.subject"
+                     placeholder="Insira o tema da aula/palestra"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2">
+              <input type="submit" class="custom-button-lg" value="Iniciar"/>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Exibição das tabelas de aulas -->
+    <div>
+      <!-- Aulas abertas -->
+      <section class="bordered-section">
+        <div class="section-header">
+          <h2>Apresentações Abertas</h2>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>Status</th>
+              <th>Tema</th>
+              <th>Data</th>
+              <th>Hora</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr data-ng-repeat="presentation in presentations | filter: {status: 0}: true">
+              <td>
+                <a href="" data-ng-click="closePresentation(presentation)">
+                  <div data-ng-class="{'fa fa-unlock-alt fa-2x apresentacao_aberta': presentation.status == 0}"></div>
+                </a>
+              <td>
+                <a data-ng-attr-href="{{buildURI(lecture, '/app', '/presentation/' + presentation.id)}}">
+                  {{presentation.subject}} - ID: {{presentation.id}}
+                </a>
+              </td>
+              <td>{{presentation.date}}</td>
+              <td>{{presentation.time}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="bordered-section">
+        <div class="section-header">
+          <h2>Apresentações Fechadas</h2>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>Status</th>
+              <th>Tema</th>
+              <th>Data</th>
+              <th>Hora</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr data-ng-repeat="presentation in presentations | filter: {status: 1}: true">
+              <td>
+                <div data-ng-class="{'fa fa-lock fa-2x apresentacao_fechada': presentation.status == 1}"></div>
+              <td>
+                <a data-ng-attr-href="{{buildURI(lecture, '/app', '/presentation/' + presentation.id)}}">
+                  {{presentation.subject}} - ID: {{presentation.id}}
+                </a>
+              </td>
+              <td>{{presentation.date}}</td>
+              <td>{{presentation.time}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer></footer>
+
+  <!-- Scripts -->
+  <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+
+  <script src="/view/js/utils.js"></script>
+
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/js/app.js"></script>
+  <script src="/view/js/controller/lectureCtrl.js"></script>
+</body>
+</html>
+

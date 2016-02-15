@@ -1,0 +1,36 @@
+{
+  "name": "painel-educativo",
+  "version": "1.0.1",
+  "description": "Plataforma para comunicação e interação da audiência com o instrutor",
+  "license": "UNLICENSED",
+  "author": "Pedro Siena <pedro.siena@sienaidea.com.br>",
+  "contributors": [
+    {
+      "name": "Bruno Felipe Leal Delfino",
+      "email": "bruno.delfino@sienaidea.com.br"
+    },
+    {
+      "name": "Francisco Fabiano Neves",
+      "email": "francisco.fabiano@sienaidea.com.br"
+    },
+    {
+      "name": "Silvana Maria Affonso de Lara",
+      "email": "silaffonso@gmail.com"
+    },
+    {
+      "name": "Leonardo Salgado",
+      "email": "leonardo.salgado@sienaidea.com.br"
+    },
+    {
+      "name": "Ana Elisa",
+      "email": "ana.siena@sienaidea.com.br"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/mirageSiena/www.git"
+  },
+  "dependencies": {
+    "bower": "^1.7.1"
+  }
+}

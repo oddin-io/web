@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html data-ng-app="BossEdu" data-ng-controller="apresentacaoCtrl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Apresentação  - {{apresentacao.palestra.codigo}}</title>
+
+  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/view/vendor/slick-carousel/slick/slick.css" />
+  <link rel="stylesheet" href="/view/vendor/slick-carousel/slick/slick-theme.css" />
+  <link rel="stylesheet" href="/view/css/custom.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Mirage</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>  Usuário <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li><a href="/app/lectures"><span class="glyphicon glyphicon-chevron-left"></span>Disciplinas</a></li>
+            <li><a href="../historic">Histórico</a></li>
+            <li><a href="../material">Material</a></li>
+            <li><a href="../participants">Participantes</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#modal-uploads"><span class="glyphicon glyphicon-upload">
+              </span>&#32;Uploads</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--Título Página-->
+    <div class="page-header container">
+      <h1>{{apresentacao.tema}}</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <slick init-onload="true" data="duvidas.pendente" slides-to-show=3 slides-to-scroll=3>
+        <div class="item" data-ng-repeat="duvida in duvidas.pendente">
+          <div class="doubt">
+            <div class="doubt__header">
+              <h4 class="doubt__pessoa">{{duvida.pessoa.nome}}</h4>
+              <h4 class="doubt__time">{{duvida.datahora}}</h4>
+            </div>
+            <div class="ranking"><span class="badge">{{duvida.curtidas}}</span><span>&#32;</span><span class="glyphicon glyphicon-thumbs-up"></span></div>
+            <div class="doubt__content">
+              <div class="doubt__textbox">
+                <p class="more">{{duvida.texto}}
+                </p>
+              </div>
+            </div>
+            <button type="button" class="custom-button-sm" data-toggle="modal" data-target="#modal-duvida">Ver Dúvida</button>
+          </div>
+        </div>
+      </slick>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-duvida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">{{modal.duvida.pessoa.nome}}</h4>
+          </div>
+          <div class="modal-body">
+            <p class="modal-duvida">{{modal.duvida.texto}}</p>
+          </div>
+          <div class="modal-footer">
+            <div class="abas_respostas">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#texto" aria-controls="texto" role="tab" data-toggle="tab"><span class="fa fa-font fa-lg"></span></a></li>
+                <li role="presentation"><a href="#audio" aria-controls="audio" role="tab" data-toggle="tab"><span class="fa fa-microphone fa-lg"></span></a></li>
+                <li role="presentation"><a href="#video" aria-controls="video" role="tab" data-toggle="tab"><span class="fa fa-video-camera fa-lg"></span></a></li>
+                <li role="presentation"><a href="#arquivo" aria-controls="arquivo" role="tab" data-toggle="tab"><span class="fa fa-paperclip fa-lg"></span></a></li>
+              </ul>
+
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="texto">
+                  <form>
+                    <fieldset>
+                      <textarea name="texto" placeholder="Insira sua resposta" ng-model="resposta.texto" class="form-control" id="textarea_resposta"></textarea>
+                    </fieldset>
+
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <fieldset id="checkbox_resposta">
+                          <input id="status_resposta" type="checkbox" class="with-font" />
+                          <label id="status_resposta_label" for="status_resposta">Responder</label>
+                        </fieldset>
+                      </div>
+                      <div class="col-sm-4">
+                        <input type="submit" value="Responder" class="custom-button-md"/>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="audio"><p>Gravar Áudio</p></div>
+                <div role="tabpanel" class="tab-pane" id="video"><p>Gravar Vídeo</p></div>
+                <div role="tabpanel" class="tab-pane" id="arquivo"><p>Upload de Arquivo</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+
+    <!-- Modal Upload -->
+    <div class="modal fade" id="modal-uploads" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabelUpload">Upload de Arquivos - Disciplina X</h4>
+          </div>
+          <div class="modal-footer">
+            <div class="upload-form">
+              <form enctype="multipart/form-data">
+                <div class="row">
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <label for="tema">Tema</label>
+                      <input name="tema"type="text" class="form-control" id="tema" placeholder="Insira o tema do material a ser enviado"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <label for="file">Arquivos</label>
+                      <input name="files[]" type="file" id="file" class="custom-file" multiple/>
+                    </div>
+                  </div>
+                </div>
+                <input type="submit" value="Upload" class="custom-button-sm"/>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+
+  </main>
+  <script src="/view/vendor/jquery/dist/jquery.js"></script>
+  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/view/vendor/slick-carousel/slick/slick.js"></script>
+
+  <!-- <script src="/view/js/custom-carousel.js"></script> -->
+  <script src="/view/js/ver_mais-duvida_modal.js"></script>
+  <script src="/view/js/checkbox_status_resposta.js"></script>
+  <script src="/view/js/utils.js"></script>
+
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/vendor/angular-slick/dist/slick.js"></script>
+  <script>
+    var app = angular.module("BossEdu", ["slick"]);
+  </script>
+  <script src="/view/js/filter/orderObjectBy.js"></script>
+  <script src="/view/js/controller/presentationCtrl.js"></script>
+</body>
+</html>
