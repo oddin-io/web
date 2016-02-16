@@ -1,6 +1,6 @@
 addVariable({
   "urls": {
-    "rest-server": "rest-server.localhost"
-    , "socket": "socket.localhost:3000"
+    "rest-server": "https://rest-server-mirage.herokuapp.com"
+    , "socket": "http://socket.localhost:3000"
   }
 }, "config");

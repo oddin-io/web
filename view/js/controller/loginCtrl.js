@@ -1,6 +1,10 @@
 app.controller("loginCtrl", function ($scope, $http) {
+  var restServerUrl = window.config.urls["rest-server"];
+
+  $http.defaults.headers.post["Content-Type"] = "text/plain";
+
   $scope.login = function (user) {
-    $http.post("/controller/login", user)
+    $http.post(restServerUrl + "/controller/login", user)
       .success(function (data, status) {
         location.pathname = "/app/lectures";
         location.replace();
@@ -15,11 +19,14 @@ app.controller("loginCtrl", function ($scope, $http) {
   };
 
   $scope.logout = function () {
-    $http.get("/controller/logout");
+    $http.get(restServerUrl + "/controller/logout").success(function (data) {
+      location.pathname = "/";
+      location.replace();
+    });
   };
 
   $scope.recoverPassword = function (user) {
-    $http.post("/controller/recover-password", user)
+    $http.post(restServerUrl + "/controller/recover-password", user)
       .success(function (data, status) {
         location.pathname = "/app/";
         location.replace();
