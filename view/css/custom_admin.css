@@ -29,31 +29,53 @@
 	padding-top: 20px;
 }
 
-.novo_evento {
+.admin_box {
 	border: 1px solid #ddd;
 	padding: 15px;
 	margin-bottom: 20px;
 }
 
-.novo_evento h3 {
-	text-align: center;
+.admin_box h4 {
 	padding-bottom: 10px;
 	border-bottom: 1px solid #ddd;
+	text-align: center;
 }
 
-.list-group {
-	margin-top: 33px;
-	height: 400px;
+.evento_info h5, .evento_info p {
+	display: inline-block;
+}
+
+.evento_info h5 {
+	font-weight: bold;
+	margin-right: 5px;	
+}
+
+.evento_info ul {
+	padding-left: 0;
+}
+
+.list-group-box {
+	margin-top: 10px;
 	overflow: auto;
 }
 
-.lista_eventos {
-	border: 1px solid #ddd;
-	padding: 15px;
+.lista_eventos .list-group {	
+	height: 416px;	
 }
 
-.lista_eventos h3 {
-	text-align: center;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #ddd;	
+.lista_palestras .list-group {
+	height: 411px;
 }
+
+.palestras_evento .list-group {	
+	height: 200px;
+}
+
+.lista_palestras form {
+	margin-top: 10px;
+}
+
+/*============*/
+
+
+

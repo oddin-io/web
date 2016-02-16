@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>evento x</title>
+
+  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/view/css/custom.css" />
+  <link rel="stylesheet" href="/view/css/custom_admin.css"/>
+</head>
+<body>
+  <!-- Inicio do cabecalho -->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!--Cabeçalho-->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Mirage</a>
+        </div>
+        <!--Navegação-->
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>&#32;&#32;Usuário <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span>&#32;Voltar para Eventos</a></li>            
+          </ul>
+        </div>
+      </div>
+      <!-- -->
+    </nav>
+    <!-- fim Navbar -->    
+  </header>
+
+  <main>
+    <div class="container evento-padding-top">
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="evento_info admin_box">
+            <h4>Info</h4>
+            <ul>
+              <li><h5>Código:</h5><p>000124</p></li>
+              <li><h5>Nome:</h5><p>Análise e Desenvolvimento de Sistemas</p></li>
+              <li><h5>Carga horária:</h5><p>425 horas</p></li>
+            </ul>            
+          </div>
+          <div class="palestras_evento admin_box">
+            <h4>Palestras de Evento X</h4>
+            <button type="submit" class="custom-button-sm">Criar nova palestra</button> 
+            <div class="list-group list-group-box">
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>  
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-7">
+          <div class="lista_palestras admin_box">
+            <h4>Adicionar Nova Palestra</h4>
+            <form>   
+              <div class="input-group">
+               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
+                <input type="search" class="form-control" id="busca-palestra" placeholder="Buscar palestra por nome">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                  </span>                
+              </div>
+            </form>
+
+            
+            <div class="list-group list-group-box">              
+              <a href="#" class="list-group-item disabled"><span class="fa fa-book"></span>&#32;Cras justo</a>   
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>
+              <a href="#" class="list-group-item"><span class="fa fa-book"></span>&#32;Cras justo</a>  
+            </div>
+          </div>
+        </div>
+      </div>      
+    </div>
+  </main>
+
+  <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script> 
+</body>
+</html>
