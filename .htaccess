@@ -1,0 +1,9 @@
+Options -Indexes
+
+RewriteEngine on
+
+RewriteRule ^$ view/pages/login.html [L,NC]
+RewriteRule ^app/?$ view/pages/login.html [L,NC]
+RewriteRule ^app/(.*) app/index.php [L,NC]
+
+PassEnv DATABASE_URL
