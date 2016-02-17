@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
-<html data-ng-app="BossEdu" data-ng-controller="lectureCtrl">
+<html data-ng-app="BossEdu" data-ng-controller="instructionCtrl">
 <head>
   <!-- From Bootstrap basic template -->
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apresentações - {{lecture.code}}</title>
+  <title>Apresentações - {{instruction.code}}</title>
 
   <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
@@ -51,7 +51,7 @@
 
     <!--Título Página-->
     <div class="page-header container">
-      <h1>Apresentações - {{lecture.name}}</h1>
+      <h1>Apresentações - {{instruction.name}}</h1>
     </div>
   </header>
 
@@ -79,7 +79,7 @@
                 <td>
                   <div data-ng-class="{'fa fa-unlock-alt fa-2x apresentacao_aberta': presentation.status == 0}"></div>
                   <td>
-                    <a data-ng-attr-href="{{buildURI(lecture, '/app', '/presentation/' + presentation.id)}}">
+                    <a data-ng-attr-href="{{buildURI(instruction, '/app', '/presentation/' + presentation.id)}}">
                       {{presentation.subject}} - ID: {{presentation.id}}
                     </a>
                   </td>
@@ -110,7 +110,7 @@
               <td>
                 <div data-ng-class="{'fa fa-lock fa-2x apresentacao_fechada': presentation.status == 1}"></div>
               <td>
-                <a data-ng-attr-href="{{buildURI(lecture, '/app', '/presentation/' + presentation.id)}}">
+                <a data-ng-attr-href="{{buildURI(instruction, '/app', '/presentation/' + presentation.id)}}">
                   {{presentation.subject}} - ID: {{presentation.id}}
                 </a>
               </td>
@@ -132,9 +132,10 @@
   <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
 
   <script src="/view/js/utils.js"></script>
+  <script type="application/javascript" src="/configuration.jsonp"></script>
 
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
-  <script src="/view/js/controller/lectureCtrl.js"></script>
+  <script src="/view/js/controller/instructionCtrl.js"></script>
 </body>
 </html>

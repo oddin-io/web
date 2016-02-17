@@ -1,12 +1,11 @@
 app.controller("loginCtrl", function ($scope, $http) {
   var restServerUrl = window.config.urls["rest-server"];
-
   $http.defaults.headers.post["Content-Type"] = "text/plain";
 
   $scope.login = function (user) {
     $http.post(restServerUrl + "/controller/login", user)
       .success(function (data, status) {
-        location.pathname = "/app/lectures";
+        location.pathname = "/app/instruction";
         location.replace();
       })
       .error(function (response, status) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="BossEdu">
+<html data-ng-app="BossEdu">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/view/css/custom.css" />
 </head>
-<body ng-controller="lecturesCtrl">
+<body data-ng-controller="instructionCtrl">
   <!-- Inicio do cabecalho -->
   <header>
     <!-- Navbar -->
@@ -57,9 +57,10 @@
           <div class="list-group panel">
             <a href="#1sem2015" class="list-group-item collapsed" data-toggle="collapse" data-parent="#MainMenu" aria-expanded="false">Disciplinas Correntes</a>
             <div class="collapse" id="1sem2015" aria-expanded="false" style="height: 0px;">
-              <a href="#" class="list-group-item" data-ng-attr-href="{{buildURI(lecture, '/app', '/historic')}}" data-ng-repeat="lecture in lectures">
+              <a href="#" class="list-group-item" data-ng-attr-href="{{buildURI(instruction, '/app', '/historic')}}"
+                 data-ng-repeat="instruction in instructions">
                 <span class="glyphicon glyphicon-book"></span>
-                {{lecture.name}} - Turma: {{lecture.class}}
+                {{instruction.name}} - Turma: {{instruction.class}}
               </a>
             </div>
           </div>
@@ -73,9 +74,10 @@
   <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
 
   <script src="/view/js/utils.js"></script>
+  <script type="application/javascript" src="/configuration.jsonp"></script>
 
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
-  <script src="/view/js/controller/lecturesCtrl.js"></script>
+  <script src="/view/js/controller/instructionCtrl.js"></script>
 </body>
 </html>

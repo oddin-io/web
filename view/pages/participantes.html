@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html data-ng-app="BossEdu" data-ng-controller="lectureCtrl">
+<html data-ng-app="BossEdu" data-ng-controller="instructionCtrl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Participantes - {{lecture.code}}</title>
+  <title>Participantes - {{instruction.code}}</title>
 
   <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
@@ -45,7 +45,7 @@
     </nav>
     <!--Título Página-->
     <div class="page-header container">
-      <h1>Participantes - {{lecture.name}}</h1>
+      <h1>Participantes - {{instruction.name}}</h1>
     </div>
   </header>
   <!-- Fim do cabecalho -->
@@ -73,10 +73,11 @@
   <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
 
   <script src="/view/js/utils.js"></script>
+  <script type="application/javascript" src="/configuration.jsonp"></script>
 
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
-  <script src="/view/js/controller/lectureCtrl.js"></script>
+  <script src="/view/js/controller/instructionCtrl.js"></script>
 </body>
 </html>
 

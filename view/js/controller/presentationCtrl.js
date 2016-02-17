@@ -6,27 +6,30 @@ app.controller("presentationCtrl", function ($scope, $http) {
     return ret;
   })();
 
-  var socket = io("http://localhost:3000/presentation");
+  var restServerUrl = window.config.urls["rest-server"];
+  $http.defaults.headers.post["Content-Type"] = "text/plain";
+
+  var socket = io(window.config.urls["socket"]);
   socket.on("new doubt", function (data) {
-    $http.get("/controller/" + paths.join("/") + "/chat/doubt/" + data.doubt_id)
+    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/chat/doubt/" + data.doubt_id)
       .success(function (data) {
         $scope.doubts[data.id] = data;
       });
   });
 
  $scope.getPresentation = function () {
-    $http.get("/controller/" + paths.join("/") + "/info")
+    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/info")
     .success(function (data) {
       $scope.presentation = data;
 
-      $http.get("/controller/" + paths.join("/") + "/chat/doubt").success(function (data) {
+      $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt").success(function (data) {
         $scope.doubts = data.doubts;
       });
     });
   };
 
   $scope.sendDoubt = function (doubt) {
-    $http.post("/controller/" + paths.join("/") + "/chat/doubt", doubt).success(function (data) {
+    $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt", doubt).success(function (data) {
       socket.emit("new doubt", {doubt_id: data.id});
     });
 
@@ -34,7 +37,7 @@ app.controller("presentationCtrl", function ($scope, $http) {
   };
 
   $scope.likeDoubt = function (doubt) {
-    var url = "/controller/" + paths.join("/") + "/chat/doubt/" + doubt.id;
+    var url = restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id;
 
     if (!doubt.curti) {
       $http.post(url + "/like", null).success(function (data) {
@@ -50,8 +53,6 @@ app.controller("presentationCtrl", function ($scope, $http) {
   $scope.changeStatus = function (doubt, status) {
     doubt.status = status;
 
-    $http.post("/controller/" + paths.join("/") + "/chat/doubt/" + doubt.id + "/change-status", doubt);
+    $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/change-status", doubt);
   };
-
-  $scope.getPresentation();
 });

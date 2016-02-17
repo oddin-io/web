@@ -1,0 +1,71 @@
+app.controller("instructionCtrl", function ($scope, $http) {
+  var paths = (function () {
+    var ret = getPaths();
+    ret.splice(0, 1);
+    ret.pop();
+
+    return ret;
+  })();
+
+  var restServerUrl = window.config.urls["rest-server"];
+  $http.defaults.headers.post["Content-Type"] = "text/plain";
+
+  $scope.buildURI = function (instruction, prefix, sufix) {
+    return prefix + "/instruction/" + instruction.id + sufix;
+  };
+
+  $scope.getInstructions = function () {
+    $http.get(restServerUrl + "/controller/instruction").success(function (data) {
+      $scope.instructions = data.lectures;
+    });
+  };
+
+  $scope.getInfo = function () {
+    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/info").success(function (data) {
+      $scope.instruction = data;
+    });
+  };
+
+  $scope.getParticipants = function () {
+    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/participants").success(function (data) {
+      $scope.participants = data.participants;
+    });
+  };
+
+  $scope.getHistoric = function () {
+    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/historic").success(function (data) {
+      $scope.presentations = data.presentations;
+    });
+  };
+
+  $scope.getMaterials = function () {
+    var url = restServerUrl + "/controller/" + paths.join("/") + "/materials";
+    $http.get(url).success(function (data) {
+      $scope.materials = data.materials;
+    });
+  };
+  //
+  // $scope.downloadMaterial = function (material) {
+  //
+  // };
+  //
+  // $scope.uploadMaterial = function (material) {
+  //
+  // };
+
+  $scope.newPresentation = function (lecture, presentation) {
+    var url = restServerUrl + "/controller/" + paths.join("/") + "/presentation";
+    $http.post(url, presentation).success(function (data) {
+      var presentationId = data.id;
+      location.pathname = $scope.buildURI(instruction, "/app", "/presentation/" + presentationId);
+      location.replace();
+    });
+  };
+
+  $scope.closePresentation = function (presentation) {
+    var url =  restServerUrl + "/controller/" + paths.join("/") + "/presentation/" + presentation.id + "/close";
+    $http.post(url, null).success(function (data) {
+      presentation.status = 1;
+    });
+  };
+});
