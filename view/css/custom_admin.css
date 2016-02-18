@@ -25,7 +25,8 @@
 
 /* Page eventos */
 
-.evento-padding-top {
+
+.admin-padding-top {
 	padding-top: 20px;
 }
 
@@ -42,17 +43,26 @@
 }
 
 /* Box Info */
-	.evento_info h5, .evento_info p {
+	.admin_info h5, .admin_info p {
 		display: inline-block;
 	}
 
-	.evento_info h5 {
+	.admin_info h5 {
 		font-weight: bold;
 		margin-right: 5px;	
 	}
 
-	.evento_info ul {
+	.admin_info ul {
 		padding-left: 0;
+	}
+
+	.admin_info .info-list {
+	padding-left: 15px;
+	list-style: square;
+	}
+
+	.info-list li {
+		margin-bottom: 5px;
 	}
 /*==============*/
 
@@ -78,6 +88,11 @@
 		}
 	}
 
+	.custom-list-group .added, .custom-list-group .added:hover {
+		background: #f2f2f2;
+	}
+
+	
 	.custom-list-group li:hover {
 		background-color: #f8f8f8;
 	}
@@ -94,6 +109,11 @@
 	.custom-list-group a:hover {
 		color: #777;
 	}	
+
+	.evento_lista_palestras .custom-list-group li:hover .add-palestra,
+	.palestra_lista_eventos .custom-list-group li:hover .add-palestra {
+		display: inline-block;
+	} 
 
 /*Customiza cores do status da palestra */
 	.fa-circle-o {
@@ -120,9 +140,14 @@
 		padding: 0 6px;
 		border: none;
 		background-color: #aaa;
-		color: white;
-		/*display: inline-block;*/
-		display: inline-block;
+		color: white;		
+		display: none;
+	}
+
+	.add-palestra[disabled], .add-palestra[disabled]:hover {
+		background: transparent;
+		color: #ccc;
+		border: 1px solid #ccc;
 	}
 
 	.add-palestra:hover {
@@ -130,22 +155,34 @@
 	}
 /*=================================*/
 
+/*Pagina Usuários */
+
+legend {
+	font-size: 1em;
+	color: #bbb;
+	border-bottom:none;
+}
+
+hr {
+	margin-bottom: 8px;
+}
+
 /*Customiza altura dos boxes*/
 
-	.lista_eventos .list-group {	
-		height: 416px;	
+	.eventos_lista_eventos .list-group, .palestras_lista_palestras .list-group {	
+		height: 363px;	
 	}
 
-	.lista_palestras .list-group {
+	.evento_lista_palestras .list-group, .palestra_lista_eventos .list-group {
 		height: 411px;
 	}
 
-	.palestras_evento .list-group {	
+	.evento_evento_palestras .list-group {	
 		height: 200px;
-	}
+	}	
 
-	.lista_palestras form {
-		margin-top: 10px;
+	.palestra_palestra_eventos .list-group {
+		height: 232px;
 	}
 
 /*==========================*/
