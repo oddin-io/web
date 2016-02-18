@@ -31,9 +31,7 @@
             <!-- Formulário -->
             <div class="row">
               <div class="col-sm-offset-2 col-sm-8">
-                <form class="form-horizontal" data-ng-submit="login(user)">
-                  <!-- Manter conectado -->
-                  <input id="user-persist" type="checkbox" data-ng-model="user.persist" class="form-control"/>
+                <form class="form-horizontal" data-ng-submit="login(user)">                  
                   <!-- Usuário -->
                   <div class="form-group">
                     <div class="col-xs-12">
@@ -47,6 +45,13 @@
                       <label for="user-password">Senha</label>
                       <input id="user-password" type="password" placeholder="Insira sua senha" data-ng-model="user.password" class="form-control"/>
                     </div>
+                  </div>
+                  <!-- Manter conectado -->
+                  <div class="checkbox">
+                      <label>                    
+                        <input id="user-persist" type="checkbox" data-ng-model="user.persist" class=""/>
+                        Manter conectado
+                      </label> 
                   </div>
                   <!-- Recuperar Senha -->
                   <div class="form-group">
