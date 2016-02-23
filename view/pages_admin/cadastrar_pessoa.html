@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Cadastrar novo usuário</title>
+
+  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/view/css/custom.css" />
+  <link rel="stylesheet" href="/view/css/custom_admin.css"/>
+</head>
+<body>
+  <!-- Inicio do cabecalho -->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!--Cabeçalho-->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Mirage</a>
+        </div>
+        <!--Navegação-->
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>&#32;&#32;Usuário <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span>&#32;Voltar para Usuários</a></li>            
+          </ul>
+        </div>
+      </div>
+      <!-- -->
+    </nav>
+    <!-- fim Navbar -->    
+  </header>
+
+  <main>
+    <div class="container admin-padding-top">
+      <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">        
+          <div class="admin_box">
+            <h4>Cadastrar novo usuário</h4>
+            <form>
+              
+                  <fielset>
+                    <legend>Informações Pessoais</legend>
+                      <div class="form-group">
+                        <label for="id-pessoa" class="control-label">ID</label>                
+                        <input type="text" class="form-control" id="id-pessoa" placeholder="ID do Usuário">
+
+                        <label for="nome-pessoa" class="control-label">Nome</label>                
+                        <input type="text" class="form-control" id="nome-pessoa" placeholder="Nome do Usuário">
+
+                        <label for="cpf-pessoa" class="control-label">CPF</label>
+                        <input type="text" class="form-control" id="cpf-pessoa" placeholder="CPF do Usuário">
+
+                        <label for="nasc-pessoa" class="control-label">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="nasc-pessoa">  
+
+                        <label for="tel-pessoa" class="control-label">Telefone</label>
+                        <input type="text" class="form-control" id="tel-pessoa" placeholder="Telefone"> 
+
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="usuario-perfil" id="aluno" value="aluno" checked>
+                            Aluno
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="usuario-perfil" id="professor" value="professor">
+                            Professor
+                          </label>
+                        </div>              
+                      </div>
+                  </fieldset>
+                  <hr>  
+
+                  <fieldset>
+                    <legend>Endereço</legend>
+                    <div class="form-group">
+                      <label for="rua-pessoa" class="control-label">Rua</label>                
+                      <input type="text" class="form-control" id="rua-pessoa" placeholder="Rua">
+
+                      <label for="numero_end-pessoa" class="control-label">Número</label>
+                      <input type="text" class="form-control" id="numero_end-pessoa" placeholder="Número">
+                    
+                      <label for="bairro-pessoa" class="control-label">Bairro</label>
+                      <input type="text" class="form-control" id="bairro-pessoa" placeholder="Bairro">    
+                    <div class="form-group">                      
+                      <label for="pais-pessoa" class="control-label">País</label>
+                      <select class="form-control">
+                        <option value="pais1">País 1 çalksjfçl çalksdfj çlk çalskjdf</option>
+                        <option value="pais2">País 2</option>
+                      </select> 
+
+                      <label for="estado-pessoa" class="control-label">Estado</label>
+                      <select class="form-control">
+                        <option value="estado1">Estado 1</option>
+                        <option value="estado2">Estado 2</option>
+                      </select>
+                    
+                      <label for="pais-pessoa" class="control-label">Cidade</label>
+                      <select class="form-control">
+                        <option value="pais1">País 1</option>
+                        <option value="pais2">País 2</option>
+                      </select>               
+                    </div>
+                  </fieldset>
+                  <hr>      
+                
+                  <fieldset>
+                    <legend>Dados de Usuário</legend>
+                    <div class="form-group">
+                      <label for="email-pessoa" class="control-label">Email</label>                
+                      <input type="email" class="form-control" id="email-pessoa" placeholder="usuario@email.com">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="senha-pessoa" class="control-label">Senha</label>                
+                      <input type="password" class="form-control" id="senha-pessoa" placeholder="Senha">
+                    </div>                   
+                  </fieldset>  
+                  <div class="form-group">                
+                    <button type="submit" class="custom-button-sm">Cadastrar</button>                
+                  </div> 
+            </form>
+          </div>
+        </div>
+      </div>        
+    </div>     
+  </main>
+
+  <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script> 
+</body>
+</html>

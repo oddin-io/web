@@ -53,83 +53,75 @@
 
   <main>
     <div class="container admin-padding-top">
+
       <div class="row">
-        <div class="col-md-4">        
-          <div class="admin_box">
-            <h4>Cadastrar novo usuário</h4>
-            <form>
-              
-                  <fielset>
-                    <legend>Informações Pessoais</legend>
-                      <div class="form-group">
-                        <label for="id-pessoa" class="control-label">ID</label>                
-                        <input type="text" class="form-control" id="id-pessoa" placeholder="ID do Usuário">
+        <div class="col-sm-offset-2 col-sm-8">
+          <div class="admin_info admin_box">            
+            <h4>Info</h4>                             
+            <ul class="info-list">
+              <li>x usuários cadastrados</li>
+              <li>x usuários xxxx xxx xxx</li>              
+            </ul>    
+          </div>       
+    
+        <div class="admin_box">            
+          <div class="pessoas_lista_pessoas">
+            <h4>Usuários</h4>
+            <div class="row">
+              <div class="col-sm-offset-4 col-sm-4">
+                <a href="#" class="new-user-button custom-button-sm">Criar novo usuário</a>
+              </div>
+            </div>
+            <form>   
+              <div class="input-group">
+               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
+               <input type="search" class="form-control" id="busca-evento" placeholder="Buscar usuário por nome">
+               <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+              </span>                
+            </div>
+          </form> 
+          <ul class="list-group custom-list-group list-group-box">     
+            <li class="list-group-item clearfix">
+              <a href="#"><span class="fa fa-user"></span>&#32;Usuário x</a>
+              <div class="custom-list-options">
+                <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                <button class="btn-remove-list"><span class="fa fa-close"></span></button>
+              </div>
+            </li>
 
-                        <label for="nome-pessoa" class="control-label">Nome</label>                
-                        <input type="text" class="form-control" id="nome-pessoa" placeholder="Nome do Usuário">
+            <li class="list-group-item clearfix">
+              <a href="#"><span class="fa fa-user"></span>&#32;Usuário x</a>
+              <div class="custom-list-options">
+                <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                <button class="btn-remove-list"><span class="fa fa-close"></span></button>
+              </div>
+            </li>
 
-                        <label for="cpf-pessoa" class="control-label">CPF</label>
-                        <input type="text" class="form-control" id="cpf-pessoa" placeholder="CPF do Usuário">
+            <li class="list-group-item clearfix">
+              <a href="#"><span class="fa fa-user"></span>&#32;Usuário x</a>
+              <div class="custom-list-options">
+                <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                <button class="btn-remove-list"><span class="fa fa-close"></span></button>
+              </div>
+            </li>
 
-                        <label for="nasc-pessoa" class="control-label">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="nasc-pessoa">  
+            <li class="list-group-item clearfix">
+              <a href="#"><span class="fa fa-user"></span>&#32;Usuário x</a>
+              <div class="custom-list-options">
+                <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                <button class="btn-remove-list"><span class="fa fa-close"></span></button>
+              </div>
+            </li>
 
-                        <label for="tel-pessoa" class="control-label">Telefone</label>
-                        <input type="text" class="form-control" id="tel-pessoa" placeholder="Telefone">               
-                      </div>
-                  </fieldset>
-                  <hr>  
-
-                  <fieldset>
-                    <legend>Endereço</legend>
-                    <div class="form-group">
-                      <label for="rua-pessoa" class="control-label">Rua</label>                
-                      <input type="text" class="form-control" id="rua-pessoa" placeholder="Rua">
-
-                      <label for="numero_end-pessoa" class="control-label">Número</label>
-                      <input type="text" class="form-control" id="numero_end-pessoa" placeholder="Número">
-                    
-                      <label for="bairro-pessoa" class="control-label">Bairro</label>
-                      <input type="text" class="form-control" id="bairro-pessoa" placeholder="Bairro">    
-                    <div class="form-group">                      
-                      <label for="pais-pessoa" class="control-label">País</label>
-                      <select class="form-control">
-                        <option value="pais1">País 1 çalksjfçl çalksdfj çlk çalskjdf</option>
-                        <option value="pais2">País 2</option>
-                      </select> 
-
-                      <label for="estado-pessoa" class="control-label">Estado</label>
-                      <select class="form-control">
-                        <option value="estado1">Estado 1</option>
-                        <option value="estado2">Estado 2</option>
-                      </select>
-                    
-                      <label for="pais-pessoa" class="control-label">Cidade</label>
-                      <select class="form-control">
-                        <option value="pais1">País 1</option>
-                        <option value="pais2">País 2</option>
-                      </select>               
-                    </div>
-                  </fieldset>
-                  <hr>      
-                
-                  <fieldset>
-                    <legend>Dados de Usuário</legend>
-                    <div class="form-group">
-                      <label for="email-pessoa" class="control-label">Email</label>                
-                      <input type="email" class="form-control" id="email-pessoa" placeholder="usuario@email.com">
-                    </div>
-
-                    <div class="form-group">
-                      <label for="senha-pessoa" class="control-label">Senha</label>                
-                      <input type="password" class="form-control" id="senha-pessoa" placeholder="Senha">
-                    </div>                   
-                  </fieldset>  
-                  <div class="form-group">                
-                    <button type="submit" class="custom-button-sm">Cadastrar</button>                
-                  </div> 
-            </form>
-          </div>
+            <li class="list-group-item clearfix">
+              <a href="#"><span class="fa fa-user"></span>&#32;Usuário x</a>
+              <div class="custom-list-options">
+                <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                <button class="btn-remove-list"><span class="fa fa-close"></span></button>
+              </div>
+            </li>
+          </ul> 
         </div>
       </div>        
     </div>     

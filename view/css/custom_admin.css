@@ -76,8 +76,14 @@
 	  overflow: auto;
 	}
 
+	.eventos_lista_eventos .custom-list-options,
+	.palestras_lista_palestras .custom-list-options,
+	.pessoas_lista_pessoas .custom-list-options {
+		display: none;
+	}
+
 	.custom-list-options {		
-		float: right;		
+		float: right;			
 	}
 
 	@media (max-width: 700px) {
@@ -111,8 +117,11 @@
 	}	
 
 	.evento_lista_palestras .custom-list-group li:hover .add-palestra,
-	.palestra_lista_eventos .custom-list-group li:hover .add-palestra {
-		display: inline-block;
+	.palestra_lista_eventos .custom-list-group li:hover .add-palestra,
+	.eventos_lista_eventos .custom-list-group li:hover .custom-list-options,
+	.palestras_lista_palestras .custom-list-group li:hover .custom-list-options,
+	.pessoas_lista_pessoas .custom-list-group li:hover .custom-list-options {
+		display: block;
 	} 
 
 /*Customiza cores do status da palestra */
@@ -125,19 +134,25 @@
 	}
 
 /*Botões da lista*/
-	.btn-remove-list {
+	
+	.btn-remove-list, .btn-edit-list {
 		background-color: transparent;
 		color: #aaa;
 		padding: 0 6px;
 		border: none;
 	}
 
-	.btn-remove-list:hover {
+	.btn-remove-list:hover, .btn-edit-list:hover {
 		color: #777;
+	}
+
+	.btn-edit-list .fa-edit {
+		font-size: 0.9em;
 	}
 
 	.add-palestra {
 		padding: 0 6px;
+		float: right;
 		border: none;
 		background-color: #aaa;
 		color: white;		
@@ -157,6 +172,21 @@
 
 /*Pagina Usuários */
 
+.admin_box .new-user-button{
+	margin-bottom: 10px;
+	text-align: center;		
+}
+
+.admin_box .new-user-button:link {
+	color: white;
+	text-decoration: none;
+}
+
+.admin_box .new-user-button:hover, .admin_box .new-user-button:visited {
+	color: white;	
+}
+/*Pagina Cadastro Usuário */
+
 legend {
 	font-size: 1em;
 	color: #bbb;
@@ -167,23 +197,43 @@ hr {
 	margin-bottom: 8px;
 }
 
-/*Customiza altura dos boxes*/
+/*Pagina Pessoa */
+.admin_box h5 {
+	font-size: 1em;
+	color: #bbb;
+	font-weight: normal;
+	border-bottom:none;
+}
 
-	.eventos_lista_eventos .list-group, .palestras_lista_palestras .list-group {	
+.admin_box h6 {
+	font-size: 1.02em;
+	font-weight: bold;	
+	margin-right: 5px;
+	display: inline-block;
+}
+
+/*Customiza altura dos boxes*/
+	
+	/*.eventos_lista_eventos .list-group,*/ .palestras_lista_palestras .list-group {	
 		height: 363px;	
 	}
 
-	.evento_lista_palestras .list-group, .palestra_lista_eventos .list-group {
+	/*.evento_lista_palestras .list-group,*/ .palestra_lista_eventos .list-group {
 		height: 411px;
 	}
 
 	.evento_evento_palestras .list-group {	
-		height: 200px;
+		height: 250px;
 	}	
 
 	.palestra_palestra_eventos .list-group {
 		height: 232px;
 	}
+
+	.pessoa_lista_palestras {
+		height: 637px;
+	}
+	
 
 /*==========================*/
 

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>pessoa x</title>
+
+  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/view/css/custom.css" />
+  <link rel="stylesheet" href="/view/css/custom_admin.css"/>
+</head>
+<body>
+  <!-- Inicio do cabecalho -->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!--Cabeçalho-->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Mirage</a>
+        </div>
+        <!--Navegação-->
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>&#32;&#32;Usuário <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span>&#32;Voltar para Pessoas</a></li>            
+          </ul>
+        </div>
+      </div>
+      <!-- -->
+    </nav>
+    <!-- fim Navbar -->    
+  </header>
+
+  <main>
+    <div class="container admin-padding-top">
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="admin_info admin_box">
+            <h4>Info</h4>
+            <h5>Dados Pessoais</h5>
+            <ul>
+              <li><h6>ID:</h6><p>000124</p></li>
+              <li><h6>Perfil:</h6><p>Aluno</p></li>
+              <li><h6>Nome:</h6><p>João da Silva</p></li>
+              <li><h6>CPF:</h6><p>000.000.000-00</p></li>
+              <li><h6>Data de Nascimento:</h6><p>00/00/0000</p></li>
+              <li><h6>Telefone:</h6><p>0000-0000</p></li>
+              <hr>         
+            </ul>  
+            <h5>Endereço</h5>
+            <ul>
+              <li><h6>Rua:</h6><p>Blablabla Oblabla</p></li>
+              <li><h6>Número:</h6><p>100</p></li>
+              <li><h6>Bairro:</h6><p>Jardim Bla</p></li>
+              <li><h6>País:</h6><p>Brasil</p></li>
+              <li><h6>Estado:</h6><p>SP</p></li>
+              <li><h6>Cidade:</h6><p>São Carlos</p></li>                    
+            </ul>           
+          </div>          
+        </div>
+
+        <div class="col-sm-7">
+          <div class="pessoa_lista_palestras admin_box">
+            <h4>Inscrito em:</h4>
+            <form>   
+              <div class="input-group">
+               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
+                <input type="search" class="form-control" id="busca-palestra-evento" placeholder="Buscar palestra por nome">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                  </span>                
+              </div>
+            </form>            
+            <ul class="list-group custom-list-group list-group-box">     
+              <li class="list-group-item clearfix">
+                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf&#32;-&#32;<span class="fa fa-institution"></span>&#32;Evento teste 1 blabla</a>                
+              </li>
+
+              <li class="list-group-item clearfix">
+                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf&#32;-&#32;<span class="fa fa-institution"></span>&#32;Evento teste 1 blabla</a>                
+              </li>
+
+              <li class="list-group-item clearfix">
+                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf&#32;-&#32;<span class="fa fa-institution"></span>&#32;Evento teste 1 blabla</a>                
+              </li>
+
+
+              <li class="list-group-item clearfix">
+                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf&#32;-&#32;<span class="fa fa-institution"></span>&#32;Evento teste 1 blabla</a>                
+              </li>
+
+              <li class="list-group-item clearfix">
+                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf&#32;-&#32;<span class="fa fa-institution"></span>&#32;Evento teste 1 blabla</a>                
+              </li>             
+            </ul>    
+          </div>
+        </div>
+      </div>      
+    </div>
+  </main>
+
+  <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="../js/script-admin.js"></script>   
+</body>
+</html>
