@@ -5,8 +5,11 @@ app.controller("loginCtrl", function ($scope, $http) {
   $scope.login = function (user) {
     $http.post(restServerUrl + "/controller/login", user)
       .success(function (data, status) {
-        location.pathname = "/app/instruction";
-        location.replace();
+        $http.post("/controller/login", user)
+          .success(function (data, status) {
+            location.pathname = "/app/instruction";
+            location.replace();
+          });
       })
       .error(function (response, status) {
         if (status == 404) {

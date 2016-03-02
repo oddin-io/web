@@ -10,6 +10,7 @@
     "psr-4": {
       "BossEdu\\Controller\\": "controller/"
       , "BossEdu\\Model\\": "model/generated-classes/BossEdu/Model/"
+      , "BossEdu\\Util\\": "util/"
     }
   },
   "require": {
