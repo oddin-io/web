@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Eventos</title>
+  <title>Criar Instrução</title>
 
   <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
@@ -38,11 +38,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#"><span class="fa fa-institution"></span>&#32;Eventos</a></li>
-            <li><a href="#"><span class="fa fa-book"></span>&#32;Palestras</a></li>
-            <li><a href="#"><span class="fa fa-user"></span>&#32;Usuários</a></li>
-            <li><a href="#"><span class="fa fa-building"></span>&#32;Prédios</a></li>
-            <li><a href="#"><span class="fa fa-clock-o"></span>&#32;Horários</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span>&#32;Voltar</a></li>            
           </ul>
         </div>
       </div>
@@ -56,30 +52,35 @@
       <div class="row">
         <div class="col-sm-5">
           <div class="admin_info admin_box">
-            <h4>Info</h4>
+            <h4>Palestra X em Evento Y</h4>
             <ul class="info-list">
-              <li>x eventos cadastrados</li>
-              <li>x eventos não possuem palestras associadas</li>
+              <li>x Intruções</li>
+              <li>Lorem isum dolor sit</li>
               <li>Lorem ipsum dolor sit amet, consectetur</li>
               <li>teste</li>
             </ul>
           </div>
-          <div class="evento_form admin_box">
-            <h4>Cadastrar novo evento</h4>
+          <div class="instrucao_form admin_box">
+            <h4>Criar nova instrução</h4>
             <form>
               <div class="form-group">
-                <label for="codigo-evento" class="control-label">Código</label>                
-                 <input type="text" class="form-control" id="codigo-evento" placeholder="Insira o código do evento">                
+                <label for="id-instrucao" class="control-label">ID</label>                
+                 <input type="text" class="form-control" id="id-instrucao" placeholder="Insira o ID da instrução">               
               </div>
 
               <div class="form-group">
-                <label for="nome-evento" class="control-label">Nome</label>
-                <input type="text" class="form-control" id="nome-evento" placeholder="Insira o nome do evento">                
+                <label for="turma" class="control-label">Turma</label>
+                <input type="text" class="form-control" id="turma" placeholder="Insira o código/nome da turma">                
               </div>
 
               <div class="form-group">
-                <label for="carga-evento" class="control-label">Carga Horária</label>                
-                  <input type="text" class="form-control" id="carga-evento" placeholder="Insira a carga horária do evento">
+                <label for="data-inicio" class="control-label">Data de Início</label>                
+                  <input type="date" class="form-control" id="data-inicio" placeholder="Insira a data de início">
+              </div>
+
+              <div class="form-group">
+                <label for="data-fim" class="control-label">Data de Encerramento</label>                
+                  <input type="date" class="form-control" id="data-fim" placeholder="Insira a data de encerramento">
               </div>
 
               <div class="form-group">                
@@ -90,12 +91,12 @@
         </div>
 
         <div class="col-sm-7">
-          <div class="eventos_lista_eventos admin_box">
-            <h4>Eventos</h4>
+          <div class="instrucao_lista_instrucoes admin_box">
+            <h4>Instruções</h4>
             <form>   
               <div class="input-group">
                <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
-                <input type="search" class="form-control" id="busca-evento" placeholder="Buscar evento por nome">
+                <input type="search" class="form-control" id="busca-instrucao" placeholder="Buscar instrução por nome">
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                   </span>                
@@ -103,90 +104,98 @@
             </form>  
             <ul class="list-group custom-list-group list-group-box">     
               <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento x</a>
+                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-evento"><span class="fa fa-edit"></span></button>                
+                  <span class="fa fa-lock"></span>             
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
 
               <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento x</a>
+                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-evento"><span class="fa fa-edit"></span></button>                
+                  <span class="fa fa-unlock-alt"></span>             
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
 
               <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento x</a>
+                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-evento"><span class="fa fa-edit"></span></button>                
+                  <span class="fa fa-lock"></span>             
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
 
               <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento x</a>
+                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-evento"><span class="fa fa-edit"></span></button>                
+                  <span class="fa fa-unlock-alt"></span>             
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
 
               <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento x</a>
+                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-evento"><span class="fa fa-edit"></span></button>                
+                  <span class="fa fa-lock"></span>             
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
 
               <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento x</a>
+                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-evento"><span class="fa fa-edit"></span></button>                
+                  <span class="fa fa-unlock-alt"></span>             
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
-              </li>
-
-              
+              </li>   
             </ul>            
           </div>
         </div>
       </div>      
     </div>
 
-    <!-- Modal de edição de evento -->
-    <div class="modal fade" id="modal-edita-evento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+     <!-- Modal de edição de instruções -->
+    <div class="modal fade" id="modal-edita-instrucao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabelUpload">Editar Evento X</h4>
+            <h4 class="modal-title" id="myModalLabelUpload">Editar Instrucao X</h4>
           </div>          
           <div class="modal-footer">
             <div class="upload-form">
               <form>
                 <div class="form-group">
-                  <label for="codigo-evento" class="control-label">Código</label>                
-                   <input type="text" class="form-control" id="codigo-evento" placeholder="Insira o código do evento">                
-                </div>
+                <label for="id-instrucao" class="control-label">ID</label>                
+                 <input type="text" class="form-control" id="id-instrucao" placeholder="Insira o ID da instrução">               
+              </div>
 
-                <div class="form-group">
-                  <label for="nome-evento" class="control-label">Nome</label>
-                  <input type="text" class="form-control" id="nome-evento" placeholder="Insira o nome do evento">                
-                </div>
+              <div class="form-group">
+                <label for="turma" class="control-label">Turma</label>
+                <input type="text" class="form-control" id="turma" placeholder="Insira o código/nome da turma">                
+              </div>
 
-                <div class="form-group">
-                  <label for="carga-evento" class="control-label">Carga Horária</label>                
-                    <input type="text" class="form-control" id="carga-evento" placeholder="Insira a carga horária do evento">
-                </div>
+              <div class="form-group">
+                <label for="data-inicio" class="control-label">Data de Início</label>                
+                  <input type="date" class="form-control" id="data-inicio" placeholder="Insira a data de início">
+              </div>
 
-                <div class="form-group">                
-                    <button type="submit" class="custom-button-sm">Atualizar</button>                
-                </div>
-              </form>
+              <div class="form-group">
+                <label for="data-fim" class="control-label">Data de Encerramento</label>                
+                  <input type="date" class="form-control" id="data-fim" placeholder="Insira a data de encerramento">
+              </div>
+
+              <div class="form-group">                
+                  <button type="submit" class="custom-button-sm">Atualizar</button>                
+              </div>
             </div>
           </div>
         </div>

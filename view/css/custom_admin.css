@@ -36,6 +36,15 @@
 	margin-bottom: 20px;
 }
 
+.modal_list, .modal_table {
+	padding: 15px;
+	text-align: left;
+}
+
+.modal_table_body {
+	background-color: #f8f8f8;
+}
+
 .admin_box h4 {
 	padding-bottom: 10px;
 	border-bottom: 1px solid #ddd;
@@ -125,24 +134,26 @@
 	} 
 
 /*Customiza cores do status da palestra */
-	.fa-circle-o {
+	.fa-lock {
 		color: #d24;
+		margin-right: 8px;
 	}
 
-	.fa-check-circle-o {
+	.fa-unlock-alt {
 		color: #492;
+		margin-right: 8px;
 	}
 
 /*Botões da lista*/
 	
-	.btn-remove-list, .btn-edit-list {
+	.btn-remove-list, .btn-edit-list, .btn-atribui {
 		background-color: transparent;
 		color: #aaa;
 		padding: 0 6px;
 		border: none;
 	}
 
-	.btn-remove-list:hover, .btn-edit-list:hover {
+	.btn-remove-list:hover, .btn-edit-list:hover, .btn-atribui:hover {
 		color: #777;
 	}
 
@@ -172,18 +183,22 @@
 
 /*Pagina Usuários */
 
-.admin_box .new-user-button{
+.new-user-button{
 	margin-bottom: 10px;
 	text-align: center;		
 }
 
-.admin_box .new-user-button:link {
+.new-user-button:link {
 	color: white;
 	text-decoration: none;
 }
 
-.admin_box .new-user-button:hover, .admin_box .new-user-button:visited {
+.new-user-button:hover, .new-user-button:visited {
 	color: white;	
+}
+
+.new-user-button .fa-user-plus {
+	font-size: 0.9em;	
 }
 /*Pagina Cadastro Usuário */
 
@@ -212,29 +227,121 @@ hr {
 	display: inline-block;
 }
 
+/*======================*/
+.tabela-horarios-box table {
+	font-size: 0.83em;
+	margin-bottom: 0px;	
+	/*overflow:auto;*/
+}
+
+
+.tabela-horarios-box table td, .tabela-horarios table th{
+	padding: 5px;		
+}
+
+.tabela-horarios-box table button {		
+	float: right;
+}
+
+.tabela-horarios-custom {
+	margin-bottom: 0;
+}
+
+.tabela-horarios {
+	margin-bottom: 20px;
+	overflow: auto;
+}
+
+.select-all {
+	text-align: right;
+}
+
+.select-all p {
+	color: #777;	
+	margin-bottom: 0;
+	display: inline-block;
+}
+
+#add-sala-horario {
+	margin-bottom: 20px;	
+}
+
+@media (min-width:992px) {
+	#add-sala-horario {
+		margin-bottom:0;
+		margin-top: 26px;
+	}
+}
+
+.atribuir-horarios .control-label {
+	color: #777;	
+	font-weight: normal;
+}
+
+.modal-body-tabela-horarios {
+	background-color: #f8f8f8;
+}
+
+.tabela-horarios-custom {
+	background-color: white;
+}
 /*Customiza altura dos boxes*/
-	
-	/*.eventos_lista_eventos .list-group,*/ .palestras_lista_palestras .list-group {	
-		height: 363px;	
+
+	@media (min-width:992px) {
+		.pessoas_info{
+			height: 550px;
+		}
+		.atribuicao_info {
+			height: 370px;
+		}
+
+		.palestra_info {
+		height: 550px;
+		}
+	}	
+
+	@media (min-width:768px) {
+		.palestra_info {
+		height: 550px;
+		}
+	}	
+
+	.atribuir_alunos {
+		height: 470px;
 	}
 
-	/*.evento_lista_palestras .list-group,*/ .palestra_lista_eventos .list-group {
-		height: 411px;
+	.atribuir_prof {
+		height: 450px;
 	}
+
+	.atribuir_prof .list-group {
+		height: 320px;
+	}
+
+	.atribuir_alunos .list-group{
+		height: 320px;		
+		margin-top: 2px;
+	}	
+
+	.atribuir_alunos form {
+		margin-bottom: 10px;
+	}	
 
 	.evento_evento_palestras .list-group {	
 		height: 250px;
 	}	
 
-	.palestra_palestra_eventos .list-group {
+	.palestra_palestra_eventos .list-group, .atribuicao_lista_professores .list-group {
 		height: 232px;
-	}
+	}	
 
-	.pessoa_lista_palestras {
-		height: 637px;
-	}
 	
 
+	
+
+	/*.pessoa_lista_palestras {
+		height: 637px;
+	}*/	
 /*==========================*/
 
 

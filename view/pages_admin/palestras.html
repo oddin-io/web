@@ -61,9 +61,11 @@
               <li>x palestras cadastradas</li>
               <li>x palestras não estão associadas a eventos</li>
               <li>Lorem ipsum dolor sit amet, consectetur</li>
+              <li>x palestras não estão associadas a eventos</li>
+              <li>Lorem ipsum dolor sit amet, consectetur</li>
             </ul>
           </div>
-          <div class="admin_box">
+          <div class="palestra_form admin_box">
             <h4>Cadastrar nova palestra</h4>
             <form>
               <div class="form-group">
@@ -104,7 +106,7 @@
               <li class="list-group-item clearfix">
                 <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
@@ -112,7 +114,7 @@
               <li class="list-group-item clearfix">
                 <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
@@ -120,7 +122,7 @@
               <li class="list-group-item clearfix">
                 <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
@@ -128,7 +130,7 @@
               <li class="list-group-item clearfix">
                 <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
@@ -136,7 +138,7 @@
               <li class="list-group-item clearfix">
                 <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
@@ -144,19 +146,55 @@
               <li class="list-group-item clearfix">
                 <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list"><span class="fa fa-edit"></span></button>                
+                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
-              </li>  
-
+              </li> 
             </ul> 
           </div>
         </div>
       </div>      
     </div>
+
+    <!-- Modal de edição de palestras -->
+    <div class="modal fade" id="modal-edita-palestra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabelUpload">Editar Palestra X</h4>
+          </div>          
+          <div class="modal-footer">
+            <div class="upload-form">
+              <form>
+                <div class="form-group">
+                <label for="codigo-palestra" class="control-label">Código</label>                
+                 <input type="text" class="form-control" id="codigo-palestra" placeholder="Insira o código da palestra">              
+                </div>
+
+                <div class="form-group">
+                  <label for="nome-palestra" class="control-label">Nome</label>
+                  <input type="text" class="form-control" id="nome-palestra" placeholder="Insira o nome da palestra">              
+                </div>
+
+                <div class="form-group">
+                  <label for="carga-palestra" class="control-label">Carga Horária</label>                
+                   <input type="text" class="form-control" id="carga-palestra" placeholder="Insira a carga horária da palestra">
+                </div>
+                <div class="form-group">                
+                    <button type="submit" class="custom-button-sm">Editar</button>                
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
   </main>
 
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
   <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script> 
+  <script src="../js/script-admin.js"></script>
 </body>
 </html>
