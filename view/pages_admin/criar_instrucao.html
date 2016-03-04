@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="BossEdu">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/view/css/custom.css" />
   <link rel="stylesheet" href="/view/css/custom_admin.css"/>
 </head>
-<body>
+<body data-ng-controller="createInstructionCtrl">
   <!-- Inicio do cabecalho -->
   <header>
     <!-- Navbar -->
@@ -47,6 +47,7 @@
     <!-- fim Navbar -->    
   </header>
 
+  <!-- Conteúdo Principal -->
   <main>
     <div class="container admin-padding-top">
       <div class="row">
@@ -62,29 +63,29 @@
           </div>
           <div class="instrucao_form admin_box">
             <h4>Criar nova instrução</h4>
-            <form>
+            <form data-ng-submit="criarInstrucao(instruction)">
               <div class="form-group">
                 <label for="id-instrucao" class="control-label">ID</label>                
-                 <input type="text" class="form-control" id="id-instrucao" placeholder="Insira o ID da instrução">               
+                <input type="text" class="form-control" data-ng-model="instruction.id" id="id-instrucao" placeholder="Insira o ID da instrução">               
               </div>
 
               <div class="form-group">
                 <label for="turma" class="control-label">Turma</label>
-                <input type="text" class="form-control" id="turma" placeholder="Insira o código/nome da turma">                
+                <input type="text" class="form-control" data-ng-model="instruction.turma" id="turma" placeholder="Insira o código/nome da turma">                
               </div>
 
               <div class="form-group">
                 <label for="data-inicio" class="control-label">Data de Início</label>                
-                  <input type="date" class="form-control" id="data-inicio" placeholder="Insira a data de início">
+                <input type="date" class="form-control" data-ng-model="instruction.data_ini" id="data-inicio" placeholder="Insira a data de início">
               </div>
 
               <div class="form-group">
                 <label for="data-fim" class="control-label">Data de Encerramento</label>                
-                  <input type="date" class="form-control" id="data-fim" placeholder="Insira a data de encerramento">
+                <input type="date" class="form-control" data-ng-model="instruction.data_fim" id="data-fim" placeholder="Insira a data de encerramento">
               </div>
 
               <div class="form-group">                
-                  <button type="submit" class="custom-button-sm">Cadastrar</button>                
+                <button type="submit" class="custom-button-sm">Cadastrar</button>                
               </div>
             </form>
           </div>
@@ -95,107 +96,66 @@
             <h4>Instruções</h4>
             <form>   
               <div class="input-group">
-               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
+                <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
                 <input type="search" class="form-control" id="busca-instrucao" placeholder="Buscar instrução por nome">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                  </span>                
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>                
               </div>
             </form>  
             <ul class="list-group custom-list-group list-group-box">     
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
+              <li class="list-group-item clearfix" data-ng-repeat="instruction in instructions">
+                <a href="#">
+                  <span class="glyphicon glyphicon-blackboard"></span>&#32;{{instruction.id}} - {{instruction.turma}}
+                </a>
                 <div class="custom-list-options">
-                  <span class="fa fa-lock"></span>             
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
+                  <span data-ng-class="{'fa fa-unlock-alt': instruction.status == 0, 'fa fa-lock': instruction.status == 1}">
+                  </span>             
+                  <button class="btn-edit-list" data-ng-click="editarInstrucao(instruction)" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
+                  <button class="btn-remove-list" data-ng-click="deletarInstrucao(instruction)"><span class="fa fa-close"></span></button>
                 </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
-                <div class="custom-list-options">
-                  <span class="fa fa-unlock-alt"></span>             
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
-                <div class="custom-list-options">
-                  <span class="fa fa-lock"></span>             
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
-                <div class="custom-list-options">
-                  <span class="fa fa-unlock-alt"></span>             
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
-                <div class="custom-list-options">
-                  <span class="fa fa-lock"></span>             
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 555</a>
-                <div class="custom-list-options">
-                  <span class="fa fa-unlock-alt"></span>             
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-instrucao"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>   
+              </li>              
             </ul>            
           </div>
         </div>
       </div>      
     </div>
 
-     <!-- Modal de edição de instruções -->
+  <!-- Modal de edição de instruções -->
     <div class="modal fade" id="modal-edita-instrucao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabelUpload">Editar Instrucao X</h4>
+            <h4 class="modal-title" id="myModalLabelUpload">Editar {{modalData.turma}}</h4>
           </div>          
           <div class="modal-footer">
             <div class="upload-form">
-              <form>
+              <form data-ng-sumit="atualizarInstrucao(modalData)">
                 <div class="form-group">
-                <label for="id-instrucao" class="control-label">ID</label>                
-                 <input type="text" class="form-control" id="id-instrucao" placeholder="Insira o ID da instrução">               
-              </div>
+                  <label for="id-instrucao" class="control-label">ID</label>                
+                  <input type="text" class="form-control" id="id-instrucao" data-ng-model="modalData.id" placeholder="Insira o ID da instrução">               
+                </div>
 
-              <div class="form-group">
-                <label for="turma" class="control-label">Turma</label>
-                <input type="text" class="form-control" id="turma" placeholder="Insira o código/nome da turma">                
-              </div>
+                <div class="form-group">
+                  <label for="turma" class="control-label">Turma</label>
+                  <input type="text" class="form-control" id="turma" data-ng-model="modalData.turma" placeholder="Insira o código/nome da turma">                
+                </div>
 
-              <div class="form-group">
-                <label for="data-inicio" class="control-label">Data de Início</label>                
-                  <input type="date" class="form-control" id="data-inicio" placeholder="Insira a data de início">
-              </div>
+                <div class="form-group">
+                  <label for="data-inicio" class="control-label">Data de Início</label>                
+                  <input type="date" class="form-control" id="data-inicio" data-ng-model="modalData.dataIni" placeholder="Insira a data de início">
+                </div>
 
-              <div class="form-group">
-                <label for="data-fim" class="control-label">Data de Encerramento</label>                
-                  <input type="date" class="form-control" id="data-fim" placeholder="Insira a data de encerramento">
-              </div>
+                <div class="form-group">
+                  <label for="data-fim" class="control-label">Data de Encerramento</label>                
+                  <input type="date" class="form-control" id="data-fim" data-ng-model="modalData.dataFim" placeholder="Insira a data de encerramento">
+                </div>
 
-              <div class="form-group">                
+                <div class="form-group">                
                   <button type="submit" class="custom-button-sm">Atualizar</button>                
-              </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -207,5 +167,11 @@
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
   <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script> 
   <script src="../js/script-admin.js"></script>  
+
+  <!-- AngularJS Scripts -->
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/js/app.js"></script>
+  <script src="/view/js/controller/createInstructionCtrl.js"></script>
+
 </body>
 </html>
