@@ -34,9 +34,9 @@
 })();
 
 (function() {
-	var instrucao_lista_instrucoes_size = $(".instrucao_form").outerHeight() + $(".admin_info").outerHeight() + parseInt($(".admin_info").css("margin-bottom"),10);
-	$(".instrucao_lista_instrucoes").css("height", instrucao_lista_instrucoes_size);
-	$(".instrucao_lista_instrucoes .list-group").css("height", instrucao_lista_instrucoes_size - 145);
+	var turma_lista_turmas_size = $(".turma_form").outerHeight() + $(".admin_info").outerHeight() + parseInt($(".admin_info").css("margin-bottom"),10);
+	$(".turma_lista_turmas").css("height", turma_lista_turmas_size);
+	$(".turma_lista_turmas .list-group").css("height", turma_lista_turmas_size - 145);
 })();
 
 

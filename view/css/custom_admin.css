@@ -144,6 +144,10 @@
 		margin-right: 8px;
 	}
 
+	.fa-check-circle {
+		color: #492;
+	}
+
 /*Botões da lista*/
 	
 	.btn-remove-list, .btn-edit-list, .btn-atribui {
@@ -285,6 +289,16 @@ hr {
 .tabela-horarios-custom {
 	background-color: white;
 }
+
+.delete-cancel, .delete-confirm {
+	display: inline-block;
+}
+
+.cancel-confirm {
+	text-align: center;
+	margin: 0 auto;
+}
+
 /*Customiza altura dos boxes*/
 
 	@media (min-width:992px) {
