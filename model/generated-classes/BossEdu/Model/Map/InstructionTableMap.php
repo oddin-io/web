@@ -177,13 +177,6 @@ class InstructionTableMap extends TableMap
     1 => ':lecture_code',
   ),
 ), null, null, null, false);
-        $this->addRelation('Person', '\\BossEdu\\Model\\Person', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':current_instruction',
-    1 => ':id',
-  ),
-), null, null, 'People', false);
         $this->addRelation('PiLink', '\\BossEdu\\Model\\PiLink', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (

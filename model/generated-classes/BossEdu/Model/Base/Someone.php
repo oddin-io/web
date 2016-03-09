@@ -83,7 +83,7 @@ abstract class Someone implements ActiveRecordInterface
     /**
      * The value for the registration_date field.
      * 
-     * Note: this column has a database default value of: '2016-02-10'
+     * Note: this column has a database default value of: '2016-03-09'
      * @var        \DateTime
      */
     protected $registration_date;
@@ -124,7 +124,7 @@ abstract class Someone implements ActiveRecordInterface
      */
     public function applyDefaultValues()
     {
-        $this->registration_date = PropelDateTime::newInstance('2016-02-10', null, 'DateTime');
+        $this->registration_date = PropelDateTime::newInstance('2016-03-09', null, 'DateTime');
         $this->admin = false;
     }
 
@@ -467,7 +467,7 @@ abstract class Someone implements ActiveRecordInterface
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->registration_date !== null || $dt !== null) {
             if ( ($dt != $this->registration_date) // normalized values don't match
-                || ($dt->format('Y-m-d') === '2016-02-10') // or the entered value matches the default
+                || ($dt->format('Y-m-d') === '2016-03-09') // or the entered value matches the default
                  ) {
                 $this->registration_date = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[SomeoneTableMap::COL_REGISTRATION_DATE] = true;
@@ -515,7 +515,7 @@ abstract class Someone implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->registration_date && $this->registration_date->format('Y-m-d') !== '2016-02-10') {
+            if ($this->registration_date && $this->registration_date->format('Y-m-d') !== '2016-03-09') {
                 return false;
             }
 
@@ -1449,31 +1449,6 @@ abstract class Someone implements ActiveRecordInterface
         }
 
         return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Someone is new, it will return
-     * an empty collection; or if this Someone has previously
-     * been saved, it will retrieve related People from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Someone.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildPerson[] List of ChildPerson objects
-     */
-    public function getPeopleJoinInstruction(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildPersonQuery::create(null, $criteria);
-        $query->joinWith('Instruction', $joinBehavior);
-
-        return $this->getPeople($query, $con);
     }
 
     /**

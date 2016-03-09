@@ -52,16 +52,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInstructionQuery rightJoinWithElHave() Adds a RIGHT JOIN clause and with to the query using the ElHave relation
  * @method     ChildInstructionQuery innerJoinWithElHave() Adds a INNER JOIN clause and with to the query using the ElHave relation
  *
- * @method     ChildInstructionQuery leftJoinPerson($relationAlias = null) Adds a LEFT JOIN clause to the query using the Person relation
- * @method     ChildInstructionQuery rightJoinPerson($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Person relation
- * @method     ChildInstructionQuery innerJoinPerson($relationAlias = null) Adds a INNER JOIN clause to the query using the Person relation
- *
- * @method     ChildInstructionQuery joinWithPerson($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Person relation
- *
- * @method     ChildInstructionQuery leftJoinWithPerson() Adds a LEFT JOIN clause and with to the query using the Person relation
- * @method     ChildInstructionQuery rightJoinWithPerson() Adds a RIGHT JOIN clause and with to the query using the Person relation
- * @method     ChildInstructionQuery innerJoinWithPerson() Adds a INNER JOIN clause and with to the query using the Person relation
- *
  * @method     ChildInstructionQuery leftJoinPiLink($relationAlias = null) Adds a LEFT JOIN clause to the query using the PiLink relation
  * @method     ChildInstructionQuery rightJoinPiLink($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PiLink relation
  * @method     ChildInstructionQuery innerJoinPiLink($relationAlias = null) Adds a INNER JOIN clause to the query using the PiLink relation
@@ -102,7 +92,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInstructionQuery rightJoinWithPresentation() Adds a RIGHT JOIN clause and with to the query using the Presentation relation
  * @method     ChildInstructionQuery innerJoinWithPresentation() Adds a INNER JOIN clause and with to the query using the Presentation relation
  *
- * @method     \BossEdu\Model\ElHaveQuery|\BossEdu\Model\PersonQuery|\BossEdu\Model\PiLinkQuery|\BossEdu\Model\IsrLinkQuery|\BossEdu\Model\MiMaterialQuery|\BossEdu\Model\PresentationQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \BossEdu\Model\ElHaveQuery|\BossEdu\Model\PiLinkQuery|\BossEdu\Model\IsrLinkQuery|\BossEdu\Model\MiMaterialQuery|\BossEdu\Model\PresentationQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildInstruction findOne(ConnectionInterface $con = null) Return the first ChildInstruction matching the query
  * @method     ChildInstruction findOneOrCreate(ConnectionInterface $con = null) Return the first ChildInstruction matching the query, or a new ChildInstruction object populated from the query conditions when no match is found
@@ -608,79 +598,6 @@ abstract class InstructionQuery extends ModelCriteria
         return $this
             ->joinElHave($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'ElHave', '\BossEdu\Model\ElHaveQuery');
-    }
-
-    /**
-     * Filter the query by a related \BossEdu\Model\Person object
-     *
-     * @param \BossEdu\Model\Person|ObjectCollection $person the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildInstructionQuery The current query, for fluid interface
-     */
-    public function filterByPerson($person, $comparison = null)
-    {
-        if ($person instanceof \BossEdu\Model\Person) {
-            return $this
-                ->addUsingAlias(InstructionTableMap::COL_ID, $person->getCurrentInstruction(), $comparison);
-        } elseif ($person instanceof ObjectCollection) {
-            return $this
-                ->usePersonQuery()
-                ->filterByPrimaryKeys($person->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByPerson() only accepts arguments of type \BossEdu\Model\Person or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Person relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildInstructionQuery The current query, for fluid interface
-     */
-    public function joinPerson($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Person');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Person');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Person relation Person object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \BossEdu\Model\PersonQuery A secondary query class using the current class as primary query
-     */
-    public function usePersonQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinPerson($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Person', '\BossEdu\Model\PersonQuery');
     }
 
     /**

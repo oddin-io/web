@@ -27,8 +27,6 @@ class FrontEndCtrl
      */
     public function lectures()
     {
-        InstructionCtrl::resetCurrentInstruction($_SESSION["id"]);
-
         echo file_get_contents(__VIEWFOLDER__."/palestras.html");
     }
 
@@ -43,8 +41,6 @@ class FrontEndCtrl
 
         $profile = $this->getProfile($instruction_id, $person);
 
-        InstructionCtrl::setCurrentInstruction($instruction_id, $_SESSION["id"]);
-
         if ($profile >= 2) {
             echo file_get_contents(__VIEWFOLDER__."/material-p.html");
             return;
@@ -58,8 +54,6 @@ class FrontEndCtrl
      */
     public function participants($instruction_id)
     {
-        InstructionCtrl::setCurrentInstruction($instruction_id, $_SESSION["id"]);
-
         echo file_get_contents(__VIEWFOLDER__."/participantes.html");
     }
 
@@ -81,8 +75,6 @@ class FrontEndCtrl
         $person = $_SESSION["id"];
 
         $profile = $this->getProfile($instruction_id, $person);
-
-        InstructionCtrl::setCurrentInstruction($instruction_id, $_SESSION["id"]);
 
         if ($profile >= 2) {
             echo file_get_contents(__VIEWFOLDER__."/historico-p.html");
@@ -119,8 +111,6 @@ class FrontEndCtrl
     public function presentation($instruction_id, $id)
     {
         $instruction_id = urldecode($instruction_id);
-
-        InstructionCtrl::setCurrentInstruction($instruction_id, $_SESSION["id"]);
 
         $profile = $this->getProfile($instruction_id, $_SESSION["id"]);
 

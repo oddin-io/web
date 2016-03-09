@@ -9,8 +9,6 @@ use BossEdu\Model\Contribution as ChildContribution;
 use BossEdu\Model\ContributionQuery as ChildContributionQuery;
 use BossEdu\Model\Doubt as ChildDoubt;
 use BossEdu\Model\DoubtQuery as ChildDoubtQuery;
-use BossEdu\Model\Instruction as ChildInstruction;
-use BossEdu\Model\InstructionQuery as ChildInstructionQuery;
 use BossEdu\Model\PdLike as ChildPdLike;
 use BossEdu\Model\PdLikeQuery as ChildPdLikeQuery;
 use BossEdu\Model\Person as ChildPerson;
@@ -167,13 +165,6 @@ abstract class Person implements ActiveRecordInterface
     protected $number;
 
     /**
-     * The value for the current_instruction field.
-     * 
-     * @var        int
-     */
-    protected $current_instruction;
-
-    /**
      * The value for the email field.
      * 
      * @var        string
@@ -184,11 +175,6 @@ abstract class Person implements ActiveRecordInterface
      * @var        ChildSomeone
      */
     protected $aSomeone;
-
-    /**
-     * @var        ChildInstruction
-     */
-    protected $aInstruction;
 
     /**
      * @var        ObjectCollection|ChildPiLink[] Collection to store aggregation of ChildPiLink objects.
@@ -614,16 +600,6 @@ abstract class Person implements ActiveRecordInterface
     }
 
     /**
-     * Get the [current_instruction] column value.
-     * 
-     * @return int
-     */
-    public function getCurrentInstruction()
-    {
-        return $this->current_instruction;
-    }
-
-    /**
      * Get the [email] column value.
      * 
      * @return string
@@ -874,30 +850,6 @@ abstract class Person implements ActiveRecordInterface
     } // setNumber()
 
     /**
-     * Set the value of [current_instruction] column.
-     * 
-     * @param int $v new value
-     * @return $this|\BossEdu\Model\Person The current object (for fluent API support)
-     */
-    public function setCurrentInstruction($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->current_instruction !== $v) {
-            $this->current_instruction = $v;
-            $this->modifiedColumns[PersonTableMap::COL_CURRENT_INSTRUCTION] = true;
-        }
-
-        if ($this->aInstruction !== null && $this->aInstruction->getId() !== $v) {
-            $this->aInstruction = null;
-        }
-
-        return $this;
-    } // setCurrentInstruction()
-
-    /**
      * Set the value of [email] column.
      * 
      * @param string $v new value
@@ -993,10 +945,7 @@ abstract class Person implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : PersonTableMap::translateFieldName('Number', TableMap::TYPE_PHPNAME, $indexType)];
             $this->number = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : PersonTableMap::translateFieldName('CurrentInstruction', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->current_instruction = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : PersonTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : PersonTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
             $this->email = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -1006,7 +955,7 @@ abstract class Person implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 14; // 14 = PersonTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 13; // 13 = PersonTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\BossEdu\\Model\\Person'), 0, $e);
@@ -1028,9 +977,6 @@ abstract class Person implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aInstruction !== null && $this->current_instruction !== $this->aInstruction->getId()) {
-            $this->aInstruction = null;
-        }
         if ($this->aSomeone !== null && $this->email !== $this->aSomeone->getEmail()) {
             $this->aSomeone = null;
         }
@@ -1074,7 +1020,6 @@ abstract class Person implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->aSomeone = null;
-            $this->aInstruction = null;
             $this->collPiLinks = null;
 
             $this->collPresentations = null;
@@ -1194,13 +1139,6 @@ abstract class Person implements ActiveRecordInterface
                     $affectedRows += $this->aSomeone->save($con);
                 }
                 $this->setSomeone($this->aSomeone);
-            }
-
-            if ($this->aInstruction !== null) {
-                if ($this->aInstruction->isModified() || $this->aInstruction->isNew()) {
-                    $affectedRows += $this->aInstruction->save($con);
-                }
-                $this->setInstruction($this->aInstruction);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1370,9 +1308,6 @@ abstract class Person implements ActiveRecordInterface
         if ($this->isColumnModified(PersonTableMap::COL_NUMBER)) {
             $modifiedColumns[':p' . $index++]  = 'number';
         }
-        if ($this->isColumnModified(PersonTableMap::COL_CURRENT_INSTRUCTION)) {
-            $modifiedColumns[':p' . $index++]  = 'current_instruction';
-        }
         if ($this->isColumnModified(PersonTableMap::COL_EMAIL)) {
             $modifiedColumns[':p' . $index++]  = 'email';
         }
@@ -1422,9 +1357,6 @@ abstract class Person implements ActiveRecordInterface
                         break;
                     case 'number':                        
                         $stmt->bindValue($identifier, $this->number, PDO::PARAM_STR);
-                        break;
-                    case 'current_instruction':                        
-                        $stmt->bindValue($identifier, $this->current_instruction, PDO::PARAM_INT);
                         break;
                     case 'email':                        
                         $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
@@ -1521,9 +1453,6 @@ abstract class Person implements ActiveRecordInterface
                 return $this->getNumber();
                 break;
             case 12:
-                return $this->getCurrentInstruction();
-                break;
-            case 13:
                 return $this->getEmail();
                 break;
             default:
@@ -1568,8 +1497,7 @@ abstract class Person implements ActiveRecordInterface
             $keys[9] => $this->getDistrict(),
             $keys[10] => $this->getStreet(),
             $keys[11] => $this->getNumber(),
-            $keys[12] => $this->getCurrentInstruction(),
-            $keys[13] => $this->getEmail(),
+            $keys[12] => $this->getEmail(),
         );
         if ($result[$keys[4]] instanceof \DateTime) {
             $result[$keys[4]] = $result[$keys[4]]->format('c');
@@ -1595,21 +1523,6 @@ abstract class Person implements ActiveRecordInterface
                 }
         
                 $result[$key] = $this->aSomeone->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aInstruction) {
-                
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'instruction';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'instruction';
-                        break;
-                    default:
-                        $key = 'Instruction';
-                }
-        
-                $result[$key] = $this->aInstruction->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collPiLinks) {
                 
@@ -1757,9 +1670,6 @@ abstract class Person implements ActiveRecordInterface
                 $this->setNumber($value);
                 break;
             case 12:
-                $this->setCurrentInstruction($value);
-                break;
-            case 13:
                 $this->setEmail($value);
                 break;
         } // switch()
@@ -1825,10 +1735,7 @@ abstract class Person implements ActiveRecordInterface
             $this->setNumber($arr[$keys[11]]);
         }
         if (array_key_exists($keys[12], $arr)) {
-            $this->setCurrentInstruction($arr[$keys[12]]);
-        }
-        if (array_key_exists($keys[13], $arr)) {
-            $this->setEmail($arr[$keys[13]]);
+            $this->setEmail($arr[$keys[12]]);
         }
     }
 
@@ -1906,9 +1813,6 @@ abstract class Person implements ActiveRecordInterface
         }
         if ($this->isColumnModified(PersonTableMap::COL_NUMBER)) {
             $criteria->add(PersonTableMap::COL_NUMBER, $this->number);
-        }
-        if ($this->isColumnModified(PersonTableMap::COL_CURRENT_INSTRUCTION)) {
-            $criteria->add(PersonTableMap::COL_CURRENT_INSTRUCTION, $this->current_instruction);
         }
         if ($this->isColumnModified(PersonTableMap::COL_EMAIL)) {
             $criteria->add(PersonTableMap::COL_EMAIL, $this->email);
@@ -2010,7 +1914,6 @@ abstract class Person implements ActiveRecordInterface
         $copyObj->setDistrict($this->getDistrict());
         $copyObj->setStreet($this->getStreet());
         $copyObj->setNumber($this->getNumber());
-        $copyObj->setCurrentInstruction($this->getCurrentInstruction());
         $copyObj->setEmail($this->getEmail());
 
         if ($deepCopy) {
@@ -2127,57 +2030,6 @@ abstract class Person implements ActiveRecordInterface
         }
 
         return $this->aSomeone;
-    }
-
-    /**
-     * Declares an association between this object and a ChildInstruction object.
-     *
-     * @param  ChildInstruction $v
-     * @return $this|\BossEdu\Model\Person The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setInstruction(ChildInstruction $v = null)
-    {
-        if ($v === null) {
-            $this->setCurrentInstruction(NULL);
-        } else {
-            $this->setCurrentInstruction($v->getId());
-        }
-
-        $this->aInstruction = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildInstruction object, it will not be re-added.
-        if ($v !== null) {
-            $v->addPerson($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildInstruction object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildInstruction The associated ChildInstruction object.
-     * @throws PropelException
-     */
-    public function getInstruction(ConnectionInterface $con = null)
-    {
-        if ($this->aInstruction === null && ($this->current_instruction !== null)) {
-            $this->aInstruction = ChildInstructionQuery::create()->findPk($this->current_instruction, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aInstruction->addPeople($this);
-             */
-        }
-
-        return $this->aInstruction;
     }
 
 
@@ -3474,9 +3326,6 @@ abstract class Person implements ActiveRecordInterface
         if (null !== $this->aSomeone) {
             $this->aSomeone->removePerson($this);
         }
-        if (null !== $this->aInstruction) {
-            $this->aInstruction->removePerson($this);
-        }
         $this->id = null;
         $this->document_name = null;
         $this->document_number = null;
@@ -3489,7 +3338,6 @@ abstract class Person implements ActiveRecordInterface
         $this->district = null;
         $this->street = null;
         $this->number = null;
-        $this->current_instruction = null;
         $this->email = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
@@ -3542,7 +3390,6 @@ abstract class Person implements ActiveRecordInterface
         $this->collPdLikes = null;
         $this->collContributions = null;
         $this->aSomeone = null;
-        $this->aInstruction = null;
     }
 
     /**
