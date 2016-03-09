@@ -5,15 +5,13 @@ use BossEdu\Model\PersonQuery;
 use BossEdu\Model\SomeoneQuery;
 use BossEdu\Util\Util;
 use Jacwright\RestServer\RestException;
-use Mailgun\Mailgun;
+use Jasny\SSO\Broker;
 
 class AuthCtrl
 {
     public static function check()
     {
         if (!isset($_SESSION)) session_start();
-
-        AuthCtrl::refreshSession();
 
         if (isset($_SESSION["email"])) {
             $user = SomeoneQuery::create()
@@ -25,49 +23,13 @@ class AuthCtrl
                 return true;
             }
         }
-
-        AuthCtrl::destroySession();
     }
 
-    public static function startSession($persist = false)
-    {
-        if ($persist) {
-            session_set_cookie_params(time() + 3600 * 24 * 60); // 2 Months
-        }
+    private function attach() {
+        $broker = new Broker("http://auth.localhost", "Greg", "7pypoox2pc");
+        $broker->attach(true);
 
-        session_start();
-    }
-
-    public static function refreshSession()
-    {
-        if (!isset($_SESSION)) session_start();
-
-        if ($_SESSION["persist"]) {
-            $params = session_get_cookie_params();
-            setcookie(session_name(), session_id(), time() + 3600 * 24 * 60,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
-            );
-        }
-    }
-
-    public static function destroySession()
-    {
-        if (!isset($_SESSION)) session_start();
-
-        if (isset($_SESSION["id"])) InstructionCtrl::resetCurrentInstruction($_SESSION["id"]);
-
-        $_SESSION = [];
-
-        if (ini_get("session.use_cookies")) {
-            $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
-            );
-        }
-
-        session_destroy();
+        return $broker;
     }
 
     /**
@@ -75,42 +37,13 @@ class AuthCtrl
      */
     public function login()
     {
+        $broker = $this->attach();
         $user = Util::getPostContents("lower");
 
-        AuthCtrl::startSession($user["persist"] ?? false);
-
-        if (!isset($_SESSION["email"]) && !isset($_SESSION["password"])) {
-            if (isset($user["email"]) && isset($user["password"])) {
-                $entity = SomeoneQuery::create()
-                    ->filterByEmail($user["email"])
-                    ->findOne();
-
-                if ($entity) {
-                    $entity = SomeoneQuery::create()
-                        ->filterByEmail($user["email"])
-                        ->filterByPassword($user["password"])
-                        ->findOne();
-
-                    if ($entity) {
-                        $_SESSION["id"] = PersonQuery::create()
-                            ->filterByEmail($user["email"])
-                            ->select("Person.Id")
-                            ->findOne();
-                        $_SESSION["email"] = $user["email"];
-                        $_SESSION["password"] = $user["password"];
-                        $_SESSION["persist"] = $user["persist"] ? true : false;
-                    } else {
-                        AuthCtrl::destroySession();
-                        throw new RestException(401, "Password");
-                    }
-                } else {
-                    AuthCtrl::destroySession();
-                    throw new RestException(404, "User");
-                }
-            } else {
-                AuthCtrl::destroySession();
-                throw new RestException(400, "No post data");
-            }
+        try {
+            $broker->login($user['username'], $user['password']);
+        } catch (Exception $ex) {
+            throw new RestException(401, "Unauthorized");
         }
     }
 
@@ -120,9 +53,31 @@ class AuthCtrl
      */
     public function logout()
     {
-        AuthCtrl::destroySession();
+        $broker = $this->attach();
 
-        header("Location: /");
-        exit();
+        $broker->logout();
+    }
+
+    /**
+     * @noAuth
+     * @url GET /test
+     */
+    public function getTest()
+    {
+        $broker = $this->attach();
+
+        $user = $broker->getUserInfo();
+
+        echo json_encode($user, JSON_PRETTY_PRINT);
+    }
+
+    /**
+     * @noAuth
+     * @url POST /test
+     */
+    public function postTest()
+    {
+        echo json_encode($_FILES);
+        echo json_encode($_POST);
     }
 }

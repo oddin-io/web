@@ -15,7 +15,8 @@
   },
   "require": {
     "propel/propel": "~2.0@dev",
-    "jacwright/restserver": "dev-master"
+    "jacwright/restserver": "dev-master",
+    "jasny/sso": "^0.1.8"
   },
   "require-dev": {
     "heroku/heroku-buildpack-php": "^87.0"

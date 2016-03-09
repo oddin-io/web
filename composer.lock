@@ -4,9 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "35af26fe2ca2c24456c87236ad2cc147",
-    "content-hash": "250eb0b83b0b764aa7e3cc33afff14fe",
+    "hash": "e0bbd1b664b18bb7a02ad65128535ad6",
+    "content-hash": "72b49eda0b652bca1fbedfda71cabc7e",
     "packages": [
+        {
+            "name": "desarrolla2/cache",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/desarrolla2/Cache.git",
+                "reference": "5a9b1b55cf666328cb3ca161357ccd767225fea0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/desarrolla2/Cache/zipball/5a9b1b55cf666328cb3ca161357ccd767225fea0",
+                "reference": "5a9b1b55cf666328cb3ca161357ccd767225fea0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "predis/predis": "~1.0.0"
+            },
+            "suggest": {
+                "predis/predis": "Predis support"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Desarrolla2\\Cache\\": "src/",
+                    "Desarrolla2\\Test\\Cache\\": "test/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel González",
+                    "homepage": "http://desarrolla2.com/"
+                }
+            ],
+            "description": "Provides an cache interface for several adapters Apc, Apcu, File, Mongo, Memcache, Memcached, Mysql, Mongo, Redis is supported. New adapters is comming!",
+            "homepage": "https://github.com/desarrolla2/Cache/",
+            "keywords": [
+                "apc",
+                "apcu",
+                "cache",
+                "file",
+                "memcache",
+                "memcached",
+                "mongo",
+                "mysql",
+                "redis"
+            ],
+            "time": "2015-11-26 12:29:49"
+        },
         {
             "name": "jacwright/restserver",
             "version": "dev-master",
@@ -56,17 +111,105 @@
             "time": "2016-02-15 20:41:57"
         },
         {
+            "name": "jasny/sso",
+            "version": "v0.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jasny/sso.git",
+                "reference": "4873a00fc14b9cff06c9dab05824fb917bbcfb24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jasny/sso/zipball/4873a00fc14b9cff06c9dab05824fb917bbcfb24",
+                "reference": "4873a00fc14b9cff06c9dab05824fb917bbcfb24",
+                "shasum": ""
+            },
+            "require": {
+                "desarrolla2/cache": "^2.0",
+                "jasny/validation-result": "^0.1.1",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.1",
+                "jasny/php-code-quality": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jasny\\SSO\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arnold Daniels",
+                    "email": "arnold@jasny.net",
+                    "homepage": "http://www.jasny.net"
+                }
+            ],
+            "description": "Simple Single Sign-On",
+            "homepage": "http://www.jasny.net/articles/simple-single-sign-on-for-php/",
+            "keywords": [
+                "SSO",
+                "auth"
+            ],
+            "time": "2015-12-29 14:18:59"
+        },
+        {
+            "name": "jasny/validation-result",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jasny/validation-result.git",
+                "reference": "b8da5d7532c00da94ef328226a05ce27048c8a5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jasny/validation-result/zipball/b8da5d7532c00da94ef328226a05ce27048c8a5b",
+                "reference": "b8da5d7532c00da94ef328226a05ce27048c8a5b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jasny\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arnold Daniels",
+                    "email": "arnold@jasny.net",
+                    "homepage": "http://www.jasny.net"
+                }
+            ],
+            "description": "A result object for validation",
+            "keywords": [
+                "validation"
+            ],
+            "time": "2015-09-10 13:18:29"
+        },
+        {
             "name": "propel/propel",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/propelorm/Propel2.git",
-                "reference": "67696347de254b185bf54f9028e923922df432a5"
+                "reference": "feef0feceba25fa97e5590263b522854e3c32b78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/propelorm/Propel2/zipball/67696347de254b185bf54f9028e923922df432a5",
-                "reference": "67696347de254b185bf54f9028e923922df432a5",
+                "url": "https://api.github.com/repos/propelorm/Propel2/zipball/feef0feceba25fa97e5590263b522854e3c32b78",
+                "reference": "feef0feceba25fa97e5590263b522854e3c32b78",
                 "shasum": ""
             },
             "require": {
@@ -118,7 +261,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2016-02-16 12:09:41"
+            "time": "2016-03-02 20:39:49"
         },
         {
             "name": "psr/log",
@@ -160,21 +303,24 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "8c83ff9a2ffbed1e606bc816db11ddc2385a16ee"
+                "reference": "79a97025f7bf4bbf8352b5df1905aa136a531066"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/8c83ff9a2ffbed1e606bc816db11ddc2385a16ee",
-                "reference": "8c83ff9a2ffbed1e606bc816db11ddc2385a16ee",
+                "url": "https://api.github.com/repos/symfony/config/zipball/79a97025f7bf4bbf8352b5df1905aa136a531066",
+                "reference": "79a97025f7bf4bbf8352b5df1905aa136a531066",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9",
                 "symfony/filesystem": "~2.8|~3.0"
+            },
+            "suggest": {
+                "symfony/yaml": "To use the yaml reference dumper"
             },
             "type": "library",
             "extra": {
@@ -206,20 +352,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-21 09:38:31"
+            "time": "2016-02-23 15:16:06"
         },
         {
             "name": "symfony/console",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "5a02eaadaa285e2bb727eb6bbdfb8201fcd971b0"
+                "reference": "2ed5e2706ce92313d120b8fe50d1063bcfd12e04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/5a02eaadaa285e2bb727eb6bbdfb8201fcd971b0",
-                "reference": "5a02eaadaa285e2bb727eb6bbdfb8201fcd971b0",
+                "url": "https://api.github.com/repos/symfony/console/zipball/2ed5e2706ce92313d120b8fe50d1063bcfd12e04",
+                "reference": "2ed5e2706ce92313d120b8fe50d1063bcfd12e04",
                 "shasum": ""
             },
             "require": {
@@ -266,20 +412,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-02 13:44:19"
+            "time": "2016-02-28 16:24:34"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "064ac12afd2ceb8a2c1bfb7bed8e931c6dd1997f"
+                "reference": "23ae8f9648d0a7fe94a47c8e20e5bf37c489a451"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/064ac12afd2ceb8a2c1bfb7bed8e931c6dd1997f",
-                "reference": "064ac12afd2ceb8a2c1bfb7bed8e931c6dd1997f",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/23ae8f9648d0a7fe94a47c8e20e5bf37c489a451",
+                "reference": "23ae8f9648d0a7fe94a47c8e20e5bf37c489a451",
                 "shasum": ""
             },
             "require": {
@@ -315,11 +461,11 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-27 11:34:55"
+            "time": "2016-02-23 15:16:06"
         },
         {
             "name": "symfony/finder",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -368,7 +514,7 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -427,7 +573,7 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
@@ -491,16 +637,16 @@
         },
         {
             "name": "symfony/validator",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/validator.git",
-                "reference": "eba184e59b60fca0454bc2280494948cc7e30b2f"
+                "reference": "27e163672f3c300924fd6b7661e6a2f92c8781c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/validator/zipball/eba184e59b60fca0454bc2280494948cc7e30b2f",
-                "reference": "eba184e59b60fca0454bc2280494948cc7e30b2f",
+                "url": "https://api.github.com/repos/symfony/validator/zipball/27e163672f3c300924fd6b7661e6a2f92c8781c7",
+                "reference": "27e163672f3c300924fd6b7661e6a2f92c8781c7",
                 "shasum": ""
             },
             "require": {
@@ -515,7 +661,6 @@
                 "symfony/expression-language": "~2.8|~3.0",
                 "symfony/http-foundation": "~2.8|~3.0",
                 "symfony/intl": "~2.8|~3.0",
-                "symfony/property-access": "~2.8|~3.0",
                 "symfony/yaml": "~2.8|~3.0"
             },
             "suggest": {
@@ -559,20 +704,20 @@
             ],
             "description": "Symfony Validator Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-25 09:56:57"
+            "time": "2016-02-26 04:25:31"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "3cf0709d7fe936e97bee9e954382e449003f1d9a"
+                "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/3cf0709d7fe936e97bee9e954382e449003f1d9a",
-                "reference": "3cf0709d7fe936e97bee9e954382e449003f1d9a",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/b5ba64cd67ecd6887f63868fa781ca094bd1377c",
+                "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c",
                 "shasum": ""
             },
             "require": {
@@ -608,7 +753,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-02 13:44:19"
+            "time": "2016-02-23 15:16:06"
         }
     ],
     "packages-dev": [
