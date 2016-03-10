@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html data-ng-app="BossEdu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Prédios</title>
+
+  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/view/css/custom.css" />
+  <link rel="stylesheet" href="/view/css/custom_admin.css"/>
+</head>
+<body data-ng-controller="cadastrarPredioCtrl">
+  <!-- Inicio do cabecalho -->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!--Cabeçalho-->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Mirage</a>
+        </div>
+        <!--Navegação-->
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>&#32;&#32;Usuário <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li><a href="#"><span class="fa fa-institution"></span>&#32;Eventos</a></li>
+            <li><a href="#"><span class="fa fa-book"></span>&#32;Palestras</a></li>
+            <li><a href="#"><span class="fa fa-user"></span>&#32;Usuários</a></li>
+            <li class="active"><a href="#"><span class="fa fa-building"></span>&#32;Prédios</a></li>
+            <li><a href="#"><span class="fa fa-clock-o"></span>&#32;Horários</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- -->
+    </nav>
+    <!-- fim Navbar -->    
+  </header>
+
+  <main>
+    <div class="container admin-padding-top">
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="admin_info admin_box">
+            <h4>Info</h4>
+            <ul class="info-list">
+              <li>{{predios.length}} prédios cadastrados</li>
+              <li>x prédios não possuem palestras associadas</li>
+              <li>Lorem ipsum dolor sit amet, consectetur</li>
+              <li>teste</li>
+            </ul>
+          </div>
+          <div class="predio_form admin_box">
+            <h4>Cadastrar novo prédio</h4>
+            <form data-ng-submit="cadastrarPredio(predio)">
+              <div class="form-group">
+                <label for="codigo-predio" class="control-label">Código</label>                
+                 <input type="text" class="form-control" data-ng-model="predio.codigo" id="codigo-predio" placeholder="Insira o código do prédio">                
+              </div>
+
+              <div class="form-group">
+                <label for="descricao-predio" class="control-label">Descrição</label>
+                <input type="text" class="form-control" data-ng-model="predio.descricao" id="descricao-predio" placeholder="Insira a descrição do prédio">             
+              </div>              
+
+              <div class="form-group">                
+                  <button type="submit" class="custom-button-sm">Cadastrar</button>                
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-sm-7">
+          <div class="predios_lista_predios admin_box">
+            <h4>Prédios</h4>
+            <form>   
+              <div class="input-group">
+               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
+                <input type="search" class="form-control" id="busca-predio" placeholder="Buscar prédio por código">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                  </span>                
+              </div>
+            </form>  
+            <ul class="list-group custom-list-group list-group-box">     
+              <li class="list-group-item clearfix" data-ng-repeat="predio in predios">
+                <a href="#"><span class="fa fa-building"></span>&#32;{{predio.codigo}}</a>
+                <div class="custom-list-options">
+                  <span data-ng-class="{'fa fa-circle-o': predio.status == 0, 'fa fa-circle': predio.status == 1}">
+                  </span>      
+                  <button class="btn-edit-list" data-ng-click="editarPredio(predio)" data-toggle="modal" data-target="#modal-edita-predio"><span class="fa fa-edit"></span></button>                
+                  <button class="btn-remove-list" data-ng-click="editarPredio(predio)" data-toggle="modal" data-target="#modal-deleta-predio"><span class="fa fa-close"></span></button>
+                </div>
+              </li>
+            </ul>            
+          </div>
+        </div>
+      </div>      
+    </div>
+
+    <!-- Modal de edição de evento -->
+    <div class="modal fade" id="modal-edita-predio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabelUpload">Editar {{modalData.codigo}}</h4>
+          </div>          
+          <div class="modal-footer">
+            <div class="upload-form">
+              <form data-ng-submit="atualizarPredio(modalData)">
+                <div class="form-group">
+                  <label for="codigo-predio" class="control-label">Código</label>                
+                   <input type="text" class="form-control" id="codigo-predio" data-ng-model="modalData.codigo">                
+                </div>
+
+                <div class="form-group">
+                  <label for="descricao-predio" class="control-label">Descrição</label>
+                  <input type="text" class="form-control" id="descricao-predio" data-ng-model="modalData.descricao">          
+                </div>                
+
+                <div class="form-group">                
+                    <button type="submit" class="custom-button-sm" data-toggle="modal" data-target="#modal-confirma-edicao" data-dismiss="modal">Atualizar</button>                
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+
+     <!-- Modal de confirmação de edição-->
+    <div class="modal fade" id="modal-confirma-edicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="fa fa-check-circle"></span>&#32;Prédio atualizado com sucesso!               
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+
+    <!-- Modal de remoção de evento -->
+    <div class="modal fade" id="modal-deleta-predio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabelUpload">Deletar {{predio.codigo}}</h4>
+          </div>          
+          <div class="modal-footer">
+            <div class="upload-form">
+              <form data-ng-submit="deletarPredio(modalData)">
+                <div class="form-group">
+                  <label for="codigo-predio" class="control-label">Código</label>                
+                   <input type="text" class="form-control" id="codigo-predio" data-ng-model="modalData.codigo" disabled>              
+                </div>
+
+                <div class="form-group">
+                  <label for="descricao-predio" class="control-label">Descrição</label>
+                  <input type="text" class="form-control" id="descricao-predio" data-ng-model="modalData.descricao" disabled>         
+                </div>  
+
+                <div class="form-group cancel-confirm">   
+                  <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="deletarPredio(modalData)" data-toggle="modal" data-target="#modal-confirma-remocao" data-dismiss="modal">Confirmar
+                  </button> 
+                  <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button> 
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+
+    <!-- Modal de confirmação de remoção-->
+    <div class="modal fade" id="modal-confirma-remocao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="fa fa-check-circle"></span>&#32;Prédio removido com sucesso!               
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+    
+  </main>
+
+  <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script> 
+  <script src="../js/script-admin.js"></script> 
+
+   <!-- AngularJS Scripts -->
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/js/app.js"></script>
+  <script src="/view/js/controller/cadastrarPredioCtrl.js"></script>
+</body>
+</html>

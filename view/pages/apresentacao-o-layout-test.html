@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html data-ng-app="BossEdu" data-ng-controller="presentationCtrl">
+<html data-ng-app="BossEdu" data-ng-controller="presentationCtrlTest">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -63,8 +63,8 @@
             <!--Cabeçalho da Pergunta-->
             <div class="doubt__header">
               <div class="row">
-                <div class="col-md-4 col-sm-6"><h4 class="doubt__pessoa">{{doubt.person.name}}</h4></div>
-                <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="doubt__time">{{doubt.createdat}}</h4></div>
+                <div class="col-md-4 col-sm-6"><h4 class="doubt__pessoa">{{doubt.personName}}</h4></div>
+                <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="doubt__time">{{doubt.dataHora}}</h4></div>
               </div>
             </div>
             <!--Conteúdo da Pergunta -->
@@ -81,8 +81,8 @@
                   <span class="resposta-btn-icon glyphicon glyphicon-comment"></span>
                   <span class="icon_label hidden-xs">Resposta</span>
                 </button>
-              </div> 
-              
+              </div>
+              <!-- SUBSTITUIR POR ESSE -->
               <div class="doubt__interactive" id="curtir" data-ng-class="{interactive_checked: doubt.like}">
                 <a href="#" data-ng-click="likeDoubt(doubt)">
                   <span class="glyphicon glyphicon-thumbs-up"></span>
@@ -90,14 +90,13 @@
                 </a>
                 <span class="badge">{{doubt.likes}}</span>
               </div>
-              
+              <!-- -->
             </div>
           </div>
         </div>
-        <!--Fim da Pergunta-->
-        
-        <!--Resposta--> 
-        <!--             
+        <!--Fim da Pergunta-->        
+
+        <!--Resposta-->              
         <div class = "col-md-offset-2 col-md-8">
           <div id="resposta" class="resposta animated fadeIn" style="display: none">
             <div class="resposta__header">
@@ -143,9 +142,7 @@
             </div>
           </div>
         </div>
-        -->
         <!--Fim da Resposta-->
-
       </div>
       <!-- Fim da dúvida -->
     </div>
@@ -188,11 +185,12 @@
   <script src="/view/assets/socket.io-client/socket.io.js"></script>
 
   <script src="/view/js/utils.js"></script>
+  <script src="/view/js/ver-resposta.js"></script>
   <script type="application/javascript" src="/configuration.jsonp"></script>
 
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
   <script src="/view/js/filter/orderObjectBy.js"></script>
-  <script src="/view/js/controller/presentationCtrl.js"></script>
+  <script src="/view/js/controller/presentationCtrlTest.js"></script>
 </body>
 </html>

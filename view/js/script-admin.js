@@ -47,6 +47,20 @@
 	$(".tabela-horarios table").css("height", tabela_horarios_box_size);		
 })();
 
+(function() {	
+	var tabela_horarios_cadastrados_box_size = $(".admin_info").outerHeight() + $(".horario_form").outerHeight() + parseInt($(".admin_info").css("margin-bottom"),10);	
+	$(".tabela-horarios-cadastrados-box").css("height", tabela_horarios_cadastrados_box_size);	
+	$(".tabela-horarios-cadastrados").css("height", tabela_horarios_cadastrados_box_size - 125);
+	//$(".tabela-horarios-cadastrados table").css("height", tabela_horarios_cadastrados_box_size);		
+})();
+
+(function() {	
+	var tabela_horarios_disponiveis_box_size = $(".admin_info").outerHeight() + $(".disponibilidade-box").outerHeight() + parseInt($(".admin_info").css("margin-bottom"),10);	
+	$(".tabela-horarios-disponiveis-box").css("height", tabela_horarios_disponiveis_box_size);	
+	$(".tabela-horarios-disponiveis").css("height", tabela_horarios_disponiveis_box_size - 125);
+	//$(".tabela-horarios-cadastrados table").css("height", tabela_horarios_cadastrados_box_size);		
+})();
+
 (function() {
 	var atribuicao_lista_alunos_size = $(".atribuicao_lista_professores").outerHeight();
 	$(".atribuicao_lista_alunos").css("height", atribuicao_lista_alunos_size);
@@ -62,6 +76,18 @@
 	var palestra_palestra_eventos_size = $(".palestra_info").outerHeight();
 	$(".palestra_palestra_eventos").css("height", palestra_palestra_eventos_size);
 	$(".palestra_palestra_eventos .list-group").css("height", palestra_palestra_eventos_size - 145);
+})();
+
+(function() {
+	var predios_lista_predios_size = $(".predio_form").outerHeight() + $(".admin_info").outerHeight() + parseInt($(".admin_info").css("margin-bottom"),10);
+	$(".predios_lista_predios").css("height", predios_lista_predios_size);
+	$(".predios_lista_predios .list-group").css("height", predios_lista_predios_size - 145);
+})();
+
+(function() {
+	var predio_lista_salas_size = $(".sala_form").outerHeight() + $(".admin_info").outerHeight() + parseInt($(".admin_info").css("margin-bottom"),10);
+	$(".predio_lista_salas").css("height", predio_lista_salas_size);
+	$(".predio_lista_salas .list-group").css("height", predio_lista_salas_size - 145);
 })();
 
 

@@ -134,13 +134,13 @@
 	} 
 
 /*Customiza cores do status da palestra */
-	.fa-lock {
-		color: #d24;
+	.fa-circle-o {
+		color: #999;
 		margin-right: 8px;
 	}
 
-	.fa-unlock-alt {
-		color: #492;
+	.fa-circle {
+		color: #999;
 		margin-right: 8px;
 	}
 
@@ -232,26 +232,51 @@ hr {
 }
 
 /*======================*/
-.tabela-horarios-box table {
+.tabela-horarios-box table, .tabela-horarios-cadastrados-box table, .disponibilidade-box table, .tabela-horarios-disponiveis-box table{
 	font-size: 0.83em;
 	margin-bottom: 0px;	
 	/*overflow:auto;*/
 }
 
-
-.tabela-horarios-box table td, .tabela-horarios table th{
+.tabela-horarios-box table td, .tabela-horarios table th, .disponibilidade-box table td, .disponibilidade-horarios table th {
 	padding: 5px;		
 }
 
-.tabela-horarios-box table button {		
+.tabela-horarios-box table button, .tabela-horarios-cadastrados-box table button, .tabela-horarios-disponiveis-box table button{		
 	float: right;
 }
 
-.tabela-horarios-custom {
+.tabela-horarios-cadastrados-box table td, .tabela-horarios-disponiveis-box table td {
+	padding: 0;
+}
+
+.tabela-horarios-cadastrados .table>tbody>tr>td, .tabela-horarios-disponiveis .table>tbody>tr>td{
+	padding: 0;
+}
+
+.tabela-horarios-cadastrados .table>tbody>tr>td .list-group-item, .tabela-horarios-disponiveis .table>tbody>tr>td .list-group-item{
+	border: 0 1px 0 0 solid #eee;	
+	border-radius: 0;
+}
+
+.tabela-horarios-cadastrados .table>tbody>tr>td .list-group, .tabela-horarios-disponiveis .table>tbody>tr>td .list-group{
 	margin-bottom: 0;
 }
 
-.tabela-horarios {
+
+.tabela-horarios-cadastrados .btn-remove-list, .tabela-horarios-disponiveis .btn-remove-list {
+	display: block;
+	text-align: center;
+	margin: 0 auto;
+	float: none;
+}
+
+
+/*.tabela-horarios-custom {
+	margin-bottom: 0;
+}*/
+
+.tabela-horarios, .tabela-horarios-cadastrados, .tabela-horarios-disponiveis {
 	margin-bottom: 20px;
 	overflow: auto;
 }
@@ -347,7 +372,19 @@ hr {
 
 	.palestra_palestra_eventos .list-group, .atribuicao_lista_professores .list-group {
 		height: 232px;
+	}
+
+	.disponibilidade-box {
+		height: 360px;
 	}	
+
+	.disponibilidade-horarios {
+		height: 235px;
+	}
+
+	.fa-plus-square {
+		font-size: 1.4em;
+	}
 
 	
 

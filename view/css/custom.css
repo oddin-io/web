@@ -285,6 +285,35 @@ ul {
   padding: 0;
   border: none;
 }
+
+.doubt__interactive a {  
+  color: #555;
+}
+
+.doubt__interactive a:link {  
+  text-decoration: none;  
+}
+
+.doubt__interactive a:hover {
+  color: #111;
+}
+
+.doubt__interactive button:hover {
+  color: #111;
+  text-decoration: none;
+}
+
+.resposta {
+  padding-bottom: 15px;
+}
+
+.btn-entendi {
+  color: #229911;
+}
+
+.btn-resp-fechada {
+  color: #992211;
+}
     /*---Parte fixa - Formulário de pergunta*/
 
 .fixed {

@@ -55,7 +55,7 @@
           <div class="admin_info admin_box">
             <h4>Palestra X em Evento Y</h4>
             <ul class="info-list">
-              <li>x Turmas</li>
+              <li>{{turmas.length}} turmas cadastradas</li>
               <li>Lorem isum dolor sit</li>
               <li>Lorem ipsum dolor sit amet, consectetur</li>
               <li>teste</li>
@@ -104,7 +104,7 @@
                   <span class="glyphicon glyphicon-blackboard"></span>&#32;{{turma.id}} - {{turma.nome}}
                 </a>
                 <div class="custom-list-options">
-                  <span data-ng-class="{'fa fa-unlock-alt': turma.status == 0, 'fa fa-lock': turma.status == 1}">
+                  <span data-ng-class="{'fa fa-circle-o': turma.status == 0, 'fa fa-circle': turma.status == 1}">
                   </span>             
                   <button class="btn-edit-list" data-ng-click="editarTurma(turma)" data-toggle="modal" data-target="#modal-edita-turma"><span class="fa fa-edit"></span></button>                
                   <button class="btn-remove-list" data-ng-click="editarTurma(turma)" data-toggle="modal" data-target="#modal-deleta-turma"><span class="fa fa-close"></span></button>
@@ -126,7 +126,7 @@
         </div>          
         <div class="modal-footer">
           <div class="upload-form">
-            <form data-ng-submit="atualizarTurma(modalData)">
+            <form data-ng-submit="deletarTurma(modalData)">
               <div class="form-group">
                 <label for="id-turma" class="control-label">ID</label>                
                 <input type="text" class="form-control" id="id-turma" data-ng-model="modalData.id" disabled>               
@@ -215,7 +215,7 @@
     </div>
     <!-- -->
 
-    <!-- Modal de confirmação de remoção-->
+    <!-- Modal de confirmação de edição-->
     <div class="modal fade" id="modal-confirma-edicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
