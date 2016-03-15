@@ -3,20 +3,19 @@ app.controller("loginCtrl", function ($scope, $http) {
   $http.defaults.headers.post["Content-Type"] = "text/plain";
 
   $scope.login = function (user) {
-    $http.post(restServerUrl + "/controller/login", user)
+    $http.post("/controller/login", user)
       .success(function (data, status) {
         $http.post("/controller/login", user)
           .success(function (data, status) {
-            location.pathname = "/app/instruction";
-            location.replace();
+            $http.post(restServerUrl + "/controller/login", user)
+              .success(function (data, status) {
+                location.pathname = "/app/instruction";
+                location.replace();
+              });
           });
       })
       .error(function (response, status) {
-        if (status == 404) {
-          $scope.message = "Usuário inexistente";
-        } else if (status == 401) {
-          $scope.message = "Senha incorreta";
-        }
+          $scope.message = "Credenciais incorretas";
       });
   };
 
