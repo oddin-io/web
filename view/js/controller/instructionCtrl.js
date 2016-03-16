@@ -8,7 +8,8 @@ app.controller("instructionCtrl", function ($scope, $http) {
   })();
 
   var restServerUrl = window.config.urls["rest-server"];
-  $http.defaults.headers.post["Content-Type"] = "text/plain";
+  $http.defaults.headers.common["Content-Type"] = "text/plain";
+  $http.defaults.headers.common["X-Auth-Token"] = getCookie("sso_client_token");
 
   $scope.buildURI = function (instruction, prefix, sufix) {
     return prefix + "/instruction/" + instruction.id + sufix;

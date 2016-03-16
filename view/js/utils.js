@@ -17,4 +17,10 @@
   root.addVariable = function (obj, propName) {
     window[propName] = window[propName] || obj;
   };
+
+  root.getCookie = function (name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+  }
 })(window);

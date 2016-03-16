@@ -45,6 +45,9 @@ class AuthCtrl
         try {
             $loggedClient->logout();
             self::deleteCookie();
+
+            header("Location: /");
+            exit();
         } catch (\Exception $ex) {
             throw new RestException(401, $ex->getMessage());
         }
