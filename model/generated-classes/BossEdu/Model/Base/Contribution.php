@@ -95,7 +95,7 @@ abstract class Contribution implements ActiveRecordInterface
     /**
      * The value for the created_at field.
      * 
-     * Note: this column has a database default value of: '2016-02-10 03:52:19'
+     * Note: this column has a database default value of: '2016-03-09 18:50:28'
      * @var        \DateTime
      */
     protected $created_at;
@@ -163,7 +163,7 @@ abstract class Contribution implements ActiveRecordInterface
     public function applyDefaultValues()
     {
         $this->status = 0;
-        $this->created_at = PropelDateTime::newInstance('2016-02-10 03:52:19', null, 'DateTime');
+        $this->created_at = PropelDateTime::newInstance('2016-03-09 18:50:28', null, 'DateTime');
         $this->anonymous = false;
         $this->doubt_id = 0;
         $this->person_id = 0;
@@ -558,7 +558,7 @@ abstract class Contribution implements ActiveRecordInterface
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->created_at !== null || $dt !== null) {
             if ( ($dt != $this->created_at) // normalized values don't match
-                || ($dt->format('Y-m-d H:i:s') === '2016-02-10 03:52:19') // or the entered value matches the default
+                || ($dt->format('Y-m-d H:i:s') === '2016-03-09 18:50:28') // or the entered value matches the default
                  ) {
                 $this->created_at = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[ContributionTableMap::COL_CREATED_AT] = true;
@@ -658,7 +658,7 @@ abstract class Contribution implements ActiveRecordInterface
                 return false;
             }
 
-            if ($this->created_at && $this->created_at->format('Y-m-d H:i:s') !== '2016-02-10 03:52:19') {
+            if ($this->created_at && $this->created_at->format('Y-m-d H:i:s') !== '2016-03-09 18:50:28') {
                 return false;
             }
 

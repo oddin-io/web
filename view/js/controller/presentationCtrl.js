@@ -8,6 +8,7 @@ app.controller("presentationCtrl", function ($scope, $http) {
 
   var restServerUrl = window.config.urls["rest-server"];
   $http.defaults.headers.post["Content-Type"] = "text/plain";
+  $http.defaults.headers.common["X-Auth-Token"] = getCookie("sso_client_token");
 
   var socket = io(window.config.urls["socket"]);
   socket.on("new doubt", function (data) {

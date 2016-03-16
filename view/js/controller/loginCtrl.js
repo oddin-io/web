@@ -1,27 +1,21 @@
 app.controller("loginCtrl", function ($scope, $http) {
   var restServerUrl = window.config.urls["rest-server"];
   $http.defaults.headers.post["Content-Type"] = "text/plain";
+  $http.defaults.headers.common["X-Auth-Token"] = getCookie("sso_client_token");
 
   $scope.login = function (user) {
-    $http.post(restServerUrl + "/controller/login", user)
+    $http.post("/controller/login", user)
       .success(function (data, status) {
-        $http.post("/controller/login", user)
-          .success(function (data, status) {
-            location.pathname = "/app/instruction";
-            location.replace();
-          });
+        location.pathname = "/app/instruction";
+        location.replace();
       })
       .error(function (response, status) {
-        if (status == 404) {
-          $scope.message = "Usuário inexistente";
-        } else if (status == 401) {
-          $scope.message = "Senha incorreta";
-        }
+          $scope.message = "Credenciais incorretas";
       });
   };
 
   $scope.logout = function () {
-    $http.get(restServerUrl + "/controller/logout").success(function (data) {
+    $http.get("/controller/logout").success(function (data) {
       location.pathname = "/";
       location.replace();
     });

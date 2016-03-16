@@ -59,7 +59,7 @@ class PersonTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 14;
+    const NUM_COLUMNS = 13;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PersonTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 14;
+    const NUM_HYDRATE_COLUMNS = 13;
 
     /**
      * the column name for the id field
@@ -132,11 +132,6 @@ class PersonTableMap extends TableMap
     const COL_NUMBER = 'person.number';
 
     /**
-     * the column name for the current_instruction field
-     */
-    const COL_CURRENT_INSTRUCTION = 'person.current_instruction';
-
-    /**
      * the column name for the email field
      */
     const COL_EMAIL = 'person.email';
@@ -153,11 +148,11 @@ class PersonTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'DocumentName', 'DocumentNumber', 'Name', 'BirthDate', 'Telephone', 'Country', 'State', 'Town', 'District', 'Street', 'Number', 'CurrentInstruction', 'Email', ),
-        self::TYPE_CAMELNAME     => array('id', 'documentName', 'documentNumber', 'name', 'birthDate', 'telephone', 'country', 'state', 'town', 'district', 'street', 'number', 'currentInstruction', 'email', ),
-        self::TYPE_COLNAME       => array(PersonTableMap::COL_ID, PersonTableMap::COL_DOCUMENT_NAME, PersonTableMap::COL_DOCUMENT_NUMBER, PersonTableMap::COL_NAME, PersonTableMap::COL_BIRTH_DATE, PersonTableMap::COL_TELEPHONE, PersonTableMap::COL_COUNTRY, PersonTableMap::COL_STATE, PersonTableMap::COL_TOWN, PersonTableMap::COL_DISTRICT, PersonTableMap::COL_STREET, PersonTableMap::COL_NUMBER, PersonTableMap::COL_CURRENT_INSTRUCTION, PersonTableMap::COL_EMAIL, ),
-        self::TYPE_FIELDNAME     => array('id', 'document_name', 'document_number', 'name', 'birth_date', 'telephone', 'country', 'state', 'town', 'district', 'street', 'number', 'current_instruction', 'email', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+        self::TYPE_PHPNAME       => array('Id', 'DocumentName', 'DocumentNumber', 'Name', 'BirthDate', 'Telephone', 'Country', 'State', 'Town', 'District', 'Street', 'Number', 'Email', ),
+        self::TYPE_CAMELNAME     => array('id', 'documentName', 'documentNumber', 'name', 'birthDate', 'telephone', 'country', 'state', 'town', 'district', 'street', 'number', 'email', ),
+        self::TYPE_COLNAME       => array(PersonTableMap::COL_ID, PersonTableMap::COL_DOCUMENT_NAME, PersonTableMap::COL_DOCUMENT_NUMBER, PersonTableMap::COL_NAME, PersonTableMap::COL_BIRTH_DATE, PersonTableMap::COL_TELEPHONE, PersonTableMap::COL_COUNTRY, PersonTableMap::COL_STATE, PersonTableMap::COL_TOWN, PersonTableMap::COL_DISTRICT, PersonTableMap::COL_STREET, PersonTableMap::COL_NUMBER, PersonTableMap::COL_EMAIL, ),
+        self::TYPE_FIELDNAME     => array('id', 'document_name', 'document_number', 'name', 'birth_date', 'telephone', 'country', 'state', 'town', 'district', 'street', 'number', 'email', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
     );
 
     /**
@@ -167,11 +162,11 @@ class PersonTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'DocumentName' => 1, 'DocumentNumber' => 2, 'Name' => 3, 'BirthDate' => 4, 'Telephone' => 5, 'Country' => 6, 'State' => 7, 'Town' => 8, 'District' => 9, 'Street' => 10, 'Number' => 11, 'CurrentInstruction' => 12, 'Email' => 13, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'documentName' => 1, 'documentNumber' => 2, 'name' => 3, 'birthDate' => 4, 'telephone' => 5, 'country' => 6, 'state' => 7, 'town' => 8, 'district' => 9, 'street' => 10, 'number' => 11, 'currentInstruction' => 12, 'email' => 13, ),
-        self::TYPE_COLNAME       => array(PersonTableMap::COL_ID => 0, PersonTableMap::COL_DOCUMENT_NAME => 1, PersonTableMap::COL_DOCUMENT_NUMBER => 2, PersonTableMap::COL_NAME => 3, PersonTableMap::COL_BIRTH_DATE => 4, PersonTableMap::COL_TELEPHONE => 5, PersonTableMap::COL_COUNTRY => 6, PersonTableMap::COL_STATE => 7, PersonTableMap::COL_TOWN => 8, PersonTableMap::COL_DISTRICT => 9, PersonTableMap::COL_STREET => 10, PersonTableMap::COL_NUMBER => 11, PersonTableMap::COL_CURRENT_INSTRUCTION => 12, PersonTableMap::COL_EMAIL => 13, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'document_name' => 1, 'document_number' => 2, 'name' => 3, 'birth_date' => 4, 'telephone' => 5, 'country' => 6, 'state' => 7, 'town' => 8, 'district' => 9, 'street' => 10, 'number' => 11, 'current_instruction' => 12, 'email' => 13, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'DocumentName' => 1, 'DocumentNumber' => 2, 'Name' => 3, 'BirthDate' => 4, 'Telephone' => 5, 'Country' => 6, 'State' => 7, 'Town' => 8, 'District' => 9, 'Street' => 10, 'Number' => 11, 'Email' => 12, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'documentName' => 1, 'documentNumber' => 2, 'name' => 3, 'birthDate' => 4, 'telephone' => 5, 'country' => 6, 'state' => 7, 'town' => 8, 'district' => 9, 'street' => 10, 'number' => 11, 'email' => 12, ),
+        self::TYPE_COLNAME       => array(PersonTableMap::COL_ID => 0, PersonTableMap::COL_DOCUMENT_NAME => 1, PersonTableMap::COL_DOCUMENT_NUMBER => 2, PersonTableMap::COL_NAME => 3, PersonTableMap::COL_BIRTH_DATE => 4, PersonTableMap::COL_TELEPHONE => 5, PersonTableMap::COL_COUNTRY => 6, PersonTableMap::COL_STATE => 7, PersonTableMap::COL_TOWN => 8, PersonTableMap::COL_DISTRICT => 9, PersonTableMap::COL_STREET => 10, PersonTableMap::COL_NUMBER => 11, PersonTableMap::COL_EMAIL => 12, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'document_name' => 1, 'document_number' => 2, 'name' => 3, 'birth_date' => 4, 'telephone' => 5, 'country' => 6, 'state' => 7, 'town' => 8, 'district' => 9, 'street' => 10, 'number' => 11, 'email' => 12, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
     );
 
     /**
@@ -204,7 +199,6 @@ class PersonTableMap extends TableMap
         $this->addColumn('district', 'District', 'VARCHAR', false, 100, null);
         $this->addColumn('street', 'Street', 'VARCHAR', false, 100, null);
         $this->addColumn('number', 'Number', 'VARCHAR', false, 10, null);
-        $this->addForeignKey('current_instruction', 'CurrentInstruction', 'INTEGER', 'instruction', 'id', false, null, null);
         $this->addForeignKey('email', 'Email', 'VARCHAR', 'someone', 'email', true, 100, null);
     } // initialize()
 
@@ -218,13 +212,6 @@ class PersonTableMap extends TableMap
   array (
     0 => ':email',
     1 => ':email',
-  ),
-), null, null, null, false);
-        $this->addRelation('Instruction', '\\BossEdu\\Model\\Instruction', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':current_instruction',
-    1 => ':id',
   ),
 ), null, null, null, false);
         $this->addRelation('PiLink', '\\BossEdu\\Model\\PiLink', RelationMap::ONE_TO_MANY, array (
@@ -417,7 +404,6 @@ class PersonTableMap extends TableMap
             $criteria->addSelectColumn(PersonTableMap::COL_DISTRICT);
             $criteria->addSelectColumn(PersonTableMap::COL_STREET);
             $criteria->addSelectColumn(PersonTableMap::COL_NUMBER);
-            $criteria->addSelectColumn(PersonTableMap::COL_CURRENT_INSTRUCTION);
             $criteria->addSelectColumn(PersonTableMap::COL_EMAIL);
         } else {
             $criteria->addSelectColumn($alias . '.id');
@@ -432,7 +418,6 @@ class PersonTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.district');
             $criteria->addSelectColumn($alias . '.street');
             $criteria->addSelectColumn($alias . '.number');
-            $criteria->addSelectColumn($alias . '.current_instruction');
             $criteria->addSelectColumn($alias . '.email');
         }
     }

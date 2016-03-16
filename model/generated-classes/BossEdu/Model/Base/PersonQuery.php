@@ -32,7 +32,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersonQuery orderByDistrict($order = Criteria::ASC) Order by the district column
  * @method     ChildPersonQuery orderByStreet($order = Criteria::ASC) Order by the street column
  * @method     ChildPersonQuery orderByNumber($order = Criteria::ASC) Order by the number column
- * @method     ChildPersonQuery orderByCurrentInstruction($order = Criteria::ASC) Order by the current_instruction column
  * @method     ChildPersonQuery orderByEmail($order = Criteria::ASC) Order by the email column
  *
  * @method     ChildPersonQuery groupById() Group by the id column
@@ -47,7 +46,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersonQuery groupByDistrict() Group by the district column
  * @method     ChildPersonQuery groupByStreet() Group by the street column
  * @method     ChildPersonQuery groupByNumber() Group by the number column
- * @method     ChildPersonQuery groupByCurrentInstruction() Group by the current_instruction column
  * @method     ChildPersonQuery groupByEmail() Group by the email column
  *
  * @method     ChildPersonQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
@@ -67,16 +65,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersonQuery leftJoinWithSomeone() Adds a LEFT JOIN clause and with to the query using the Someone relation
  * @method     ChildPersonQuery rightJoinWithSomeone() Adds a RIGHT JOIN clause and with to the query using the Someone relation
  * @method     ChildPersonQuery innerJoinWithSomeone() Adds a INNER JOIN clause and with to the query using the Someone relation
- *
- * @method     ChildPersonQuery leftJoinInstruction($relationAlias = null) Adds a LEFT JOIN clause to the query using the Instruction relation
- * @method     ChildPersonQuery rightJoinInstruction($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Instruction relation
- * @method     ChildPersonQuery innerJoinInstruction($relationAlias = null) Adds a INNER JOIN clause to the query using the Instruction relation
- *
- * @method     ChildPersonQuery joinWithInstruction($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Instruction relation
- *
- * @method     ChildPersonQuery leftJoinWithInstruction() Adds a LEFT JOIN clause and with to the query using the Instruction relation
- * @method     ChildPersonQuery rightJoinWithInstruction() Adds a RIGHT JOIN clause and with to the query using the Instruction relation
- * @method     ChildPersonQuery innerJoinWithInstruction() Adds a INNER JOIN clause and with to the query using the Instruction relation
  *
  * @method     ChildPersonQuery leftJoinPiLink($relationAlias = null) Adds a LEFT JOIN clause to the query using the PiLink relation
  * @method     ChildPersonQuery rightJoinPiLink($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PiLink relation
@@ -128,7 +116,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersonQuery rightJoinWithContribution() Adds a RIGHT JOIN clause and with to the query using the Contribution relation
  * @method     ChildPersonQuery innerJoinWithContribution() Adds a INNER JOIN clause and with to the query using the Contribution relation
  *
- * @method     \BossEdu\Model\SomeoneQuery|\BossEdu\Model\InstructionQuery|\BossEdu\Model\PiLinkQuery|\BossEdu\Model\PresentationQuery|\BossEdu\Model\DoubtQuery|\BossEdu\Model\PdLikeQuery|\BossEdu\Model\ContributionQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \BossEdu\Model\SomeoneQuery|\BossEdu\Model\PiLinkQuery|\BossEdu\Model\PresentationQuery|\BossEdu\Model\DoubtQuery|\BossEdu\Model\PdLikeQuery|\BossEdu\Model\ContributionQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildPerson findOne(ConnectionInterface $con = null) Return the first ChildPerson matching the query
  * @method     ChildPerson findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPerson matching the query, or a new ChildPerson object populated from the query conditions when no match is found
@@ -145,7 +133,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPerson findOneByDistrict(string $district) Return the first ChildPerson filtered by the district column
  * @method     ChildPerson findOneByStreet(string $street) Return the first ChildPerson filtered by the street column
  * @method     ChildPerson findOneByNumber(string $number) Return the first ChildPerson filtered by the number column
- * @method     ChildPerson findOneByCurrentInstruction(int $current_instruction) Return the first ChildPerson filtered by the current_instruction column
  * @method     ChildPerson findOneByEmail(string $email) Return the first ChildPerson filtered by the email column *
 
  * @method     ChildPerson requirePk($key, ConnectionInterface $con = null) Return the ChildPerson by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -163,7 +150,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPerson requireOneByDistrict(string $district) Return the first ChildPerson filtered by the district column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPerson requireOneByStreet(string $street) Return the first ChildPerson filtered by the street column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPerson requireOneByNumber(string $number) Return the first ChildPerson filtered by the number column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPerson requireOneByCurrentInstruction(int $current_instruction) Return the first ChildPerson filtered by the current_instruction column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPerson requireOneByEmail(string $email) Return the first ChildPerson filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildPerson[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPerson objects based on current ModelCriteria
@@ -179,7 +165,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPerson[]|ObjectCollection findByDistrict(string $district) Return ChildPerson objects filtered by the district column
  * @method     ChildPerson[]|ObjectCollection findByStreet(string $street) Return ChildPerson objects filtered by the street column
  * @method     ChildPerson[]|ObjectCollection findByNumber(string $number) Return ChildPerson objects filtered by the number column
- * @method     ChildPerson[]|ObjectCollection findByCurrentInstruction(int $current_instruction) Return ChildPerson objects filtered by the current_instruction column
  * @method     ChildPerson[]|ObjectCollection findByEmail(string $email) Return ChildPerson objects filtered by the email column
  * @method     ChildPerson[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
@@ -273,7 +258,7 @@ abstract class PersonQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, document_name, document_number, name, birth_date, telephone, country, state, town, district, street, number, current_instruction, email FROM person WHERE id = :p0';
+        $sql = 'SELECT id, document_name, document_number, name, birth_date, telephone, country, state, town, district, street, number, email FROM person WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -738,49 +723,6 @@ abstract class PersonQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the current_instruction column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByCurrentInstruction(1234); // WHERE current_instruction = 1234
-     * $query->filterByCurrentInstruction(array(12, 34)); // WHERE current_instruction IN (12, 34)
-     * $query->filterByCurrentInstruction(array('min' => 12)); // WHERE current_instruction > 12
-     * </code>
-     *
-     * @see       filterByInstruction()
-     *
-     * @param     mixed $currentInstruction The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildPersonQuery The current query, for fluid interface
-     */
-    public function filterByCurrentInstruction($currentInstruction = null, $comparison = null)
-    {
-        if (is_array($currentInstruction)) {
-            $useMinMax = false;
-            if (isset($currentInstruction['min'])) {
-                $this->addUsingAlias(PersonTableMap::COL_CURRENT_INSTRUCTION, $currentInstruction['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($currentInstruction['max'])) {
-                $this->addUsingAlias(PersonTableMap::COL_CURRENT_INSTRUCTION, $currentInstruction['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(PersonTableMap::COL_CURRENT_INSTRUCTION, $currentInstruction, $comparison);
-    }
-
-    /**
      * Filter the query on the email column
      *
      * Example usage:
@@ -884,83 +826,6 @@ abstract class PersonQuery extends ModelCriteria
         return $this
             ->joinSomeone($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Someone', '\BossEdu\Model\SomeoneQuery');
-    }
-
-    /**
-     * Filter the query by a related \BossEdu\Model\Instruction object
-     *
-     * @param \BossEdu\Model\Instruction|ObjectCollection $instruction The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildPersonQuery The current query, for fluid interface
-     */
-    public function filterByInstruction($instruction, $comparison = null)
-    {
-        if ($instruction instanceof \BossEdu\Model\Instruction) {
-            return $this
-                ->addUsingAlias(PersonTableMap::COL_CURRENT_INSTRUCTION, $instruction->getId(), $comparison);
-        } elseif ($instruction instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(PersonTableMap::COL_CURRENT_INSTRUCTION, $instruction->toKeyValue('PrimaryKey', 'Id'), $comparison);
-        } else {
-            throw new PropelException('filterByInstruction() only accepts arguments of type \BossEdu\Model\Instruction or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Instruction relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildPersonQuery The current query, for fluid interface
-     */
-    public function joinInstruction($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Instruction');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Instruction');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Instruction relation Instruction object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \BossEdu\Model\InstructionQuery A secondary query class using the current class as primary query
-     */
-    public function useInstructionQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinInstruction($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Instruction', '\BossEdu\Model\InstructionQuery');
     }
 
     /**

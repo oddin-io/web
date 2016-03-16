@@ -11,10 +11,14 @@
       "BossEdu\\Controller\\": "controller/"
       , "BossEdu\\Model\\": "model/generated-classes/BossEdu/Model/"
       , "BossEdu\\Util\\": "util/"
+      , "BombArea\\SSO\\": "BombArea/SSO/"
     }
   },
   "require": {
     "propel/propel": "~2.0@dev",
+    "ramsey/uuid": "^3.2",
+    "desarrolla2/cache":  "~2.0",
+    "guzzlehttp/guzzle": "^6.1",
     "jacwright/restserver": "dev-master"
   },
   "require-dev": {

@@ -103,13 +103,9 @@
     <column name="district" type="varchar" size="100" />
     <column name="street" type="varchar" size="100" />
     <column name="number" type="varchar" size="10" />
-    <column name="current_instruction" type="integer" />
     <column name="email" type="varchar" size="100" required="true" />
     <foreign-key foreignTable="someone" name="person_user_fk">
       <reference local="email" foreign="email" />
-    </foreign-key>
-    <foreign-key foreignTable="instruction" name="person_current_instruction_fk">
-      <reference local="current_instruction" foreign="id" />
     </foreign-key>
   </table>
 

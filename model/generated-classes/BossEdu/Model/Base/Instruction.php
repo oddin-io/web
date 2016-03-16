@@ -13,8 +13,6 @@ use BossEdu\Model\IsrLink as ChildIsrLink;
 use BossEdu\Model\IsrLinkQuery as ChildIsrLinkQuery;
 use BossEdu\Model\MiMaterial as ChildMiMaterial;
 use BossEdu\Model\MiMaterialQuery as ChildMiMaterialQuery;
-use BossEdu\Model\Person as ChildPerson;
-use BossEdu\Model\PersonQuery as ChildPersonQuery;
 use BossEdu\Model\PiLink as ChildPiLink;
 use BossEdu\Model\PiLinkQuery as ChildPiLinkQuery;
 use BossEdu\Model\Presentation as ChildPresentation;
@@ -22,7 +20,6 @@ use BossEdu\Model\PresentationQuery as ChildPresentationQuery;
 use BossEdu\Model\Map\InstructionTableMap;
 use BossEdu\Model\Map\IsrLinkTableMap;
 use BossEdu\Model\Map\MiMaterialTableMap;
-use BossEdu\Model\Map\PersonTableMap;
 use BossEdu\Model\Map\PiLinkTableMap;
 use BossEdu\Model\Map\PresentationTableMap;
 use Propel\Runtime\Propel;
@@ -129,12 +126,6 @@ abstract class Instruction implements ActiveRecordInterface
     protected $aElHave;
 
     /**
-     * @var        ObjectCollection|ChildPerson[] Collection to store aggregation of ChildPerson objects.
-     */
-    protected $collPeople;
-    protected $collPeoplePartial;
-
-    /**
      * @var        ObjectCollection|ChildPiLink[] Collection to store aggregation of ChildPiLink objects.
      */
     protected $collPiLinks;
@@ -165,12 +156,6 @@ abstract class Instruction implements ActiveRecordInterface
      * @var boolean
      */
     protected $alreadyInSave = false;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildPerson[]
-     */
-    protected $peopleScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -775,8 +760,6 @@ abstract class Instruction implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->aElHave = null;
-            $this->collPeople = null;
-
             $this->collPiLinks = null;
 
             $this->collIsrLinks = null;
@@ -905,24 +888,6 @@ abstract class Instruction implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
-            }
-
-            if ($this->peopleScheduledForDeletion !== null) {
-                if (!$this->peopleScheduledForDeletion->isEmpty()) {
-                    foreach ($this->peopleScheduledForDeletion as $person) {
-                        // need to save related object because we set the relation to null
-                        $person->save($con);
-                    }
-                    $this->peopleScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collPeople !== null) {
-                foreach ($this->collPeople as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
             }
 
             if ($this->piLinksScheduledForDeletion !== null) {
@@ -1213,21 +1178,6 @@ abstract class Instruction implements ActiveRecordInterface
                 }
         
                 $result[$key] = $this->aElHave->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->collPeople) {
-                
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'people';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'people';
-                        break;
-                    default:
-                        $key = 'People';
-                }
-        
-                $result[$key] = $this->collPeople->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPiLinks) {
                 
@@ -1541,12 +1491,6 @@ abstract class Instruction implements ActiveRecordInterface
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
-            foreach ($this->getPeople() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addPerson($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getPiLinks() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addPiLink($relObj->copy($deepCopy));
@@ -1669,9 +1613,6 @@ abstract class Instruction implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('Person' == $relationName) {
-            return $this->initPeople();
-        }
         if ('PiLink' == $relationName) {
             return $this->initPiLinks();
         }
@@ -1684,256 +1625,6 @@ abstract class Instruction implements ActiveRecordInterface
         if ('Presentation' == $relationName) {
             return $this->initPresentations();
         }
-    }
-
-    /**
-     * Clears out the collPeople collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addPeople()
-     */
-    public function clearPeople()
-    {
-        $this->collPeople = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collPeople collection loaded partially.
-     */
-    public function resetPartialPeople($v = true)
-    {
-        $this->collPeoplePartial = $v;
-    }
-
-    /**
-     * Initializes the collPeople collection.
-     *
-     * By default this just sets the collPeople collection to an empty array (like clearcollPeople());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initPeople($overrideExisting = true)
-    {
-        if (null !== $this->collPeople && !$overrideExisting) {
-            return;
-        }
-
-        $collectionClassName = PersonTableMap::getTableMap()->getCollectionClassName();
-
-        $this->collPeople = new $collectionClassName;
-        $this->collPeople->setModel('\BossEdu\Model\Person');
-    }
-
-    /**
-     * Gets an array of ChildPerson objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildInstruction is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildPerson[] List of ChildPerson objects
-     * @throws PropelException
-     */
-    public function getPeople(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collPeoplePartial && !$this->isNew();
-        if (null === $this->collPeople || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collPeople) {
-                // return empty collection
-                $this->initPeople();
-            } else {
-                $collPeople = ChildPersonQuery::create(null, $criteria)
-                    ->filterByInstruction($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collPeoplePartial && count($collPeople)) {
-                        $this->initPeople(false);
-
-                        foreach ($collPeople as $obj) {
-                            if (false == $this->collPeople->contains($obj)) {
-                                $this->collPeople->append($obj);
-                            }
-                        }
-
-                        $this->collPeoplePartial = true;
-                    }
-
-                    return $collPeople;
-                }
-
-                if ($partial && $this->collPeople) {
-                    foreach ($this->collPeople as $obj) {
-                        if ($obj->isNew()) {
-                            $collPeople[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collPeople = $collPeople;
-                $this->collPeoplePartial = false;
-            }
-        }
-
-        return $this->collPeople;
-    }
-
-    /**
-     * Sets a collection of ChildPerson objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $people A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildInstruction The current object (for fluent API support)
-     */
-    public function setPeople(Collection $people, ConnectionInterface $con = null)
-    {
-        /** @var ChildPerson[] $peopleToDelete */
-        $peopleToDelete = $this->getPeople(new Criteria(), $con)->diff($people);
-
-        
-        $this->peopleScheduledForDeletion = $peopleToDelete;
-
-        foreach ($peopleToDelete as $personRemoved) {
-            $personRemoved->setInstruction(null);
-        }
-
-        $this->collPeople = null;
-        foreach ($people as $person) {
-            $this->addPerson($person);
-        }
-
-        $this->collPeople = $people;
-        $this->collPeoplePartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Person objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Person objects.
-     * @throws PropelException
-     */
-    public function countPeople(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collPeoplePartial && !$this->isNew();
-        if (null === $this->collPeople || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collPeople) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getPeople());
-            }
-
-            $query = ChildPersonQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByInstruction($this)
-                ->count($con);
-        }
-
-        return count($this->collPeople);
-    }
-
-    /**
-     * Method called to associate a ChildPerson object to this object
-     * through the ChildPerson foreign key attribute.
-     *
-     * @param  ChildPerson $l ChildPerson
-     * @return $this|\BossEdu\Model\Instruction The current object (for fluent API support)
-     */
-    public function addPerson(ChildPerson $l)
-    {
-        if ($this->collPeople === null) {
-            $this->initPeople();
-            $this->collPeoplePartial = true;
-        }
-
-        if (!$this->collPeople->contains($l)) {
-            $this->doAddPerson($l);
-
-            if ($this->peopleScheduledForDeletion and $this->peopleScheduledForDeletion->contains($l)) {
-                $this->peopleScheduledForDeletion->remove($this->peopleScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildPerson $person The ChildPerson object to add.
-     */
-    protected function doAddPerson(ChildPerson $person)
-    {
-        $this->collPeople[]= $person;
-        $person->setInstruction($this);
-    }
-
-    /**
-     * @param  ChildPerson $person The ChildPerson object to remove.
-     * @return $this|ChildInstruction The current object (for fluent API support)
-     */
-    public function removePerson(ChildPerson $person)
-    {
-        if ($this->getPeople()->contains($person)) {
-            $pos = $this->collPeople->search($person);
-            $this->collPeople->remove($pos);
-            if (null === $this->peopleScheduledForDeletion) {
-                $this->peopleScheduledForDeletion = clone $this->collPeople;
-                $this->peopleScheduledForDeletion->clear();
-            }
-            $this->peopleScheduledForDeletion[]= $person;
-            $person->setInstruction(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Instruction is new, it will return
-     * an empty collection; or if this Instruction has previously
-     * been saved, it will retrieve related People from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Instruction.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildPerson[] List of ChildPerson objects
-     */
-    public function getPeopleJoinSomeone(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildPersonQuery::create(null, $criteria);
-        $query->joinWith('Someone', $joinBehavior);
-
-        return $this->getPeople($query, $con);
     }
 
     /**
@@ -2952,11 +2643,6 @@ abstract class Instruction implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collPeople) {
-                foreach ($this->collPeople as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collPiLinks) {
                 foreach ($this->collPiLinks as $o) {
                     $o->clearAllReferences($deep);
@@ -2979,7 +2665,6 @@ abstract class Instruction implements ActiveRecordInterface
             }
         } // if ($deep)
 
-        $this->collPeople = null;
         $this->collPiLinks = null;
         $this->collIsrLinks = null;
         $this->collMiMaterials = null;
