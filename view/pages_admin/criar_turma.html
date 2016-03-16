@@ -126,7 +126,7 @@
         </div>          
         <div class="modal-footer">
           <div class="upload-form">
-            <form data-ng-submit="deletarTurma(modalData)">
+            <form>
               <div class="form-group">
                 <label for="id-turma" class="control-label">ID</label>                
                 <input type="text" class="form-control" id="id-turma" data-ng-model="modalData.id" disabled>               
@@ -183,7 +183,7 @@
           </div>          
           <div class="modal-footer">
             <div class="upload-form">
-              <form data-ng-submit="atualizarTurma(modalData)">
+              <form>
                 <div class="form-group">
                   <label for="id-turma" class="control-label">ID</label>                
                   <input type="text" class="form-control" id="id-turma" data-ng-model="modalData.id" disabled>               
@@ -205,7 +205,7 @@
                 </div>
 
                 <div class="form-group">                
-                  <button type="submit" class="custom-button-sm" data-toggle="modal" data-target="#modal-confirma-edicao" data-dismiss="modal">Atualizar</button>                
+                  <button type="submit" class="custom-button-sm" data-ng-click="atualizarTurma(modalData)" data-toggle="modal" data-target="#modal-confirma-edicao" data-dismiss="modal">Atualizar</button>                
                 </div>
               </form>
             </div>
@@ -236,7 +236,7 @@
   <!-- AngularJS Scripts -->
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
-  <script src="/view/js/controller/criarTurmaCtrl.js"></script>
+  <script src="/view/js/controller_test/criarTurmaCtrl.js"></script>
 
 </body>
 </html>

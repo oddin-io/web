@@ -106,8 +106,8 @@
                 <div class="custom-list-options">
                   <span data-ng-class="{'fa fa-circle-o': sala.status == 0, 'fa fa-circle': sala.status == 1}">
                   </span>             
-                  <button class="btn-edit-list" data-ng-click="editarSala(sala)" data-toggle="modal" data-target="#modal-edita-sala"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list" data-ng-click="editarSala(sala)" data-toggle="modal" data-target="#modal-deleta-sala"><span class="fa fa-close"></span></button>
+                  <button class="btn-edit-list" data-ng-click="editarSala(sala)"><span class="fa fa-edit"></span></button>
+                  <button class="btn-remove-list" data-ng-click="confirmarRemocaoSala(sala)"><span class="fa fa-close"></span></button>
                 </div>
               </li>              
             </ul>            
@@ -126,7 +126,7 @@
         </div>          
         <div class="modal-footer">
           <div class="upload-form">
-            <form data-ng-submit="deletarSala(modalData)">  
+            <form>  
               <div class="form-group">
                 <label for="numero" class="control-label">Número</label>
                 <input type="text" class="form-control" data-ng-model="modalData.numero" id="numero" disabled>
@@ -143,9 +143,9 @@
               </div>              
 
               <div class="form-group cancel-confirm">                
-                <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="deletarSala(modalData)" data-toggle="modal" data-target="#modal-confirma-remocao" data-dismiss="modal">Confirmar
+                <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="deletarSala(modalData)">Confirmar
                 </button> 
-                <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button>                  
+                <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button>
               </div>
             </form>
           </div>
@@ -178,7 +178,7 @@
         </div>          
         <div class="modal-footer">
           <div class="upload-form">
-            <form data-ng-submit="editarSala(modalData)">  
+            <form>  
               <div class="form-group">
                 <label for="numero" class="control-label">Número</label>
                 <input type="text" class="form-control" data-ng-model="modalData.numero" id="numero">
@@ -195,7 +195,7 @@
               </div>
               
               <div class="form-group">                
-                  <button type="submit" class="custom-button-sm" data-toggle="modal" data-target="#modal-confirma-edicao" data-dismiss="modal">Atualizar</button>                
+                  <button type="submit" class="custom-button-sm" data-ng-click="atualizarSala(modalData)">Atualizar</button>                
               </div>
             </form>
           </div>
@@ -218,6 +218,20 @@
       </div>
     </div>
     <!-- -->
+
+    <!-- Modal de confirmação de cadastro-->
+    <div class="modal fade" id="modal-confirma-cadastro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+            </button>
+            <span class="fa fa-check-circle"></span>&#32;Sala cadastrada com sucesso!               
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
   </main>
 
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
@@ -227,7 +241,7 @@
   <!-- AngularJS Scripts -->
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
-  <script src="/view/js/controller/criarSalaCtrl.js"></script>
+  <script src="/view/js/controller_test/criarSalaCtrl.js"></script>
 
 </body>
 </html>

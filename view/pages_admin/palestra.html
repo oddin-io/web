@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="BossEdu">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/view/css/custom.css" />
   <link rel="stylesheet" href="/view/css/custom_admin.css"/>
 </head>
-<body>
+<body data-ng-controller="palestraCtrl">
   <!-- Inicio do cabecalho -->
   <header>
     <!-- Navbar -->
@@ -54,9 +54,9 @@
           <div class="palestra_info admin_info admin_box">
             <h4>Info</h4>
             <ul>
-              <li><h5>Código:</h5><p>03524</p></li>
-              <li><h5>Nome:</h5><p>Introdução a Sistemas Operacionais</p></li>
-              <li><h5>Carga horária:</h5><p>30 horas</p></li>
+              <li><h5>Código:</h5><p>{{palestra.codigo}}</p></li>
+              <li><h5>Nome:</h5><p>{{palestra.nome}}</p></li>
+              <li><h5>Carga horária:</h5><p>{{palestra.carga}} horas</p></li>
             </ul>            
           </div>
         </div>
@@ -64,77 +64,12 @@
           <div class="palestra_palestra_eventos admin_box">
             <h4>Associada aos Eventos:</h4>             
             <ul class="list-group custom-list-group list-group-box">     
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento teste 1 asdf asdf</a>
+              <li class="list-group-item clearfix" data-ng-repeat="evento in eventos">
+                <a href="#"><span class="fa fa-institution"></span>&#32;{{evento.nome}}</a>
                 <div class="custom-list-options">                                 
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
+                  <button class="btn-remove-list" data-ng-click="confirmarRemocaoEvento(evento)"><span class="fa fa-close"></span></button>
                 </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                 
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                 
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                 
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                 
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                 
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                 
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                 
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                 
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-institution"></span>&#32;Evento teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                 
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-                       
+              </li>   
             </ul>            
           </div>  
         </div>
@@ -142,8 +77,66 @@
     </div>
   </main>
 
+  <!-- Modal de remoção de evento -->
+    <div class="modal fade" id="modal-deleta-evento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabelUpload">Remover de {{modalData.nome}}:</h4>
+          </div>          
+          <div class="modal-footer">
+            <div class="upload-form">
+              <form>
+                <div class="form-group">
+                  <label for="codigo-evento" class="control-label">Código</label>                
+                   <input type="text" class="form-control" id="codigo-evento" data-ng-model="modalData.codigo" disabled>
+                </div>
+
+                <div class="form-group">
+                  <label for="nome-evento" class="control-label">Nome</label>
+                  <input type="text" class="form-control" id="nome-evento" data-ng-model="modalData.nome" disabled>
+                </div>
+
+                <div class="form-group">
+                  <label for="carga-evento" class="control-label">Carga Horária</label>                
+                    <input type="text" class="form-control" id="carga-evento" data-ng-model="modalData.carga" disabled>
+                </div>
+
+                <div class="form-group cancel-confirm">   
+                  <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="deletarEvento(modalData)">Confirmar
+                  </button> 
+                  <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button> 
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+
+     <!-- Modal de confirmação de remoção -->
+    <div class="modal fade" id="modal-confirma-remocao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="fa fa-check-circle"></span>&#32;Evento removido com sucesso!               
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- -->
+
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
   <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="../js/script-admin.js"></script>  
+  <script src="../js/script-admin.js"></script> 
+
+    <!-- AngularJS Scripts -->
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/js/app.js"></script>
+  <script src="/view/js/controller_test/palestraCtrl.js"></script>    
 </body>
 </html>

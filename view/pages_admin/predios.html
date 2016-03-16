@@ -102,8 +102,12 @@
                 <div class="custom-list-options">
                   <span data-ng-class="{'fa fa-circle-o': predio.status == 0, 'fa fa-circle': predio.status == 1}">
                   </span>      
-                  <button class="btn-edit-list" data-ng-click="editarPredio(predio)" data-toggle="modal" data-target="#modal-edita-predio"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list" data-ng-click="editarPredio(predio)" data-toggle="modal" data-target="#modal-deleta-predio"><span class="fa fa-close"></span></button>
+                  <button class="btn-edit-list" data-ng-click="editarPredio(predio)">
+                    <span class="fa fa-edit"></span>
+                  </button>
+                  <button class="btn-remove-list" data-ng-click="confirmarRemocaoPredio(predio)">
+                    <span class="fa fa-close"></span>
+                  </button>
                 </div>
               </li>
             </ul>            
@@ -122,10 +126,10 @@
           </div>          
           <div class="modal-footer">
             <div class="upload-form">
-              <form data-ng-submit="atualizarPredio(modalData)">
+              <form>
                 <div class="form-group">
                   <label for="codigo-predio" class="control-label">Código</label>                
-                   <input type="text" class="form-control" id="codigo-predio" data-ng-model="modalData.codigo">                
+                   <input type="text" class="form-control" id="codigo-predio" data-ng-model="modalData.codigo">               
                 </div>
 
                 <div class="form-group">
@@ -134,7 +138,8 @@
                 </div>                
 
                 <div class="form-group">                
-                    <button type="submit" class="custom-button-sm" data-toggle="modal" data-target="#modal-confirma-edicao" data-dismiss="modal">Atualizar</button>                
+                    <button type="submit" class="custom-button-sm" data-ng-click="atualizarPredio(modalData)">Atualizar
+                    </button>                
                 </div>
               </form>
             </div>
@@ -167,7 +172,7 @@
           </div>          
           <div class="modal-footer">
             <div class="upload-form">
-              <form data-ng-submit="deletarPredio(modalData)">
+              <form>
                 <div class="form-group">
                   <label for="codigo-predio" class="control-label">Código</label>                
                    <input type="text" class="form-control" id="codigo-predio" data-ng-model="modalData.codigo" disabled>              
@@ -179,7 +184,7 @@
                 </div>  
 
                 <div class="form-group cancel-confirm">   
-                  <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="deletarPredio(modalData)" data-toggle="modal" data-target="#modal-confirma-remocao" data-dismiss="modal">Confirmar
+                  <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="deletarPredio(modalData)">Confirmar
                   </button> 
                   <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button> 
                 </div>
@@ -203,6 +208,19 @@
       </div>
     </div>
     <!-- -->
+
+    <!-- Modal de confirmação de cadastro-->
+    <div class="modal fade" id="modal-confirma-cadastro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="fa fa-check-circle"></span>&#32;Prédio cadastrado com sucesso!               
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
     
   </main>
 
@@ -213,6 +231,6 @@
    <!-- AngularJS Scripts -->
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
-  <script src="/view/js/controller/cadastrarPredioCtrl.js"></script>
+  <script src="/view/js/controller_test/cadastrarPredioCtrl.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="BossEdu">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/view/css/custom.css" />
   <link rel="stylesheet" href="/view/css/custom_admin.css"/>
 </head>
-<body>
+<body data-ng-controller="eventoCtrl">
   <!-- Inicio do cabecalho -->
   <header>
     <!-- Navbar -->
@@ -54,42 +54,21 @@
           <div class="admin_info admin_box">
             <h4>Info</h4>
             <ul>
-              <li><h6>Código:</h6><p>000124</p></li>
-              <li><h6>Nome:</h6><p>Análise e Desenvolvimento de Sistemas</p></li>
-              <li><h6>Carga horária:</h6><p>425 horas</p></li>
+              <li><h6>Código:</h6><p>{{evento.codigo}}</p></li>
+              <li><h6>Nome:</h6><p>{{evento.nome}}</p></li>
+              <li><h6>Carga horária:</h6><p>{{evento.carga}} horas</p></li>
             </ul>            
           </div>
           <div class="evento_evento_palestras admin_box">
             <h4>Palestras de Evento X</h4>
             <button type="button" data-toggle="modal" data-target="#modal-cadastro-palestra" class="custom-button-sm">Criar nova palestra</button> 
             <ul class="list-group custom-list-group list-group-box">     
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
+              <li class="list-group-item clearfix" data-ng-repeat="palestra in palestrasInEvento">
+                <a href="#"><span class="fa fa-book"></span>&#32;{{palestra.nome}}</a>
                 <div class="custom-list-options">                                  
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                  
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                   
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>                     
+              </li>                             
             </ul>            
           </div>
         </div>
@@ -107,148 +86,12 @@
               </div>
             </form>            
             <ul class="list-group custom-list-group list-group-box">     
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
+              <li class="list-group-item clearfix" data-ng-repeat="palestra in palestras">
+                <a href="#"><span class="fa fa-book"></span>&#32;{{palestra.nome}}</a>
                 <div class="custom-list-options">                                    
                   <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
                 </div>
-              </li>
-              <li class="list-group-item added clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra" disabled><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>    
-
-               <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-
-               <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-
-               <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-
-                  <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra teste 1 asdf asdf</a>
-                <div class="custom-list-options">                                    
-                  <button class="add-palestra"><span class="fa fa-plus"></span>&#32;Adicionar a Evento</button>
-                </div>
-              </li>  
+              </li>              
             </ul>    
           </div>
         </div>
@@ -295,6 +138,11 @@
 
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
   <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="../js/script-admin.js"></script>     
+  <script src="../js/script-admin.js"></script>
+
+  <!-- AngularJS Scripts -->
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/js/app.js"></script>
+  <script src="/view/js/controller_test/EventoCtrl.js"></script>      
 </body>
 </html>

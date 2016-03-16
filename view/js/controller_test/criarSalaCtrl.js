@@ -14,25 +14,49 @@ app.controller("criarSalaCtrl", function($scope){
 
 	$scope.salas = salas;
 	$scope.modalData;
-	$scope.modalIndex;
+	var modalIndex;
 
 	$scope.criarSala = function(sala) {
 		sala.status = 0;
 		salas.push(sala);
 		delete $scope.sala;
+		$('#modal-confirma-cadastro').modal('show');
 	}
 
 	$scope.editarSala = function(sala) {
-		$scope.modalData = sala;
-		$scope.modalIndex = salas.indexOf(sala);
+		$scope.modalData = JSON.parse(JSON.stringify(sala));
+		modalIndex = salas.indexOf(sala);
+		$('#modal-edita-sala').modal('show');
+	}
+
+	$scope.confirmarRemocaoSala = function(sala) {
+		$scope.modalData = JSON.parse(JSON.stringify(sala));
+		modalIndex = salas.indexOf(sala);
+		$('#modal-deleta-sala').modal('show');
 	}
 
 	$scope.atualizarSala = function(modalData) {
-		salas[$scope.modalIndex] = modalData;
+		salas[modalIndex] = modalData;		
+		$('#modal-edita-sala').on('hidden.bs.modal', function(e) {
+			$('#modal-confirma-edicao').modal('show');
+			$('#modal-edita-sala').off('hidden.bs.modal');
+		});
+		$('#modal-edita-sala').modal('hide');
 	}
 
 	$scope.deletarSala = function(sala) {
-		var index = salas.indexOf(sala);
-		salas.splice(index, 1);
+		var index;
+		for(var i = 0; i < salas.length; i++) {
+			if(salas[i].numero == sala.numero) {
+				index = i;
+				break;
+			}
+		}		
+		salas.splice(index, 1);		
+		$('#modal-deleta-sala').on('hidden.bs.modal', function(e) {
+			$('#modal-confirma-remocao').modal('show');
+			$('#modal-deleta-sala').off('hidden.bs.modal');
+		});
+		$('#modal-deleta-sala').modal('hide');
 	}
 });

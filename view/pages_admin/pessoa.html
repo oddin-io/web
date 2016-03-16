@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="BossEdu">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/view/css/custom.css" />
   <link rel="stylesheet" href="/view/css/custom_admin.css"/>
 </head>
-<body>
+<body data-ng-controller="usuarioInfoCtrl">
   <!-- Inicio do cabecalho -->
   <header>
     <!-- Navbar -->
@@ -55,22 +55,22 @@
             <h4>Info</h4>
             <h5>Dados Pessoais</h5>
             <ul>
-              <li><h6>ID:</h6><p>000124</p></li>
-              <li><h6>Perfil:</h6><p>Aluno</p></li>
-              <li><h6>Nome:</h6><p>João da Silva</p></li>
-              <li><h6>CPF:</h6><p>000.000.000-00</p></li>
-              <li><h6>Data de Nascimento:</h6><p>00/00/0000</p></li>
-              <li><h6>Telefone:</h6><p>0000-0000</p></li>
+              <li><h6>ID:</h6><p>{{usuario.id}}</p></li>
+              <li><h6>Perfil:</h6><p>{{usuario.perfil}}</p></li>
+              <li><h6>Nome:</h6><p>{{usuario.nome}}</p></li>
+              <li><h6>CPF:</h6><p>{{usuario.cpf}}</p></li>
+              <li><h6>Data de Nascimento:</h6><p>{{usuario.data_nasc}}</p></li>
+              <li><h6>Telefone:</h6><p>{{usuario.tel}}</p></li>
               <hr>         
             </ul>  
             <h5>Endereço</h5>
             <ul>
-              <li><h6>Rua:</h6><p>Blablabla Oblabla</p></li>
-              <li><h6>Número:</h6><p>100</p></li>
-              <li><h6>Bairro:</h6><p>Jardim Bla</p></li>
-              <li><h6>País:</h6><p>Brasil</p></li>
-              <li><h6>Estado:</h6><p>SP</p></li>
-              <li><h6>Cidade:</h6><p>São Carlos</p></li>                    
+              <li><h6>Rua:</h6><p>{{usuario.rua}}</p></li>
+              <li><h6>Número:</h6><p>{{usuario.numero}}</p></li>
+              <li><h6>Bairro:</h6><p>{{usuario.bairro}}</p></li>
+              <li><h6>País:</h6><p>{{usuario.pais}}</p></li>
+              <li><h6>Estado:</h6><p>{{usuario.estado}}</p></li>
+              <li><h6>Cidade:</h6><p>{{usuario.cidade}}</p></li>                    
             </ul>           
           </div>          
         </div>
@@ -88,74 +88,9 @@
               </div>
             </form>            
             <ul class="list-group custom-list-group list-group-box">     
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
+              <li class="list-group-item clearfix" data-ng-repeat="palestra_turma in palestras_turmas">
+                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;{{palestra_turma.turma}} - {{palestra_turma.palestra}}</a>                
               </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="glyphicon glyphicon-blackboard"></span>&#32;123 - Turma 567</a>                
-              </li>
-                       
             </ul>    
           </div>
         </div>
@@ -165,6 +100,11 @@
 
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
   <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="../js/script-admin.js"></script>   
+  <script src="../js/script-admin.js"></script>
+
+   <!-- AngularJS Scripts -->
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/js/app.js"></script>
+  <script src="/view/js/controller_test/usuarioInfoCtrl.js"></script>   
 </body>
 </html>

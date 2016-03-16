@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="BossEdu">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/view/css/custom.css" />
   <link rel="stylesheet" href="/view/css/custom_admin.css"/>
 </head>
-<body>
+<body data-ng-controller="cadastrarPalestraCtrl">
   <!-- Inicio do cabecalho -->
   <header>
     <!-- Navbar -->
@@ -58,29 +58,27 @@
           <div class="admin_info admin_box">
             <h4>Info</h4>
             <ul class="info-list">
-              <li>x palestras cadastradas</li>
+              <li>{{palestras.length}} palestras cadastradas</li>
               <li>x palestras não estão associadas a eventos</li>
-              <li>Lorem ipsum dolor sit amet, consectetur</li>
-              <li>x palestras não estão associadas a eventos</li>
-              <li>Lorem ipsum dolor sit amet, consectetur</li>
+              <li>Lorem ipsum dolor sit amet, consectetur</li>              
             </ul>
           </div>
           <div class="palestra_form admin_box">
             <h4>Cadastrar nova palestra</h4>
-            <form>
+            <form data-ng-submit="cadastrarPalestra(palestra)">
               <div class="form-group">
                 <label for="codigo-palestra" class="control-label">Código</label>                
-                 <input type="text" class="form-control" id="codigo-palestra" placeholder="Insira o código da palestra">              
+                 <input type="text" class="form-control" id="codigo-palestra" data-ng-model="palestra.codigo" placeholder="Insira o código da palestra">              
               </div>
 
               <div class="form-group">
                 <label for="nome-palestra" class="control-label">Nome</label>
-                <input type="text" class="form-control" id="nome-palestra" placeholder="Insira o nome da palestra">                
+                <input type="text" class="form-control" id="nome-palestra" data-ng-model="palestra.nome" placeholder="Insira o nome da palestra">                
               </div>
 
               <div class="form-group">
                 <label for="carga-palestra" class="control-label">Carga Horária</label>                
-                  <input type="text" class="form-control" id="carga-palestra" placeholder="Insira a carga horária da palestra">
+                  <input type="text" class="form-control" id="carga-palestra" data-ng-model="palestra.carga" placeholder="Insira a carga horária da palestra">
               </div>
 
               <div class="form-group">                
@@ -96,65 +94,39 @@
             <form>   
               <div class="input-group">
                <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
-                <input type="search" class="form-control" id="busca-evento" placeholder="Buscar palestra por nome">
+                <input type="search" class="form-control" id="busca-palestra" placeholder="Buscar palestra por nome">
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                   </span>                
               </div>
             </form> 
             <ul class="list-group custom-list-group list-group-box">     
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
+              <li class="list-group-item clearfix" data-ng-repeat="palestra in palestras">
+                <a href="#"><span class="fa fa-book"></span>&#32;{{palestra.nome}}</a>
                 <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
+                  <button class="btn-edit-list" data-ng-click="editarPalestra(palestra)"><span class="fa fa-edit"></span></button>                
+                  <button class="btn-remove-list" data-ng-click="confirmarRemocaoPalestra(palestra)"><span class="fa fa-close"></span></button>
                 </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
-                <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
-                <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
-                <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
-                <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-book"></span>&#32;Palestra x</a>
-                <div class="custom-list-options">
-                  <button class="btn-edit-list" data-toggle="modal" data-target="#modal-edita-palestra"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li> 
+              </li>              
             </ul> 
           </div>
         </div>
       </div>      
     </div>
+
+    <!-- Modal de confirmação de cadastro -->
+    <div class="modal fade" id="modal-confirma-cadastro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="fa fa-check-circle"></span>&#32;Palestra cadastrada com sucesso!               
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- -->
 
     <!-- Modal de edição de palestras -->
     <div class="modal fade" id="modal-edita-palestra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -162,27 +134,27 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabelUpload">Editar Palestra X</h4>
+            <h4 class="modal-title" id="myModalLabelUpload">Editar {{modalData.nome}}:</h4>
           </div>          
           <div class="modal-footer">
             <div class="upload-form">
               <form>
                 <div class="form-group">
                 <label for="codigo-palestra" class="control-label">Código</label>                
-                 <input type="text" class="form-control" id="codigo-palestra" placeholder="Insira o código da palestra">              
+                 <input type="text" class="form-control" id="codigo-palestra" data-ng-model="modalData.codigo">              
                 </div>
 
                 <div class="form-group">
                   <label for="nome-palestra" class="control-label">Nome</label>
-                  <input type="text" class="form-control" id="nome-palestra" placeholder="Insira o nome da palestra">              
+                  <input type="text" class="form-control" id="nome-palestra" data-ng-model="modalData.nome">              
                 </div>
 
                 <div class="form-group">
                   <label for="carga-palestra" class="control-label">Carga Horária</label>                
-                   <input type="text" class="form-control" id="carga-palestra" placeholder="Insira a carga horária da palestra">
+                   <input type="text" class="form-control" id="carga-palestra" data-ng-model="modalData.carga">
                 </div>
                 <div class="form-group">                
-                    <button type="submit" class="custom-button-sm">Editar</button>                
+                    <button type="submit" class="custom-button-sm" data-ng-click="atualizarPalestra(modalData)">Atualizar</button>
                 </div>
               </form>
             </div>
@@ -191,10 +163,83 @@
       </div>
     </div>
     <!-- -->
+
+    <!-- Modal de confirmação de edição -->
+    <div class="modal fade" id="modal-confirma-edicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="fa fa-check-circle"></span>&#32;Palestra atualizada com sucesso!               
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- -->
+
+  <!-- Modal de remoção de evento -->
+    <div class="modal fade" id="modal-deleta-palestra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabelUpload">Deletar {{modalData.nome}}:</h4>
+          </div>          
+          <div class="modal-footer">
+            <div class="upload-form">
+              <form>
+                <div class="form-group">
+                  <label for="codigo-palestra" class="control-label">Código</label>                
+                   <input type="text" class="form-control" id="codigo-palestra" data-ng-model="modalData.codigo" disabled>                
+                </div>
+
+                <div class="form-group">
+                  <label for="nome-palestra" class="control-label">Nome</label>
+                  <input type="text" class="form-control" id="nome-palestra" data-ng-model="modalData.nome" disabled>                
+                </div>
+
+                <div class="form-group">
+                  <label for="carga-palestra" class="control-label">Carga Horária</label>                
+                    <input type="text" class="form-control" id="carga-palestra" data-ng-model="modalData.carga" disabled>
+                </div>
+
+                <div class="form-group cancel-confirm">   
+                  <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="deletarPalestra(modalData)">Confirmar
+                  </button> 
+                  <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button> 
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+
+     <!-- Modal de confirmação de remoção -->
+    <div class="modal fade" id="modal-confirma-remocao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="fa fa-check-circle"></span>&#32;Palestra removida com sucesso!               
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- -->
+
   </main>
 
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
   <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script> 
   <script src="../js/script-admin.js"></script>
+
+  <!-- AngularJS Scripts -->
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/js/app.js"></script>
+  <script src="/view/js/controller_test/cadastrarPalestraCtrl.js"></script>  
 </body>
 </html>

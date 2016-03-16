@@ -235,7 +235,7 @@ hr {
 .tabela-horarios-box table, .tabela-horarios-cadastrados-box table, .disponibilidade-box table, .tabela-horarios-disponiveis-box table{
 	font-size: 0.83em;
 	margin-bottom: 0px;	
-	/*overflow:auto;*/
+	overflow:auto;
 }
 
 .tabela-horarios-box table td, .tabela-horarios table th, .disponibilidade-box table td, .disponibilidade-horarios table th {
@@ -257,6 +257,7 @@ hr {
 .tabela-horarios-cadastrados .table>tbody>tr>td .list-group-item, .tabela-horarios-disponiveis .table>tbody>tr>td .list-group-item{
 	border: 0 1px 0 0 solid #eee;	
 	border-radius: 0;
+	text-align: center;
 }
 
 .tabela-horarios-cadastrados .table>tbody>tr>td .list-group, .tabela-horarios-disponiveis .table>tbody>tr>td .list-group{
@@ -271,13 +272,12 @@ hr {
 	float: none;
 }
 
-
-/*.tabela-horarios-custom {
-	margin-bottom: 0;
-}*/
-
 .tabela-horarios, .tabela-horarios-cadastrados, .tabela-horarios-disponiveis {
 	margin-bottom: 20px;
+	overflow: auto;
+}
+
+.disponibilidade-horarios{
 	overflow: auto;
 }
 

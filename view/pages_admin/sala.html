@@ -83,7 +83,7 @@
                     <td>{{horario.data_ini}}</td>
                     <td>{{horario.data_fim}}</td>
                     <td>
-                      <button class="btn-remove-list" data-ng-click="confirmaRemoverHorarioDisp(horario)"  data-toggle="modal" data-target="#modal-remove-horarioDisp">
+                      <button class="btn-remove-list" data-ng-click="confirmaRemoverHorarioDisp(horario)">
                         <span class="fa fa-close"></span>
                       </button>
                     </td>
@@ -114,8 +114,8 @@
                   <tr>                    
                     <td>
                       <ul class="list-group">
-                        <li class="list-group-item" data-ng-repeat="horario in domingo">{{horario.inicio}} - {{horario.fim}} 
-                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)" data-toggle="modal" data-target="#modal-adiciona-horario">
+                        <li class="list-group-item" data-ng-repeat="horario in horarios" data-ng-if="horario.dia=='Domingo'">{{horario.inicio}} - {{horario.fim}} 
+                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)">
                             <span class="fa fa-plus-square"></span>
                           </button>
                         </li>                                                           
@@ -123,8 +123,8 @@
                     </td>
                     <td>
                       <ul class="list-group">
-                        <li class="list-group-item" data-ng-repeat="horario in segunda">{{horario.inicio}} - {{horario.fim}} 
-                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)" data-toggle="modal" data-target="#modal-adiciona-horario">
+                        <li class="list-group-item" data-ng-repeat="horario in horarios" data-ng-if="horario.dia=='Segunda'">{{horario.inicio}} - {{horario.fim}} 
+                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)">
                             <span class="fa fa-plus-square"></span>
                           </button>
                         </li>                                                           
@@ -132,8 +132,8 @@
                     </td>
                     <td>
                       <ul class="list-group">
-                        <li class="list-group-item" data-ng-repeat="horario in terca">{{horario.inicio}} - {{horario.fim}} 
-                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)" data-toggle="modal" data-target="#modal-adiciona-horario">
+                        <li class="list-group-item" data-ng-repeat="horario in horarios" data-ng-if="horario.dia=='Terca'">{{horario.inicio}} - {{horario.fim}} 
+                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)">
                             <span class="fa fa-plus-square"></span>
                           </button>
                         </li>                                                           
@@ -141,8 +141,8 @@
                     </td>
                     <td>
                       <ul class="list-group">
-                        <li class="list-group-item" data-ng-repeat="horario in quarta">{{horario.inicio}} - {{horario.fim}} 
-                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)" data-toggle="modal" data-target="#modal-adiciona-horario">
+                        <li class="list-group-item" data-ng-repeat="horario in horarios" data-ng-if="horario.dia=='Quarta'">{{horario.inicio}} - {{horario.fim}} 
+                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)">
                             <span class="fa fa-plus-square"></span>
                           </button>
                         </li>                                                           
@@ -150,8 +150,8 @@
                     </td>
                     <td>
                       <ul class="list-group">
-                        <li class="list-group-item" data-ng-repeat="horario in quinta">{{horario.inicio}} - {{horario.fim}} 
-                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)" data-toggle="modal" data-target="#modal-adiciona-horario">
+                        <li class="list-group-item" data-ng-repeat="horario in horarios" data-ng-if="horario.dia=='Quinta'">{{horario.inicio}} - {{horario.fim}} 
+                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)">
                             <span class="fa fa-plus-square"></span>
                           </button>
                         </li>                                                           
@@ -159,8 +159,8 @@
                     </td>
                     <td>
                       <ul class="list-group">
-                        <li class="list-group-item" data-ng-repeat="horario in sexta">{{horario.inicio}} - {{horario.fim}} 
-                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)" data-toggle="modal" data-target="#modal-adiciona-horario">
+                        <li class="list-group-item" data-ng-repeat="horario in horarios" data-ng-if="horario.dia=='Sexta'">{{horario.inicio}} - {{horario.fim}} 
+                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)">
                             <span class="fa fa-plus-square"></span>
                           </button>
                         </li>                                                           
@@ -168,8 +168,8 @@
                     </td>
                     <td>
                       <ul class="list-group">
-                        <li class="list-group-item" data-ng-repeat="horario in sabado">{{horario.inicio}} - {{horario.fim}} 
-                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)" data-toggle="modal" data-target="#modal-adiciona-horario">
+                        <li class="list-group-item" data-ng-repeat="horario in horarios" data-ng-if="horario.dia=='Sabado'">{{horario.inicio}} - {{horario.fim}} 
+                          <button class="btn-remove-list" data-ng-click="confirmaAdicionarHorario(horario)">
                             <span class="fa fa-plus-square"></span>
                           </button>
                         </li>                                                           
@@ -194,7 +194,7 @@
           </div>          
           <div class="modal-footer">
             <div class="upload-form">
-              <form data-ng-submit="removerHorarioDisp(modalData)">  
+              <form>  
                 <div class="form-group">
                   <label for="dia-semana" class="control-label">Dia da semana</label>
                   <input type="text" class="form-control" data-ng-model="modalData.dia" id="dia-semana" disabled>
@@ -221,9 +221,9 @@
                 </div>                           
 
                 <div class="form-group cancel-confirm">                
-                  <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="removerHorarioDisp(modalData)" data-toggle="modal" data-target="#modal-confirma-remocao" data-dismiss="modal">Confirmar
+                  <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="removerHorarioDisp(modalData)">Confirmar
                   </button> 
-                  <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button>                  
+                  <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button>
                 </div>
               </form>
             </div>
@@ -233,7 +233,7 @@
     </div>
     <!-- -->
 
-    <!-- Modal de confirmação de remoção-->
+    <!-- Modal de confirmação de remoção -->
     <div class="modal fade" id="modal-confirma-remocao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -256,7 +256,7 @@
           </div>          
           <div class="modal-footer">
             <div class="upload-form">
-              <form data-ng-submit="adicionarHorario(modalData)">  
+              <form>  
                 <div class="form-group">
                   <label for="dia-semana" class="control-label">Dia da semana</label>
                   <input type="text" class="form-control" data-ng-model="modalData.dia" id="dia-semana" disabled>
@@ -274,18 +274,18 @@
 
                 <div class="form-group">
                   <label for="data-ini" class="control-label">Data de Início</label>                
-                  <input type="text" class="form-control" data-ng-model="modalData.data_ini" id="data-ini" placeholder="Insira a data de início" required>
+                  <input type="text" class="form-control" data-ng-model="modalData.data_ini" id="data-ini" placeholder="Insira a data de início">
                 </div>
 
                 <div class="form-group">
                   <label for="data-fim" class="control-label">Data de Encerramento</label>                
-                  <input type="text" class="form-control" data-ng-model="modalData.data_fim" id="data-fim" placeholder="Insira a data de encerramento" required>
+                  <input type="text" class="form-control" data-ng-model="modalData.data_fim" id="data-fim" placeholder="Insira a data de encerramento">
                 </div>                           
 
                 <div class="form-group cancel-confirm">                
-                  <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="adicionarHorario(modalData)" data-toggle="modal" data-target="#modal-confirma-adicao" data-dismiss="modal">Confirmar
+                  <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="adicionarHorario(modalData)">Confirmar
                   </button> 
-                  <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button>               
+                  <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button>
                 </div>
               </form>
             </div>
@@ -295,7 +295,7 @@
     </div>
     <!-- -->
 
-    <!-- Modal de confirmação de remoção-->
+    <!-- Modal de confirmação de adição -->
     <div class="modal fade" id="modal-confirma-adicao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -306,9 +306,7 @@
         </div>
       </div>
     </div>
-    <!-- -->
-
-    
+    <!-- -->    
   </main>
 
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
@@ -318,6 +316,6 @@
   <!-- AngularJS Scripts -->
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
-  <script src="/view/js/controller/cadastrarDisponibilidadeCtrl.js"></script>
+  <script src="/view/js/controller_test/cadastrarDisponibilidadeCtrl.js"></script>
 </body>
 </html>
