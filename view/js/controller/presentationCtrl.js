@@ -10,23 +10,23 @@ app.controller("presentationCtrl", function ($scope, $http) {
   $http.defaults.headers.post["Content-Type"] = "text/plain";
   $http.defaults.headers.common["X-Auth-Token"] = getCookie("sso_client_token");
 
-  var socket = io(window.config.urls["socket"]);
+  var socket = io(window.config.urls["socket"] + "/presentation");
   socket.on("new doubt", function (data) {
-    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/chat/doubt/" + data.doubt_id)
+    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + data.doubt_id)
       .success(function (data) {
         $scope.doubts[data.id] = data;
       });
   });
 
- $scope.getPresentation = function () {
+  $scope.getPresentation = function () {
     $http.get(restServerUrl + "/controller/" + paths.join("/") + "/info")
-    .success(function (data) {
-      $scope.presentation = data;
+      .success(function (data) {
+        $scope.presentation = data;
 
-      $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt").success(function (data) {
-        $scope.doubts = data.doubts;
+        $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt").success(function (data) {
+          $scope.doubts = data.doubts;
+        });
       });
-    });
   };
 
   $scope.sendDoubt = function (doubt) {
@@ -55,5 +55,10 @@ app.controller("presentationCtrl", function ($scope, $http) {
     doubt.status = status;
 
     $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/change-status", doubt);
+  };
+
+  $scope.seeDoubt = function (doubt) {
+    $scope.modal = {};
+    $scope.modal.doubt = doubt;
   };
 });

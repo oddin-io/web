@@ -37,7 +37,7 @@ class FrontEndCtrl
     {
         $instruction_id = urldecode($instruction_id);
 
-        $person = $_SESSION["id"];
+        $person = AuthCtrl::getSession()["id"];
 
         $profile = $this->getProfile($instruction_id, $person);
 
@@ -72,7 +72,7 @@ class FrontEndCtrl
     public function historic($instruction_id)
     {
         $instruction_id = urldecode($instruction_id);
-        $person = $_SESSION["id"];
+        $person = AuthCtrl::getSession()["id"];
 
         $profile = $this->getProfile($instruction_id, $person);
 
@@ -106,13 +106,13 @@ class FrontEndCtrl
     }
 
     /**
-     * @url GET /instruction/$instruction_id/presentation/$id
+     * @url GET /instruction/$instruction_id/presentation/$presentation_id
      */
-    public function presentation($instruction_id, $id)
+    public function presentation($instruction_id, $presentation_id)
     {
         $instruction_id = urldecode($instruction_id);
 
-        $profile = $this->getProfile($instruction_id, $_SESSION["id"]);
+        $profile = $this->getProfile($instruction_id, AuthCtrl::getSession()["id"]);
 
         if ($profile >= 2) {
             echo file_get_contents(__VIEWFOLDER__."/apresentacao-p-slick_carousel.html");

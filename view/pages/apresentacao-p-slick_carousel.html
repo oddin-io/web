@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html data-ng-app="BossEdu" data-ng-controller="apresentacaoCtrl">
+<html data-ng-app="BossEdu" data-ng-controller="presentationCtrl" data-ng-init="getPresentation()">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Apresentação  - {{apresentacao.palestra.codigo}}</title>
+  <title>Apresentação  - {{presentation.lecture.code}}</title>
 
   <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
@@ -48,27 +48,27 @@
     </nav>
     <!--Título Página-->
     <div class="page-header container">
-      <h1>{{apresentacao.tema}}</h1>
+      <h1>{{presentation.subject}}</h1>
     </div>
   </header>
 
   <main>
     <div class="container">
-      <slick init-onload="true" data="duvidas.pendente" slides-to-show=3 slides-to-scroll=3>
-        <div class="item" data-ng-repeat="duvida in duvidas.pendente">
+      <slick init-onload="true" data="doubts" slides-to-show=3 slides-to-scroll=3>
+        <div class="item" data-ng-repeat="doubt in doubts">
           <div class="doubt">
             <div class="doubt__header">
-              <h4 class="doubt__pessoa">{{duvida.pessoa.nome}}</h4>
-              <h4 class="doubt__time">{{duvida.datahora}}</h4>
+              <h4 class="doubt__pessoa">{{doubt.person.name}}</h4>
+              <h4 class="doubt__time">{{doubt.createdat}}</h4>
             </div>
-            <div class="ranking"><span class="badge">{{duvida.curtidas}}</span><span>&#32;</span><span class="glyphicon glyphicon-thumbs-up"></span></div>
+            <div class="ranking"><span class="badge">{{doubt.likes}}</span><span>&#32;</span><span class="glyphicon glyphicon-thumbs-up"></span></div>
             <div class="doubt__content">
               <div class="doubt__textbox">
-                <p class="more">{{duvida.texto}}
+                <p class="more">{{doubt.text}}
                 </p>
               </div>
             </div>
-            <button type="button" class="custom-button-sm" data-toggle="modal" data-target="#modal-duvida">Ver Dúvida</button>
+            <button data-ng-click="seeDoubt(doubt)" type="button" class="custom-button-sm" data-toggle="modal" data-target="#modal-duvida">Ver Dúvida</button>
           </div>
         </div>
       </slick>
@@ -80,10 +80,10 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">{{modal.duvida.pessoa.nome}}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{modal.doubt.person.name}}</h4>
           </div>
           <div class="modal-body">
-            <p class="modal-duvida">{{modal.duvida.texto}}</p>
+            <p class="modal-duvida">{{modal.doubt.text}}</p>
           </div>
           <div class="modal-footer">
             <div class="abas_respostas">
@@ -169,6 +169,7 @@
   <script src="/view/js/checkbox_status_resposta.js"></script>
   <script src="/view/js/utils.js"></script>
   <script type="application/javascript" src="/configuration.jsonp"></script>
+  <script src="/view/assets/socket.io-client/socket.io.js"></script>
 
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/vendor/angular-slick/dist/slick.js"></script>

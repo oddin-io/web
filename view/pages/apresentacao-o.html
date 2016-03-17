@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html data-ng-app="BossEdu" data-ng-controller="presentationCtrl">
+<html data-ng-app="BossEdu" data-ng-controller="presentationCtrl" data-ng-init="getPresentation()">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -84,7 +84,7 @@
               </div>
 
               <div class="doubt__interactive" id="curtir" data-ng-class="{interactive_checked: doubt.like}">
-                <a href="#" data-ng-click="likeDoubt(doubt)">
+                <a data-ng-click="likeDoubt(doubt)">
                   <span class="glyphicon glyphicon-thumbs-up"></span>
                   <span class="icon_label hidden-xs">Gostei</span>
                 </a>
