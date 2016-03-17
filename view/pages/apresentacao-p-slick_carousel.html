@@ -98,14 +98,14 @@
                 <div role="tabpanel" class="tab-pane active" id="texto">
                   <form>
                     <fieldset>
-                      <textarea name="texto" placeholder="Insira sua resposta" ng-model="resposta.texto" class="form-control" id="textarea_resposta"></textarea>
+                      <textarea name="texto" placeholder="Insira sua resposta" data-ng-model="answer.text" class="form-control" id="textarea_resposta"></textarea>
                     </fieldset>
 
                     <div class="row">
                       <div class="col-sm-8">
                         <fieldset id="checkbox_resposta">
                           <input id="status_resposta" type="checkbox" class="with-font" />
-                          <label id="status_resposta_label" for="status_resposta">Responder</label>
+                          <label id="status_resposta_label" for="status_resposta" data-ng-click="answerDoubt(modal.doubt, answer)">Responder</label>
                         </fieldset>
                       </div>
                       <div class="col-sm-4">

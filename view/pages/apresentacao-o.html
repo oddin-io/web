@@ -77,13 +77,13 @@
             <!--Opções do Usuário -->
             <div class="doubt__options">
               <div class="doubt__interactive" data-ng-if="doubt.status == 2">
-                <button class="btn btn-link btn-respondido" onclick="ver_resposta('resposta')">
+                <button class="btn btn-link btn-respondido" data-ng-click="fetchAnswer(doubt)">
                   <span class="resposta-btn-icon glyphicon glyphicon-comment"></span>
                   <span class="icon_label hidden-xs">Resposta</span>
                 </button>
               </div>
 
-              <div class="doubt__interactive" id="curtir" data-ng-class="{interactive_checked: doubt.like}">
+              <div class="doubt__interactive" id="curtirComentario" data-ng-class="{interactive_checked: doubt.like}">
                 <a data-ng-click="likeDoubt(doubt)">
                   <span class="glyphicon glyphicon-thumbs-up"></span>
                   <span class="icon_label hidden-xs">Gostei</span>
@@ -97,12 +97,11 @@
         <!--Fim da Pergunta-->
 
         <!--Resposta-->
-        <!--
-        <div class = "col-md-offset-2 col-md-8">
-          <div id="resposta" class="resposta animated fadeIn" style="display: none">
+        <div data-ng-attr-id="{{doubt.id}}" class = "col-md-offset-2 col-md-8" data-ng-if="doubt.answers.length > 0">
+          <div class="resposta animated fadeIn" data-ng-repeat="answer in doubt.answers">
             <div class="resposta__header">
               <div class="row">
-                  <div class="col-md-4 col-sm-6"><h4 class="resposta__pessoa">{{duvida.pessoa.nome}}</h4></div>
+                  <div class="col-md-4 col-sm-6"><h4 class="resposta__pessoa">{{doubt.pessoa.nome}}</h4></div>
                   <div class="col-md-offset-6 col-md-2 col-sm-offset-4 col-sm-2"><h4 class="resposta__time">00:00:00</h4></div>
               </div>
             </div>
@@ -111,14 +110,14 @@
               <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#texto" aria-controls="texto" role="tab" data-toggle="tab"><span class="fa fa-font fa-lg"></span></a></li>
                 <li role="presentation"><a href="#audio" aria-controls="audio" role="tab" data-toggle="tab"><span class="fa fa-microphone fa-lg"></span></a></li>
-                <li role="presentation"><a href="#video" aria-controls="video" role="tab" data-toggle="tab"><span class="fa fa-video-camera fa-lg"></a></li>
-                <li role="presentation"><a href="#arquivo" aria-controls="arquivo" role="tab" data-toggle="tab"><span class="fa fa-paperclip fa-lg"></a></li>
+                <li role="presentation"><a href="#video" aria-controls="video" role="tab" data-toggle="tab"><span class="fa fa-video-camera fa-lg"></span></a></li>
+                <li role="presentation"><a href="#arquivo" aria-controls="arquivo" role="tab" data-toggle="tab"><span class="fa fa-paperclip fa-lg"></span></a></li>
               </ul>
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="texto">
                   <div class="resposta__textbox">
-                    <p>Lorem ipsum dolor sit amet, melius interesset ad per, te doctus facilis percipit eum, adhuc eligendi an quo. Has amet omittam ea, qui utroque recteque ocurreret ei. Vidit facer interesset ut per, nusquam conclusionemque an pri, ius ridens causae an. Has at natum tamquam, no mel quas illud aperiam, has at doming meliore. At latine tibique gubergren per, mazim omnesque conclusionemque ex ius, vim no adhuc oporteat.
-                      Sea ornatus fuisset consetetur an, alterum inimicus recteque vel id. Ne eirmod legimus gloriatur vim, at audiam laoreet vim. Et ius iuvaret discere imperdiet, erat phaedrum vituperatoribus sea eu. At possim sanctus cum. No referrentur efficiantur mei, verear discere posidonium ea ius, erat liber vix id. Ne vel ridens liberavisse, vis sententiae theophrastus in, doctus theophrastus cum te. Duo ex quas repudiandae instructior.
+                    <p>
+                      {{answer.text}}
                     </p>
                   </div>
                 </div>
@@ -143,9 +142,7 @@
             </div>
           </div>
         </div>
-        -->
         <!--Fim da Resposta-->
-
       </div>
       <!-- Fim da dúvida -->
     </div>
@@ -189,6 +186,7 @@
 
   <script src="/view/js/utils.js"></script>
   <script type="application/javascript" src="/configuration.jsonp"></script>
+  <script src="/view/js/ver-resposta.js"></script>
 
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>

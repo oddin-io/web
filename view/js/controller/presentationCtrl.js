@@ -61,4 +61,16 @@ app.controller("presentationCtrl", function ($scope, $http) {
     $scope.modal = {};
     $scope.modal.doubt = doubt;
   };
+
+  $scope.fetchAnswer = function (doubt) {
+    doubt.answers = [
+      {"text": "resposta 1"}
+      , {"text": "resposta 2"}
+    ];
+    ver_resposta(doubt.id);
+  };
+
+  $scope.answerDoubt = function (doubt, answer) {
+    $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/contribution", answer);
+  };
 });
