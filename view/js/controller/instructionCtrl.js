@@ -34,13 +34,13 @@ app.controller("instructionCtrl", function ($scope, $http) {
   };
 
   $scope.getHistoric = function () {
-    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/historic").success(function (data) {
+    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/presentation").success(function (data) {
       $scope.presentations = data.presentations;
     });
   };
 
   $scope.getMaterials = function () {
-    var url = restServerUrl + "/controller/" + paths.join("/") + "/materials";
+    var url = restServerUrl + "/controller/" + paths.join("/") + "/material";
     $http.get(url).success(function (data) {
       $scope.materials = data.materials;
     });
