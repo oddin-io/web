@@ -97,10 +97,10 @@ class FrontEndCtrl
             ->findOne();
 
         if ($presentation_id) {
-            $url = "/app/{$instruction_id}/presentation/{$presentation_id}";
+            $url = "/app/instruction/{$instruction_id}/presentation/{$presentation_id}";
             header("Location: {$url}");
         } else {
-            $url = "/app/{$instruction_id}/historic";
+            $url = "/app/instruction/{$instruction_id}/historic";
             header("Location: {$url}");
         }
     }
