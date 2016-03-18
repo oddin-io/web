@@ -14,8 +14,12 @@
     return parts;
   };
 
-  root.addVariable = function (obj, propName) {
-    window[propName] = window[propName] || obj;
+  root.setEnvironment = function (obj) {
+    window.environment = obj;
+  };
+
+  root.getEnvironment = function () {
+    return window.environment;
   };
 
   root.getCookie = function (name) {

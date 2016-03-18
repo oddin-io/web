@@ -20,10 +20,10 @@ class ConfigCtrl
         $config = [
             "config" => [
                 "urls" => [
-                    "rest" => getenv("REST_URL"),
-                    "auth" => getenv("AUTH_URL"),
-                    "socket" => getenv("SOCKET_URL"),
-                    "www" => getenv("WWW_URL")
+                    "rest" => "http://rest.localhost" // getenv("REST_URL")
+                    , "auth" => "http://auth.localhost" // getenv("AUTH_URL")
+                    , "socket" => "http://localhost:3000"// getenv("SOCKET_URL")
+                    , "www" => "http://localhost" //getenv("WWW_URL")
                 ]
             ]
         ];
