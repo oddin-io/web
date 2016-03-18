@@ -12,6 +12,7 @@ use Jacwright\RestServer\RestServer;
 $server = new RestServer("debug");
 try {
     $server->addClass("\\BossEdu\\Controller\\AuthCtrl");
+    $server->addClass("\\BossEdu\\Controller\\ConfigCtrl");
     $server->handle();
 } catch (Exception $ex) {
     echo $ex->getMessage();
