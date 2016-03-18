@@ -8,18 +8,20 @@
     }
   };
 
-  root.getPaths = function () {
-    var parts = location.pathname.split("/");
-    parts.splice(0, 1);
-    return parts;
-  };
+  function Util() {}
 
-  root.setEnvironment = function (obj) {
+  Util.setEnvironment = function (obj) {
     window.environment = obj;
   };
 
-  root.getEnvironment = function () {
+  Util.getEnvironment = function () {
     return window.environment;
+  };
+
+  Util.getPaths = function () {
+    var parts = location.pathname.split("/");
+    parts.splice(0, 1);
+    return parts;
   };
 
   root.getCookie = function (name) {
@@ -27,4 +29,6 @@
     var parts = value.split("; " + name + "=");
     if (parts.length == 2) return parts.pop().split(";").shift();
   }
+
+  root.Util = Util;
 })(window);
