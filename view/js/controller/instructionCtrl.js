@@ -1,15 +1,15 @@
 app.controller("instructionCtrl", function ($scope, $http) {
   var paths = (function () {
-    var ret = getPaths();
+    var ret = Util.getPaths();
     ret.splice(0, 1);
     ret.pop();
 
     return ret;
   })();
 
-  var restServerUrl = window.config.urls["rest-server"];
+  var restServerUrl = Util.getEnvironment().config.urls["rest"];
   $http.defaults.headers.common["Content-Type"] = "text/plain";
-  $http.defaults.headers.common["X-Auth-Token"] = getCookie("sso_client_token");
+  $http.defaults.headers.common["X-Auth-Token"] = Util.getCookie("sso_client_token");
 
   $scope.buildURI = function (instruction, prefix, sufix) {
     return prefix + "/instruction/" + instruction.id + sufix;
