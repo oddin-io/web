@@ -1,16 +1,16 @@
 app.controller("presentationCtrl", function ($scope, $http) {
   var paths = (function () {
-    var ret = getPaths();
+    var ret = Util.getPaths();
     ret.splice(0, 1);
 
     return ret;
   })();
 
-  var restServerUrl = window.config.urls["rest-server"];
+  var restServerUrl = Util.getEnvironment().config.urls["rest"];;
   $http.defaults.headers.post["Content-Type"] = "text/plain";
-  $http.defaults.headers.common["X-Auth-Token"] = getCookie("sso_client_token");
+  $http.defaults.headers.common["X-Auth-Token"] = Util.getCookie("sso_client_token");
 
-  var socket = io(window.config.urls["socket"] + "/presentation");
+  var socket = io(Util.getEnvironment().config.urls["socket"] + "/presentation");
   socket.on("new doubt", function (data) {
     $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + data.doubt_id)
       .success(function (data) {
@@ -63,11 +63,9 @@ app.controller("presentationCtrl", function ($scope, $http) {
   };
 
   $scope.fetchAnswer = function (doubt) {
-    doubt.answers = [
-      {"text": "resposta 1"}
-      , {"text": "resposta 2"}
-    ];
-    ver_resposta(doubt.id);
+    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/contribution").success(function (data) {
+      doubt.answers = data.contributions;
+    });
   };
 
   $scope.answerDoubt = function (doubt, answer) {

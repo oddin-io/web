@@ -1,7 +1,7 @@
 app.controller("loginCtrl", function ($scope, $http) {
-  var restServerUrl = window.config.urls["rest-server"];
+  var restServerUrl = Util.getEnvironment().config.urls["rest"];
   $http.defaults.headers.post["Content-Type"] = "text/plain";
-  $http.defaults.headers.common["X-Auth-Token"] = getCookie("sso_client_token");
+  $http.defaults.headers.common["X-Auth-Token"] = Util.getCookie("sso_client_token");
 
   $scope.login = function (user) {
     $http.post("/controller/login", user)

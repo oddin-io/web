@@ -1,6 +1,0 @@
-addVariable({
-  "urls": {
-    "rest-server": "http://rest.localhost"
-    , "socket": "http://localhost:3000"
-  }
-}, "config");
