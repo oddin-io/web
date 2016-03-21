@@ -29,15 +29,29 @@ app.controller("criarTurmaCtrl", function($scope){
 		turma.id = parseInt(turmas[turmas.length-1].id) + 1;
 		turmas.push(turma);
 		delete $scope.turma;
+		$('#modal-confirma-cadastro').modal('show');
 	};	
 
 	$scope.editarTurma = function(turma) {
 		$scope.modalData = JSON.parse(JSON.stringify(turma));  //Cria cópia do objeto turma
 		modalIndex = turmas.indexOf(turma);
+		$('#modal-edita-turma').modal('show');
+	}
+
+	$scope.confirmarRemocaoTurma = function(turma) {
+		$scope.modalData = JSON.parse(JSON.stringify(turma));  //Cria cópia do objeto turma
+		modalIndex = turmas.indexOf(turma);
+		$('#modal-deleta-turma').modal('show');
 	}	
+	
 
 	$scope.atualizarTurma = function(modalData) {
-		turmas[modalIndex] = modalData;		
+		turmas[modalIndex] = modalData;	
+		$('#modal-edita-turma').on('hidden.bs.modal', function(e) {
+			$('#modal-confirma-edicao').modal('show');
+			$('#modal-edita-turma').off('hidden.bs.modal');
+		});	
+		$('#modal-edita-turma').modal('hide');	
 	};
 
 	$scope.deletarTurma = function(turma) {			
@@ -48,6 +62,12 @@ app.controller("criarTurmaCtrl", function($scope){
 				break;
 			}
 		}		
-		turmas.splice(index, 1);		
+		turmas.splice(index, 1);
+
+		$('#modal-deleta-turma').on('hidden.bs.modal', function(e) {
+			$('#modal-confirma-remocao').modal('show');
+			$('#modal-deleta-turma').off('hidden.bs.modal');
+		});	
+		$('#modal-deleta-turma').modal('hide');		
 	}
 });

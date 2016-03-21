@@ -106,8 +106,8 @@
                 <div class="custom-list-options">
                   <span data-ng-class="{'fa fa-circle-o': turma.status == 0, 'fa fa-circle': turma.status == 1}">
                   </span>             
-                  <button class="btn-edit-list" data-ng-click="editarTurma(turma)" data-toggle="modal" data-target="#modal-edita-turma"><span class="fa fa-edit"></span></button>                
-                  <button class="btn-remove-list" data-ng-click="editarTurma(turma)" data-toggle="modal" data-target="#modal-deleta-turma"><span class="fa fa-close"></span></button>
+                  <button class="btn-edit-list" data-ng-click="editarTurma(turma)"><span class="fa fa-edit"></span></button>
+                  <button class="btn-remove-list" data-ng-click="confirmarRemocaoTurma(turma)"><span class="fa fa-close"></span></button>
                 </div>
               </li>              
             </ul>            
@@ -148,9 +148,9 @@
               </div>
 
               <div class="form-group cancel-confirm">                
-                <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="deletarTurma(modalData)" data-toggle="modal" data-target="#modal-confirma-remocao" data-dismiss="modal">Confirmar
+                <button type="submit" class="custom-button-sm delete-confirm" data-ng-click="deletarTurma(modalData)">Confirmar
                 </button> 
-                <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button>                  
+                <button type="submit" class="custom-button-sm delete-cancel"  data-dismiss="modal">Cancelar</button>
               </div>
             </form>
           </div>
@@ -205,7 +205,7 @@
                 </div>
 
                 <div class="form-group">                
-                  <button type="submit" class="custom-button-sm" data-ng-click="atualizarTurma(modalData)" data-toggle="modal" data-target="#modal-confirma-edicao" data-dismiss="modal">Atualizar</button>                
+                  <button type="submit" class="custom-button-sm" data-ng-click="atualizarTurma(modalData)">Atualizar</button>
                 </div>
               </form>
             </div>
@@ -227,6 +227,20 @@
       </div>
     </div>
     <!-- -->
+
+    <!-- Modal de confirmação de cadastro-->
+    <div class="modal fade" id="modal-confirma-cadastro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="fa fa-check-circle"></span>&#32;Turma cadastrada com sucesso!                         
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+
   </main>
 
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>

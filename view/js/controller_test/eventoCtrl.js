@@ -32,32 +32,51 @@ app.controller("eventoCtrl", function($scope){
 	$scope.palestrasInEvento = palestrasInEvento;
 	$scope.palestras = palestras;
 	$scope.evento = evento;
-	$scope.modalData;
-	var modalIndex;
+	$scope.modalData;	
 
 	$scope.cadastrarPalestra = function(palestra) {
 		palestra.status = 0;
+		palestrasInEvento.push(palestra);
+		delete $scope.palestra;		
+
+		$('#modal-cadastro-palestra').on('hidden.bs.modal', function(e) {
+			$('#modal-confirma-cadastro').modal('show');
+			$('#modal-cadastro-palestra').off('hidden.bs.modal');
+		});	
+		$('#modal-cadastro-palestra').modal('hide');	
+	}
+
+	$scope.confirmarRemocaoPalestra = function(palestra) {		
+		$scope.modalData = palestra;		
+		$('#modal-deleta-palestra').modal('show');
+	}
+
+	$scope.removerPalestra = function(palestra) {
+		var index = palestrasInEvento.indexOf(palestra);
+		palestrasInEvento.splice(index, 1);	
 		palestras.push(palestra);
-		delete $scope.palestra;
+
+		$('#modal-deleta-palestra').on('hidden.bs.modal', function(e) {
+			$('#modal-confirma-remocao').modal('show');
+			$('#modal-deleta-palestra').off('hidden.bs.modal');
+		});	
+		$('#modal-deleta-palestra').modal('hide');
+	} 
+
+	$scope.confirmarAdicaoPalestra = function(palestra) {		
+		$scope.modalData = palestra;		
+		$('#modal-adiciona-palestra').modal('show');
 	}
 
-	$scope.editarPalestra = function(palestra) {
-		$scope.modalData = JSON.parse(JSON.stringify(palestra));  //Cria cópia do objeto evento
-		modalIndex = palestras.indexOf(palestra);
-	}
+	$scope.adicionarPalestra = function(palestra) {
+		var index = palestras.indexOf(palestra);
+		palestras.splice(index, 1);	
+		palestrasInEvento.push(palestra);
 
-	$scope.atualizarPalestra = function(modalData) {		
-		palestras[modalIndex] = modalData;
-	}
- 
-	$scope.deletarPalestra = function(palestra) {		
-		var index;
-		for(var i = 0; i < palestras.length; i++) {
-			if(palestras[i].codigo == palestra.codigo) {
-				index = i;
-				break;
-			}
-		}		
-		palestras.splice(index, 1);
+		$('#modal-adiciona-palestra').on('hidden.bs.modal', function(e) {
+			$('#modal-confirma-adicao').modal('show');
+			$('#modal-adiciona-palestra').off('hidden.bs.modal');
+		});	
+		$('#modal-adiciona-palestra').modal('hide');
 	} 
 });

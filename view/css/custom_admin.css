@@ -134,9 +134,9 @@
 	} 
 
 /*Customiza cores do status da palestra */
-	.fa-circle-o {
-		color: #999;
+	.fa-circle-o {		
 		margin-right: 8px;
+		color: #999;
 	}
 
 	.fa-circle {
@@ -146,6 +146,10 @@
 
 	.fa-check-circle {
 		color: #492;
+	}
+
+	.fa-check-circle-o {
+		margin-right: 8px;
 	}
 
 /*Botões da lista*/

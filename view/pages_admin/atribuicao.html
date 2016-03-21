@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="BossEdu">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/view/css/custom.css" />
   <link rel="stylesheet" href="/view/css/custom_admin.css"/>
 </head>
-<body>
+<body data-ng-controller="atribuicaoCtrl">
   <!-- Inicio do cabecalho -->
   <header>
     <!-- Navbar -->
@@ -38,13 +38,13 @@
             </li>
           </ul>
           <ul class="nav navbar-nav">
-            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span>&#32;Voltar</a></li>            
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span>&#32;Voltar</a></li>
           </ul>
         </div>
       </div>
       <!-- -->
     </nav>
-    <!-- fim Navbar -->    
+    <!-- fim Navbar -->
   </header>
 
   <main>
@@ -58,9 +58,9 @@
               <li><h6>Turma:</h6><p>ADS-20326</p></li>
               <li><h6>Data de início:</h6><p>10/04/2011</p></li>
               <li><h6>Data de encerramento:</h6><p>22/05/2022</p></li>
-              <li><h6>Alunos cadastrados:</h6><p>34</p></li>              
-            </ul>           
-          </div>          
+              <li><h6>Alunos cadastrados:</h6><p>34</p></li>
+            </ul>
+          </div>
         </div>
 
         <div class="col-md-9">
@@ -74,104 +74,23 @@
                     <th>Hora - Início</th>
                     <th>Hora - Fim</th>
                     <th>Prédio</th>
-                    <th>Sala</th> 
-                    <th></th>                       
+                    <th>Sala</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>                    
-                    <td>Domingo</td>
-                    <td>18:00</td>
-                    <td>18:50</td>
-                    <td>AT-8</td>
-                    <td>176</td>
+                  <tr data-ng-repeat="disponibilidade in salas_horarios">
+                    <td>{{disponibilidade.dia}}</td>
+                    <td>{{disponibilidade.hora_ini}}</td>
+                    <td>{{disponibilidade.hora_fim}}</td>
+                    <td>{{disponibilidade.predio}}</td>
+                    <td>{{disponibilidade.sala}}</td>
                     <td><button class="btn-remove-list"><span class="fa fa-close"></span></button></td>
                   </tr>
-
-                  <tr>                    
-                    <td>Domingo</td>
-                    <td>18:00</td>
-                    <td>18:50</td>
-                    <td>AT-8</td>
-                    <td>176</td>
-                    <td><button class="btn-remove-list"><span class="fa fa-close"></span></button></td>
-                  </tr> 
-
-                  <tr>                    
-                    <td>Domingo</td>
-                    <td>18:00</td>
-                    <td>18:50</td>
-                    <td>AT-8</td>
-                    <td>176</td>
-                    <td><button class="btn-remove-list"><span class="fa fa-close"></span></button></td>
-                  </tr> 
-
-                  <tr>                    
-                    <td>Domingo</td>
-                    <td>18:00</td>
-                    <td>18:50</td>
-                    <td>AT-8</td>
-                    <td>176</td>
-                    <td><button class="btn-remove-list"><span class="fa fa-close"></span></button></td>
-                  </tr> 
-
-                  <tr>                    
-                    <td>Domingo</td>
-                    <td>18:00</td>
-                    <td>18:50</td>
-                    <td>AT-8</td>
-                    <td>176</td>
-                    <td><button class="btn-remove-list"><span class="fa fa-close"></span></button></td>
-                  </tr>  
-
-                  <tr>                    
-                    <td>Domingo</td>
-                    <td>18:00</td>
-                    <td>18:50</td>
-                    <td>AT-8</td>
-                    <td>176</td>
-                    <td><button class="btn-remove-list"><span class="fa fa-close"></span></button></td>
-                  </tr>  
-
-                  <tr>                    
-                    <td>Domingo</td>
-                    <td>18:00</td>
-                    <td>18:50</td>
-                    <td>AT-8</td>
-                    <td>176</td>
-                    <td><button class="btn-remove-list"><span class="fa fa-close"></span></button></td>
-                  </tr>  
-
-                  <tr>                    
-                    <td>Domingo</td>
-                    <td>18:00</td>
-                    <td>18:50</td>
-                    <td>AT-8</td>
-                    <td>176</td>
-                    <td><button class="btn-remove-list"><span class="fa fa-close"></span></button></td>
-                  </tr>  
-
-                  <tr>                    
-                    <td>Domingo</td>
-                    <td>18:00</td>
-                    <td>18:50</td>
-                    <td>AT-8</td>
-                    <td>176</td>
-                    <td><button class="btn-remove-list"><span class="fa fa-close"></span></button></td>
-                  </tr>  
-
-                  <tr>                    
-                    <td>Domingo</td>
-                    <td>18:00</td>
-                    <td>18:50</td>
-                    <td>AT-8</td>
-                    <td>176</td>
-                    <td><button class="btn-remove-list"><span class="fa fa-close"></span></button></td>
-                  </tr>                   
                 </tbody>
               </table>
-            </div>           
-            <button type="button" class="custom-button-sm" data-toggle="modal" data-target="#modal-atribui-horario">Atribuir nova sala/horário</button> 
+            </div>
+            <button type="button" class="custom-button-sm" data-toggle="modal" data-target="#modal-atribui-horario">Atribuir nova sala/horário</button>
           </div>
         </div>
       </div>
@@ -180,168 +99,43 @@
         <div class="col-sm-6">
           <div class="atribuicao_lista_professores admin_box">
             <h4>Professores</h4>
-            <ul class="list-group custom-list-group list-group-box">     
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
+            <ul class="list-group custom-list-group list-group-box">
+              <li class="list-group-item clearfix" data-ng-repeat="professor in usuarios_matriculados" data-ng-if="professor.status==1">
+                <a href="#"><span class="fa fa-user"></span>&#32;{{professor.nome}}</a>
+                <div class="custom-list-options">
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>    
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>    
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>    
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>    
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>     
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>    
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>    
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>                 
             </ul>
-            <button type="button" class="custom-button-sm" data-toggle="modal" data-target="#modal-atribui-professor">Atribuir novo professor</button> 
-          </div>         
+            <button type="button" class="custom-button-sm" data-toggle="modal" data-target="#modal-atribui-professor">Atribuir novo professor</button>
+          </div>
         </div>
 
         <div class="col-sm-6">
          <div class="atribuicao_lista_alunos admin_box">
             <h4>Alunos</h4>
-            <form>   
+            <form>
               <div class="input-group">
-               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
+               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->
                 <input type="search" class="form-control" id="busca-aluno" placeholder="Buscar aluno por nome">
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                  </span>                
+                  </span>
               </div>
-            </form> 
-            <ul class="list-group custom-list-group list-group-box">     
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
+            </form>
+            <ul class="list-group custom-list-group list-group-box">
+              <li class="list-group-item clearfix" data-ng-repeat="aluno in usuarios_matriculados" data-ng-if="aluno.status==0">
+                <a href="#"><span class="fa fa-user"></span>&#32;{{aluno.nome}}</a>
+                <div class="custom-list-options">
                   <button class="btn-remove-list"><span class="fa fa-close"></span></button>
                 </div>
               </li>
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li> 
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li> 
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li> 
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li> 
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li> 
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li> 
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li> 
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-remove-list"><span class="fa fa-close"></span></button>
-                </div>
-              </li>               
-            </ul> 
-            <button type="button" class="custom-button-sm" data-toggle="modal" data-target="#modal-atribui-aluno">Atribuir novos alunos</button> 
+            </ul>
+            <button type="button" class="custom-button-sm" data-toggle="modal" data-target="#modal-atribui-aluno">Atribuir novos alunos</button>
           </div>
         </div>
-      </div> 
-      </div>     
+      </div>
+      </div>
     </div>
 
    <!-- Modal de atribuição de horarios -->
@@ -350,11 +144,11 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabelUpload">Atribuir Horário/Sala</h4>           
+            <h4 class="modal-title" id="myModalLabelUpload">Atribuir Horário/Sala</h4>
 
-          </div>  
-          <div class="modal-body-tabela-horarios modal-body">           
-            
+          </div>
+          <div class="modal-body-tabela-horarios modal-body">
+
             <div class="row">
               <form class="atribuir-horarios">
                 <div class="form-group">
@@ -365,16 +159,16 @@
                         <option value="seg">Seg</option>
                         <option value="ter">Ter</option>
                         <option value="qua">Qua</option>
-                        <option value="qui">Qui</option> 
+                        <option value="qui">Qui</option>
                         <option value="sex">Sex</option>
-                        <option value="sab">Sab</option>                   
+                        <option value="sab">Sab</option>
                       </select>
                     </div>
                     <div class="col-md-3 col-sm-6">
                       <label for="horario-aula" class="control-label">Horário</label>
                       <select id="horario-aula" class="form-control">
                         <option>18:00 - 18:30</option>
-                        <option>22:15 - 23:00</option>                                    
+                        <option>22:15 - 23:00</option>
                       </select>
                     </div>
 
@@ -382,22 +176,22 @@
                       <label for="predio-aula" class="control-label">Prédio</label>
                       <select id="predio-aula" class="form-control">
                         <option>AT - 785</option>
-                        <option>Area - 51</option>                                    
+                        <option>Area - 51</option>
                       </select>
                     </div>
 
                     <div class="col-md-3 col-sm-6">
                       <label for="predio-aula" class="control-label">Sala</label>
-                      <select id="predio-aula" class="form-control">
+                      <select id="sala-aula" class="form-control">
                         <option>Sala 134</option>
-                        <option>Lab 697</option>                                    
+                        <option>Lab 697</option>
                       </select>
                     </div>
                     <div class="col-md-1">
                       <button type="button" id="add-sala-horario" class="custom-button-lg"><span class="fa fa-plus"></span></button>
                     </div>
                   </div>
-              </form> 
+              </form>
             </div>
 
             <div class="table-responsive">
@@ -415,24 +209,24 @@
                     <td>Seg</td>
                     <td>18:00 - 19:30</td>
                     <td>AT-84</td>
-                    <td>Sala 435</td>                      
+                    <td>Sala 435</td>
                   </tr>
                   <tr>
                     <td>Seg</td>
                     <td>18:00 - 19:30</td>
                     <td>AT-84</td>
-                    <td>Sala 435</td>                      
-                  </tr>                   
+                    <td>Sala 435</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </div>
-                
+
           <div class="modal-footer">
             <div class="modal_table">
-                        
-              <button type="button" class="custom-button-sm"> Incluir novos alunos</button>
-            </div>          
+
+              <button type="button" class="custom-button-sm"> Incluir novos horários</button>
+            </div>
           </div>
         </div>
       </div>
@@ -446,148 +240,28 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabelUpload">Atribuir Professores</h4>
-          </div>          
-          <div class="modal-footer">  
-            <div class="atribuir_prof modal_list">            
-            <form>   
+          </div>
+          <div class="modal-footer">
+            <div class="atribuir_prof modal_list">
+            <form>
               <div class="input-group">
-               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
+               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->
                 <input type="search" class="form-control" id="busca-professor" placeholder="Buscar professor por nome">
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                  </span>                
-              </div>              
-            </form>           
-
-            <ul class="list-group custom-list-group list-group-box">     
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
+                  </span>
+              </div>
+            </form>
+            <ul class="list-group custom-list-group list-group-box">
+              <li class="list-group-item clearfix" data-ng-repeat="professor in usuarios" data-ng-if="professor.status==1">
+                <a href="#"><span class="fa fa-user"></span>&#32;{{professor.nome}}</a>
+                <div class="custom-list-options">
+                  <button class="btn-atribui" data-ng-click="selecionarUsuario(professor)"><span id="{{professor.id}}" class="fa fa-circle-o"></span></button>
                 </div>
               </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Professor x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>                                   
-            </ul>             
-            <button type="button" class="custom-button-sm">Incluir novos professores</button> 
-          </div>          
+            </ul>
+            <button type="button" class="custom-button-sm" data-ng-click="incluirUsuarios()">Incluir novos professores</button>
+          </div>
           </div>
         </div>
       </div>
@@ -601,135 +275,47 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabelUpload">Atribuir Alunos</h4>
-          </div>          
-          <div class="modal-footer">  
-            <div class="atribuir_alunos modal_list">            
-            <form>   
+          </div>
+          <div class="modal-footer">
+            <div class="atribuir_alunos modal_list">
+            <form>
               <div class="input-group">
-               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->                
+               <!-- <label for="busca-palestra" class="control-label">Buscar Palestra</label-->
                 <input type="search" class="form-control" id="busca-aluno" placeholder="Buscar aluno por nome">
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                  </span>                
-              </div>              
-            </form> 
-            <div class="select-all"> 
-                   <p>Selecionar Todos</p>                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>                
+                  </span>
+              </div>
+            </form>
+            <div class="select-all">
+                   <p>Selecionar Todos</p>
+                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
             </div>
 
-            <ul class="list-group custom-list-group list-group-box">     
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
+            <ul class="list-group custom-list-group list-group-box">
+              <li class="list-group-item clearfix" data-ng-repeat="aluno in usuarios" data-ng-if="aluno.status==0">
+                <a href="#"><span class="fa fa-user"></span>&#32;{{aluno.nome}}</a>
+                <div class="custom-list-options">
                   <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
                 </div>
               </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>
-
-              <li class="list-group-item clearfix">
-                <a href="#"><span class="fa fa-user"></span>&#32;Aluno x</a>
-                <div class="custom-list-options">                        
-                  <button class="btn-atribui"><span class="fa fa-check-circle-o"></span></button>
-                </div>
-              </li>              
-            </ul>             
-            <button type="button" class="custom-button-sm"> Incluir novos alunos</button> 
-          </div>          
+            </ul>
+            <button type="button" class="custom-button-sm"> Incluir novos alunos</button>
+          </div>
           </div>
         </div>
       </div>
     </div>
     <!-- -->
-
-    
   </main>
 
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script> 
+  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
   <script src="../js/script-admin.js"></script>
+
+  <!-- AngularJS Scripts -->
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/js/app.js"></script>
+  <script src="/view/js/controller_test/atribuicaoCtrl.js"></script>
 </body>
 </html>
