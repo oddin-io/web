@@ -23,5 +23,8 @@
   },
   "require-dev": {
     "heroku/heroku-buildpack-php": "^87.0"
+  },
+  "scripts": {
+    "post-install-cmd": ["bower install"]
   }
 }
