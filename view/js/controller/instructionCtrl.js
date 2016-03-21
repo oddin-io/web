@@ -54,7 +54,7 @@ app.controller("instructionCtrl", function ($scope, $http) {
   //
   // };
 
-  $scope.newPresentation = function (lecture, presentation) {
+  $scope.newPresentation = function (instruction, presentation) {
     var url = restServerUrl + "/controller/" + paths.join("/") + "/presentation";
     $http.post(url, presentation).success(function (data) {
       var presentationId = data.id;
