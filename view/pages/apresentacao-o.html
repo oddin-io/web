@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Apresentação - {{presentation.lecture.code}}</title>
+  <title>Aula - {{presentation.lecture.code}}</title>
 
   <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
@@ -76,21 +76,45 @@
             </div>
             <!--Opções do Usuário -->
             <div class="doubt__options">
-              <div class="doubt__interactive" data-ng-if="doubt.status == 2">
-                <button class="btn btn-link btn-respondido" data-ng-click="fetchAnswer(doubt)">
-                  <span class="resposta-btn-icon glyphicon glyphicon-comment"></span>
-                  <span class="icon_label hidden-xs">Resposta</span>
-                </button>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="doubt__interactive status-duvida">
+                    <span class="glyphicon glyphicon-lock btn-resp-fechada"></span>
+                    <span class="icon_label hidden-xs ">Respondido</span>
+                  </div>
+                </div>
               </div>
 
-              <div class="doubt__interactive" id="curtirComentario" data-ng-class="{interactive_checked: doubt.like}">
-                <a data-ng-click="likeDoubt(doubt)">
-                  <span class="glyphicon glyphicon-thumbs-up"></span>
-                  <span class="icon_label hidden-xs">Gostei</span>
-                </a>
-                <span class="badge">{{doubt.likes}}</span>
-              </div>
+              <div class="row">
+                <div class="col-xs-4">
+                  <div class="doubt__interactive doubt-margin-top pull-left" data-ng-if="doubt.status == 2">
+                    <button class="btn btn-link btn-respondido" data-ng-click="fetchAnswer(doubt)">
+                      <span class="resposta-btn-icon glyphicon glyphicon-comment"></span>
+                      <span class="icon_label hidden-xs">Resposta</span>
+                    </button>
+                  </div>
+                </div>
 
+                <div class="col-xs-4">
+                  <div class="doubt__interactive doubt-margin-top center-block-custom" id="curtirComentario" data-ng-class="{interactive_checked: doubt.like}">
+                    <a data-ng-click="likeDoubt(doubt)">
+                      <span class="glyphicon glyphicon-thumbs-up"></span>
+                      <span class="icon_label hidden-xs">Gostei</span>
+                    </a>
+                    <span class="badge">{{doubt.likes}}</span>
+                  </div>
+                </div>
+
+                <div class="col-xs-4">
+                  <div class="doubt__interactive doubt-margin-top pull-right" id="entendi">
+                    <a href="#">
+                      <span class="glyphicon glyphicon-check btn-entendi"></span>
+                      <span class="icon_label hidden-xs">Entendi</span>
+                    </a>
+                    <span class="badge">10</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -98,14 +122,7 @@
 
         <!--Resposta-->
         <div data-ng-attr-id="{{doubt.id}}" class = "col-md-offset-2 col-md-8" data-ng-if="doubt.answers.length > 0">
-          <div class="resposta animated fadeIn" data-ng-repeat="answer in doubt.answers">
-            <div class="resposta__header">
-              <div class="row">
-                  <div class="col-md-4 col-sm-6"><h4 class="resposta__pessoa">{{doubt.pessoa.nome}}</h4></div>
-                  <div class="col-md-offset-6 col-md-2 col-sm-offset-4 col-sm-2"><h4 class="resposta__time">00:00:00</h4></div>
-              </div>
-            </div>
-
+          <div class="resposta animated fadeIn">
             <div class="abas_respostas">
               <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#texto" aria-controls="texto" role="tab" data-toggle="tab"><span class="fa fa-font fa-lg"></span></a></li>
@@ -115,29 +132,21 @@
               </ul>
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="texto">
-                  <div class="resposta__textbox">
-                    <p>
-                      {{answer.text}}
-                    </p>
+                  <div class="respostas_section" data-ng-repeat="">
+                    <div class="row">
+                      <div class="col-md-4 col-sm-6"><h4 class="resposta__pessoa">{{answer.pessoa}}</h4></div>
+                      <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="resposta__time">{{answer.time}}</h4></div>
+                    </div>
+                    <div class="resposta__textbox">
+                      <p>
+                        {{answer.text}}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="audio"><p>Áudio</p></div>
                 <div role="tabpanel" class="tab-pane" id="video"><p>Vídeo</p></div>
                 <div role="tabpanel" class="tab-pane" id="arquivo"><p>Download de Arquivo</p></div>
-              </div>
-            </div>
-
-             <div class="doubt__options">
-              <div class="doubt__interactive">
-                <span class="glyphicon glyphicon-lock btn-resp-fechada"></span>
-                <span class="icon_label hidden-xs ">Respondido</span>
-              </div>
-              <div class="doubt__interactive" id="curtir">
-                <a href="#">
-                  <span class="glyphicon glyphicon-check btn-entendi"></span>
-                  <span class="icon_label hidden-xs">Entendi</span>
-                </a>
-                <span class="badge">100</span>
               </div>
             </div>
           </div>

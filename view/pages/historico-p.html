@@ -5,7 +5,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apresentações - {{instruction.code}}</title>
+  <title>Aulas - {{instruction.code}}</title>
 
   <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
@@ -41,7 +41,7 @@
           </ul>
           <ul class="nav navbar-nav">
             <li><a href="/app/instruction"><span class="glyphicon glyphicon-chevron-left"></span>Disciplinas</a></li>
-            <li><a href="./presentation/current">Apresentação Atual</a></li>
+            <li><a href="./presentation/current">Aula Atual</a></li>
             <li><a href="./material">Material</a></li>
             <li><a href="./participants">Participantes</a></li>
           </ul>
@@ -51,16 +51,16 @@
 
     <!--Título Página-->
     <div class="page-header container">
-      <h1>Apresentações - {{instruction.name}}</h1>
+      <h1>Aulas - {{instruction.name}}</h1>
     </div>
   </header>
 
   <!-- Conteúdo principal -->
   <main class="container" data-ng-init="getHistoric()">
-    <!-- Formulário nova apresentação -->
+    <!-- Formulário nova aula -->
     <section class="bordered-section">
       <div class="section-header">
-        <h2>Nova apresentação</h2>
+        <h2>Nova aula</h2>
       </div>
       <form data-ng-submit="newPresentation(instruction, presentation)">
         <div class="row">
@@ -68,7 +68,7 @@
             <div class="col-sm-12">
               <label for="presentation-subject">Tema:</label>
               <input id="presentation-subject" type="text" class="form-control" data-ng-model="presentation.subject"
-                     placeholder="Insira o tema da aula/palestra"/>
+                     placeholder="Insira o tema da aula/apresentação"/>
             </div>
           </div>
           <div class="form-group">
@@ -85,7 +85,7 @@
       <!-- Aulas abertas -->
       <section class="bordered-section">
         <div class="section-header">
-          <h2>Apresentações Abertas</h2>
+          <h2>Aulas Abertas</h2>
         </div>
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover">
@@ -119,7 +119,7 @@
 
       <section class="bordered-section">
         <div class="section-header">
-          <h2>Apresentações Fechadas</h2>
+          <h2>Aulas Fechadas</h2>
         </div>
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover">

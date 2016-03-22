@@ -1,6 +1,6 @@
 /*Estilos Base*/
 body {
-  padding-top: 50px;  
+  padding-top: 50px;
 }
 h1 {
   text-align: center;
@@ -273,7 +273,7 @@ ul {
     /*---Parte da interação do Usuário */
 
 .doubt__options {
-  margin: 0 15px 0px 15px;  
+  margin: 0 15px 0px 15px;
  }
 
 .resposta-btn-icon {    /*Cor do ícone de ver resposta */
@@ -286,12 +286,12 @@ ul {
   border: none;
 }
 
-.doubt__interactive a {  
+.doubt__interactive a {
   color: #555;
 }
 
-.doubt__interactive a:link {  
-  text-decoration: none;  
+.doubt__interactive a:link {
+  text-decoration: none;
 }
 
 .doubt__interactive a:hover {
@@ -304,7 +304,7 @@ ul {
 }
 
 .resposta {
-  padding-bottom: 15px;
+  margin-top: 1px;
 }
 
 .btn-entendi {
@@ -314,6 +314,31 @@ ul {
 .btn-resp-fechada {
   color: #992211;
 }
+
+.status-duvida {
+  border-bottom: 1px solid #ddd;
+}
+
+.doubt-margin-top {
+  margin-top: 8px;
+}
+
+.center-block-custom {
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.respostas_section {
+  padding-bottom: 20px;
+}
+
+.respostas_section h4 {
+  font-size: 1.1em;
+  color: #777;
+}
+
     /*---Parte fixa - Formulário de pergunta*/
 
 .fixed {
