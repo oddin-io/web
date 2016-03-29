@@ -70,5 +70,7 @@ app.controller("presentationCtrl", function ($scope, $http) {
 
   $scope.answerDoubt = function (doubt, answer) {
     $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/contribution", answer);
+
+    delete $scope.answer;
   };
 });
