@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/view/vendor/slick-carousel/slick/slick-theme.css" />
   <link rel="stylesheet" href="/view/css/custom.css" />
 </head>
-<body>
+<body ng-cloak="true">
   <header>
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -96,7 +96,7 @@
 
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="texto">
-                  <form>
+                  <form data-ng-submit="answerDoubt(modal.doubt, answer)">
                     <fieldset>
                       <textarea name="texto" placeholder="Insira sua resposta" data-ng-model="answer.text" class="form-control" id="textarea_resposta"></textarea>
                     </fieldset>
@@ -105,7 +105,7 @@
                       <div class="col-sm-8">
                         <fieldset id="checkbox_resposta">
                           <input id="status_resposta" type="checkbox" class="with-font" />
-                          <label id="status_resposta_label" for="status_resposta" data-ng-click="answerDoubt(modal.doubt, answer)">Responder</label>
+                          <label id="status_resposta_label" for="status_resposta">Responder</label>
                         </fieldset>
                       </div>
                       <div class="col-sm-4">
