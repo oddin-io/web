@@ -79,7 +79,13 @@ ul {
   color: #fff;
 }
 
-.custom-button-lg:hover, .custom-button-sm:hover {
+.button-standard {
+  border: none;
+  background-color: #aaa;
+  color: #fff;
+}
+
+.custom-button-lg:hover, .custom-button-sm:hover, .button-standard:hover, .custom-buton-md:hover {
   background-color: #bbb;
 }
 
@@ -274,6 +280,10 @@ ul {
   padding: 15px;
 }
 
+.section_respostas_text {
+  max-height: 200px;
+  overflow: auto;
+}
 
 .doubt__textbox, .resposta__textbox {
   background-color: #fff;
@@ -328,6 +338,10 @@ ul {
   border-bottom: 1px solid #ddd;
 }
 
+.modal-footer p {
+  text-align: left;
+}
+
 .doubt-margin-top {
   margin-top: 8px;
 }
@@ -343,9 +357,21 @@ ul {
   padding-bottom: 20px;
 }
 
+.respostas_prof {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
 .respostas_section h4 {
   font-size: 1.1em;
   color: #777;
+}
+
+.btn-options-prof {
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
     /*---Parte fixa - Formulário de pergunta*/
@@ -368,6 +394,11 @@ ul {
 
 #textarea_duvida {
   margin-bottom: 5px;
+}
+
+.form_responder_duvida {
+  padding-top: 15px;
+  /*border-top: 1px solid #bbb;*/
 }
 
 /*Abas de resposta */
@@ -452,11 +483,17 @@ slick .doubt__content {
   background-color: #aaa;
 }
 
-.ranking .glyphicon-thumbs-up {
-  color: #777;
-  vertical-align: text-top;
+.ranking .status-duvida-prof {
+  margin-left: 6px;
+  margin-right: 6px;
   font-size: 1.1em;
 }
+.ranking .glyphicon-thumbs-up {
+  color: #777;
+  /*vertical-align: text-top;
+  font-size: 1.1em;*/
+}
+
 
 slick .doubt {
   padding-bottom: 5px;

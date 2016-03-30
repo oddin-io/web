@@ -166,7 +166,7 @@
                     </div>
                     <div class="col-md-3 col-sm-6">
                       <label for="horario-aula" class="control-label">Horário</label>
-                      <select id="horario-aula" class="form-control" data-ng-disabled="!(selected)">
+                      <select id="horario-aula" class="form-control" data-ng-options="item as item.dia for item in selected" data-ng-disabled="!(selected)">
                         <!--<option>18:00 - 18:30</option>
                         <option>22:15 - 23:00</option>-->
                       </select>

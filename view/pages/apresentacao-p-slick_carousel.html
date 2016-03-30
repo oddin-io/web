@@ -61,14 +61,21 @@
               <h4 class="doubt__pessoa">{{doubt.person.name}}</h4>
               <h4 class="doubt__time">{{doubt.date}} {{doubt.time}}</h4>
             </div>
-            <div class="ranking"><span class="badge">{{doubt.likes}}</span><span>&#32;</span><span class="glyphicon glyphicon-thumbs-up"></span></div>
+            <div class="ranking">
+              <span class="status-duvida-prof"><span class="badge">{{doubt.likes}}</span><span>&#32;</span><span class="glyphicon glyphicon-thumbs-up"></span></span>
+              <span class="status-duvida-prof"><span class="badge">{{doubt.likes}}</span><span>&#32;</span><span class="glyphicon glyphicon glyphicon-check btn-entendi"></span></span>
+              <span class="status-duvida-prof"><span class="glyphicon glyphicon-lock btn-resp-fechada"></span></span>
+            </div>
             <div class="doubt__content">
               <div class="doubt__textbox">
                 <p class="more">{{doubt.text}}
                 </p>
               </div>
             </div>
-            <button data-ng-click="seeDoubt(doubt)" type="button" class="custom-button-sm" data-toggle="modal" data-target="#modal-duvida">Ver Dúvida</button>
+            <div class="btn-options-prof">
+              <button data-ng-click="seeDoubt(doubt)" class="button-standard" type="button" data-toggle="modal" data-target="#modal-duvida">Ver Dúvida</button>
+              <button class="button-standard" type="button">Fechar Resposta</button>
+            </div>
           </div>
         </div>
       </slick>
@@ -96,19 +103,27 @@
 
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="texto">
-                  <form data-ng-submit="answerDoubt(modal.doubt, answer)">
+                  <div class="section_respostas_text">
+                    <div class="respostas_section respostas_prof" data-ng-repeat="answer in answers">
+                      <div class="row">
+                        <div class="col-md-4 col-sm-6"><h4 class="resposta__pessoa">{{answer.pessoa}}</h4></div>
+                        <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="resposta__time">{{answer.date}} {{answer.time}}</h4></div>
+                      </div>
+                      <div class="resposta__textbox">
+                        <p>
+                          {{answer.text}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <form class="form_responder_duvida" data-ng-submit="answerDoubt(modal.doubt, answer)">
                     <fieldset>
                       <textarea name="texto" placeholder="Insira sua resposta" data-ng-model="answer.text" class="form-control" id="textarea_resposta"></textarea>
                     </fieldset>
 
                     <div class="row">
-                      <div class="col-sm-8">
-                        <fieldset id="checkbox_resposta">
-                          <input id="status_resposta" type="checkbox" class="with-font" />
-                          <label id="status_resposta_label" for="status_resposta">Responder</label>
-                        </fieldset>
-                      </div>
-                      <div class="col-sm-4">
+                      <div class="col-sm-offset-8 col-sm-4">
                         <input type="submit" value="Responder" class="custom-button-md"/>
                       </div>
                     </div>
