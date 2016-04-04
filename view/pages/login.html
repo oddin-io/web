@@ -1,100 +1,101 @@
 <!DOCTYPE html>
 <html data-ng-app="BossEdu">
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Login - BOSS Education</title>
+    <title>Oddin</title>
 
-  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/view/css/custom.css" />
-</head>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/view/vendor/Materialize/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="/view/css/custom.css" />
+  </head>
 
-<body data-ng-controller="loginCtrl">
-  <main>
-    <div class="container">
-      <!-- Login Box -->
-      <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-          <div class="login_box">
-            <!-- LOGO -->
-            <div class="row">
-              <div class="col-xs-offset-2 col-xs-8">
-                <div class="div_logo">
-                  <img src="/view/img/LogoComCirculo.png" class="img-responsive center-block"/>
+  <body data-ng-controller="loginCtrl">
+    <main>
+      <div class="container">
+        <!-- Login Box -->
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <div class="login_box">
+              <!-- LOGO -->
+              <div class="row">
+                <div class="col-xs-offset-2 col-xs-8">
+                  <div class="div_logo">
+                    <img src="/view/img/LogoComCirculo.png" class="img-responsive center-block"/>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- fim LOGO -->
+              <!-- fim LOGO -->
 
-            <!-- Formulário -->
-            <div class="row">
-              <div class="col-sm-offset-2 col-sm-8">
-                <form class="form-horizontal" data-ng-submit="login(user)">
-                  <!-- Usuário -->
-                  <div class="form-group">
-                    <div class="col-xs-12">
-                      <label for="user-email">Usuário</label>
-                      <input id="user-email" type="text" placeholder="Insira seu usuário" data-ng-model="user.email" class="form-control"/>
+              <!-- Formulário -->
+              <div class="row">
+                <div class="col-sm-offset-2 col-sm-8">
+                  <form class="form-horizontal" data-ng-submit="login(user)">
+                    <!-- Usuário -->
+                    <div class="form-group">
+                      <div class="col-xs-12">
+                        <label for="user-email">Usuário</label>
+                        <input id="user-email" type="text" placeholder="Insira seu usuário" data-ng-model="user.email" class="form-control"/>
+                      </div>
                     </div>
-                  </div>
-                  <!-- Senha -->
-                  <div class="form-group">
-                    <div class="col-xs-12">
-                      <label for="user-password">Senha</label>
-                      <input id="user-password" type="password" placeholder="Insira sua senha" data-ng-model="user.password" class="form-control"/>
+                    <!-- Senha -->
+                    <div class="form-group">
+                      <div class="col-xs-12">
+                        <label for="user-password">Senha</label>
+                        <input id="user-password" type="password" placeholder="Insira sua senha" data-ng-model="user.password" class="form-control"/>
+                      </div>
                     </div>
-                  </div>
-                  <!-- Manter conectado -->
-                  <div class="checkbox">
+                    <!-- Manter conectado -->
+                    <div class="checkbox">
                       <label>
                         <input id="user-persist" type="checkbox" data-ng-model="user.persist" class=""/>
                         Manter conectado
                       </label>
-                  </div>
-                  <!-- Recuperar Senha -->
-                  <div class="form-group">
-                    <div class="col-xs-12">
-                      <p id="link_esq_senha"><a href="/app/recover-password">Esqueceu o usuário ou senha? Clique aqui</a></p>
                     </div>
-                  <!-- Botão Submit -->
-                  </div>
-
-                  <div class="form-group">
-                    <div class="col-xs-offset-3 col-xs-6">
-                      <input type="submit" value="Entrar" class="custom-button-lg"/>
+                    <!-- Recuperar Senha -->
+                    <div class="form-group">
+                      <div class="col-xs-12">
+                        <p id="link_esq_senha"><a href="/app/recover-password">Esqueceu o usuário ou senha? Clique aqui</a></p>
+                      </div>
+                      <!-- Botão Submit -->
                     </div>
-                  </div>
-                  <!--  -->
-                </form>
-              </div>
-            </div>
-            <!-- Fim formulario -->
 
-            <!-- Mensagem -->
-            <div class="row">
-              <div data-ng-if="message" class="usuario_inexistente col-sm-offset-2 col-sm-8">
-                <p class="message alert-danger">{{message}}</p>
+                    <div class="form-group">
+                      <div class="col-xs-offset-3 col-xs-6">
+                        <input type="submit" value="Entrar" class="custom-button-lg"/>
+                      </div>
+                    </div>
+                    <!--  -->
+                  </form>
+                </div>
               </div>
+              <!-- Fim formulario -->
+
+              <!-- Mensagem -->
+              <div class="row">
+                <div data-ng-if="message" class="usuario_inexistente col-sm-offset-2 col-sm-8">
+                  <p class="message alert-danger">{{message}}</p>
+                </div>
+              </div>
+              <!-- Fim Mensagem -->
             </div>
-            <!-- Fim Mensagem -->
           </div>
         </div>
+        <!--Fim Login Box -->
       </div>
-      <!--Fim Login Box -->
-    </div>
-    <!--Fim Container-->
-  </main>
-  <!-- Fim do main -->
-  <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+      <!--Fim Container-->
+    </main>
+    <!-- Fim do main -->
+    <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
 
-  <script src="/view/js/utils.js"></script>
-  <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
+    <script src="/view/js/utils.js"></script>
+    <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
 
-  <script src="/view/vendor/angular/angular.js"></script>
-  <script src="/view/js/app.js"></script>
-  <script src="/view/js/controller/loginCtrl.js"></script>
-</body>
+    <script src="/view/vendor/angular/angular.js"></script>
+    <script src="/view/js/app.js"></script>
+    <script src="/view/js/controller/loginCtrl.js"></script>
+  </body>
 </html>
