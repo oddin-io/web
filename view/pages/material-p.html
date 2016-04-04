@@ -58,18 +58,23 @@
       <div class="section-header">
         <h2>Upload de material da disciplina</h2>
       </div>
-      <form enctype="multipart/form-data">
+      <form enctype="multipart/form-data" data-ng-submit="uploadMaterial(name)" name="uploadArchive">
         <div class="row">
           <div class="form-group">
             <div class="col-sm-12">
               <label for="material-name">Nome: </label>
-              <input id="material-name" type="text" class="form-control" placeholder="Insira o nome do material a ser enviado"/>
+              <input ng-model="name" id="material-name" type="text" class="form-control" placeholder="Insira o nome do material a ser enviado"/>
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-12">
               <label for="material-file">Arquivo</label>
-              <input id="material-file" type="file" class="custom-file"/>
+              <input id="material-file" name="file" type="file" class="custom-file" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2">
+              <input type="submit" class="custom-button-lg" value="Enviar"/>
             </div>
           </div>
         </div>
@@ -93,7 +98,7 @@
 
             <tbody>
             <tr data-ng-repeat="material in materials">
-              <td><a href="#"><span class="glyphicon glyphicon-save-file"></span>{{material.name}}</a></td>
+              <td><a data-ng-attr-href="{{restServerUrl + buildURI(instruction, '/controller', '/material/') + material.id}}" download="true"><span class="glyphicon glyphicon-save-file"></span>{{material.name}}</a></td>
               <td>{{material.mime}}</td>
             </tr>
             </tbody>
