@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html data-ng-app="BossEdu">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Confirmação de senha</title>
+
+  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/view/css/custom.css" />
+</head>
+<body data-ng-controller="loginCtrl">
+<main>
+  <div class="container">
+    <!--login box-->
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6">
+        <div class="login_box">
+          <!-- LOGO -->
+          <div class="row">
+            <div class="col-xs-offset-2 col-xs-8">
+              <div class="div_logo">
+                <img src="/view/img/LogoComCirculo.png" class="img-responsive center-block"/>
+              </div>
+            </div>
+          </div>
+          <!-- fim LOGO -->
+
+          <div class="row">
+            <div class="col-sm-offset-2 col-sm-8">
+              <!-- Mensagem de confirmação de recuperação de senha -->
+              <div class="col-xs-12">
+                <div id="mensagem" class="alert alert-warning fade in">
+                  <a href="" class="close" onClick="exibeMsg('mensagem');" aria-label="close">&times;</a>
+                  <p>Um link para recuperação de senha foi enviado para seu e-mail.</p>
+                </div>
+              </div>
+
+              <!-- Botão voltar para login-->
+              <div class="col-xs-offset-3 col-xs-6">
+                <input type="button" value="Voltar" href="" role="group" class="custom-button-lg"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fim Login Box -->
+  </div>
+  <!-- Fim do container -->
+</main>
+<script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+
+<script src="/view/js/utils.js"></script>
+<script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
+
+<script src="/view/vendor/angular/angular.js"></script>
+<script src="/view/js/app.js"></script>
+<script src="/view/js/controller/loginCtrl.js"></script>
+</body>
+</html>

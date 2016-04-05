@@ -12,19 +12,18 @@
     <link rel="stylesheet" href="/view/css/custom.css" />
   </head>
 
-  <body data-ng-controller="loginCtrl">
-    <main>
-      <div class="container">
-        <!-- Login Box -->
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <div class="login_box">
-              <!-- LOGO -->
-              <div class="row">
-                <div class="col-xs-offset-2 col-xs-8">
-                  <div class="div_logo">
-                    <img src="/view/img/LogoComCirculo.png" class="img-responsive center-block"/>
-                  </div>
+<body data-ng-controller="loginCtrl" data-ng-cloak="true">
+  <main>
+    <div class="container">
+      <!-- Login Box -->
+      <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+          <div class="login_box">
+            <!-- LOGO -->
+            <div class="row">
+              <div class="col-xs-offset-2 col-xs-8">
+                <div class="div_logo">
+                  <img src="/view/img/LogoComCirculo.png" class="img-responsive center-block"/>
                 </div>
               </div>
               <!-- fim LOGO -->
@@ -57,11 +56,10 @@
                     <!-- Recuperar Senha -->
                     <div class="form-group">
                       <div class="col-xs-12">
-                        <p id="link_esq_senha"><a href="/app/recover-password">Esqueceu o usuário ou senha? Clique aqui</a></p>
+                        <p id="link_esq_senha"><a href="/app/recover-password">Esqueceu sua senha? Clique aqui</a></p>
                       </div>
-                      <!-- Botão Submit -->
                     </div>
-
+                    <!-- Botão Submit -->
                     <div class="form-group">
                       <div class="col-xs-offset-3 col-xs-6">
                         <input type="submit" value="Entrar" class="custom-button-lg"/>
@@ -83,10 +81,11 @@
             </div>
           </div>
         </div>
-        <!--Fim Login Box -->
       </div>
-      <!--Fim Container-->
-    </main>
+      <!--Fim Login Box -->
+    </div>
+    <!--Fim Container-->
+  </main>
     <!-- Fim do main -->
     <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
@@ -97,5 +96,5 @@
     <script src="/view/vendor/angular/angular.js"></script>
     <script src="/view/js/app.js"></script>
     <script src="/view/js/controller/loginCtrl.js"></script>
-  </body>
+</body>
 </html>

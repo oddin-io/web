@@ -18,6 +18,17 @@ app.controller("presentationCtrl", function ($scope, $http) {
       });
   });
 
+  socket.on("new contribution", function (data) {
+    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + data.doubt_id + "/contribution/" + data.contribution_id)
+      .success(function (response) {
+        console.log($scope.doubts[data.doubt_id]["answers"]);
+        $scope.doubts[data.doubt_id]["answers"].push(response);
+
+        console.log($scope.doubts[data.doubt_id]["answers"]);
+        $scope.modal.doubt = $scope.doubts[data.doubt_id];
+      });
+  });
+
   $scope.getPresentation = function () {
     $http.get(restServerUrl + "/controller/" + paths.join("/") + "/info")
       .success(function (data) {
@@ -57,19 +68,40 @@ app.controller("presentationCtrl", function ($scope, $http) {
     $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/change-status", doubt);
   };
 
+  $scope.fetchAnswer = function (doubt) {
+    if(doubt.answers == undefined)
+      doubt.answers = [];
+
+    if(doubt.answers.length == 0) {
+      $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/contribution").success(function (data) {
+        doubt.answers = data.contributions;
+      });
+    }
+    else {
+      doubt.answers = [];
+    }
+  };
+
+  $scope.fetchAnswerProf = function (doubt) {
+      $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/contribution").success(function (data) {
+        doubt.answers = data.contributions;
+      });
+  };
+
   $scope.seeDoubt = function (doubt) {
+    $scope.fetchAnswerProf(doubt);
     $scope.modal = {};
     $scope.modal.doubt = doubt;
   };
 
-  $scope.fetchAnswer = function (doubt) {
-    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/contribution").success(function (data) {
-      doubt.answers = data.contributions;
-    });
-  };
-
   $scope.answerDoubt = function (doubt, answer) {
-    $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/contribution", answer);
+    $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/contribution", answer)
+      .success(function (data) {
+        socket.emit("new contribution", {doubt_id: doubt.id, contribution_id: data.Id});
+        console.log(data.Id);
+      });
+    if(doubt.status == 0)
+      $scope.changeStatus(doubt, 1);
 
     delete $scope.answer;
   };

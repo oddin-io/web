@@ -11,8 +11,12 @@ app.controller("instructionCtrl", function ($scope, $http) {
   $http.defaults.headers.common["Content-Type"] = "text/plain";
   $http.defaults.headers.common["X-Auth-Token"] = Util.getCookie("sso_client_token");
 
-  $scope.buildURI = function (instruction, prefix, sufix) {
-    return prefix + "/instruction/" + instruction.id + sufix;
+  $scope.restServerUrl = restServerUrl;
+
+  $scope.buildURI = function (instruction, prefix, suffix) {
+    var url = prefix + "/instruction/" + instruction.id + suffix;
+    console.log(url);
+    return url;
   };
 
   $scope.getInstructions = function () {
@@ -45,14 +49,30 @@ app.controller("instructionCtrl", function ($scope, $http) {
       $scope.materials = data.materials;
     });
   };
-  //
+
   // $scope.downloadMaterial = function (material) {
-  //
+  //   var url = restServerUrl + $scope.buildURI($scope.instruction, '/controller', '/material/') + material.id;
+  //   $http.get(url).success(function (data) {
+  //       console.log(data);
+  //   });
   // };
-  //
-  // $scope.uploadMaterial = function (material) {
-  //
-  // };
+
+  $scope.uploadMaterial = function (name) {
+    var file = document.forms.uploadArchive.file.files[0];
+    console.log(file);
+
+    var fd = new FormData();
+    fd.append("file", file);
+    fd.append("name", name);
+
+    var url = restServerUrl + $scope.buildURI($scope.instruction, "/controller", "/material");
+    console.log(url);
+    $http.post(url, fd,
+      {headers: {"Content-Type": undefined}})
+      .success(function (data) {
+        console.log(data);
+    });
+  };
 
   $scope.newPresentation = function (instruction, presentation) {
     var url = restServerUrl + "/controller/" + paths.join("/") + "/presentation";

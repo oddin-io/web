@@ -332,6 +332,17 @@ ul {
 
 .btn-resp-fechada {
   color: #992211;
+  font-size: 1.2em;
+}
+
+.btn-resp-none {
+  color: #229911;
+  font-size: 1.2em;
+}
+
+.btn-resp-aberta {
+  color: #E8DA72;
+  font-size: 1.2em;
 }
 
 .status-duvida {
