@@ -6,28 +6,52 @@ app.controller("presentationCtrl", function ($scope, $http) {
     return ret;
   })();
 
-  var restServerUrl = Util.getEnvironment().config.urls["rest"];;
+  var restServerUrl = Util.getEnvironment().config.urls["rest"];
   $http.defaults.headers.post["Content-Type"] = "text/plain";
   $http.defaults.headers.common["X-Auth-Token"] = Util.getCookie("sso_client_token");
 
+// #region Socket.io
   var socket = io(Util.getEnvironment().config.urls["socket"] + "/presentation");
-  socket.on("new doubt", function (data) {
+  socket.on("new/doubt", function (data) {
+    console.log("Event = new/doubt; Data = " + data);
     $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + data.doubt_id)
       .success(function (data) {
         $scope.doubts[data.id] = data;
       });
   });
 
-  socket.on("new contribution", function (data) {
+  socket.on("new/contribution", function (data) {
+    console.log("Event = new/contribution; Data = " + data);
     $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + data.doubt_id + "/contribution/" + data.contribution_id)
-      .success(function (response) {
-        console.log($scope.doubts[data.doubt_id]["answers"]);
-        $scope.doubts[data.doubt_id]["answers"].push(response);
+    .success(function (response) {
+      console.log($scope.doubts[data.doubt_id]["answers"]);
+      $scope.doubts[data.doubt_id]["answers"].push(response);
 
-        console.log($scope.doubts[data.doubt_id]["answers"]);
-        $scope.modal.doubt = $scope.doubts[data.doubt_id];
-      });
+      console.log($scope.doubts[data.doubt_id]["answers"]);
+      $scope.modal.doubt = $scope.doubts[data.doubt_id];
+    });
   });
+
+  socket.on("new/doubt_like", function (data) {
+    console.log("Event = new/doubt_like; Data = " + data);
+  });
+
+  socket.on("delete/doubt_like", function (data) {
+    console.log("Event = delete/doubt_like; Data = " + data);
+  });
+
+  socket.on("new/doubt_understand", function (data) {
+    console.log("Event = new/doubt_understand; Data = " + data);
+  });
+
+  socket.on("delete/doubt_understand", function (data) {
+    console.log("Event = delete/doubt_understand; Data = " + data);
+  });
+
+  socket.on("update/doubt_status", function (data) {
+    console.log("Event = update/doubt_status; Data = " + data);
+  });
+// #endregion
 
   $scope.getPresentation = function () {
     $http.get(restServerUrl + "/controller/" + paths.join("/") + "/info")
@@ -42,7 +66,7 @@ app.controller("presentationCtrl", function ($scope, $http) {
 
   $scope.sendDoubt = function (doubt) {
     $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt", doubt).success(function (data) {
-      socket.emit("new doubt", {doubt_id: data.id});
+      socket.emit("new/doubt", {doubt_id: data.id});
     });
 
     delete $scope.doubt;
@@ -53,10 +77,12 @@ app.controller("presentationCtrl", function ($scope, $http) {
 
     if (!doubt.curti) {
       $http.post(url + "/like", null).success(function (data) {
+        socket.emit("new/doubt_like", {doubt_id: doubt.id});
         doubt.curti = true;
       });
     } else {
       $http.delete(url + "/like").success(function (data) {
+        socket.emit("delete/doubt_like", {doubt_id: doubt.id});
         doubt.curti = false;
       });
     }
@@ -65,7 +91,10 @@ app.controller("presentationCtrl", function ($scope, $http) {
   $scope.changeStatus = function (doubt, status) {
     doubt.status = status;
 
-    $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/change-status", doubt);
+    $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/change-status", doubt)
+      .success(function (data) {
+        socket.emit("update/doubt_status", {doubt_id: doubt.id});
+      });
   };
 
   $scope.fetchAnswer = function (doubt) {
@@ -97,7 +126,7 @@ app.controller("presentationCtrl", function ($scope, $http) {
   $scope.answerDoubt = function (doubt, answer) {
     $http.post(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id + "/contribution", answer)
       .success(function (data) {
-        socket.emit("new contribution", {doubt_id: doubt.id, contribution_id: data.Id});
+        socket.emit("new/contribution", {doubt_id: doubt.id, contribution_id: data.Id});
         console.log(data.Id);
       });
     if(doubt.status == 0)
