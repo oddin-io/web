@@ -50,12 +50,21 @@ app.controller("instructionCtrl", function ($scope, $http) {
     });
   };
 
-  // $scope.downloadMaterial = function (material) {
-  //   var url = restServerUrl + $scope.buildURI($scope.instruction, '/controller', '/material/') + material.id;
-  //   $http.get(url).success(function (data) {
-  //       console.log(data);
-  //   });
-  // };
+  $scope.downloadMaterial = function (material) {
+    var url = restServerUrl + $scope.buildURI($scope.instruction, '/controller', '/material/') + material.id;
+    $http.get(url).success(function (data, status, headers) {
+      var type = headers("Content-Type");
+      var name = headers("Content-Disposition");
+      name = name.slice(name.indexOf("=") + 1).slice(1, -1);
+
+      var anchor = angular.element('<a/>');
+      anchor.attr({
+        href: 'data:' + type + ';charset=utf-8,' + encodeURI(data),
+        target: '_blank',
+        download: name
+      })[0].click();
+    });
+  };
 
   $scope.uploadMaterial = function (name) {
     var file = document.forms.uploadArchive.file.files[0];
@@ -71,7 +80,7 @@ app.controller("instructionCtrl", function ($scope, $http) {
       {headers: {"Content-Type": undefined}})
       .success(function (data) {
         console.log(data);
-    });
+      });
   };
 
   $scope.newPresentation = function (instruction, presentation) {

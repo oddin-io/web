@@ -71,7 +71,7 @@
 
             <tbody>
               <tr data-ng-repeat="material in materials">
-                <td><a href="#"><span class="glyphicon glyphicon-save-file"></span>{{material.name}}</a></td>
+                <td><a data-ng-click="downloadMaterial(material)" download="true"><span class="glyphicon glyphicon-save-file"></span>{{material.name}}</a></td>
                 <td>{{material.mime}}</td>
               </tr>
             </tbody>
