@@ -59,7 +59,7 @@
           <div class="doubt">
             <div class="doubt__header">
               <h4 class="doubt__pessoa">{{doubt.person.name}}</h4>
-              <h4 class="doubt__time">{{doubt.date}} {{doubt.time}}</h4>
+              <h4 class="doubt__time">{{doubt.date | date: 'dd/MM/yyyy'}} {{doubt.time}}</h4>
             </div>
             <div class="ranking">
               <span class="status-duvida-prof"><span class="badge">{{doubt.likes}}</span><span>&#32;</span><span class="glyphicon glyphicon-thumbs-up"></span></span>
@@ -110,7 +110,7 @@
                     <div class="respostas_section respostas_prof" data-ng-repeat="answer in modal.doubt.answers">
                       <div class="row">
                         <div class="col-md-4 col-sm-6"><h4 class="resposta__pessoa">{{answer.person.name}}</h4></div>
-                        <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="resposta__time">{{answer.createdat}}</h4></div>
+                        <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="resposta__time">{{answer.date | date: 'dd/MM/yyyy'}}</h4></div>
                       </div>
                       <div class="resposta__textbox">
                         <p>
