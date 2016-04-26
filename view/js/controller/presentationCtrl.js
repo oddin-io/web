@@ -4,7 +4,12 @@ app.controller("presentationCtrl", function ($scope, $http) {
     ret.splice(0, 1);
 
     return ret;
-  })();
+  })(), getDoubt = function (doubt_id) {
+    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt_id)
+      .success(function (data) {
+        $scope.doubts[data.id] = data;
+      });
+  };
 
   var restServerUrl = Util.getEnvironment().config.urls["rest"];
   $http.defaults.headers.post["Content-Type"] = "text/plain";
@@ -14,10 +19,7 @@ app.controller("presentationCtrl", function ($scope, $http) {
   var socket = io(Util.getEnvironment().config.urls["socket"] + "/presentation");
   socket.on("new/doubt", function (data) {
     console.log("Event = new/doubt; Data = " + data);
-    $http.get(restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + data.doubt_id)
-      .success(function (data) {
-        $scope.doubts[data.id] = data;
-      });
+    getDoubt(data.doubt_id);
   });
 
   socket.on("new/contribution", function (data) {
@@ -33,23 +35,23 @@ app.controller("presentationCtrl", function ($scope, $http) {
   });
 
   socket.on("new/doubt_like", function (data) {
-    console.log("Event = new/doubt_like; Data = " + data);
+    getDoubt(data.doubt_id);
   });
 
   socket.on("delete/doubt_like", function (data) {
-    console.log("Event = delete/doubt_like; Data = " + data);
+    getDoubt(data.doubt_id);
   });
 
   socket.on("new/doubt_understand", function (data) {
-    console.log("Event = new/doubt_understand; Data = " + data);
+    getDoubt(data.doubt_id);
   });
 
   socket.on("delete/doubt_understand", function (data) {
-    console.log("Event = delete/doubt_understand; Data = " + data);
+    getDoubt(data.doubt_id);
   });
 
   socket.on("update/doubt_status", function (data) {
-    console.log("Event = update/doubt_status; Data = " + data);
+    getDoubt(data.doubt_id);
   });
 // #endregion
 
