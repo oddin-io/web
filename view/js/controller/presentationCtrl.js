@@ -77,15 +77,15 @@ app.controller("presentationCtrl", function ($scope, $http) {
   $scope.likeDoubt = function (doubt) {
     var url = restServerUrl + "/controller/" + paths.join("/") + "/doubt/" + doubt.id;
 
-    if (!doubt.curti) {
+    if (!doubt.like) {
       $http.post(url + "/like", null).success(function (data) {
         socket.emit("new/doubt_like", {doubt_id: doubt.id});
-        doubt.curti = true;
+        doubt.like = true;
       });
     } else {
       $http.delete(url + "/like").success(function (data) {
         socket.emit("delete/doubt_like", {doubt_id: doubt.id});
-        doubt.curti = false;
+        doubt.like = false;
       });
     }
   };
