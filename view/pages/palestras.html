@@ -2,21 +2,21 @@
 <html data-ng-app="BossEdu">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <title>Disciplinas</title>
 
-  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="/view/css/custom.css" />
+  <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons"/>
+  <link rel="stylesheet" href="/view/vendor/Materialize/dist/css/materialize.min.css"/>
+  <link rel="stylesheet" href="/view/css/build/user_style.min.css" />
+  <link rel="shortcut icon" href="/view/img/oddin_favicon.png" type="image/x-icon" />
 </head>
 <body data-ng-controller="instructionCtrl" data-ng-cloak="true">
-  <!-- Inicio do cabecalho -->
   <header>
-    <!-- Navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <!--<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
-        <!--Cabeçalho-->
+
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -26,7 +26,7 @@
           </button>
           <a class="navbar-brand" href="#">Mirage</a>
         </div>
-        <!--Navegação-->
+
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -38,9 +38,20 @@
           </ul>
         </div>
       </div>
-      <!-- -->
-    </nav>
+    </nav>-->
     <!-- fim Navbar -->
+    <div class="navbar-fixed">
+      <nav>
+        <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+        <ul class="left">
+          <li><a href="#!">Blah</a></li>
+        </ul>
+        <ul id="slide-out" class="side-nav fixed">
+          <li><a href="#!">First Sidebar Link</a></li>
+          <li><a href="#!">Second Sidebar Link</a></li>
+        </ul>
+      </nav>
+    </div>
 
     <!--Título Página-->
     <div class="page-header container">
@@ -71,7 +82,7 @@
   </main>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
 
   <script src="/view/js/utils.js"></script>
   <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
@@ -79,5 +90,7 @@
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
   <script src="/view/js/controller/instructionCtrl.js"></script>
+
+  <script src="/view/js/sideNav.js"></script>
 </body>
 </html>

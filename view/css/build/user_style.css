@@ -1,0 +1,5 @@
+header, main, footer {
+  padding-left: 240px; }
+  @media (max-width: 992px) {
+    header, main, footer {
+      padding-left: 0; } }
