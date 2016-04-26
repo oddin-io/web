@@ -5,60 +5,48 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Confirmação de senha</title>
+  <title>Redefinição de Senha</title>
 
-  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="/view/css/custom.css" />
+  <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons" >
+  <link rel="stylesheet" href="/view/vendor/Materialize/dist/css/materialize.min.css">
+  <link rel="stylesheet" href="/view/css/build/login_style.min.css" />
+  <link rel="shortcut icon" href="/view/img/oddin_favicon.png" type="image/x-icon" />
 </head>
 <body data-ng-controller="loginCtrl">
-<main>
-  <div class="container">
-    <!--login box-->
-    <div class="row">
-      <div class="col-md-offset-3 col-md-6">
-        <div class="login_box">
-          <!-- LOGO -->
-          <div class="row">
-            <div class="col-xs-offset-2 col-xs-8">
-              <div class="div_logo">
-                <img src="/view/img/LogoComCirculo.png" class="img-responsive center-block"/>
-              </div>
-            </div>
-          </div>
-          <!-- fim LOGO -->
-
-          <div class="row">
-            <div class="col-sm-offset-2 col-sm-8">
-              <!-- Mensagem de confirmação de redefinição de senha -->
-              <div class="col-xs-12">
-                <div id="mensagem" class="alert alert-warning fade in">
-                  <a href="" class="close" onClick="exibeMsg('mensagem');" aria-label="close">&times;</a>
-                  <p>Sua senha foi redefinida com sucesso!</p>
+  <header class="login-header">
+    <!--LOGO-->
+    <img class="login-header__logo" src="/view/img/oddin_logo-01.png"/>
+  </header>
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="offset-m2 offset-l3 col s12 m8 l6">
+          <!--card-->
+          <div class="card">
+            <div class="login-box">
+              <!-- Título -->
+              <h1 class="login-box__title">Redefinir Senha</h1>
+              <div class="row">
+                <div class="login-box__alert col s12">
+                  <p>Sua senha foi redefinida com sucesso.</p>
                 </div>
               </div>
-
-              <!-- Botão voltar para login-->
-              <div class="col-xs-offset-3 col-xs-6">
-                <input type="button" value="Voltar" href="" role="group" class="custom-button-lg"/>
-              </div>
+              <button class="login-box__main-button btn waves-effect waves-light">Voltar</button>
             </div>
           </div>
+          <p class="login-info">Lorem ipsum dolor sit amet &#169;</p>
         </div>
       </div>
     </div>
-    <!-- Fim Login Box -->
-  </div>
-  <!-- Fim do container -->
-</main>
-<script src="/view/vendor/jquery/dist/jquery.min.js"></script>
-<script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+  </main>
+  <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
 
-<script src="/view/js/utils.js"></script>
-<script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
+  <script src="/view/js/utils.js"></script>
+  <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
 
-<script src="/view/vendor/angular/angular.js"></script>
-<script src="/view/js/app.js"></script>
-<script src="/view/js/controller/loginCtrl.js"></script>
+  <script src="/view/vendor/angular/angular.js"></script>
+  <script src="/view/js/app.js"></script>
+  <script src="/view/js/controller/loginCtrl.js"></script>
 </body>
 </html>

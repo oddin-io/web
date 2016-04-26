@@ -1,0 +1,66 @@
+body {
+  background-color: #fafafa; }
+
+.login-header__logo {
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 32px auto 16px auto;
+  max-height: 140px; }
+
+.login-box {
+  padding: 32px; }
+  .login-box__title {
+    margin: 0 auto 0 auto;
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+    color: #007279; }
+  .login-box__options {
+    font-size: 12px; }
+    .login-box__options p {
+      margin: 0;
+      text-align: left; }
+      .login-box__options p label {
+        margin: 0 0 8px 0;
+        font-size: inherit; }
+    .login-box__options a {
+      display: block;
+      margin-top: 3px;
+      text-align: right; }
+      @media (max-width: 600px) {
+        .login-box__options a {
+          text-align: left; } }
+  .login-box__submit {
+    display: block;
+    margin: 24px auto 0 auto;
+    box-shadow: none; }
+    .login-box__submit:hover {
+      box-shadow: none; }
+  .login-box__message {
+    margin: 8px auto 0 auto;
+    text-align: center;
+    color: #ff8a65;
+    font-size: 14px; }
+  .login-box__alert {
+    margin: 24px 0 8px 0;
+    border-radius: 4px;
+    background-color: #fcebe3; }
+    .login-box__alert p {
+      margin: 0;
+      padding: 8px;
+      font-size: 14px;
+      color: #007279; }
+  .login-box__buttons {
+    text-align: center; }
+    .login-box__buttons .btn {
+      margin-top: 8px;
+      box-shadow: none; }
+      .login-box__buttons .btn:hover {
+        box-shadow: none; }
+
+.login-info {
+  margin: 24px 0 24px 0;
+  text-align: center;
+  font-size: 14px;
+  color: #9e9e9e; }

@@ -7,66 +7,52 @@
 
   <title>Recuperar senha</title>
 
-  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="/view/css/custom.css" />
+  <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="/view/vendor/Materialize/dist/css/materialize.min.css">
+  <link rel="stylesheet" href="/view/css/build/login_style.min.css" />
+  <link rel="shortcut icon" href="/view/img/oddin_favicon.png" type="image/x-icon" />
 </head>
+
 <body data-ng-controller="loginCtrl">
+  <header class="login-header">
+    <!--LOGO-->
+    <img class="login-header__logo" src="/view/img/oddin_logo-01.png"/>
+  </header>
   <main>
     <div class="container">
-      <!--login box-->
       <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-          <div class="login_box">
-            <!-- LOGO -->
-            <div class="row">
-                <div class="col-xs-offset-2 col-xs-8">
-                  <div class="div_logo">
-                    <img src="/view/img/LogoComCirculo.png" class="img-responsive center-block"/>
+        <div class="offset-m2 offset-l3 col s12 m8 l6">
+          <!--card-->
+          <div class="card">
+            <div class="login-box">
+              <!-- Título -->
+              <h1 class="login-box__title">Recuperar Senha</h1>
+              <!-- Formulário -->
+              <form>
+                <div class="row">
+                  <div class="login-box__alert col s12">
+                    <p>Insira o mesmo e-mail cadastrado em nosso sistema. Você receberá uma senha e um nome de usuário.</p>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="usuario" type="text" ng-model="usuario.email" class="form-control"/>
+                    <label for="usuario">E-mail de cadastro</label>
                   </div>
                 </div>
+                <div class="login-box__buttons">
+                  <input class="btn waves-effect waves-light" type="button" value="Voltar" onclick="javascript:history.back()"/>
+                  <button class="btn waves-effect waves-light" type="submit" name="action" ng-click="recuperarSenha(usuario)">Enviar</button>
+                </div>
+              </form>
             </div>
-            <!-- fim LOGO -->
-
-            <!-- Formulario -->
-            <div class="row">
-              <div class="col-sm-offset-2 col-sm-8">
-                <form class="form-horizontal">
-                  <!-- Email de Cadastro, Notificação e Input de texto-->
-                  <div class="form-group">
-                    <div class="col-xs-12">
-                      <label for="usuario">Email de cadastro</label>
-                      <a href="#" onClick="exibeMsg('mensagem');"> <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
-                      <div id="mensagem" class="alert alert-warning fade in">
-                        <a href="" class="close" onClick="exibeMsg('mensagem');" aria-label="close">&times;</a>
-                        <p>Insira o mesmo e-mail cadastrado em nosso sistema.</p>
-                        <p>Você receberá uma senha e um nome de usuário.</p>
-                      </div>
-                      <input id="usuario" type="text" placeholder="Insira seu e-mail" ng-model="usuario.email" class="form-control"/>
-                    </div>
-                  </div>
-                  <!-- Botões voltar e enviar-->
-                  <div class="form-group">
-                    <div class="col-xs-6">
-                      <input type="button" value="Enviar" role="group" class="custom-button-lg" ng-click="recuperarSenha(usuario)"/>
-                    </div>
-                    <div class="col-xs-6">
-                      <input type="button" value="Voltar" onclick="javascript:history.back()" role="group" class="custom-button-lg"/>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <!-- Fim Formulário -->
           </div>
+          <!-- info -->
+          <p class="login-info">Lorem ipsum dolor sit amet &#169;</p>
         </div>
       </div>
-      <!-- Fim Login Box -->
     </div>
-    <!-- Fim do container -->
   </main>
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
 
   <script src="/view/js/utils.js"></script>
   <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>

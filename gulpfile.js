@@ -17,10 +17,27 @@ gulp.task('scripts', function() {
 });
 
 //compilar sass, minificar e renomear
-gulp.task('sass', function() {
+gulp.task('sass-min', function() {  
   return sass('view/scss/*.scss', {style: 'compressed'})
     .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('view/css/build'));
+    .pipe(gulp.dest('view/css/build'));  
+});
+
+
+gulp.task('sass', function() {  
+  return sass('view/scss/*.scss')    
+    .pipe(gulp.dest('view/css/build'));  
+});
+
+/*gulp.task('css-min', ['css'], function () {
+  console.log('alguma coisa');
+});*/
+
+
+gulp.task('sass_materialize', function() {  
+  return sass('view/vendor/Materialize/sass/*.scss', {style: 'compressed'})
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest('view/vendor/Materialize/dist/css'));  
 });
 
 //rastrear mudanças
@@ -28,7 +45,10 @@ gulp.task('watch', function() {
   //rastrear arquivos .js
   gulp.watch('view/js/*.js', ['scripts']);
   //rastrear arquivos .scss
-  gulp.watch('view/scss/*.scss', ['sass']);
+  gulp.watch('view/scss/*.scss', ['sass', 'sass-min']);
+  //rastrear materialize .scss
+  gulp.watch('view/vendor/Materialize/sass/*.scss', ['sass_materialize']);
+  
 });
 
 //Default
