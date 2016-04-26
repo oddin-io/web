@@ -135,7 +135,7 @@
                   <div class="respostas_section" data-ng-repeat="answer in doubt.answers">
                     <div class="row">
                       <div class="col-md-4 col-sm-6"><h4 class="resposta__pessoa">{{answer.person.name}}</h4></div>
-                      <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="resposta__time">{{answer.date | date: 'dd/MM/yyyy'}} {{answer.time}}</h4></div>
+                      <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="resposta__time"><!--{{answer.date | date: 'dd/MM/yyyy'}} {{answer.time}}-->{{answer.createdat}}</h4></div>
                     </div>
                     <div class="resposta__textbox">
                       <p>
@@ -166,18 +166,14 @@
               <div class="form-group">
                 <div class="col-sm-9">
                   <textarea name="texto" placeholder="Insira sua dúvida" data-ng-model="doubt.text" class="form-control" id="textarea_duvida"></textarea>
-                </div>
-                <div class="col-sm-3 ">
-                  <input type="submit" value="Enviar" class="custom-button-lg"/>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-6 ">
                   <div class="checkbox">
                     <label>
                       <input type="checkbox" data-ng-model="doubt.anonymous"> Enviar como anônimo
                     </label>
                   </div>
+                </div>
+                <div class="col-sm-3 ">
+                  <input type="submit" value="Enviar" class="custom-button-lg"/>
                 </div>
               </div>
             </form>

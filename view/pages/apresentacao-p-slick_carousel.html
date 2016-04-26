@@ -110,7 +110,7 @@
                     <div class="respostas_section respostas_prof" data-ng-repeat="answer in modal.doubt.answers">
                       <div class="row">
                         <div class="col-md-4 col-sm-6"><h4 class="resposta__pessoa">{{answer.person.name}}</h4></div>
-                        <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="resposta__time">{{answer.date | date: 'dd/MM/yyyy'}}</h4></div>
+                        <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="resposta__time"><!--{{answer.date | date: 'dd/MM/yyyy'}}-->{{answer.createdat}}</h4></div>
                       </div>
                       <div class="resposta__textbox">
                         <p>
