@@ -1,58 +1,72 @@
 <!DOCTYPE HTML>
 <html data-ng-app="BossEdu" data-ng-controller="instructionCtrl" data-ng-init="getInfo()">
 <head>
-  <!-- From Bootstrap basic template -->
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Aulas - {{instruction.code}}</title>
-
-  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="/view/css/custom.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Disciplinas</title>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons"/>
+  <link rel="stylesheet" href="/view/vendor/Materialize/dist/css/materialize.min.css"/>
+  <link rel="stylesheet" href="/view/css/build/user_style.min.css" />
+  <link rel="shortcut icon" href="/view/img/oddin_favicon.png" type="image/x-icon" />
 </head>
 
 <body data-ng-cloak="true">
-  <!-- Cabeçalho -->
   <header>
-    <!--Navbar-->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="/" class="navbar-brand">Mirage</a>
-        </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <span class="fa fa-user"></span>  Usuário <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
-              </ul>
-            </li>
+    <!--Barra de navegação superior-->
+    <div class="navbar-fixed barra-navegacao">
+      <nav>
+        <div class="nav-wrapper barra-navegacao__container">
+          <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
+          <a class="barra-navegacao__voltar hide-on-med-and-down" href="/app/instruction"><i class="material-icons">arrow_back</i></a>
+          <h1 class="barra-navegacao__title truncate">Aulas - {{instruction.name}}</h1>
+          <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="/view/img/oddin_logo_horizontal-01.png"/></a>
+          <!--Barra de navegação lateral-->
+          <ul id="slide-out" class="side-nav fixed barra-lateral">
+            <div>
+              <i class="material-icons barra-lateral__user-avatar">account_circle</i>
+              <p class="barra-lateral__user-name">Usuário</p>
+            </div>
+            <div class="divider"></div>
+            <!--<li><a href="./presentation/current">Aula Atual</a></li>-->
+            <li><a class="barra-lateral__item" href="./material">Material</a></li>
+            <li><a class="barra-lateral__item" href="./participants">Participantes</a></li>
+            <li class="hide-on-large-only"><a class="barra-lateral__item" href="/app/instruction">Voltar Para Disciplinas</a></li>
+            <li><a class="barra-lateral__item" href="/controller/logout">Sair</a></li>
           </ul>
-          <ul class="nav navbar-nav">
-            <li><a href="/app/instruction"><span class="glyphicon glyphicon-chevron-left"></span>Disciplinas</a></li>
-            <li><a href="./presentation/current">Aula Atual</a></li>
-            <li><a href="./material">Material</a></li>
-            <li><a href="./participants">Participantes</a></li>
-          </ul>
+          <!---->
         </div>
-      </div>
-    </nav>
-
-    <!--Título Página-->
-    <div class="page-header container">
-      <h1>Aulas - {{instruction.name}}</h1>
+      </nav>
     </div>
+    <!---->
+        <!--<div class="navbar-header">-->
+          <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">-->
+            <!--<span class="sr-only">Toggle navigation</span>-->
+            <!--<span class="icon-bar"></span>-->
+            <!--<span class="icon-bar"></span>-->
+            <!--<span class="icon-bar"></span>-->
+          <!--</button>-->
+          <!--<a href="/" class="navbar-brand">Mirage</a>-->
+        <!--</div>-->
+
+        <!--<div id="navbar" class="navbar-collapse collapse">-->
+          <!--<ul class="nav navbar-nav navbar-right">-->
+            <!--<li class="dropdown">-->
+              <!--<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">-->
+                <!--<span class="fa fa-user"></span>  Usuário <span class="caret"></span>-->
+              <!--</a>-->
+              <!--<ul class="dropdown-menu">-->
+                <!--<li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>-->
+              <!--</ul>-->
+            <!--</li>-->
+          <!--</ul>-->
+          <!--<ul class="nav navbar-nav">-->
+            <!--<li><a href="/app/instruction"><span class="glyphicon glyphicon-chevron-left"></span>Disciplinas</a></li>-->
+            <!--<li><a href="./presentation/current">Aula Atual</a></li>-->
+            <!--<li><a href="./material">Material</a></li>-->
+            <!--<li><a href="./participants">Participantes</a></li>-->
+          <!--</ul>-->
+        <!--</div>-->
   </header>
 
   <!-- Conteúdo principal -->
@@ -129,7 +143,7 @@
 
   <!-- Scripts -->
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
 
   <script src="/view/js/utils.js"></script>
   <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
@@ -137,5 +151,7 @@
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
   <script src="/view/js/controller/instructionCtrl.js"></script>
+
+  <script src="/view/js/initMaterialize.js"></script>
 </body>
 </html>

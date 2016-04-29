@@ -1,5 +1,144 @@
+body {
+  background-color: #fafafa; }
+
 header, main, footer {
   padding-left: 240px; }
   @media (max-width: 992px) {
     header, main, footer {
       padding-left: 0; } }
+
+main {
+  margin-top: 32px; }
+  @media (max-width: 600px) {
+    main {
+      margin-top: 24px; } }
+
+.barra-navegacao__container {
+  margin: 0 264px 0 24px; }
+  @media (max-width: 992px) {
+    .barra-navegacao__container {
+      margin: 0 24px 0 24px; } }
+.barra-navegacao__voltar {
+  display: inline-block;
+  vertical-align: middle; }
+.barra-navegacao__title {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0 0 32px;
+  font-size: 20px; }
+  @media (max-width: 320px) {
+    .barra-navegacao__title {
+      max-width: 130px; } }
+  @media (min-width: 320px) {
+    .barra-navegacao__title {
+      max-width: 180px; } }
+  @media (min-width: 360px) {
+    .barra-navegacao__title {
+      max-width: 220px; } }
+  @media (min-width: 400px) {
+    .barra-navegacao__title {
+      max-width: 260px; } }
+  @media (min-width: 440px) {
+    .barra-navegacao__title {
+      max-width: 300px; } }
+  @media (min-width: 480px) {
+    .barra-navegacao__title {
+      max-width: 340px; } }
+  @media (min-width: 520px) {
+    .barra-navegacao__title {
+      max-width: 380px; } }
+  @media (min-width: 560px) {
+    .barra-navegacao__title {
+      max-width: 420px; } }
+  @media (min-width: 600px) {
+    .barra-navegacao__title {
+      max-width: 460px; } }
+  @media (min-width: 601px) {
+    .barra-navegacao__title {
+      max-width: 341px; } }
+  @media (min-width: 641px) {
+    .barra-navegacao__title {
+      max-width: 381px; } }
+  @media (min-width: 681px) {
+    .barra-navegacao__title {
+      max-width: 421px; } }
+  @media (min-width: 721px) {
+    .barra-navegacao__title {
+      max-width: 461px; } }
+  @media (min-width: 761px) {
+    .barra-navegacao__title {
+      max-width: 501px; } }
+  @media (min-width: 801px) {
+    .barra-navegacao__title {
+      max-width: 541px; } }
+  @media (min-width: 841px) {
+    .barra-navegacao__title {
+      max-width: 581px; } }
+  @media (min-width: 881px) {
+    .barra-navegacao__title {
+      max-width: 621px; } }
+  @media (min-width: 921px) {
+    .barra-navegacao__title {
+      max-width: 661px; } }
+  @media (min-width: 961px) {
+    .barra-navegacao__title {
+      max-width: 701px; } }
+  @media (min-width: 993px) {
+    .barra-navegacao__title {
+      max-width: 493px; } }
+  @media (min-width: 1033px) {
+    .barra-navegacao__title {
+      max-width: 533px; } }
+  @media (min-width: 1073px) {
+    .barra-navegacao__title {
+      max-width: 573px; } }
+  @media (min-width: 1113px) {
+    .barra-navegacao__title {
+      max-width: 613px; } }
+  @media (min-width: 1153px) {
+    .barra-navegacao__title {
+      max-width: 653px; } }
+  @media (min-width: 1193px) {
+    .barra-navegacao__title {
+      max-width: 693px; } }
+  @media (min-width: 1233px) {
+    .barra-navegacao__title {
+      max-width: 733px; } }
+  @media (min-width: 1273px) {
+    .barra-navegacao__title {
+      max-width: 773px; } }
+  @media (min-width: 1313px) {
+    .barra-navegacao__title {
+      max-width: 813px; } }
+  @media (min-width: 1353px) {
+    .barra-navegacao__title {
+      max-width: 853px; } }
+  @media (min-width: 1393px) {
+    .barra-navegacao__title {
+      max-width: 893px; } }
+.barra-navegacao__logo {
+  height: auto;
+  max-height: 40px;
+  margin: 12px 0 12px 0; }
+
+.barra-lateral__user-avatar {
+  text-align: center;
+  color: #9e9e9e;
+  margin-top: 32px;
+  font-size: 96px !important; }
+.barra-lateral__user-name {
+  text-align: center;
+  color: #9e9e9e;
+  font-size: 16px;
+  margin: 0 0 0 0; }
+.barra-lateral__item {
+  font-weight: bold; }
+  .barra-lateral__item:hover {
+    background-color: transparent; }
+
+.lista-disciplinas__header {
+  color: #007279;
+  font-size: 16px;
+  font-weight: 500; }
+.lista-disciplinas__body a {
+  color: #007279 !important; }

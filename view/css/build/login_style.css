@@ -10,6 +10,9 @@ body {
 
 .login-box {
   padding: 32px; }
+  @media (max-width: 600px) {
+    .login-box {
+      padding: 24px; } }
   .login-box__title {
     margin: 0 auto 0 auto;
     text-align: center;

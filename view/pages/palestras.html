@@ -4,9 +4,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
   <title>Disciplinas</title>
-
   <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons"/>
   <link rel="stylesheet" href="/view/vendor/Materialize/dist/css/materialize.min.css"/>
   <link rel="stylesheet" href="/view/css/build/user_style.min.css" />
@@ -14,73 +12,50 @@
 </head>
 <body data-ng-controller="instructionCtrl" data-ng-cloak="true">
   <header>
-    <!--<nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Mirage</a>
-        </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>  Usuário <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>-->
-    <!-- fim Navbar -->
-    <div class="navbar-fixed">
+    <!--Barra de navegação superior-->
+    <div class="navbar-fixed barra-navegacao">
       <nav>
-        <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-        <ul class="left">
-          <li><a href="#!">Blah</a></li>
-        </ul>
-        <ul id="slide-out" class="side-nav fixed">
-          <li><a href="#!">First Sidebar Link</a></li>
-          <li><a href="#!">Second Sidebar Link</a></li>
-        </ul>
+        <div class="nav-wrapper barra-navegacao__container">
+          <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
+          <h1 class="barra-navegacao__title">Disciplinas</h1>
+          <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="/view/img/oddin_logo_horizontal-01.png"/></a>
+          <!--Barra de navegação lateral-->
+          <ul id="slide-out" class="side-nav fixed barra-lateral">
+            <div>
+              <i class="material-icons barra-lateral__user-avatar">account_circle</i>
+              <p class="barra-lateral__user-name">Usuário</p>
+            </div>
+            <div class="divider"></div>
+            <li><a class="barra-lateral__item" href="/controller/logout">Sair</a></li>
+          </ul>
+          <!---->
+        </div>
       </nav>
     </div>
-
-    <!--Título Página-->
-    <div class="page-header container">
-      <h1>Disciplinas</h1>
-    </div>
+    <!---->
   </header>
 
   <main data-ng-init="getInstructions()">
-    <div class="container" id="MainMenu">
-      <!-- inicio do list group das disciplinas -->
-      <div class="row">
-        <div class="col-md-offset-2 col-md-8 col-xs-12">
-
-          <div class="list-group panel">
-            <a href="#1sem2015" class="list-group-item collapsed" data-toggle="collapse" data-parent="#MainMenu" aria-expanded="false">Disciplinas Correntes</a>
-            <div class="collapse" id="1sem2015" aria-expanded="false" style="height: 0px;">
-              <a href="#" class="list-group-item" data-ng-attr-href="{{buildURI(instruction, '/app', '/historic')}}"
-                 data-ng-repeat="instruction in instructions">
-                <span class="glyphicon glyphicon-book"></span>
-                {{instruction.name}} - Turma: {{instruction.class}}
-              </a>
-            </div>
+    <div class="container">
+      <!--Lista de Disciplinas-->
+      <ul class="collapsible lista-disciplinas" data-collapsible="expandable">
+        <li>
+          <!--Cabeçalho da Lista-->
+          <div class="collapsible-header lista-disciplinas__header active">
+            <i class="material-icons">collections_bookmark</i>
+              Disciplinas Correntes
           </div>
-        </div>
-      </div>
-      <!-- fim do list group das disciplinas -->
+          <!--Corpo da Lista-->
+          <div class="collection collapsible-body lista-disciplinas__body">
+            <a href="#!" class="collection-item" data-ng-attr-href="{{buildURI (instruction, '/app', '/historic')}}"
+            data-ng-repeat="instruction in instructions">
+              {{instruction.name}} - Turma: {{instruction.class}}
+            </a>
+          </div>
+        </li>
+      </ul>
     </div>
   </main>
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
   <script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
 
@@ -91,6 +66,6 @@
   <script src="/view/js/app.js"></script>
   <script src="/view/js/controller/instructionCtrl.js"></script>
 
-  <script src="/view/js/sideNav.js"></script>
+  <script src="/view/js/initMaterialize.js"></script>
 </body>
 </html>

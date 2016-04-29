@@ -1,6 +1,130 @@
+//variáveis de cor
+$backgroundColor: #fafafa;
+$textColor1: #007279;
+$textColor2: #00acc1;
+$errorColor: #ff8a65;
+$secondaryColorLight: #fcebe3;
+$greyColor: #9e9e9e;
+
+//variáveis de texto
+$textTitle: 20px;
+$textCaption: 12px;
+$textBody1: 14px;
+
+//variáveis de posicionamento
+$largePadding: 32px;
+$largeMargin: 32px;
+$mediumPadding2: 24px;
+$mediumMargin2: 24px;
+$mediumPadding1: 16px;
+$mediumMargin1: 16px;
+$smallPadding: 8px;
+$smallMargin: 8px;
+
+$sideBarCompensation: 240px;
+
+//mixins
+@mixin truncate-text {
+  @media (max-width: 320px) {
+    max-width: 130px;
+  }
+  $i: 320;
+  @while $i <= 600 {
+    @media (min-width: #{$i}px) {
+      max-width: $i - 140px;
+    }
+    $i: $i + 40;
+  }
+  $i: 601;
+  @while $i <= 992 {
+    @media (min-width: #{$i}px) {
+      max-width: $i - 260px;
+    }
+    $i: $i + 40;
+  }
+  $i: 993;
+  @while $i < 1400 {
+    @media (min-width: #{$i}px) {
+      max-width: $i - 500px;
+    }
+    $i: $i + 40;
+  }
+}
+
+body {
+  background-color: $backgroundColor;
+}
+
 header, main, footer {
   padding-left: 240px;
-  @media  (max-width: 992px) {
+  @media (max-width: 992px) {
     padding-left: 0;
+  }
+}
+
+main {
+  margin-top: $largeMargin;
+  @media (max-width: 600px) {
+    margin-top: $mediumMargin2;
+  }
+}
+
+.barra-navegacao {
+  &__container {
+    margin: 0 $mediumMargin2 + $sideBarCompensation 0 $mediumMargin2;
+    @media (max-width: 992px) {
+      margin: 0 $mediumMargin2 0 $mediumMargin2;
+    }
+  }
+  &__voltar {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  &__title {
+    display: inline-block;
+    vertical-align: middle;
+    @include truncate-text;
+    //max-width: 130px;
+    margin: 0 0 0 $largeMargin;
+    font-size: 20px;
+  }
+  &__logo {
+    height: auto;
+    max-height: 40px;
+    margin: 12px 0 12px 0;
+  }
+}
+
+.barra-lateral {
+  &__user-avatar {
+    text-align: center;
+    color: $greyColor;
+    margin-top: 32px;
+    font-size: 96px !important;
+  }
+  &__user-name {
+    text-align: center;
+    color: $greyColor;
+    font-size: 16px;
+    margin: 0 0 0 0;
+  }
+  &__item {
+    font-weight: bold;
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+.lista-disciplinas {
+  &__header {
+    color: $textColor1;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  &__body {
+    a {
+    color: $textColor1 !important;
+    }
   }
 }
