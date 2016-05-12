@@ -1,130 +1,110 @@
-//variáveis de cor
-$backgroundColor: #fafafa;
-$textColor1: #007279;
-$textColor2: #00acc1;
-$errorColor: #ff8a65;
-$secondaryColorLight: #fcebe3;
-$greyColor: #9e9e9e;
+@import 'mixins_variaveis';
+@import 'navbar_config';
 
-//variáveis de texto
-$textTitle: 20px;
-$textCaption: 12px;
-$textBody1: 14px;
-
-//variáveis de posicionamento
-$largePadding: 32px;
-$largeMargin: 32px;
-$mediumPadding2: 24px;
-$mediumMargin2: 24px;
-$mediumPadding1: 16px;
-$mediumMargin1: 16px;
-$smallPadding: 8px;
-$smallMargin: 8px;
-
-$sideBarCompensation: 240px;
-
-//mixins
-@mixin truncate-text {
-  @media (max-width: 320px) {
-    max-width: 130px;
+.modal-criar-item {
+  &__titulo {
+    @include type-title;
+    color: $type-primary-color;
+    margin: 0;
   }
-  $i: 320;
-  @while $i <= 600 {
-    @media (min-width: #{$i}px) {
-      max-width: $i - 140px;
-    }
-    $i: $i + 40;
-  }
-  $i: 601;
-  @while $i <= 992 {
-    @media (min-width: #{$i}px) {
-      max-width: $i - 260px;
-    }
-    $i: $i + 40;
-  }
-  $i: 993;
-  @while $i < 1400 {
-    @media (min-width: #{$i}px) {
-      max-width: $i - 500px;
-    }
-    $i: $i + 40;
+  &__file-button {
+    //padding: 0 !important;
+    @include unraise-button;
+    color: $secondary-color;
+    border: 1px solid $secondary-color;
+    background-color: white !important;
+    padding: 0 22px 0 22px;
+
   }
 }
 
-body {
-  background-color: $backgroundColor;
-}
-
-header, main, footer {
-  padding-left: 240px;
-  @media (max-width: 992px) {
-    padding-left: 0;
-  }
-}
-
-main {
-  margin-top: $largeMargin;
-  @media (max-width: 600px) {
-    margin-top: $mediumMargin2;
-  }
-}
-
-.barra-navegacao {
-  &__container {
-    margin: 0 $mediumMargin2 + $sideBarCompensation 0 $mediumMargin2;
-    @media (max-width: 992px) {
-      margin: 0 $mediumMargin2 0 $mediumMargin2;
-    }
-  }
-  &__voltar {
-    display: inline-block;
-    vertical-align: middle;
-  }
-  &__title {
-    display: inline-block;
-    vertical-align: middle;
-    @include truncate-text;
-    //max-width: 130px;
-    margin: 0 0 0 $largeMargin;
-    font-size: 20px;
-  }
-  &__logo {
-    height: auto;
-    max-height: 40px;
-    margin: 12px 0 12px 0;
-  }
-}
-
-.barra-lateral {
-  &__user-avatar {
-    text-align: center;
-    color: $greyColor;
-    margin-top: 32px;
-    font-size: 96px !important;
-  }
-  &__user-name {
-    text-align: center;
-    color: $greyColor;
-    font-size: 16px;
-    margin: 0 0 0 0;
-  }
-  &__item {
-    font-weight: bold;
-    &:hover {
-      background-color: transparent;
-    }
-  }
-}
-
+//Tela de Palestras
 .lista-disciplinas {
   &__header {
-    color: $textColor1;
-    font-size: 16px;
-    font-weight: 500;
+    @include type-list-section-title(!important);
+    color: $primary-color;
   }
   &__body {
+    @include type-list-secondary;
     a {
-    color: $textColor1 !important;
+      color: $type-primary-color !important;
     }
   }
 }
+
+//Tela de Aulas
+.lista-tab {
+  //border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  width: 100% !important;
+  overflow: hidden;
+  &__item {
+    @include type-button;
+    & a:hover {
+      color: $secondary-color !important;
+    }
+    @media (max-width: 400px) {
+      font-size: 12px !important;
+    }
+  }
+}
+
+.lista-aulas {
+  &__item {
+    a {
+      color: $type-primary-color;
+      span {
+        @include type-list-primary(!important);
+      }
+    }
+    p {
+      @include type-list-secondary;
+      color: $type-secondary-color;
+    }
+  }
+}
+
+//Tela de Materiais
+.lista-material {
+  &__header {
+    padding: 20px !important;
+    h2 {
+      margin: 0;
+      @include type-list-section-title(!important);
+      color: $primary-color;
+    }
+  }
+  &__item {
+    span {
+      @include type-list-primary(!important);
+    }
+    p {
+      @include type-list-secondary;
+      color: $type-secondary-color;
+    }
+    i {
+      background-color: $secondary-color !important;
+    }
+  }
+}
+
+//Tela Participantes
+
+
+
+.lista-participantes {
+  &__item {
+    min-height: 62px !important;
+    span {
+      @include type-list-primary(!important);
+    }
+    i {
+      background-color: $secondary-color !important;
+    }
+    .user--online {
+      background-color: $primary-color !important;
+    }
+  }
+}
+
+

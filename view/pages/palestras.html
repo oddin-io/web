@@ -6,33 +6,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Disciplinas</title>
   <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons"/>
-  <link rel="stylesheet" href="/view/vendor/Materialize/dist/css/materialize.min.css"/>
+  <!--<link rel="stylesheet" href="/view/vendor/Materialize/dist/css/materialize.min.css"/>-->
+  <link rel="stylesheet" href="/view/css/build/materialize_custom.min.css" />
   <link rel="stylesheet" href="/view/css/build/user_style.min.css" />
   <link rel="shortcut icon" href="/view/img/oddin_favicon.png" type="image/x-icon" />
 </head>
 <body data-ng-controller="instructionCtrl" data-ng-cloak="true">
   <header>
     <!--Barra de navegação superior-->
-    <div class="navbar-fixed barra-navegacao">
+    <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper barra-navegacao__container">
           <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
           <h1 class="barra-navegacao__title">Disciplinas</h1>
           <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="/view/img/oddin_logo_horizontal-01.png"/></a>
-          <!--Barra de navegação lateral-->
-          <ul id="slide-out" class="side-nav fixed barra-lateral">
-            <div>
-              <i class="material-icons barra-lateral__user-avatar">account_circle</i>
-              <p class="barra-lateral__user-name">Usuário</p>
-            </div>
-            <div class="divider"></div>
-            <li><a class="barra-lateral__item" href="/controller/logout">Sair</a></li>
-          </ul>
-          <!---->
         </div>
       </nav>
     </div>
-    <!---->
+
+    <!--Barra de navegação lateral-->
+    <ul id="slide-out" class="side-nav fixed barra-lateral">
+      <div class="barra-lateral__header">
+        <i class="barra-lateral__user-avatar material-icons">account_circle</i>
+        <p class="barra-lateral__user-name">Usuário Teste</p>
+        <p class="barra-lateral__user-email">usuario@email.com</p>
+      </div>
+      <li class="no-padding barra-lateral__item"><a href="/controller/logout">Sair</a></li>
+    </ul>
+
   </header>
 
   <main data-ng-init="getInstructions()">

@@ -1,35 +1,7 @@
-//variáveis de cor
-$backgroundColor: #fafafa;
-$textColor1: #007279;
-$errorColor: #ff8a65;
-$secondaryColorLight: #fcebe3;
-$greyColor: #9e9e9e;
-
-//variáveis de texto
-$textTitle: 20px;
-$textCaption: 12px;
-$textBody1: 14px;
-
-//variáveis de posicionamento
-$largePadding: 32px;
-$largeMargin: 32px;
-$mediumPadding2: 24px;
-$mediumMargin2: 24px;
-$mediumPadding1: 16px;
-$mediumMargin1: 16px;
-$smallPadding: 8px;
-$smallMargin: 8px;
-
-//mixins
-@mixin unraise-button {
-	box-shadow: none;
-	&:hover {
-		box-shadow: none;
-	}
-}
+@import 'mixins_variaveis';
 
 body {
-  background-color: $backgroundColor;
+  background-color: $background-color;
 }
 
 .login-header {
@@ -37,30 +9,29 @@ body {
 		display: block;
 		width: auto;
 		height: auto;
-		margin: $largeMargin auto $mediumMargin1 auto;
+		margin: (4 * $min) auto (2 * $min) auto;
 		max-height:140px;
 	}
 }
 
 .login-box {
-	padding: $largePadding;
-	@media (max-width: 600px) {
-		padding: $mediumPadding2;
+	padding: 4 * $min;
+	@media (max-width: $max-mobile-size) {
+		padding: 3 * $min;
 	}
 	&__title {
 		margin: 0 auto 0 auto;
 		text-align: center;
-		font-weight: 500;
-		font-size: $textTitle;
-		color: $textColor1;
+		@include type-title;
+		color: $primary-color-darker;
 	}
 	&__options {
-		font-size: $textCaption;
+		@include type-caption;
 		p {
 			margin: 0;
 			text-align: left;
 			label {
-				margin: 0 0 $smallMargin 0;
+				margin: 0 0 $min 0;
 				font-size: inherit;
 			}
 		}	
@@ -68,45 +39,45 @@ body {
 			display: block;
 			margin-top: 3px;
 			text-align: right;
-			@media  (max-width: 600px) {
+			@media  (max-width: $max-mobile-size) {
 				text-align: left;
 			}	
 		}
 	}
 	&__main-button {
 		display: block;
-		margin: $mediumMargin2 auto 0 auto;
+		margin: (3 * $min) auto 0 auto;
 		@include unraise-button;
 	}
 	&__message {
-		margin: $smallMargin auto 0 auto;
+		margin: $min auto 0 auto;
 		text-align: center;
-		color: $errorColor;
-		font-size: $textBody1;
+		color: $error-color;
+		@include type-body1;
 	}
 	&__alert {
-		margin: $mediumMargin2 0 $smallMargin 0;
+		margin: (3 * $min) 0 $min 0;
 		border-radius: 4px;
-		background-color: $secondaryColorLight;
+		border: 1px solid $secondary-color;
 		p {
 			margin: 0;
-			padding: $smallPadding;
-			font-size: $textBody1;
-			color: $textColor1;
+			padding: $min;
+			@include type-body1;
+			color: $secondary-color;
 		}
 	}
 	&__buttons {
 		text-align: center;
 		.btn {
-			margin-top: $smallMargin;
+			margin-top: $min;
 			@include unraise-button;
 		}
 	}
 }
 
 .login-info {
-	margin: $mediumMargin2 0 $mediumMargin2 0;
+	margin: (3 * $min) 0 (3 * $min) 0;
 	text-align:center;
-	font-size: $textBody1;
-	color: $greyColor;
+	@include type-subheading;
+	color: $grey-color;
 }

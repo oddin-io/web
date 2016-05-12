@@ -2,75 +2,70 @@
 <html data-ng-app="BossEdu" data-ng-controller="instructionCtrl" data-ng-init="getInfo()">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Participantes - {{instruction.code}}</title>
-
-  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="/view/css/custom.css" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{instruction.name}} - Material</title>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons"/>
+  <link rel="stylesheet" href="/view/css/build/materialize_custom.min.css" />
+  <link rel="stylesheet" href="/view/css/build/user_style.min.css" />
+  <link rel="shortcut icon" href="/view/img/oddin_favicon.png" type="image/x-icon" />
 </head>
 <body data-ng-cloak="true">
   <!-- Inicio do cabecalho -->
   <header>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Mirage</a>
+    <!--Barra de navegação superior-->
+    <div class="navbar-fixed">
+      <nav class="navbar-fixed barra-navegacao">
+        <div class="nav-wrapper barra-navegacao__container">
+          <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
+          <a class="barra-navegacao__voltar hide-on-med-and-down" href="/app/instruction"><i class="material-icons">arrow_back</i></a>
+          <h1 class="barra-navegacao__title truncate">{{instruction.name}} - Participantes</h1>
+          <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="/view/img/oddin_logo_horizontal-01.png"/></a>
         </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>  Usuário <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/controller/logout"><a href="#"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav">
-            <li><a href="/app/instruction"><span class="glyphicon glyphicon-chevron-left"></span>Disciplinas</a></li>
-            <li><a href="./presentation/current">Aula Atual</a></li>
-            <li><a href="./historic">Histórico</a></li>
-            <li><a href="./material">Material</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!--Título Página-->
-    <div class="page-header container">
-      <h1>Participantes - {{instruction.name}}</h1>
+      </nav>
     </div>
+    <!--Barra de navegação lateral-->
+    <ul id="slide-out" class="side-nav fixed barra-lateral">
+      <div class="barra-lateral__header">
+        <i class="barra-lateral__user-avatar material-icons">account_circle</i>
+        <p class="barra-lateral__user-name">Usuário Teste</p>
+        <p class="barra-lateral__user-email">usuario@email.com</p>
+      </div>
+      <!--<li><a href="./presentation/current">Aula Atual</a></li>-->
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li class="barra-lateral__item">
+            <a class="barra-lateral__item--collapsible collapsible-header active">
+              {{instruction.name}}
+            </a>
+            <div class="collapsible-body">
+              <ul>
+                <li class="barra-lateral__subitem"><a  href="./historic">Aulas</a></li>
+                <li class="barra-lateral__subitem"><a href="./material">Material</a></li>
+                <li class="barra-lateral__subitem active"><a href="#">Participantes</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="hide-on-large-only no-padding barra-lateral__item"><a href="/app/instruction">Voltar Para Disciplinas</a></li>
+      <li class="no-padding barra-lateral__item"><a href="/controller/logout">Sair</a></li>
+    </ul>
   </header>
-  <!-- Fim do cabecalho -->
-
-  <!-- Conteúdo principal -->
   <main data-ng-init="getParticipants()">
     <div class="container">
-      <div class="row">
-        <div class="col-md-offset-2 col-md-8">
-          <ul class="list-group">
-            <li class="list-group-item" data-ng-repeat="participant in participants">
-              <span class="icon icon_list-left fa-stack fa-lg" data-ng-class="{user_online: participant.online}">
-                <span class="fa fa-user fa-stack-1x"></span>
-                <span class="fa fa-circle-thin fa-stack-2x"></span>
-              </span>
-              {{participant.name}}
-            </li>
-          </ul>
-        </div>
-      </div>
+      <ul class="collection lista-participantes">
+        <li data-ng-repeat="participant in participants" class="collection-item avatar lista-participantes__item">
+          <i class="material-icons circle " data-ng-class="{user--online: participant.online}">person</i>
+          <span class="title">{{participant.name}}</span>
+        </li>
+      </ul>
     </div>
   </main>
 
+  <!-- Scripts -->
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
 
   <script src="/view/js/utils.js"></script>
   <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
@@ -78,6 +73,8 @@
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
   <script src="/view/js/controller/instructionCtrl.js"></script>
+
+  <script src="/view/js/initMaterialize.js"></script>
 </body>
 </html>
 

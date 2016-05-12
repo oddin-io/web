@@ -16,11 +16,12 @@ body {
   .login-box__title {
     margin: 0 auto 0 auto;
     text-align: center;
-    font-weight: 500;
     font-size: 20px;
+    font-weight: 500;
     color: #007279; }
   .login-box__options {
-    font-size: 12px; }
+    font-size: 12px;
+    font-weight: 400; }
     .login-box__options p {
       margin: 0;
       text-align: left; }
@@ -44,16 +45,18 @@ body {
     margin: 8px auto 0 auto;
     text-align: center;
     color: #ff8a65;
-    font-size: 14px; }
+    font-size: 13px;
+    font-weight: 400; }
   .login-box__alert {
     margin: 24px 0 8px 0;
     border-radius: 4px;
-    background-color: #fcebe3; }
+    border: 1px solid #ff9850; }
     .login-box__alert p {
       margin: 0;
       padding: 8px;
-      font-size: 14px;
-      color: #007279; }
+      font-size: 13px;
+      font-weight: 400;
+      color: #ff9850; }
   .login-box__buttons {
     text-align: center; }
     .login-box__buttons .btn {
@@ -65,5 +68,6 @@ body {
 .login-info {
   margin: 24px 0 24px 0;
   text-align: center;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 400;
   color: #9e9e9e; }
