@@ -9,7 +9,7 @@ Error: Undefined variable: "$background-color".
 5: }
 6: header, main, footer {
 7:   padding-left: $sideBarCompensation;
-8:   @media (max-width: $max-tablet-size) {
+8:   @media only screen and (max-width: $max-tablet-size) {
 9:     padding-left: 0;
 
 Backtrace:
@@ -64,4 +64,4 @@ C:/Ruby22-x64/bin/sass:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$background-color\".\A         on line 4 of view/scss/navbar_config.scss\A \A 1: //Configura├º├Áes principais\A 2: $sideBarCompensation: 240px;\A 3: body {\A 4:   background-color: $background-color;\A 5: }\A 6: header, main, footer {\A 7:   padding-left: $sideBarCompensation;\A 8:   @media (max-width: $max-tablet-size) {\A 9:     padding-left: 0;"; }
+  content: "Error: Undefined variable: \"$background-color\".\A         on line 4 of view/scss/navbar_config.scss\A \A 1: //Configura├º├Áes principais\A 2: $sideBarCompensation: 240px;\A 3: body {\A 4:   background-color: $background-color;\A 5: }\A 6: header, main, footer {\A 7:   padding-left: $sideBarCompensation;\A 8:   @media only screen and (max-width: $max-tablet-size) {\A 9:     padding-left: 0;"; }

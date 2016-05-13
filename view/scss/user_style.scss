@@ -3,18 +3,16 @@
 
 .modal-criar-item {
   &__titulo {
+    margin: 0;
     @include type-title;
     color: $type-primary-color;
-    margin: 0;
   }
   &__file-button {
-    //padding: 0 !important;
+    padding: 0 22px 0 22px;
+    border: 1px solid $secondary-color;
     @include unraise-button;
     color: $secondary-color;
-    border: 1px solid $secondary-color;
-    background-color: white !important;
-    padding: 0 22px 0 22px;
-
+    background-color: #fafafa !important;
   }
 }
 
@@ -34,17 +32,16 @@
 
 //Tela de Aulas
 .lista-tab {
-  //border: 1px solid #e0e0e0;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
   width: 100% !important;
   overflow: hidden;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
   &__item {
     @include type-button;
-    & a:hover {
-      color: $secondary-color !important;
-    }
     @media (max-width: 400px) {
       font-size: 12px !important;
+    }
+    & a:hover {
+      color: $secondary-color !important;
     }
   }
 }
@@ -89,9 +86,6 @@
 }
 
 //Tela Participantes
-
-
-
 .lista-participantes {
   &__item {
     min-height: 62px !important;
@@ -106,5 +100,3 @@
     }
   }
 }
-
-

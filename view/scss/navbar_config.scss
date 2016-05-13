@@ -5,11 +5,14 @@ body {
 }
 header, main, footer {
   padding-left: $sideBarCompensation;
-  @media (max-width: $max-tablet-size) {
+  @media only screen and (max-width: $max-tablet-size) {
     padding-left: 0;
   }
 }
 .navbar-fixed {
+  z-index: 997;
+}
+.fixed-action-btn {
   z-index: 997;
 }
 main {
@@ -36,13 +39,13 @@ main {
     vertical-align: middle;
     max-width: 66%;
     margin: 0 0 0 (4 * $min);
-    @include type-title;
     @media(min-width: $min-tablet-size) {
       max-width: 60%;
     }
     @media(min-width: $min-desktop-size) {
       max-width: 70%;
     }
+    @include type-title;
   }
   &__logo {
     height: auto;
@@ -72,16 +75,17 @@ main {
   &__item {
     background-color: #fff !important;
     & > a {
+      padding-left: 2 * $min !important;
       font-weight: 500;
       &:hover {
         color: $secondary-color !important;
-        background-color: transparent;
+        background-color: transparent !important;
       }
       &.active {
         color: $primary-color !important;
         &:hover {
           color: $secondary-color !important;
-          background-color: transparent;
+          background-color: transparent !important;
         }
       }
     }

@@ -3,11 +3,14 @@ body {
 
 header, main, footer {
   padding-left: 240px; }
-  @media (max-width: 992px) {
+  @media only screen and (max-width: 992px) {
     header, main, footer {
       padding-left: 0; } }
 
 .navbar-fixed {
+  z-index: 997; }
+
+.fixed-action-btn {
   z-index: 997; }
 
 main {
@@ -60,15 +63,16 @@ main {
 .barra-lateral__item {
   background-color: #fff !important; }
   .barra-lateral__item > a {
+    padding-left: 16px !important;
     font-weight: 500; }
     .barra-lateral__item > a:hover {
       color: #ff9850 !important;
-      background-color: transparent; }
+      background-color: transparent !important; }
     .barra-lateral__item > a.active {
       color: #00acc1 !important; }
       .barra-lateral__item > a.active:hover {
         color: #ff9850 !important;
-        background-color: transparent; }
+        background-color: transparent !important; }
   .barra-lateral__item--collapsible {
     margin: 0 !important; }
 .barra-lateral__subitem a {
@@ -82,16 +86,16 @@ main {
   background-color: transparent !important; }
 
 .modal-criar-item__titulo {
+  margin: 0;
   font-size: 20px;
   font-weight: 500;
-  color: rgba(33, 33, 33, 0.87);
-  margin: 0; }
+  color: rgba(33, 33, 33, 0.87); }
 .modal-criar-item__file-button {
+  padding: 0 22px 0 22px;
+  border: 1px solid #ff9850;
   box-shadow: none;
   color: #ff9850;
-  border: 1px solid #ff9850;
-  background-color: white !important;
-  padding: 0 22px 0 22px; }
+  background-color: #fafafa !important; }
   .modal-criar-item__file-button:hover {
     box-shadow: none; }
 
@@ -106,18 +110,18 @@ main {
     color: rgba(33, 33, 33, 0.87) !important; }
 
 .lista-tab {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   width: 100% !important;
-  overflow: hidden; }
+  overflow: hidden;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
   .lista-tab__item {
     font-size: 14px;
     font-weight: 500;
     text-transform: uppercase; }
-    .lista-tab__item a:hover {
-      color: #ff9850 !important; }
     @media (max-width: 400px) {
       .lista-tab__item {
         font-size: 12px !important; } }
+    .lista-tab__item a:hover {
+      color: #ff9850 !important; }
 
 .lista-aulas__item a {
   color: rgba(33, 33, 33, 0.87); }

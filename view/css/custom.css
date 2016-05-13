@@ -459,11 +459,11 @@ slick .doubt__content {
   }
 
   .owl-carousel .doubt__header h4 {
-    font-size: 0.98em;
+    fonts-size: 0.98em;
   }
 
   .owl-carousel .doubt__textbox p {
-    font-size: 0.96em;
+    fonts-size: 0.96em;
   }
   .owl-pagination {
     display: none;
@@ -502,7 +502,7 @@ slick .doubt__content {
 .ranking .glyphicon-thumbs-up {
   color: #777;
   /*vertical-align: text-top;
-  font-size: 1.1em;*/
+  fonts-size: 1.1em;*/
 }
 
 
