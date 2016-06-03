@@ -66,7 +66,7 @@
           <ul class="collection lista-aulas">
             <li data-ng-repeat="presentation in presentations | filter: {status: 0}: true" class="collection-item avatar lista-aulas__item">
               <i class="material-icons circle green lighten-2">lock_open</i>
-              <a href="{{buildURI(instruction, '/app', '/presentation/' + presentation.id)}}">
+              <a data-ng-attr-href="{{buildURI(instruction, '/app', '/presentation/' + presentation.id)}}">
                 <span class="title">{{presentation.subject}}</span>
                 <p>{{presentation.date}} <br>
                   {{presentation.time}}
