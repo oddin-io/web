@@ -19,7 +19,7 @@
       <nav class="navbar-fixed barra-navegacao">
         <div class="nav-wrapper barra-navegacao__container">
           <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
-          <a class="barra-navegacao__voltar hide-on-med-and-down" href="../historic"><i class="material-icons">close</i></a>
+          <a class="barra-navegacao__voltar hide-on-med-and-down" href="../historic"><i class="material-icons">arrow_back</i></a>
           <h1 class="barra-navegacao__title truncate">{{presentation.subject}} - {{presentation.lecture.code}}</h1>
           <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="/view/img/oddin_logo_horizontal-01.png"/></a>
         </div>
@@ -109,17 +109,17 @@
             </div>
 
             <div class="col  m4">
-              <div class="ver-resposta--prof" data-ng-if="doubt.contributions > 0">
-                <a id="button_{{doubt.id}}" class="waves-effect btn-flat" data-ng-click="fetchAnswer(doubt)">
-                  <span>Ver Respostas</span>
+              <div class="responder">
+                <a class="waves-effect btn-flat modal-trigger" ng-click="modalTrigger(doubt)" href="">
+                  Responder
                 </a>
               </div>
             </div>
 
             <div class="col  m4">
-              <div class="responder">
-                <a class="waves-effect btn-flat modal-trigger" ng-click="modalTrigger(doubt)" href="">
-                  Responder
+              <div class="ver-resposta--prof" data-ng-if="doubt.contributions > 0">
+                <a id="button_{{doubt.id}}" class="waves-effect btn-flat" data-ng-click="fetchAnswer(doubt)">
+                  <span>Ver Respostas</span>
                 </a>
               </div>
             </div>
