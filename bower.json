@@ -1,0 +1,24 @@
+{
+  "name": "oddin",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Heitor Kuba <hjkuba@yahoo.com.br>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.7",
+    "angular-resource": "^1.5.7",
+    "Materialize": "materialize#^0.97.6",
+    "angular-ui-router": "^0.3.1"
+  }
+}
