@@ -5,14 +5,11 @@ angular.module('oddin', ['ui.router', 'ngResource'])
             .state('disciplinas', {
                 url: "/disciplinas",
                 views: {
-                    "viewA": {templateUrl: "partials/disciplinas.html"}
+                    "viewTitle": {templateUrl: "partials/title.html", controller: "DisciplinasController"},
+                    "viewNavHeader": {templateUrl: "partials/nav_header.html", controller: "DisciplinasController"},
+                    "viewSideMenuItens": {templateUrl: "partials/disciplinas_side_menu_itens.html"},
+                    "viewContent": {templateUrl: "partials/disciplinas_content.html", controller: "DisciplinasController"}
                 },
                 controller: "DisciplinasController"
-            })
-            .state('aulas', {
-                url: '/aulas',
-                views: {
-                    "viewA": {templateUrl: "partials/aulas.html"}
-                }
             });
     });

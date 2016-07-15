@@ -1,5 +1,5 @@
 angular.module('oddin').controller('DisciplinasController',
     function($scope) {
-        $scope.titulo = "Disciplinas";
+        $scope.template = {'titulo': "Disciplinas", 'navHeader' : "Disciplinas"};
     }
 );
