@@ -1,4 +1,4 @@
-<ul class="collapsible lista-disciplinas" data-collapsible="expandable">
+<ul class="collapsible lista-disciplinas" data-collapsible="expandable" watch>
     <li>
         <!--Cabeçalho da Lista-->
         <div class="collapsible-header lista-disciplinas__header active">
@@ -7,8 +7,7 @@
         </div>
         <!--Corpo da Lista-->
         <div class="collection collapsible-body lista-disciplinas__body">
-            <a href="#!" class="collection-item" data-ng-attr-href="{{buildURI (instruction, '/app', '/historic')}}"
-               data-ng-repeat="disciplina in disciplinas">
+            <a href="#!" class="collection-item" data-ng-repeat="disciplina in disciplinas">
                 {{disciplina.nome}} - Turma: {{disciplina.turma}}
             </a>
         </div>
