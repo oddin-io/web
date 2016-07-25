@@ -1,4 +1,4 @@
-$(".button-collapse").sideNav();
+//$(".button-collapse").sideNav();
 $(document).ready(function(){
   $('.collapsible').collapsible({
     accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
@@ -6,6 +6,3 @@ $(document).ready(function(){
   $('ul.tabs').tabs();
   $('.modal-trigger').leanModal();
 });
-
-
-

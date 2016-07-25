@@ -9,7 +9,7 @@ angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize'])
                 }
             })
             .state('aulas', {
-                url: "/disciplina/:disciplinaID",
+                url: "/disciplina/:disciplinaID/aulas",
                 views: {
                     "viewContent": {templateUrl: "partials/aulas.html", controller: "AulasController"}
                 }

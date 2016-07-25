@@ -2,7 +2,7 @@
     <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper barra-navegacao__container">
-                <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
+                <a href="#" data-activates="slide-out" class="button-collapse" data-sidenav="left"><i class=" material-icons">menu</i></a>
                 <h1 class="barra-navegacao__title">{{titulo}}</h1>
                 <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
             </div>
@@ -29,7 +29,7 @@
                 </div>
                 <!--Corpo da Lista-->
                 <div class="collection collapsible-body lista-disciplinas__body">
-                    <a href="#/disciplina/{{disciplina._id}}" class="collection-item" data-ng-repeat="disciplina in disciplinas">
+                    <a href="#/disciplina/{{disciplina._id}}/aulas" class="collection-item" data-ng-repeat="disciplina in disciplinas">
                         {{disciplina.nome}} - Turma: {{disciplina.turma}}
                     </a>
                 </div>

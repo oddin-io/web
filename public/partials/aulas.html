@@ -1,2 +1,82 @@
-<h1>{{titulo}}</h1>
-<h2 ng-repeat="aulas in disciplina.aulas">{{aulas.nome}}</h2>
+<!--<h2 ng-repeat="aulas in disciplina.aulas">{{aulas.nome}}</h2>-->
+<header>
+    <div class="navbar-fixed">
+        <nav class="navbar-fixed barra-navegacao">
+            <div class="nav-wrapper barra-navegacao__container">
+                <a href="#" data-activates="slide-out" class="button-collapse" data-sidenav="left" data-closeonclick="true"><i class=" material-icons">menu</i></a>
+                <a class="barra-navegacao__voltar hide-on-med-and-down" href="#/disciplinas"><i class="material-icons">arrow_back</i></a>
+                <h1 class="barra-navegacao__title truncate">{{titulo}}</h1>
+                <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
+            </div>
+        </nav>
+    </div>
+    <!--Barra de navegação lateral-->
+    <ul id="slide-out" class="side-nav fixed barra-lateral">
+        <div class="barra-lateral__header">
+            <i class="barra-lateral__user-avatar material-icons">account_circle</i>
+            <p class="barra-lateral__user-name">Aluno Teste</p>
+            <p class="barra-lateral__user-email">aluno@email.com</p>
+        </div>
+
+        <li class="no-padding">
+            <ul class="collapsible " data-collapsible="expandable">
+                <li class="barra-lateral__item">
+                    <a class="barra-lateral__item--collapsible collapsible-header active truncate">
+                        {{titulo}}
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li class="barra-lateral__subitem active"><a  href="#">Aulas</a></li>
+                            <li class="barra-lateral__subitem"><a href="#">Material</a></li>
+                            <li class="barra-lateral__subitem"><a href="#">Participantes</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplinas">Voltar Para Disciplinas</a></li>
+        <li class="no-padding barra-lateral__item"><a href="/controller/logout">Logout</a></li>
+    </ul>
+    <!---->
+</header>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <ul tabs reload="allTabContentLoaded" class="tabs lista-tab">
+                    <li class="tab col s6 lista-tab__item"><a href="#aulas-abertas">Abertas</a></li>
+                    <li class="tab col s6 lista-tab__item"><a href="#aulas-encerradas">Encerradas</a></li>
+                </ul>
+            </div>
+            <div id="aulas-abertas" class="col s12">
+                <ul class="collection lista-aulas">
+                    <li data-ng-repeat="aula in disciplina.aulas | filter: {status: 0}: true" class="collection-item avatar lista-aulas__item">
+                        <i class="material-icons circle green lighten-2">lock_open</i>
+                        <a data-ng-attr-href="{{buildURI(instruction, '/app', '/presentation/' + presentation.id)}}">
+                            <span class="title">{{aula.nome}}</span>
+                            <p>{{aula.date}} <br>
+                                {{aula.time}}
+                            </p>
+                        </a>
+                        <!--<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>-->
+                    </li>
+                </ul>
+            </div>
+            <div id="aulas-encerradas" class="col s12">
+                <ul class="collection lista-aulas">
+                    <li data-ng-repeat="aula in disciplina.aulas | filter: {status: 1}: true" class="collection-item avatar lista-aulas__item">
+                        <i class="material-icons circle red lighten-2">lock_outline</i>
+                        <a data-ng-attr-href="{{buildURI(instruction, '/app', '/presentation/' + presentation.id)}}">
+                            <span class="title">
+                                {{aula.nome}}  <!-- ID: {{presentation.id}}-->
+                            </span>
+                            <p>{{aula.date}} <br>
+                                {{aula.time}}
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
