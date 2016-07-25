@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <div ui-view="viewTitle"></div>
+    <title>Oddin</title>
 
     <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="../css/materialize_custom.min.css"/>
@@ -13,42 +13,20 @@
     <link rel="shortcut icon" href="../img/oddin_favicon.png" type="image/x-icon"/>
 </head>
 <body>
-<header>
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper barra-navegacao__container">
-                <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
-                <span ui-view="viewNavHeader"></span>
-                <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
-            </div>
-        </nav>
-    </div>
-    <!--Barra de navegação lateral-->
-    <ul id="slide-out" class="side-nav fixed barra-lateral">
-        <div class="barra-lateral__header">
-            <i class="barra-lateral__user-avatar material-icons">account_circle</i>
-            <p class="barra-lateral__user-name">Usuário Teste</p>
-            <p class="barra-lateral__user-email">usuario@email.com</p>
-        </div>
-        <div ui-view="viewSideMenuItens"></div>
-    </ul>
-</header>
-<main>
-    <div class="container">
-        <div ui-view="viewContent"></div>
-    </div>
-</main>
-<script src="../vendor/jquery/dist/jquery.min.js"></script>
-<script src="../vendor/Materialize/dist/js/materialize.min.js"></script>
+    <div ui-view="viewContent"></div>
 
-<script src="../vendor/angular/angular.js"></script>
-<script src="../vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
-<script src="../vendor/angular-resource/angular-resource.js"></script>
-<script src="../vendor/angular-materialize/src/angular-materialize.js"></script>
-<script src="../js/angular/main.js"></script>
-<script src="../js/angular/services/DisciplinasService.js"></script>
-<script src="../js/angular/controllers/DisciplinasController.js"></script>
+    <script src="../vendor/jquery/dist/jquery.min.js"></script>
+    <script src="../vendor/Materialize/dist/js/materialize.min.js"></script>
 
-<script src="../js/initMaterialize.js"></script>
+    <script src="../vendor/angular/angular.js"></script>
+    <script src="../vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="../vendor/angular-resource/angular-resource.js"></script>
+    <script src="../vendor/angular-materialize/src/angular-materialize.js"></script>
+    <script src="../js/angular/main.js"></script>
+    <script src="../js/angular/services/DisciplinasService.js"></script>
+    <script src="../js/angular/controllers/DisciplinasController.js"></script>
+    <script src="../js/angular/controllers/AulasController.js"></script>
+
+    <script src="../js/initMaterialize.js"></script>
 </body>
 </html>

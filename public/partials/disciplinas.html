@@ -1,0 +1,39 @@
+<header>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper barra-navegacao__container">
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
+                <h1 class="barra-navegacao__title">{{titulo}}</h1>
+                <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
+            </div>
+        </nav>
+    </div>
+    <!--Barra de navegação lateral-->
+    <ul id="slide-out" class="side-nav fixed barra-lateral">
+        <div class="barra-lateral__header">
+            <i class="barra-lateral__user-avatar material-icons">account_circle</i>
+            <p class="barra-lateral__user-name">Usuário Teste</p>
+            <p class="barra-lateral__user-email">usuario@email.com</p>
+        </div>
+        <li class="no-padding barra-lateral__item"><a href="/controller/logout">Logout</a></li>
+    </ul>
+</header>
+<main>
+    <div class="container">
+        <ul class="collapsible lista-disciplinas" data-collapsible="expandable" watch>
+            <li>
+                <!--Cabeçalho da Lista-->
+                <div class="collapsible-header lista-disciplinas__header active">
+                    <i class="material-icons">collections_bookmark</i>
+                    Disciplinas Correntes
+                </div>
+                <!--Corpo da Lista-->
+                <div class="collection collapsible-body lista-disciplinas__body">
+                    <a href="#/disciplina/{{disciplina._id}}" class="collection-item" data-ng-repeat="disciplina in disciplinas">
+                        {{disciplina.nome}} - Turma: {{disciplina.turma}}
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</main>
