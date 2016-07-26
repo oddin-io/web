@@ -1,9 +1,9 @@
-angular.module('oddin').controller('AulasController',
-    function($scope, $stateParams, Aulas) {
-        function buscaAulas() {
-            Aulas.get({id: $stateParams.disciplinaID},
+angular.module('oddin').controller('MateriaisController',
+    function($scope, $stateParams, Materiais) {
+        function buscaMateriais() {
+            Materiais.get({id: $stateParams.disciplinaID},
                 function (disciplina) {
-                    $scope.aulas = disciplina.aulas;
+                    $scope.materiais = disciplina.materiais;
                     $scope.titulo = disciplina.nome;
                     $scope._id = disciplina._id;
                 },
@@ -14,6 +14,6 @@ angular.module('oddin').controller('AulasController',
                 }
             );
         }
-        buscaAulas();
+        buscaMateriais();
     }
 );
