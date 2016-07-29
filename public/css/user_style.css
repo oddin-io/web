@@ -80,6 +80,11 @@ main {
   .barra-lateral__subitem a:hover {
     color: #ff9850;
     background-color: transparent; }
+.barra-lateral__subitem p {
+  font-weight: normal;
+  padding: 0 0 0 45px;
+  color: #fff;
+  background-color: transparent; }
 .barra-lateral__subitem.active:hover {
   background-color: #ff9850 !important; }
 .barra-lateral__subitem:hover {
@@ -163,9 +168,9 @@ main {
     font-size: 16px !important;
     font-weight: 400 !important; }
   .lista-participantes__item i {
-    background-color: #ff9850 !important; }
+    background-color: #d5d5d5 !important; }
   .lista-participantes__item .user--online {
-    background-color: #00acc1 !important; }
+    background-color: #ff9850 !important; }
 
 .pergunta__header {
   margin-bottom: 8px; }

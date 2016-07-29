@@ -2,7 +2,7 @@
     <div class="navbar-fixed">
         <nav class="navbar-fixed barra-navegacao">
             <div class="nav-wrapper barra-navegacao__container">
-                <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only" data-sidenav="left" data-closeonclick="false"><i class=" material-icons">menu</i></a>
+                <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only" data-sidenav="left" data-closeonclick="true"><i class=" material-icons">menu</i></a>
                 <a class="barra-navegacao__voltar hide-on-med-and-down" href="#/disciplinas"><i class="material-icons">arrow_back</i></a>
                 <h1 class="barra-navegacao__title truncate">{{titulo}} - Aulas</h1>
                 <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
@@ -18,14 +18,14 @@
         </div>
 
         <li class="no-padding">
-            <ul class="collapsible " data-collapsible="expandable">
+            <ul class="collapsible" data-collapsible="expandable">
                 <li class="barra-lateral__item">
                     <a class="barra-lateral__item--collapsible collapsible-header active truncate">
                         {{titulo}}
                     </a>
                     <div class="collapsible-body">
                         <ul>
-                            <li class="barra-lateral__subitem active"><a>Aulas</a></li>
+                            <li class="barra-lateral__subitem active"><p>Aulas</p></li>
                             <li class="barra-lateral__subitem"><a href="#/disciplina/{{_id}}/materiais">Material</a></li>
                             <li class="barra-lateral__subitem"><a href="#/disciplina/{{_id}}/participantes">Participantes</a></li>
                         </ul>
@@ -51,7 +51,7 @@
                 <ul class="collection lista-aulas">
                     <li data-ng-repeat="aula in aulas | filter: {status: 0}: true" class="collection-item avatar lista-aulas__item">
                         <i class="material-icons circle green lighten-2">lock_open</i>
-                        <a data-ng-attr-href="{{buildURI(instruction, '/app', '/presentation/' + presentation.id)}}">
+                        <a href="#/disciplina/{{_id}}/aula/{{aula._id}}">
                             <span class="title">{{aula.nome}}</span>
                             <p>{{aula.date}} <br>
                                 {{aula.time}}
@@ -65,7 +65,7 @@
                 <ul class="collection lista-aulas">
                     <li data-ng-repeat="aula in aulas | filter: {status: 1}: true" class="collection-item avatar lista-aulas__item">
                         <i class="material-icons circle red lighten-2">lock_outline</i>
-                        <a data-ng-attr-href="{{buildURI(instruction, '/app', '/presentation/' + presentation.id)}}">
+                        <a href="#/disciplina/{{_id}}/aula/{{aula._id}}">
                             <span class="title">
                                 {{aula.nome}}  <!-- ID: {{presentation.id}}-->
                             </span>

@@ -102,10 +102,10 @@
       @include type-list-primary(!important);
     }
     i {
-      background-color: $secondary-color !important;
+      background-color: $grey-light-color !important;
     }
     .user--online {
-      background-color: $primary-color !important;
+      background-color: $secondary-color !important;
     }
   }
 }

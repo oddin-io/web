@@ -25,5 +25,11 @@ angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize'])
                 views: {
                     "viewContent": {templateUrl: "partials/participantes.html", controller: "ParticipantesController"}
                 }
-            });
+            })
+            .state('duvidas', {
+                url: "/disciplina/:disciplinaID/aula/:aulaID",
+                views: {
+                    "viewContent": {templateUrl: "partials/duvidas.html", controller: "DuvidasController"}
+                }
+            })
     });

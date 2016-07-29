@@ -101,6 +101,12 @@ main {
         background-color: transparent;
       }
     }
+    p {
+      font-weight: normal;
+      padding: 0 0 0 45px;
+      color: #fff;
+      background-color: transparent;
+    }
     &.active {
       &:hover {
         background-color: $secondary-color !important;

@@ -6,14 +6,16 @@ var disciplinas = [
             {"_id": 3, "nome": "Aula 3", "status": 1, "date": '25/04/1999', "time":"13:15"}
         ],
         "materiais": [
-            {},
-            {},
-            {}
+            {"_id": 1, "nome": "teste1.jpeg", "mime":"image/jpeg"},
+            {"_id": 2, "nome": "teste2.jpeg", "mime":"image/jpeg"},
+            {"_id": 3, "nome": "teste3.jpeg", "mime":"image/jpeg"}
         ],
         "participantes": [
-            {},
-            {},
-            {}
+            {"_id": 1, "nome": "João", "online": 1},
+            {"_id": 2, "nome": "Maria", "online": 1},
+            {"_id": 3, "nome": "Pedro", "online": 0},
+            {"_id": 4, "nome": "Fernando", "online": 1},
+            {"_id": 5, "nome": "Luíza", "online": 0}
         ]
     },
     {"_id": 2, "nome": "Banco de Dados I", "turma": "629"},
@@ -54,7 +56,18 @@ module.exports = function() {
             res.json(disciplina);
         },
         listaParticipantes: function(req, res) {
-
+            var _id = req.params.id;
+            var disciplina = {};
+            for(var i = 0; i < disciplinas.length; i++) {
+                if(disciplinas[i]._id == _id)
+                {
+                    disciplina.participantes = disciplinas[i].participantes;
+                    disciplina.nome = disciplinas[i].nome;
+                    disciplina._id = disciplinas[i]._id;
+                    break;
+                }
+            }
+            res.json(disciplina);
         }
     };
     return controller;
