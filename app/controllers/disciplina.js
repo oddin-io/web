@@ -27,47 +27,52 @@ module.exports = function() {
         listaDisciplinas: function (req, res) {
             res.json(disciplinas);
         },
-        listaAulas: function(req, res) {
+        mostraInfoDisciplina: function (req, res) {
             var _id = req.params.id;
             var disciplina = {};
             for(var i = 0; i < disciplinas.length; i++) {
-                if(disciplinas[i]._id == _id)
-                {
-                    disciplina.aulas = disciplinas[i].aulas;
-                    disciplina.nome = disciplinas[i].nome;
-                    disciplina._id = disciplinas[i]._id;
+                if(disciplinas[i]._id == _id) {
+                    disciplina = disciplinas[i];
                     break;
                 }
             }
             res.json(disciplina);
+        },
+        listaAulas: function(req, res) {
+            var _id = req.params.id;
+            var aulas;
+            for(var i = 0; i < disciplinas.length; i++) {
+                if(disciplinas[i]._id == _id)
+                {
+                    aulas = disciplinas[i].aulas;
+                    break;
+                }
+            }
+            res.json(aulas);
         },
         listaMateriais: function(req, res) {
             var _id = req.params.id;
-            var disciplina = {};
+            var materiais;
             for(var i = 0; i < disciplinas.length; i++) {
                 if(disciplinas[i]._id == _id)
                 {
-                    disciplina.materiais = disciplinas[i].materiais;
-                    disciplina.nome = disciplinas[i].nome;
-                    disciplina._id = disciplinas[i]._id;
+                    materiais = disciplinas[i].materiais;
                     break;
                 }
             }
-            res.json(disciplina);
+            res.json(materiais);
         },
         listaParticipantes: function(req, res) {
             var _id = req.params.id;
-            var disciplina = {};
+            var participantes;
             for(var i = 0; i < disciplinas.length; i++) {
                 if(disciplinas[i]._id == _id)
                 {
-                    disciplina.participantes = disciplinas[i].participantes;
-                    disciplina.nome = disciplinas[i].nome;
-                    disciplina._id = disciplinas[i]._id;
+                    participantes = disciplinas[i].participantes;
                     break;
                 }
             }
-            res.json(disciplina);
+            res.json(participantes);
         }
     };
     return controller;

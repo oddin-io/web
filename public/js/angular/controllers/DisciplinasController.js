@@ -1,7 +1,7 @@
 angular.module('oddin').controller('DisciplinasController',
-    function($scope, Disciplinas) {
+    function($scope, Disciplina) {
         function buscaDisciplinas() {
-            Disciplinas.query(
+            Disciplina.query(
                 function(disciplinas) {
                     $scope.disciplinas = disciplinas;
                 },
