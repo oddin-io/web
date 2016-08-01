@@ -11,7 +11,7 @@ angular.module('oddin').controller('DisciplinaController',
             );
         }
         $scope.buscaAulas = function() {
-            Aula.query({id: $stateParams.disciplinaID},
+            Aula.query(
                 function (aulas) {
                     $scope.aulas = aulas;
                 },
@@ -35,7 +35,7 @@ angular.module('oddin').controller('DisciplinaController',
             );
         }
         $scope.buscaMateriais = function() {
-            Material.query({id: $stateParams.disciplinaID},
+            Material.query(
                 function (materiais) {
                     $scope.materiais = materiais;
                 },

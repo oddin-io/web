@@ -5,7 +5,7 @@
             <div class="nav-wrapper barra-navegacao__container">
                 <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only" data-sidenav="left" data-closeonclick="true"><i class=" material-icons">menu</i></a>
                 <a class="barra-navegacao__voltar hide-on-med-and-down" href="#/disciplinas"><i class="material-icons">arrow_back</i></a>
-                <h1 class="barra-navegacao__title truncate">{{disciplina.nome}} - Participantes</h1>
+                <h1 class="barra-navegacao__title truncate">{{disciplina.lecture.name}} - Participantes</h1>
                 <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
             </div>
         </nav>
@@ -22,12 +22,12 @@
             <ul class="collapsible" data-collapsible="expandable">
                 <li class="barra-lateral__item">
                     <a class="barra-lateral__item--collapsible collapsible-header active truncate">
-                        {{disciplina.nome}}
+                        {{disciplina.lecture.name}}
                     </a>
                     <div class="collapsible-body">
                         <ul>
-                            <li class="barra-lateral__subitem"><a  href="#/disciplina/{{disciplina._id}}/aulas">Aulas</a></li>
-                            <li class="barra-lateral__subitem"><a href="#/disciplina/{{disciplina._id}}/materiais">Material</a></li>
+                            <li class="barra-lateral__subitem"><a  href="#/disciplina/{{disciplina.id}}/aulas">Aulas</a></li>
+                            <li class="barra-lateral__subitem"><a href="#/disciplina/{{disciplina.id}}/materiais">Material</a></li>
                             <li class="barra-lateral__subitem active"><a href="#">Participantes</a></li>
                         </ul>
                     </div>
@@ -43,7 +43,7 @@
         <ul class="collection lista-participantes">
             <li data-ng-repeat="participante in participantes" class="collection-item avatar lista-participantes__item">
                 <i class="material-icons circle" data-ng-class="{'user--online' : participante.online}">person</i>
-                <span class="title">{{participante.nome}}</span>
+                <span class="title">{{participante.name}}</span>
             </li>
         </ul>
     </div>

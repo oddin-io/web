@@ -29,8 +29,8 @@
                 </div>
                 <!--Corpo da Lista-->
                 <div class="collection collapsible-body lista-disciplinas__body">
-                    <a href="#/disciplina/{{disciplina._id}}/aulas" class="collection-item" data-ng-repeat="disciplina in disciplinas">
-                        {{disciplina.nome}} - Turma: {{disciplina.turma}}
+                    <a href="#/disciplina/{{disciplina.id}}/aulas" class="collection-item" data-ng-repeat="disciplina in disciplinas">
+                        {{disciplina.lecture.name}} - Turma: {{disciplina.lecture.code}}
                     </a>
                 </div>
             </li>
