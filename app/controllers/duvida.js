@@ -44,13 +44,12 @@ var duvidas = [
             "name": "Célia"
         }
     }
-]
+];
 
 module.exports = function() {
-    var controller = {
-        listaDuvidas: function(req, res) {
+    return {
+        listaDuvidas: function (req, res) {
             res.json(duvidas);
         }
     };
-    return controller;
-}
+};

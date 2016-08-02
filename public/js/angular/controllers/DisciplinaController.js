@@ -21,7 +21,7 @@ angular.module('oddin').controller('DisciplinaController',
                     };
                 }
             );
-        }
+        };
         $scope.buscaParticipantes = function() {
             Participante.query({id: $stateParams.disciplinaID},
                 function (participantes) {
@@ -33,7 +33,7 @@ angular.module('oddin').controller('DisciplinaController',
                     };
                 }
             );
-        }
+        };
         $scope.buscaMateriais = function() {
             Material.query(
                 function (materiais) {
@@ -45,7 +45,7 @@ angular.module('oddin').controller('DisciplinaController',
                     };
                 }
             );
-        }
+        };
         buscaInfo();
     }
 );

@@ -4,4 +4,4 @@ module.exports = function(app) {
     app.get('/index', controller.app);
     app.post('/', controller.login);
     app.post('/loginTeste', controller.loginTest);
-}
+};

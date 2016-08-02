@@ -50,15 +50,15 @@ var aulas = [
 ];
 
 module.exports = function() {
-    var controller = {
-        listaAulas: function(req, res) {
+    return {
+        listaAulas: function (req, res) {
             res.json(aulas);
         },
         mostraInfoAula: function (req, res) {
             var id = req.params.id;
             var aula = {};
-            for(var i = 0; i < aulas.length; i++) {
-                if(aulas[i].id == id) {
+            for (var i = 0; i < aulas.length; i++) {
+                if (aulas[i].id == id) {
                     aula = aulas[i];
                     break;
                 }
@@ -66,5 +66,4 @@ module.exports = function() {
             res.json(aula);
         }
     };
-    return controller;
-}
+};

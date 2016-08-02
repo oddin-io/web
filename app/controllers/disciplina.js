@@ -58,7 +58,7 @@ var disciplinas = [
 ];
 
 module.exports = function() {
-    var controller = {
+    return {
         //listaDisciplinas: function (req, res) {
         //    res.json(disciplinas);
         //},
@@ -73,8 +73,8 @@ module.exports = function() {
                     'headers': {
                         'x-session-token': session.token
                     }
-                }, function(error, response, body) {
-                    if(response.statusCode == 401) {
+                }, function (error, response, body) {
+                    if (response.statusCode == 401) {
                         res.status(401);
                         res.end();
                     }
@@ -88,8 +88,8 @@ module.exports = function() {
         mostraInfoDisciplina: function (req, res) {
             var id = req.params.id;
             var disciplina = {};
-            for(var i = 0; i < disciplinas.length; i++) {
-                if(disciplinas[i].id == id) {
+            for (var i = 0; i < disciplinas.length; i++) {
+                if (disciplinas[i].id == id) {
                     disciplina = disciplinas[i];
                     break;
                 }
@@ -97,5 +97,4 @@ module.exports = function() {
             res.json(disciplina);
         }
     };
-    return controller;
 };

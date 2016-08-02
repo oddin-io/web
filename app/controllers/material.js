@@ -35,11 +35,10 @@ var materiais = [
 ];
 
 module.exports = function() {
-    var controller = {
-        listaMateriais: function(req, res) {
+    return {
+        listaMateriais: function (req, res) {
             res.json(materiais);
         }
     };
-    return controller;
-}
+};
 

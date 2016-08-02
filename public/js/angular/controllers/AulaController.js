@@ -21,7 +21,7 @@ angular.module('oddin').controller('AulaController',
                     };
                 }
             );
-        }
+        };
         buscaInfo();
     }
 );

@@ -17,10 +17,9 @@ var participantes = [
 ];
 
 module.exports = function() {
-    var controller = {
-        listaParticipantes: function(req, res) {
+    return {
+        listaParticipantes: function (req, res) {
             res.json(participantes);
         }
     };
-    return controller;
-}
+};

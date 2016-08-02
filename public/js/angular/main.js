@@ -31,8 +31,7 @@ angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize'])
                     "viewContent": {templateUrl: "partials/duvidas.html", controller: "AulaController"}
                 }
             })
-    })
-    .run(function($window, $location, $state) {
+    }).run(function($window, $location, $state) {
         if($window.location.pathname == '/index')
             $state.go('disciplinas');
     });
