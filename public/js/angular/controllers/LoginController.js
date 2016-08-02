@@ -4,11 +4,11 @@ angular.module('oddin').controller('LoginController',
         $scope.login = function() {
             $scope.user.$save()
                 .then(function(data) {
-                    $window.sessionStorage = data;
+                    //$window.sessionStorage = data;
                     $window.location.href = '/index';
                 })
                 .catch(function(erro) {
-                    delete $window.sessionStorage.token;
+                    //delete $window.sessionStorage.token;
                     $scope.mensagem = "Usuário ou senha inválida";
                 });
         }

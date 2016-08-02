@@ -1,3 +1,5 @@
+var request = require('request');
+
 var disciplinas = [
     {
         'id': 1,
@@ -57,8 +59,31 @@ var disciplinas = [
 
 module.exports = function() {
     var controller = {
+        //listaDisciplinas: function (req, res) {
+        //    res.json(disciplinas);
+        //},
         listaDisciplinas: function (req, res) {
-            res.json(disciplinas);
+            var cookie = JSON.parse(req.headers.cookie);
+            console.log(cookie);
+
+            request(
+                {
+                    'uri': "http://rws-edupanel.herokuapp.com/instructions",
+                    'method': "GET",
+                    'headers': {
+                        'x-session-token': req.headers.cookie.token
+                    }
+                }, function(error, response, body) {
+                    if(response.statusCode == 401) {
+                        res.status(401);
+                        res.end();
+                    }
+                    else {
+                        res.json(JSON.parse(body));
+                    }
+                }
+            )
+            //res.json(disciplinas);
         },
         mostraInfoDisciplina: function (req, res) {
             var id = req.params.id;

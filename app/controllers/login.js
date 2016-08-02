@@ -13,8 +13,6 @@ module.exports = function() {
             res.render('index');
         },
         login: function(req, res, next) {
-            console.log(req.body.email);
-            console.log(req.body.senha);
             testAuth = true;
             res.end();
         },
@@ -28,10 +26,14 @@ module.exports = function() {
                         'password': req.body.password
                     }
                 }, function(error, response, body) {
-                    if(error) {
-                        console.log(error);
-                    } else {
-                        res.json(JSON.parse(body));
+                    if(response.statusCode == 401) {
+                        res.status(401);
+                        res.end();
+                    }
+                    else {
+                        res.cookie(JSON.stringify(body));
+                        res.end();
+                        console.log("logado");
                     }
                 }
             );

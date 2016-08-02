@@ -1,10 +1,5 @@
 angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize'])
     .config(function($stateProvider, $urlRouterProvider) {
-        //$urlRouterProvider.otherwise("/disciplinas");
-        
-        // if($window.location.href == "/index") {
-        //     $state.go('disciplinas');
-        // }
         $stateProvider
             .state('disciplinas', {
                 url: "/disciplinas",
@@ -36,4 +31,9 @@ angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize'])
                     "viewContent": {templateUrl: "partials/duvidas.html", controller: "AulaController"}
                 }
             })
+    })
+    .run(function($window, $location, $state) {
+        if($window.location.pathname == '/index')
+            $state.go('disciplinas');
     });
+
