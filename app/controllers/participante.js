@@ -18,18 +18,6 @@ var participantes = [
 
 module.exports = function() {
     var controller = {
-        //listaParticipantes: function(req, res) {
-        //    var _id = req.params.id;
-        //    var participantes;
-        //    for(var i = 0; i < disciplinas.length; i++) {
-        //        if(disciplinas[i]._id == _id)
-        //        {
-        //            participantes = disciplinas[i].participantes;
-        //            break;
-        //        }
-        //    }
-        //    res.json(participantes);
-        //}
         listaParticipantes: function(req, res) {
             res.json(participantes);
         }

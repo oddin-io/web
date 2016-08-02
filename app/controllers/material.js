@@ -36,18 +36,6 @@ var materiais = [
 
 module.exports = function() {
     var controller = {
-        //listaMateriais: function(req, res) {
-        //    var _id = req.params.id;
-        //    var materiais;
-        //    for(var i = 0; i < disciplinas.length; i++) {
-        //        if(disciplinas[i]._id == _id)
-        //        {
-        //            materiais = disciplinas[i].materiais;
-        //            break;
-        //        }
-        //    }
-        //    res.json(materiais);
-        //}
         listaMateriais: function(req, res) {
             res.json(materiais);
         }

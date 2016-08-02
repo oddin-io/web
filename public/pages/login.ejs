@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="oddin-auth">
+<html ng-app="oddin">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,7 +37,7 @@
                                 </div>
                                 <!-- Senha -->
                                 <div class="input-field col s12">
-                                    <input id="user-password" type="password" required ng-model="user.senha"/>
+                                    <input id="user-password" type="password" required ng-model="user.password"/>
                                     <label for="user-password">Senha</label>
                                 </div>
                             </div>
@@ -62,8 +62,8 @@
                         </form>
                         <!-- Fim formulario -->
                         <!-- Mensagem -->
-                        <div>
-                            <p class="login-box__message">mensagem login</p>
+                        <div data-ng-if="mensagem">
+                            <p class="login-box__message">{{mensagem}}</p>
                         </div>
                         <!-- Fim Mensagem -->
                     </div>
@@ -79,8 +79,10 @@
 <script src="../vendor/jquery/dist/jquery.min.js"></script>
 <script src="../vendor/Materialize/dist/js/materialize.min.js"></script>
 <script src="../vendor/angular/angular.js"></script>
+<script src="../vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="../vendor/angular-resource/angular-resource.js"></script>
-<script src="../js/angular/auth.js"></script>
+<script src="../vendor/angular-materialize/src/angular-materialize.js"></script>
+<script src="../js/angular/main.js"></script>
 <script src="../js/angular/services/LoginService.js"></script>
 <script src="../js/angular/controllers/LoginController.js"></script>
 </body>

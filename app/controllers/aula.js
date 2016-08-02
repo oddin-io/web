@@ -51,20 +51,19 @@ var aulas = [
 
 module.exports = function() {
     var controller = {
-        //listaAulas: function(req, res) {
-        //    var id = req.params.id;
-        //    var aulas;
-        //    for(var i = 0; i < disciplinas.length; i++) {
-        //        if(disciplinas[i].id == id)
-        //        {
-        //            aulas = disciplinas[i].aulas;
-        //            break;
-        //        }
-        //    }
-        //    res.json(aulas);
-        //}
         listaAulas: function(req, res) {
             res.json(aulas);
+        },
+        mostraInfoAula: function (req, res) {
+            var id = req.params.id;
+            var aula = {};
+            for(var i = 0; i < aulas.length; i++) {
+                if(aulas[i].id == id) {
+                    aula = aulas[i];
+                    break;
+                }
+            }
+            res.json(aula);
         }
     };
     return controller;

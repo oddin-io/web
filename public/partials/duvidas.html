@@ -4,8 +4,8 @@
         <nav class="navbar-fixed barra-navegacao">
             <div class="nav-wrapper barra-navegacao__container">
                 <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only" data-sidenav="left" data-closeonclick="true"><i class="material-icons">menu</i></a>
-                <a class="barra-navegacao__voltar hide-on-med-and-down" href="#/disciplina/:disciplinaID/aula/{{duvidas.presentationid}}"><i class="material-icons">arrow_back</i></a>
-                <h1 class="barra-navegacao__title truncate">{{nome}} - {{codigo}}</h1>
+                <a class="barra-navegacao__voltar hide-on-med-and-down" href="#/disciplina/{{aula.instruction.id}}/aulas"><i class="material-icons">arrow_back</i></a>
+                <h1 class="barra-navegacao__title truncate">{{aula.subject}}</h1>
                 <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
             </div>
         </nav>
@@ -17,12 +17,12 @@
             <p class="barra-lateral__user-name">Aluno Teste</p>
             <p class="barra-lateral__user-email">aluno@email.com</p>
         </div>
-        <li class="hide-on-large-only no-padding barra-lateral__item"><a href="..">Sair de {{nome}}</a></li>
+        <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplina/{{aula.instruction.id}}/aulas">Sair de {{aula.subject}}</a></li>
         <li class="no-padding barra-lateral__item"><a href="#/disciplinas">Voltar Para Disciplinas</a></li>
         <li class="no-padding barra-lateral__item"><a href="/controller/logout">Logout</a></li>
     </ul>
 </header>
-<main>
+<main data-ng-init = "buscaDuvidas()">
     <div class="container">
         <!--FAB-->
         <div class="fixed-action-btn" style="bottom: 24px; right: 24px;">
@@ -63,7 +63,7 @@
             <div class="card-content">
                 <div class="pergunta__header">
                     <span class="autor">{{duvida.person.name}}</span>
-                    <span class="datahora">{{duvida.date}} {{doubt.time}}</span>
+                    <span class="datahora">{{duvida.created_at}}</span>
                 </div>
                 <div class="pergunta__content">
                     <p>{{duvida.text}}
@@ -87,7 +87,7 @@
                     </div>
                     <div class="col s12 m4">
                         <div class="ver-resposta" data-ng-if="duvida.contributions > 0">
-                            <a id="button_{{duvida._id}}" class="waves-effect btn-flat" data-ng-click="fetchAnswer(doubt)">
+                            <a id="button_{{duvida.id}}" class="waves-effect btn-flat" data-ng-click="fetchAnswer(doubt)">
                                 Ver Respostas
                             </a>
                         </div>

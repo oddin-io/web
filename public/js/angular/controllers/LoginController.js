@@ -1,14 +1,15 @@
-angular.module('oddin-auth').controller('LoginController',
-    function($scope, Login) {
+angular.module('oddin').controller('LoginController',
+    function($scope, $window, Login) {
         $scope.user = new Login();
         $scope.login = function() {
             $scope.user.$save()
-                .then(function() {
-                    location.pathname = "/";
-                    location.replace();
+                .then(function(data) {
+                    $window.sessionStorage = data;
+                    $window.location.href = '/index';
                 })
                 .catch(function(erro) {
-                    $scope.mensagem = "Erro!";
+                    delete $window.sessionStorage.token;
+                    $scope.mensagem = "Usuário ou senha inválida";
                 });
         }
     }

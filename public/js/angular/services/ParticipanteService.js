@@ -1,4 +1,4 @@
 angular.module('oddin').factory('Participante', function($resource) {
-    return $resource('/participants')
-})
+    return $resource('/participants/:id')
+});
 

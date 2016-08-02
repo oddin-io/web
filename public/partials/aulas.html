@@ -51,7 +51,7 @@
                 <ul class="collection lista-aulas">
                     <li data-ng-repeat="aula in aulas | filter: {status: 0}: true" class="collection-item avatar lista-aulas__item">
                         <i class="material-icons circle green lighten-2">lock_open</i>
-                        <a href="#/disciplina/{{_id}}/aula/{{aula.id}}">
+                        <a href="#/disciplina/{{aula.instruction.id}}/aula/{{aula.id}}">
                             <span class="title">{{aula.subject}}</span>
                             <p>{{aula.created_at}} <br>
                                 {{aula.time}}
@@ -64,7 +64,7 @@
                 <ul class="collection lista-aulas">
                     <li data-ng-repeat="aula in aulas | filter: {status: 1}: true" class="collection-item avatar lista-aulas__item">
                         <i class="material-icons circle red lighten-2">lock_outline</i>
-                        <a href="#/disciplina/{{_id}}/aula/{{aula.id}}">
+                        <a href="#/disciplina/{{aula.instruction.id}}/aula/{{aula.id}}">
                             <span class="title">
                                 {{aula.subject}}  <!-- ID: {{presentation.id}}-->
                             </span>
