@@ -31,7 +31,7 @@ module.exports = function() {
                         res.end();
                     }
                     else {
-                        res.cookie(JSON.stringify(body));
+                        res.cookie('session', body);
                         res.end();
                         console.log("logado");
                     }

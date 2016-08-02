@@ -17,7 +17,7 @@ var disciplinas = [
             'code': "BD1",
             'name': "Banco de Dados I",
             'workload': "79.2"
-        },
+        }
     },
     {
         'id': 2,
@@ -35,7 +35,7 @@ var disciplinas = [
             'code': "LP1",
             'name': "Linguagem de Programação I",
             'workload': "79.2"
-        },
+        }
     },
     {
         'id': 3,
@@ -53,7 +53,7 @@ var disciplinas = [
             'code': "ISO",
             'name': "Introdução a Sistemas Operacionais",
             'workload': "79.2"
-        },
+        }
     }
 ];
 
@@ -63,15 +63,15 @@ module.exports = function() {
         //    res.json(disciplinas);
         //},
         listaDisciplinas: function (req, res) {
-            var cookie = JSON.parse(req.headers.cookie);
-            console.log(cookie);
+            var session = JSON.parse(req.cookies.session);
+            console.log(session.token);
 
             request(
                 {
                     'uri': "http://rws-edupanel.herokuapp.com/instructions",
                     'method': "GET",
                     'headers': {
-                        'x-session-token': req.headers.cookie.token
+                        'x-session-token': session.token
                     }
                 }, function(error, response, body) {
                     if(response.statusCode == 401) {
@@ -82,7 +82,7 @@ module.exports = function() {
                         res.json(JSON.parse(body));
                     }
                 }
-            )
+            );
             //res.json(disciplinas);
         },
         mostraInfoDisciplina: function (req, res) {
@@ -98,4 +98,4 @@ module.exports = function() {
         }
     };
     return controller;
-}
+};
