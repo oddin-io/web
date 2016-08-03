@@ -1,5 +1,6 @@
 angular.module('oddin').controller('DisciplinaController',
-  function($scope, $stateParams, Disciplina, Aula, Material, Participante) {
+  function($scope, $stateParams, Disciplina, DisciplinaAula, Material, Participante, Profile, $state) {
+    // $state.go('materiais');
     function buscaInfo() {
       Disciplina.get({id: $stateParams.disciplinaID},
         function(disciplina) {
@@ -10,8 +11,9 @@ angular.module('oddin').controller('DisciplinaController',
         }
       );
     }
+
     $scope.buscaAulas = function() {
-      Aula.query(
+      DisciplinaAula.query({id: $stateParams.disciplinaID},
         function (aulas) {
           $scope.aulas = aulas;
         },

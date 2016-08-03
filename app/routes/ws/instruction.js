@@ -6,4 +6,10 @@ module.exports = function (app) {
   app.post('/api/instructions', controller.create);
   app.put('/api/instructions/:id', controller.update);
   app.delete('/api/instructions/:id', controller.destroy);
+
+  app.get('/api/instructions/:id/presentations', controller.showPresentations);
+  app.get('/api/instructions/:id/materials', controller.showMaterials);
+  app.get('/api/instructions/:id/participants', controller.showParticipants);
+
+  app.get('/api/instructions/:id/profile', controller.showProfile);
 };

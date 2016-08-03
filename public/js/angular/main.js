@@ -7,10 +7,33 @@ angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize'])
       "viewContent": {templateUrl: "partials/disciplinas.html", controller: "DisciplinasController"}
     }
   })
-  .state('aulas', {
+  .state('disciplina', {
+    url: "/disciplina/:disciplinaID",
+    controllerProvider: function(Profile, $stateParams, $state) {
+      Profile.get({id: $stateParams.disciplinaID},
+          function (data) {
+            if (data.profile == 0) {
+              $state.go('aulas-aluno', {disciplinaID: $stateParams.disciplinaID});
+            } else {
+              $state.go('aulas-professor', {disciplinaID: $stateParams.disciplinaID});
+            }
+          },
+          function (erro) {
+            console.log("Erro ao encontrar perfil");
+          }
+      );
+    }
+  })
+  .state('aulas-aluno', {
     url: "/disciplina/:disciplinaID/aulas",
     views: {
       "viewContent": {templateUrl: "partials/aulas.html", controller: "DisciplinaController"}
+    }
+  })
+  .state('aulas-professor', {
+    url: "/disciplina/:disciplinaID/aulas",
+    views: {
+      "viewContent": {templateUrl: "partials/aulas-p.html", controller: "DisciplinaController"}
     }
   })
   .state('materiais', {
@@ -33,5 +56,5 @@ angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize'])
   })
 }).run(function($window, $location, $state) {
   if($window.location.pathname == '/home')
-  $state.go('disciplinas');
+    $state.go('disciplinas');
 });
