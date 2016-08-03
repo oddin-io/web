@@ -1,3 +1,6 @@
+var request = require('request');
+
+
 var aulas = [
   {
     'id': 1,
@@ -69,12 +72,35 @@ function destroy(req, res, next) {
 
 }
 
+function close(req, res, next) {
+  var session = req.cookies.session;
+  request(
+      {
+        uri: app.utils.constants.ws.uri + '/presentations/' + req.params.id + '/close',
+        method: 'POST',
+        headers: {
+          'x-session-token': session.token
+        }
+      }, function (error, response, body) {
+        if (response.statusCode == 401) {
+          res.status(401);
+          res.end();
+        }
+        else {
+          res.json(JSON.parse(body));
+          res.end();
+        }
+      }
+  );
+}
+
 module.exports = function (app) {
   return {
     index: index,
     show: show,
     create: create,
     update: update,
-    destroy: destroy
+    destroy: destroy,
+    close: close
   };
 };

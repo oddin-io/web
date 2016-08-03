@@ -1,5 +1,5 @@
 angular.module('oddin').controller('DisciplinaController',
-  function($scope, $stateParams, $state, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
+  function($http, $scope, $stateParams, $state, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
     function buscaInfo() {
       Disciplina.get({id: $stateParams.disciplinaID},
         function(disciplina) {
@@ -53,12 +53,21 @@ angular.module('oddin').controller('DisciplinaController',
         $scope.aula.$save({id: $stateParams.disciplinaID})
             .then(function() {
                 $scope.mensagem = {texto: 'Salvo com sucesso'};
-                $state.reload();
-                //$scope.aula = new DisciplinaAula();
+                $scope.buscaAulas();
+                $scope.aula = new DisciplinaAula();
             })
             .catch(function(erro) {
                 $scope.mensagem = {texto: 'Não foi possível salvar'};
             });
+    };
+    $scope.fechaAula = function(aula) {
+        $http.post('api/presentations/' + aula.id + "/close")
+            .success(function(data) {
+                $scope.buscaAulas();
+            });
+    };
+    $scope.uploadMaterial = function() {
+        alert('upload de material');
     }
     buscaInfo();
   }
