@@ -1,7 +1,8 @@
-var express = require('express');
-var load = require('express-load');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
+var express = require('express')
+  , load = require('express-load')
+  , bodyParser = require('body-parser')
+  , cookieParser = require('cookie-parser')
+  , request = require('request');
 
 module.exports = function () {
   var app = express();
@@ -19,7 +20,8 @@ module.exports = function () {
   app.use(cookieParser());
 
   //express load
-  load('controllers', {cwd: 'app'})
+  load('utils', {cwd: 'app'})
+    .then('controllers')
     .then('routes')
     .into(app);
 

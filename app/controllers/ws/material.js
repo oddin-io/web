@@ -34,12 +34,32 @@ var materiais = [
   }
 ];
 
-function listaMateriais(req, res) {
-  res.json(materiais);
+function index(req, res, next) {
+  console.log('instruction#index')
 }
 
-module.exports = function() {
+function show(req, res, next) {
+
+}
+
+function create(req, res, next) {
+
+}
+
+function update(req, res, next) {
+
+}
+
+function destroy(req, res, next) {
+
+}
+
+module.exports = function (app) {
   return {
-    listaMateriais: listaMateriais
+    index: index,
+    show: show,
+    create: create,
+    update: update,
+    destroy: destroy
   };
 };

@@ -49,21 +49,32 @@ var aulas = [
   }
 ];
 
-module.exports = function () {
+function index(req, res, next) {
+
+}
+
+function show(req, res, next) {
+
+}
+
+function create(req, res, next) {
+
+}
+
+function update(req, res, next) {
+
+}
+
+function destroy(req, res, next) {
+
+}
+
+module.exports = function (app) {
   return {
-    listaAulas: function (req, res) {
-      res.json(aulas);
-    },
-    mostraInfoAula: function (req, res) {
-      var id = req.params.id;
-      var aula = {};
-      for (var i = 0; i < aulas.length; i++) {
-        if (aulas[i].id == id) {
-          aula = aulas[i];
-          break;
-        }
-      }
-      res.json(aula);
-    }
+    index: index,
+    show: show,
+    create: create,
+    update: update,
+    destroy: destroy
   };
 };
