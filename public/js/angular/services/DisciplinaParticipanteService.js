@@ -1,3 +1,4 @@
-/**
- * Created by Heitor on 03/08/2016.
- */
+angular.module('oddin').factory('DisciplinaParticipante', function($resource) {
+    return $resource('/api/instructions/:id/participants')
+});
+

@@ -59,7 +59,6 @@ function destroy(req, res, next) {
 
 function showPresentations(req, res, next) {
   var session = req.cookies.session;
-
   request(
       {
         uri: app.utils.constants.ws.uri + '/instructions/' + req.params.id + '/presentations',
@@ -79,12 +78,70 @@ function showPresentations(req, res, next) {
   );
 }
 
-function showMaterials(req, res, next) {
+function createPresentation(req, res, next) {
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/instructions/' + req.params.id + '/presentations',
+            method: 'POST',
+            headers: {
+                'x-session-token': session.token
+            },
+            json: {
+                subject: req.body.subject
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.end();
+            }
+        }
+    );
+}
 
+function showMaterials(req, res, next) {
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/instructions/' + req.params.id + '/materials',
+            method: 'GET',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.json(JSON.parse(body));
+            }
+        }
+    );
 }
 
 function showParticipants(req, res, next) {
-
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/instructions/' + req.params.id + '/participants',
+            method: 'GET',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.json(JSON.parse(body));
+            }
+        }
+    );
 }
 
 function showProfile(req, res, next) {
@@ -119,6 +176,7 @@ module.exports = function (application) {
     update: update,
     destroy: destroy,
     showPresentations: showPresentations,
+    createPresentation: createPresentation,
     showMaterials: showMaterials,
     showParticipants: showParticipants,
     showProfile: showProfile

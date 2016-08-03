@@ -1,6 +1,5 @@
 angular.module('oddin').controller('DisciplinaController',
-  function($scope, $stateParams, Disciplina, DisciplinaAula, Material, Participante, Profile, $state) {
-    // $state.go('materiais');
+  function($scope, $stateParams, $state, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
     function buscaInfo() {
       Disciplina.get({id: $stateParams.disciplinaID},
         function(disciplina) {
@@ -11,6 +10,8 @@ angular.module('oddin').controller('DisciplinaController',
         }
       );
     }
+
+    $scope.aula = new DisciplinaAula();
 
     $scope.buscaAulas = function() {
       DisciplinaAula.query({id: $stateParams.disciplinaID},
@@ -25,7 +26,7 @@ angular.module('oddin').controller('DisciplinaController',
       );
     };
     $scope.buscaParticipantes = function() {
-      Participante.query({id: $stateParams.disciplinaID},
+      DisciplinaParticipante.query({id: $stateParams.disciplinaID},
         function (participantes) {
           $scope.participantes = participantes;
         },
@@ -37,7 +38,7 @@ angular.module('oddin').controller('DisciplinaController',
       );
     };
     $scope.buscaMateriais = function() {
-      Material.query(
+      DisciplinaMaterial.query({id: $stateParams.disciplinaID},
         function (materiais) {
           $scope.materiais = materiais;
         },
@@ -48,6 +49,17 @@ angular.module('oddin').controller('DisciplinaController',
         }
       );
     };
+    $scope.criaAula = function() {
+        $scope.aula.$save({id: $stateParams.disciplinaID})
+            .then(function() {
+                $scope.mensagem = {texto: 'Salvo com sucesso'};
+                $state.reload();
+                //$scope.aula = new DisciplinaAula();
+            })
+            .catch(function(erro) {
+                $scope.mensagem = {texto: 'Não foi possível salvar'};
+            });
+    }
     buscaInfo();
   }
 );
