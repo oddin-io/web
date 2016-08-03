@@ -16,10 +16,12 @@ var participantes = [
   }
 ];
 
+function listaParticipantes(req, res) {
+  res.json(participantes);
+}
+
 module.exports = function() {
   return {
-    listaParticipantes: function (req, res) {
-      res.json(participantes);
-    }
+    listaParticipantes: listaParticipantes
   };
 };

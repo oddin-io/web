@@ -34,10 +34,12 @@ var materiais = [
   }
 ];
 
+function listaMateriais(req, res) {
+  res.json(materiais);
+}
+
 module.exports = function() {
   return {
-    listaMateriais: function (req, res) {
-      res.json(materiais);
-    }
+    listaMateriais: listaMateriais
   };
 };

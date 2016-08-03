@@ -5,7 +5,7 @@ angular.module('oddin').controller('LoginController',
       $scope.user.$save()
       .then(function(data) {
         //$window.sessionStorage = data;
-        $window.location.href = '/index';
+        $window.location.href = '/home';
       })
       .catch(function(erro) {
         //delete $window.sessionStorage.token;

@@ -46,10 +46,12 @@ var duvidas = [
   }
 ];
 
+function listaDuvidas(req, res) {
+  res.json(duvidas);
+}
+
 module.exports = function() {
   return {
-    listaDuvidas: function (req, res) {
-      res.json(duvidas);
-    }
+    listaDuvidas: listaDuvidas
   };
 };

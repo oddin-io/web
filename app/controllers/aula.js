@@ -49,7 +49,7 @@ var aulas = [
   }
 ];
 
-module.exports = function() {
+module.exports = function () {
   return {
     listaAulas: function (req, res) {
       res.json(aulas);

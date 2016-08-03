@@ -57,44 +57,43 @@ var disciplinas = [
   }
 ];
 
-module.exports = function() {
-  return {
-    //listaDisciplinas: function (req, res) {
-    //    res.json(disciplinas);
-    //},
-    listaDisciplinas: function (req, res) {
-      var session = JSON.parse(req.cookies.session);
-      console.log(session.token);
+function listaDisciplinas(req, res) {
+  var session = req.cookies.session;
 
-      request(
-        {
-          'uri': "http://rws-edupanel.herokuapp.com/instructions",
-          'method': "GET",
-          'headers': {
-            'x-session-token': session.token
-          }
-        }, function (error, response, body) {
-          if (response.statusCode == 401) {
-            res.status(401);
-            res.end();
-          }
-          else {
-            res.json(JSON.parse(body));
-          }
-        }
-      );
-      //res.json(disciplinas);
-    },
-    mostraInfoDisciplina: function (req, res) {
-      var id = req.params.id;
-      var disciplina = {};
-      for (var i = 0; i < disciplinas.length; i++) {
-        if (disciplinas[i].id == id) {
-          disciplina = disciplinas[i];
-          break;
-        }
+  request(
+    {
+      uri: 'http://rws-edupanel.herokuapp.com/instructions',
+      method: 'GET',
+      headers: {
+        'x-session-token': session.token
       }
-      res.json(disciplina);
+    }, function (error, response, body) {
+      if (response.statusCode == 401) {
+        res.status(401);
+        res.end();
+      }
+      else {
+        res.json(JSON.parse(body));
+      }
     }
+  );
+}
+
+function mostraInfoDisciplinas(req, res) {
+  var id = req.params.id;
+  var disciplina = {};
+  for (var i = 0; i < disciplinas.length; i++) {
+    if (disciplinas[i].id == id) {
+      disciplina = disciplinas[i];
+      break;
+    }
+  }
+  res.json(disciplina);
+}
+
+module.exports = function () {
+  return {
+    listaDisciplinas: listaDisciplinas,
+    mostraInfoDisciplina: mostraInfoDisciplinas
   };
 };

@@ -32,6 +32,6 @@ angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize'])
     }
   })
 }).run(function($window, $location, $state) {
-  if($window.location.pathname == '/index')
+  if($window.location.pathname == '/home')
   $state.go('disciplinas');
 });
