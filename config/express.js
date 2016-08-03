@@ -4,25 +4,25 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 
 module.exports = function() {
-    var app = express();
+  var app = express();
 
-    //configuração de ambiente
-    app.set('port', 3000);
-    app.set('view engine', 'ejs');
-    app.set('views', './public/pages');
+  //configuração de ambiente
+  app.set('port', 3000);
+  app.set('view engine', 'ejs');
+  app.set('views', './public/pages');
 
-    //middleware
-    app.use(express.static('./public'));
-    app.use(bodyParser.urlencoded({extended: true}));
-    app.use(bodyParser.json());
-    app.use(require('method-override')());
-    app.use(cookieParser());
+  //middleware
+  app.use(express.static('./public'));
+  app.use(bodyParser.urlencoded({extended: true}));
+  app.use(bodyParser.json());
+  app.use(require('method-override')());
+  app.use(cookieParser());
 
-    //express load
-    load('controllers', {cwd: 'app'})
-        .then('routes/login.js')
-        .then('routes')
-        .into(app);
+  //express load
+  load('controllers', {cwd: 'app'})
+  .then('routes/login.js')
+  .then('routes')
+  .into(app);
 
-    return app;
+  return app;
 };

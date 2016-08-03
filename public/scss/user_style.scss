@@ -9,6 +9,7 @@
   border-radius: 3px;
   font-size: 13px;
 }
+
 //
 .modal-criar-item {
   &__titulo {
@@ -43,7 +44,7 @@
 .lista-tab {
   width: 100% !important;
   overflow: hidden;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   &__item {
     @include type-button;
     @media (max-width: 400px) {
@@ -119,7 +120,7 @@
     }
     .datahora {
       float: right;
-      @media (max-width:$max-mobile-size) {
+      @media (max-width: $max-mobile-size) {
         display: block;
         float: none;
       }
@@ -142,7 +143,7 @@
       padding: 8px 0 8px 0;
       i {
         vertical-align: middle;
-        color: $grey-color ;
+        color: $grey-color;
       }
       a {
         margin-right: 0 !important;
@@ -165,7 +166,7 @@
       }
       &--prof {
         @extend .check-entendi;
-        margin-left: 24px;//
+        margin-left: 24px; //
         display: inline-block;
         @media (max-width: $max-mobile-size) {
           margin-left: 16px;
@@ -208,7 +209,7 @@
 }
 
 .resposta {
-  border-top: 4px solid rgba(160,160,160, 0.2);
+  border-top: 4px solid rgba(160, 160, 160, 0.2);
   background-color: $grey-light-color2;
   &__header {
     margin-bottom: 8px;
@@ -218,7 +219,7 @@
     }
     .datahora {
       float: right;
-      @media (max-width:$max-mobile-size) {
+      @media (max-width: $max-mobile-size) {
         display: block;
         float: none;
       }

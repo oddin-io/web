@@ -3,18 +3,22 @@ $sideBarCompensation: 240px;
 body {
   background-color: $background-color;
 }
+
 header, main, footer {
   padding-left: $sideBarCompensation;
   @media only screen and (max-width: $max-tablet-size) {
     padding-left: 0;
   }
 }
+
 .navbar-fixed {
   z-index: 997;
 }
+
 .fixed-action-btn {
   z-index: 997;
 }
+
 main {
   margin-top: 4 * $min;
   @media (max-width: $max-mobile-size) {
@@ -70,7 +74,7 @@ main {
   }
   &__user-email {
     @include type-body1;
-    margin: 0 0 0 0 ;
+    margin: 0 0 0 0;
   }
   &__item {
     background-color: #fff !important;

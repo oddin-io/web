@@ -5,7 +5,7 @@ var rename = require('gulp-rename');
 var sass = require('gulp-ruby-sass');
 
 //concatenar, renomear e minificar arquivos js
-gulp.task('scripts', function() {
+gulp.task('scripts', function () {
   return gulp.src('./public/js/*js')
     .pipe(concat('main.js'))
     .pipe(rename({suffix: '.min'}))
@@ -14,19 +14,19 @@ gulp.task('scripts', function() {
 });
 
 //compilar sass, minificar e renomear
-gulp.task('sass-min', function() {  
+gulp.task('sass-min', function () {
   return sass('./public/scss/*.scss', {style: 'compressed'})
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('./public/css'));
 });
 
-gulp.task('sass', function() {  
+gulp.task('sass', function () {
   return sass('./public/scss/*.scss')
     .pipe(gulp.dest('./public/css'));
 });
 
 //rastrear mudanças
-gulp.task('watch', function() {
+gulp.task('watch', function () {
   //rastrear arquivos .js
   gulp.watch('./public/js/*.js', ['scripts']);
   //rastrear arquivos .scss
