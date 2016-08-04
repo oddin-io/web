@@ -2,7 +2,7 @@ body {
   background-color: #fafafa; }
 
 header, main, footer {
-  padding-left: 300px; }
+  padding-left: 240px; }
   @media only screen and (max-width: 992px) {
     header, main, footer {
       padding-left: 0; } }
@@ -23,7 +23,7 @@ main {
   margin: 0 24px 0 24px; }
   @media (min-width: 993px) {
     .barra-navegacao__container {
-      margin: 0 324px 0 24px; } }
+      margin: 0 264px 0 24px; } }
 .barra-navegacao__voltar {
   display: inline-block;
   vertical-align: middle; }
@@ -82,7 +82,7 @@ main {
     background-color: transparent; }
 .barra-lateral__subitem p {
   font-weight: normal;
-  padding: 0 0 0 31px;
+  padding: 0 0 0 45px;
   color: #fff;
   background-color: transparent; }
 .barra-lateral__subitem.active:hover {
