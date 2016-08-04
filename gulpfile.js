@@ -14,7 +14,7 @@ gulp.task('scripts', function () {
 });
 
 //compilar sass, minificar e renomear
-gulp.task('sass-min', function () {
+gulp.task('sass-min', ['sass'], function () {
   return sass('./public/scss/*.scss', {style: 'compressed'})
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('./public/css'));
@@ -30,8 +30,10 @@ gulp.task('watch', function () {
   //rastrear arquivos .js
   gulp.watch('./public/js/*.js', ['scripts']);
   //rastrear arquivos .scss
-  gulp.watch('./public/scss/*.scss', ['sass', 'sass-min']);
+  gulp.watch('./public/scss/*.scss', ['sass-min']);
 });
 
 //Default
 gulp.task('default', [/*'scripts', 'sass',*/ 'watch']);
+
+gulp.task('build', ['scripts', 'sass-min']);
