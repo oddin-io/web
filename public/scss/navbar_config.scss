@@ -1,7 +1,7 @@
 @import 'variaveis';
 
 //Configurações principais
-$sideBarCompensation: 240px;
+$sideBarCompensation: 300px;
 body {
   background-color: $background-color;
 }
@@ -109,7 +109,7 @@ main {
     }
     p {
       font-weight: normal;
-      padding: 0 0 0 45px;
+      padding: 0 0 0 31px;
       color: #fff;
       background-color: transparent;
     }

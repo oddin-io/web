@@ -1,0 +1,266 @@
+<header>
+  <!--Barra de navegação superior-->
+  <div class="navbar-fixed">
+    <nav class="navbar-fixed barra-navegacao">
+      <div class="nav-wrapper barra-navegacao__container">
+        <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
+        <a class="barra-navegacao__voltar hide-on-med-and-down" href="../historic"><i class="material-icons">arrow_back</i></a>
+        <h1 class="barra-navegacao__title truncate">{{presentation.subject}} - {{presentation.lecture.code}}</h1>
+        <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="/view/img/oddin_logo_horizontal-01.png"/></a>
+      </div>
+    </nav>
+  </div>
+  <!--Barra de navegação lateral-->
+  <ul id="slide-out" class="side-nav fixed barra-lateral">
+    <div class="barra-lateral__header">
+      <i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">Professor Teste</p>
+      <p class="barra-lateral__user-email">professor@email.com</p>
+    </div>
+    <!--<li><a href="./presentation/current">Aula Atual</a></li>-->
+    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="../historic">Sair de {{presentation.subject}}</a></li>
+    <li class="no-padding barra-lateral__item"><a href="/app/instruction">Voltar Para Disciplinas</a></li>
+    <li class="no-padding barra-lateral__item"><a href="/controller/logout">Logout</a></li>
+  </ul>
+</header>
+<main>
+  <div class="container">
+
+    <div id="responder-duvida" class="modal bottom-sheet">
+      <div class="modal-content modal-criar-item modal-post-resposta">
+        <div class="row">
+          <form class="offset-m2 offset-l3 col  s12 m8 l6" data-ng-submit="answerDoubt(modal.doubt, answer)" data-ng-if="modal.doubt.status != 2">
+            <h1 class="modal-criar-item__titulo">Responder Dúvida</h1>
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea name="texto" data-ng-model="$parent.answer.text" class="materialize-textarea" id="textarea_duvida"></textarea>
+                <label for="textarea_duvida">Resposta</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 m9">
+                <div class="modal-post-resposta__options">
+                  <a class="btn-floating" href=""><i class="material-icons">text_fields</i></a>
+                  <a class="btn-floating disabled" href="" disabled><i class="material-icons">mic</i></a>
+                  <a class="btn-floating disabled" href="" disabled><i class="material-icons">videocam</i></a>
+                  <a class="btn-floating disabled" href="" disabled><i class="material-icons">attach_file</i></a>
+                </div>
+              </div>
+              <div class="col s12 m3">
+                <button class="btn waves-effect waves-light modal-post-resposta__submit" type="submit" name="action">Enviar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h4>Modal Header</h4>
+        <p>A bunch of text</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+    </div>
+
+
+    <div class="card pergunta" data-ng-repeat="doubt in doubts | orderObjectBy:'-likes'">
+      <div class="card-content">
+        <div class="pergunta__header">
+          <span class="autor">{{doubt.person.name}}</span>
+          <span class="datahora">{{doubt.date}} {{doubt.time}}</span>
+        </div>
+        <div class="pergunta__content">
+          <p>{{doubt.text}}
+          </p>
+        </div>
+      </div>
+      <div class="card-action pergunta__action">
+        <div class="row">
+
+          <div class="col  s12 m4">
+            <div class="status">
+              <div class="upvote--prof" data-ng-class="{interactive_checked: doubt.like}">
+                <i class="material-icons">keyboard_arrow_up</i>
+                <span class="custom-badge">{{doubt.likes}}</span>
+              </div>
+              <div class="check-entendi--prof">
+                <i class="material-icons">check</i>
+              </div>
+            </div>
+          </div>
+
+          <div class="col  m4">
+            <div class="responder">
+              <a class="waves-effect btn-flat modal-trigger" ng-click="modalTrigger(doubt)" href="">
+                Responder
+              </a>
+            </div>
+          </div>
+
+          <div class="col  m4">
+            <div class="ver-resposta--prof" data-ng-if="doubt.contributions > 0">
+              <a id="button_{{doubt.id}}" class="waves-effect btn-flat" data-ng-click="fetchAnswer(doubt)">
+                <span>Ver Respostas</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!--Resposta-->
+      <div class="resposta" data-ng-attr-id="{{doubt.id}}" data-ng-if="doubt.answers.length > 0" data-ng-repeat="answer in doubt.answers">
+
+        <div class="resposta__header">
+          <span class="autor">{{answer.person.name}}</span>
+          <span class="datahora">{{answer.createdat}}<!--{{answer.date}} {{answer.time}}--></span>
+        </div>
+
+        <div class="resposta__content">
+          <p>
+            {{answer.text}}
+          </p>
+        </div>
+
+        <div class="resposta__action">
+
+          <div class="upvote" data-ng-class="{interactive_checked: doubt.like}">
+            <a href="" data-ng-click="likeDoubt(doubt)">
+              <i class="material-icons">keyboard_arrow_up</i>
+            </a>
+            <span class="custom-badge">{{doubt.likes}}</span>
+          </div>
+
+          <div class="check-entendi">
+            <i class="material-icons">check</i>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="item" data-ng-repeat="doubt in doubts">-->
+  <!--<div class="doubt">-->
+  <!--<div class="doubt__header">-->
+  <!--<h4 class="doubt__pessoa">{{doubt.person.name}}</h4>-->
+  <!--<h4 class="doubt__time">{{doubt.date}} {{doubt.time}}</h4>-->
+  <!--</div>-->
+  <!--<div class="ranking">-->
+  <!--<span class="status-duvida-prof"><span class="badge">{{doubt.likes}}</span><span>&#32;</span><span class="glyphicon glyphicon-thumbs-up"></span></span>-->
+  <!--<span class="status-duvida-prof"><span class="badge">{{doubt.likes}}</span><span>&#32;</span><span class="glyphicon glyphicon glyphicon-check btn-entendi"></span></span>-->
+  <!--<span class="status-duvida-prof">-->
+  <!--<span class="fa" data-ng-class="{'btn-resp-fechada fa-lock': doubt.status == 2, 'btn-resp-none fa-unlock': doubt.status == 0, 'btn-resp-aberta fa-unlock-alt': doubt.status == 1}">-->
+  <!--</span>-->
+  <!--</span>-->
+  <!--</div>-->
+  <!--<div class="doubt__content">-->
+  <!--<div class="doubt__textbox">-->
+  <!--<p class="more">{{doubt.text}}-->
+  <!--</p>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<div class="btn-options-prof">-->
+  <!--<button data-ng-click="seeDoubt(doubt)" class="button-standard" type="button" data-toggle="modal" data-target="#modal-duvida">Ver Dúvida</button>-->
+  <!--<button data-ng-click="changeStatus(doubt, 2)" class="button-standard" type="button">Fechar Resposta</button>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!-- Modal -->
+  <!--<div class="modal fade" id="modal-duvida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+  <!--<div class="modal-dialog" role="document">-->
+  <!--<div class="modal-content">-->
+  <!--<div class="modal-header">-->
+  <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+  <!--<h4 class="modal-title" id="myModalLabel">{{modal.doubt.person.name}}</h4>-->
+  <!--</div>-->
+  <!--<div class="modal-body">-->
+  <!--<p class="modal-duvida">{{modal.doubt.text}}</p>-->
+  <!--</div>-->
+  <!--<div class="modal-footer">-->
+  <!--<div class="abas_respostas">-->
+  <!--<ul class="nav nav-tabs" role="tablist">-->
+  <!--<li role="presentation" class="active"><a href="#texto" aria-controls="texto" role="tab" data-toggle="tab"><span class="fa fa-font fa-lg"></span></a></li>-->
+  <!--<li role="presentation"><a href="#audio" aria-controls="audio" role="tab" data-toggle="tab"><span class="fa fa-microphone fa-lg"></span></a></li>-->
+  <!--<li role="presentation"><a href="#video" aria-controls="video" role="tab" data-toggle="tab"><span class="fa fa-video-camera fa-lg"></span></a></li>-->
+  <!--<li role="presentation"><a href="#arquivo" aria-controls="arquivo" role="tab" data-toggle="tab"><span class="fa fa-paperclip fa-lg"></span></a></li>-->
+  <!--</ul>-->
+
+  <!--<div class="tab-content">-->
+  <!--<div role="tabpanel" class="tab-pane active" id="texto">-->
+  <!--<div class="section_respostas_text" data-ng-if="modal.doubt.answers.length > 0">-->
+  <!--<div class="respostas_section respostas_prof" data-ng-repeat="answer in modal.doubt.answers">-->
+  <!--<div class="row">-->
+  <!--<div class="col-md-4 col-sm-6"><h4 class="resposta__pessoa">{{answer.person.name}}</h4></div>-->
+  <!--<div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-4"><h4 class="resposta__time">{{answer.createdat}}</h4></div>-->
+  <!--</div>-->
+  <!--<div class="resposta__textbox">-->
+  <!--<p>-->
+  <!--{{answer.text}}-->
+  <!--</p>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<form class="form_responder_duvida" data-ng-submit="answerDoubt(modal.doubt, answer)" data-ng-if="modal.doubt.status != 2">-->
+  <!--<fieldset>-->
+  <!--<textarea name="texto" placeholder="Insira sua resposta" data-ng-model="$parent.answer.text" class="form-control" id="textarea_resposta"></textarea>-->
+  <!--</fieldset>-->
+
+  <!--<div class="row">-->
+  <!--<div class="col-sm-offset-8 col-sm-4">-->
+  <!--<input type="submit" value="Responder" class="custom-button-md"/>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</form>-->
+  <!--</div>-->
+  <!--<div role="tabpanel" class="tab-pane" id="audio"><p>Gravar Áudio</p></div>-->
+  <!--<div role="tabpanel" class="tab-pane" id="video"><p>Gravar Vídeo</p></div>-->
+  <!--<div role="tabpanel" class="tab-pane" id="arquivo"><p>Upload de Arquivo</p></div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!-- -->
+
+  <!--&lt;!&ndash; Modal Upload &ndash;&gt;-->
+  <!--<div class="modal fade" id="modal-uploads" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+  <!--<div class="modal-dialog" role="document">-->
+  <!--<div class="modal-content">-->
+  <!--<div class="modal-header">-->
+  <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+  <!--<h4 class="modal-title" id="myModalLabelUpload">Upload de Arquivos - Disciplina X</h4>-->
+  <!--</div>-->
+  <!--<div class="modal-footer">-->
+  <!--<div class="upload-form">-->
+  <!--<form enctype="multipart/form-data">-->
+  <!--<div class="row">-->
+  <!--<div class="form-group">-->
+  <!--<div class="col-sm-12">-->
+  <!--<label for="tema">Tema</label>-->
+  <!--<input name="tema"type="text" class="form-control" id="tema" placeholder="Insira o tema do material a ser enviado"/>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<div class="form-group">-->
+  <!--<div class="col-sm-12">-->
+  <!--<label for="file">Arquivos</label>-->
+  <!--<input name="files[]" type="file" id="file" class="custom-file" multiple/>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<input type="submit" value="Upload" class="custom-button-sm"/>-->
+  <!--</form>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!-- -->
+</main>

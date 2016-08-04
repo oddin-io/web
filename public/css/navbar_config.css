@@ -1,67 +1,91 @@
-/*
-Error: Undefined variable: "$background-color".
-        on line 4 of ./public/scss/navbar_config.scss
+body {
+  background-color: #fafafa; }
 
-1: //Configurações principais
-2: $sideBarCompensation: 240px;
-3: body {
-4:   background-color: $background-color;
-5: }
-6: //test
-7: header, main, footer {
-8:   padding-left: $sideBarCompensation;
-9:   @media only screen and (max-width: $max-tablet-size) {
+header, main, footer {
+  padding-left: 300px; }
+  @media only screen and (max-width: 992px) {
+    header, main, footer {
+      padding-left: 0; } }
 
-Backtrace:
-./public/scss/navbar_config.scss:4
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/script/tree/variable.rb:49:in `_perform'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/script/tree/node.rb:58:in `perform'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:397:in `visit_prop'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `visit'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/stack.rb:79:in `block in with_base'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/stack.rb:115:in `with_frame'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/stack.rb:79:in `with_base'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:160:in `visit'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:433:in `block (2 levels) in visit_rule'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:433:in `map'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:433:in `block in visit_rule'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:431:in `visit_rule'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `visit'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/stack.rb:79:in `block in with_base'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/stack.rb:115:in `with_frame'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/stack.rb:79:in `with_base'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:160:in `visit'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:52:in `map'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:169:in `block in visit_children'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:168:in `visit_children'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:188:in `visit_root'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `visit'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:159:in `visit'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:8:in `visit'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/root_node.rb:36:in `css_tree'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/tree/root_node.rb:20:in `render'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/engine.rb:281:in `render'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:494:in `update_stylesheet'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `each'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/plugin.rb:82:in `update_stylesheets'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/exec/sass_scss.rb:340:in `watch_or_update'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/exec/sass_scss.rb:51:in `process_result'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/exec/base.rb:52:in `parse'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/exec/base.rb:19:in `parse!'
-/home/bruno/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/bin/sass:13:in `<top (required)>'
-/home/bruno/.rvm/gems/ruby-2.3.0/bin/sass:22:in `load'
-/home/bruno/.rvm/gems/ruby-2.3.0/bin/sass:22:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: Undefined variable: \"$background-color\".\A         on line 4 of ./public/scss/navbar_config.scss\A \A 1: //Configurações principais\A 2: $sideBarCompensation: 240px;\A 3: body {\A 4:   background-color: $background-color;\A 5: }\A 6: //test\A 7: header, main, footer {\A 8:   padding-left: $sideBarCompensation;\A 9:   @media only screen and (max-width: $max-tablet-size) {"; }
+.navbar-fixed {
+  z-index: 997; }
+
+.fixed-action-btn {
+  z-index: 997; }
+
+main {
+  margin-top: 32px; }
+  @media (max-width: 600px) {
+    main {
+      margin-top: 24px; } }
+
+.barra-navegacao__container {
+  margin: 0 24px 0 24px; }
+  @media (min-width: 993px) {
+    .barra-navegacao__container {
+      margin: 0 324px 0 24px; } }
+.barra-navegacao__voltar {
+  display: inline-block;
+  vertical-align: middle; }
+.barra-navegacao__title {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 66%;
+  margin: 0 0 0 32px;
+  font-size: 20px;
+  font-weight: 500; }
+  @media (min-width: 601px) {
+    .barra-navegacao__title {
+      max-width: 60%; } }
+  @media (min-width: 993px) {
+    .barra-navegacao__title {
+      max-width: 70%; } }
+.barra-navegacao__logo {
+  height: auto;
+  max-height: 40px;
+  margin: 12px 0 12px 0; }
+
+.barra-lateral__header {
+  padding: 16px;
+  background-color: #007279;
+  color: #fff; }
+.barra-lateral__user-avatar {
+  margin-left: -4px;
+  font-size: 72px !important; }
+.barra-lateral__user-name {
+  font-size: 13px;
+  font-weight: 500;
+  margin: 16px 0 0 0; }
+.barra-lateral__user-email {
+  font-size: 13px;
+  font-weight: 400;
+  margin: 0 0 0 0; }
+.barra-lateral__item {
+  background-color: #fff !important; }
+  .barra-lateral__item > a {
+    padding-left: 16px !important;
+    font-weight: 500; }
+    .barra-lateral__item > a:hover {
+      color: #ff9850 !important;
+      background-color: transparent !important; }
+    .barra-lateral__item > a.active {
+      color: #00acc1 !important; }
+      .barra-lateral__item > a.active:hover {
+        color: #ff9850 !important;
+        background-color: transparent !important; }
+  .barra-lateral__item--collapsible {
+    margin: 0 !important; }
+.barra-lateral__subitem a {
+  font-weight: normal; }
+  .barra-lateral__subitem a:hover {
+    color: #ff9850;
+    background-color: transparent; }
+.barra-lateral__subitem p {
+  font-weight: normal;
+  padding: 0 0 0 31px;
+  color: #fff;
+  background-color: transparent; }
+.barra-lateral__subitem.active:hover {
+  background-color: #ff9850 !important; }
+.barra-lateral__subitem:hover {
+  background-color: transparent !important; }

@@ -176,13 +176,13 @@
       }
     }
 
-    //.check-nao-entendi {
-    //  @extend .check-entendi;
-    //  i {
-    //    vertical-align: middle;
-    //    color: $grey-light-color2;
-    //  }
-    //}
+    .check-nao-entendi {
+      @extend .check-entendi;
+      i {
+        vertical-align: middle;
+        color: $grey-light-color;
+      }
+    }
 
     .ver-resposta {
       @media (min-width: $min-tablet-size) {

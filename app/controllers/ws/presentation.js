@@ -90,7 +90,8 @@ function postQuestion(req, res, next){
           'x-session-token': session.token
         },
         json: {
-          //dados da dúvida
+          text: req.body.text,
+          anonymous: req.body.anonymous
         }
       }, function (error, response, body) {
         if (response.statusCode == 401) {
@@ -98,7 +99,7 @@ function postQuestion(req, res, next){
           res.end();
         }
         else {
-          res.end();
+          res.json(body);
         }
       }
   );

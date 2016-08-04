@@ -1,7 +1,7 @@
 angular.module('oddin').controller('AulaController',
   function($scope, $stateParams, Aula, Duvida, Resposta) {
     $scope.duvidas = {};
-
+    $scope.duvida = new Duvida();
     function buscaInfo() {
       Aula.get({id: $stateParams.aulaID},
         function(aula) {
@@ -36,6 +36,18 @@ angular.module('oddin').controller('AulaController',
       );
     };
 
+    $scope.postaDuvida = function() {
+        if($scope.duvida.anonymous === undefined) $scope.duvida.anonymous = false;
+        $scope.duvida.$save({id: $stateParams.aulaID})
+            .then(function(data) {
+                addDuvida(data);
+                $scope.duvida = new Duvida();
+            })
+            .catch(function(erro) {
+                $scope.mensagem = {texto: 'Não foi possível postar a dúvida'};
+                $scope.duvida = new Duvida();
+            });
+    }
     buscaInfo();
 
       var socket = io("/socket/presentation");
