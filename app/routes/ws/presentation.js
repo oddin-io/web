@@ -7,5 +7,7 @@ module.exports = function (app) {
   app.post('/api/presentations/:id/close', controller.close);
   app.put('/api/presentations/:id', controller.update);
   app.delete('/api/presentations/:id', controller.destroy);
+  app.get('/api/presentations/:id/questions', controller.showQuestions);
+  app.post('/api/presentations/:id/questions', controller.postQuestion);
 };
 

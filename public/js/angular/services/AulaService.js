@@ -1,3 +1,3 @@
 angular.module('oddin').factory('Aula', function($resource) {
-  return $resource('/presentations/:id')
+  return $resource('/api/presentations/:id')
 });

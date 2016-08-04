@@ -1,6 +1,8 @@
 @import 'mixins_variaveis';
 @import 'navbar_config';
 
+//
+
 //colocar em outro scss
 .custom-badge {
   color: white;
@@ -171,6 +173,14 @@
         @media (max-width: $max-mobile-size) {
           margin-left: 16px;
         }
+      }
+    }
+
+    .check-nao-entendi {
+      @extend .check-entendi;
+      i {
+        vertical-align: middle;
+        color: $grey-light-color2;
       }
     }
 

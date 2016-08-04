@@ -202,14 +202,14 @@ main {
     color: #9e9e9e !important; }
   .pergunta__action .upvote--prof {
     display: inline-block; }
-.pergunta__action .check-entendi, .pergunta__action .check-entendi--prof {
+.pergunta__action .check-entendi, .pergunta__action .check-entendi--prof, .pergunta__action .check-nao-entendi {
   padding: 8px 0 8px 0;
   text-align: center !important; }
-  .pergunta__action .check-entendi i, .pergunta__action .check-entendi--prof i {
+  .pergunta__action .check-entendi i, .pergunta__action .check-entendi--prof i, .pergunta__action .check-nao-entendi i {
     vertical-align: middle;
     color: #81C784; }
   @media (max-width: 600px) {
-    .pergunta__action .check-entendi, .pergunta__action .check-entendi--prof {
+    .pergunta__action .check-entendi, .pergunta__action .check-entendi--prof, .pergunta__action .check-nao-entendi {
       text-align: right !important; } }
   .pergunta__action .check-entendi--prof {
     margin-left: 24px;
@@ -217,6 +217,9 @@ main {
     @media (max-width: 600px) {
       .pergunta__action .check-entendi--prof {
         margin-left: 16px; } }
+.pergunta__action .check-nao-entendi i {
+  vertical-align: middle;
+  color: #f6f6f6; }
 @media (min-width: 601px) {
   .pergunta__action .ver-resposta, .pergunta__action .ver-resposta--prof, .pergunta__action .responder {
     text-align: right; } }
@@ -271,11 +274,11 @@ main {
       .resposta__action .upvote a, .resposta__action .pergunta__action .upvote--prof a, .pergunta__action .resposta__action .upvote--prof a {
         margin-right: 0 !important;
         color: #9e9e9e !important; }
-    .resposta__action .check-entendi, .resposta__action .pergunta__action .check-entendi--prof, .pergunta__action .resposta__action .check-entendi--prof {
+    .resposta__action .check-entendi, .resposta__action .pergunta__action .check-entendi--prof, .pergunta__action .resposta__action .check-entendi--prof, .resposta__action .pergunta__action .check-nao-entendi, .pergunta__action .resposta__action .check-nao-entendi {
       display: inline-block;
       margin-left: 24px;
       padding: 16px 0 16px 0; }
-      .resposta__action .check-entendi i, .resposta__action .pergunta__action .check-entendi--prof i, .pergunta__action .resposta__action .check-entendi--prof i {
+      .resposta__action .check-entendi i, .resposta__action .pergunta__action .check-entendi--prof i, .pergunta__action .resposta__action .check-entendi--prof i, .resposta__action .pergunta__action .check-nao-entendi i, .pergunta__action .resposta__action .check-nao-entendi i {
         vertical-align: middle;
         color: #81C784; }
 

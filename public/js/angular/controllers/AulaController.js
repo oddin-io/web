@@ -11,7 +11,7 @@ angular.module('oddin').controller('AulaController',
       );
     }
     $scope.buscaDuvidas = function (){
-      Duvida.query(
+      Duvida.query({id: $stateParams.aulaID},
         function (duvidas) {
           $scope.duvidas = duvidas;
         },

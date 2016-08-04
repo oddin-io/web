@@ -3,7 +3,7 @@ $sideBarCompensation: 240px;
 body {
   background-color: $background-color;
 }
-
+//test
 header, main, footer {
   padding-left: $sideBarCompensation;
   @media only screen and (max-width: $max-tablet-size) {
