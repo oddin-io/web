@@ -1,5 +1,5 @@
 angular.module('oddin').controller('AulaController',
-  function($scope, $stateParams, Aula, Duvida) {
+  function($scope, $stateParams, Aula, Duvida, Resposta) {
     $scope.duvidas = {};
 
     function buscaInfo() {
@@ -21,7 +21,7 @@ angular.module('oddin').controller('AulaController',
         $scope.duvidas[duvida.id] = duvida;
     }
 
-    $scope.buscaDuvidas = function (){
+    $scope.buscaDuvidas = function () {
       Duvida.query({id: $stateParams.aulaID},
         function (duvidas) {
           duvidas.forEach(function (elem) {
@@ -37,5 +37,61 @@ angular.module('oddin').controller('AulaController',
     };
 
     buscaInfo();
+
+      var socket = io("/socket/presentation");
+      socket.on("new question", function (data) {
+          Duvida.query({id: data.id},
+              function (duvidas) {
+                  duvidas.forEach(function (elem) {
+                      addDuvida(elem)
+                  });
+              },
+              function (erro) {
+                  $scope.mensagem = {
+                      texto: 'Não foi possível obter o resultado.'
+                  };
+              }
+          );
+      });
+
+      socket.on("new answer", function (data) {
+          Resposta.query({id: data.id},
+              function (respostas) {
+                  var id = respostas[0].question.id;
+                  $scope.duvidas[id].answers.push(respostas[0]);
+              },
+              function (erro) {
+                  $scope.mensagem = {
+                      texto: 'Não foi possível obter o resultado.'
+                  };
+              }
+          );
+      });
+
+      socket.on("new question vote", function (data) {
+          var type = data.type,
+              id = data.id;
+
+          $scope.duvidas[id][type]++;
+      });
+
+      socket.on("delete question vote", function (data) {
+          var type = data.type,
+              id = data.id;
+
+          $scope.duvidas[id][type] = $scope.duvidas[id][type] == 0 ? 0 : $scope.duvidas[id][type]--;
+      });
+
+      socket.on("new answer accept", function (data) {
+          var answer = data.answer;
+          answer.accepted = true;
+          $scope.duvidas[answer.question.id].answer = answer;
+      });
+
+      socket.on("delete answer accept", function (data) {
+          var answer = data.answer;
+          answer.accepted = false;
+          $scope.duvidas[answer.question.id].answer = null;
+      });
   }
 );

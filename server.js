@@ -1,6 +1,7 @@
-var http = require('http');
 var app = require('./config/express')();
+var http = require('http').Server(app);
+var socket = require('./app/socket/socket')(http);
 
-http.createServer(app).listen(app.get('port'), function () {
+http.listen(app.get('port'), function () {
   console.log('Oddin rodando na porta ' + app.get('port'));
 });
