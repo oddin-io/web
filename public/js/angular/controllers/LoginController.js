@@ -1,5 +1,5 @@
 angular.module('oddin').controller('LoginController',
-  function($scope, $window, Login) {
+  function($scope, $window, $http, $cookies, Login) {
     $scope.user = new Login();
     $scope.login = function() {
       $scope.user.$save()
@@ -11,6 +11,13 @@ angular.module('oddin').controller('LoginController',
         //delete $window.sessionStorage.token;
         $scope.mensagem = "Usuário ou senha inválida";
       });
+    }
+    $scope.logout = function() {
+        $http.post('/logout')
+            .success(function(data) {
+                $cookies.remove('session');
+                $window.location.href = '/';
+            });
     }
   }
 );

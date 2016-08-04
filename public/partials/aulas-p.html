@@ -6,7 +6,7 @@
         <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only" data-sidenav="left" data-closeonclick="true"><i class=" material-icons">menu</i></a>
         <a class="barra-navegacao__voltar hide-on-med-and-down" href="#/disciplinas"><i class="material-icons">arrow_back</i></a>
         <h1 class="barra-navegacao__title truncate">{{disciplina.lecture.name}}</h1>
-        <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
+        <a href="/" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
       </div>
     </nav>
   </div>
@@ -35,7 +35,7 @@
       </ul>
     </li>
     <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplinas">Voltar Para Disciplinas</a></li>
-    <li class="no-padding barra-lateral__item"><a href="/controller/logout">Logout</a></li>
+    <li data-ng-controller="LoginController" class="no-padding barra-lateral__item"><a href="" data-ng-click="logout()">Logout</a></li>
   </ul>
   <!---->
 </header>

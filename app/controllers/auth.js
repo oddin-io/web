@@ -23,7 +23,25 @@ function login(req, res, next) {
 }
 
 function logout(req, res, next) {
-  console.log('logout');
+  var session = req.cookies.session;
+  request(
+      {
+        uri: 'http://rws-edupanel.herokuapp.com/session',
+        method: 'DELETE',
+        headers: {
+          'x-session-token': session.token
+        }
+      }, function (error, response, body) {
+        if (response.statusCode == 401) {
+          res.status(401);
+          res.end();
+        }
+        else {
+          res.status(204);
+          res.end();
+        }
+      }
+  );
 }
 
 module.exports = function() {

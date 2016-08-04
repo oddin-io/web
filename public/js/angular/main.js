@@ -1,4 +1,4 @@
-angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize'])
+angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize', 'ngCookies'])
 .config(function($stateProvider, $urlRouterProvider) {
   var profile;
   $stateProvider
