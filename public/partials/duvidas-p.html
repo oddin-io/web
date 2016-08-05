@@ -3,10 +3,10 @@
   <div class="navbar-fixed">
     <nav class="navbar-fixed barra-navegacao">
       <div class="nav-wrapper barra-navegacao__container">
-        <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
-        <a class="barra-navegacao__voltar hide-on-med-and-down" href="../historic"><i class="material-icons">arrow_back</i></a>
-        <h1 class="barra-navegacao__title truncate">{{presentation.subject}} - {{presentation.lecture.code}}</h1>
-        <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="/view/img/oddin_logo_horizontal-01.png"/></a>
+        <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only" data-sidenav="left" data-closeonclick="true"><i class="material-icons">menu</i></a>
+        <a class="barra-navegacao__voltar hide-on-med-and-down" href="#/disciplina/{{aula.instruction.id}}/aulas"><i class="material-icons">arrow_back</i></a>
+        <h1 class="barra-navegacao__title truncate">{{aula.subject}}</h1>
+        <a href="/" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
       </div>
     </nav>
   </div>
@@ -17,23 +17,21 @@
       <p class="barra-lateral__user-name">Professor Teste</p>
       <p class="barra-lateral__user-email">professor@email.com</p>
     </div>
-    <!--<li><a href="./presentation/current">Aula Atual</a></li>-->
-    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="../historic">Sair de {{presentation.subject}}</a></li>
-    <li class="no-padding barra-lateral__item"><a href="/app/instruction">Voltar Para Disciplinas</a></li>
-    <li class="no-padding barra-lateral__item"><a href="/controller/logout">Logout</a></li>
+    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplina/{{aula.instruction.id}}/aulas">Sair de {{aula.subject}}</a></li>
+    <li class="no-padding barra-lateral__item"><a href="#/disciplinas">Voltar Para Disciplinas</a></li>
+    <li data-ng-controller="LoginController" class="no-padding barra-lateral__item"><a href="" data-ng-click="logout()">Logout</a></li>
   </ul>
 </header>
-<main>
+<main data-ng-init = "buscaDuvidas()">
   <div class="container">
-
     <div id="responder-duvida" class="modal bottom-sheet">
       <div class="modal-content modal-criar-item modal-post-resposta">
         <div class="row">
-          <form class="offset-m2 offset-l3 col  s12 m8 l6" data-ng-submit="answerDoubt(modal.doubt, answer)" data-ng-if="modal.doubt.status != 2">
+          <form class="offset-m2 offset-l3 col  s12 m8 l6" data-ng-submit="postaResposta()">
             <h1 class="modal-criar-item__titulo">Responder Dúvida</h1>
             <div class="row">
               <div class="input-field col s12">
-                <textarea name="texto" data-ng-model="$parent.answer.text" class="materialize-textarea" id="textarea_duvida"></textarea>
+                <textarea name="texto" data-ng-model="resposta.text" class="materialize-textarea" id="textarea_duvida"></textarea>
                 <label for="textarea_duvida">Resposta</label>
               </div>
             </div>
@@ -47,7 +45,7 @@
                 </div>
               </div>
               <div class="col s12 m3">
-                <button class="btn waves-effect waves-light modal-post-resposta__submit" type="submit" name="action">Enviar
+                <button class="btn waves-effect waves-light modal-post-resposta__submit modal-close" type="submit" name="action">Enviar
                 </button>
               </div>
             </div>
@@ -56,38 +54,26 @@
       </div>
     </div>
 
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-      </div>
-    </div>
-
-
-    <div class="card pergunta" data-ng-repeat="doubt in doubts | orderObjectBy:'-likes'">
+    <div class="card pergunta" data-ng-repeat="duvida in duvidas"><!-- | orderObjectBy:'upvotes'-->
       <div class="card-content">
         <div class="pergunta__header">
-          <span class="autor">{{doubt.person.name}}</span>
-          <span class="datahora">{{doubt.date}} {{doubt.time}}</span>
+          <span class="autor">{{duvida.person.name}}</span>
+          <span class="datahora">{{duvida.created_at}}</span>
         </div>
         <div class="pergunta__content">
-          <p>{{doubt.text}}
+          <p>{{duvida.text}}
           </p>
         </div>
       </div>
       <div class="card-action pergunta__action">
         <div class="row">
-
           <div class="col  s12 m4">
             <div class="status">
-              <div class="upvote--prof" data-ng-class="{interactive_checked: doubt.like}">
+              <div class="upvote--prof" data-ng-class="{interactive_checked: doubt.upvote}">
                 <i class="material-icons">keyboard_arrow_up</i>
-                <span class="custom-badge">{{doubt.likes}}</span>
+                <span class="custom-badge">{{duvida.upvotes}}</span>
               </div>
-              <div class="check-entendi--prof">
+              <div data-ng-class="{'check-entendi--prof': duvida.anwer, 'check-nao-entendi--prof': !duvida.answer}">
                 <i class="material-icons">check</i>
               </div>
             </div>
@@ -95,15 +81,15 @@
 
           <div class="col  m4">
             <div class="responder">
-              <a class="waves-effect btn-flat modal-trigger" ng-click="modalTrigger(doubt)" href="">
+              <a class="waves-effect btn-flat modal-trigger" data-ng-click="setLastDoubt(duvida)" href="#responder-duvida" modal>
                 Responder
               </a>
             </div>
           </div>
 
           <div class="col  m4">
-            <div class="ver-resposta--prof" data-ng-if="doubt.contributions > 0">
-              <a id="button_{{doubt.id}}" class="waves-effect btn-flat" data-ng-click="fetchAnswer(doubt)">
+            <div class="ver-resposta--prof"> <!--data-ng-if="doubt.contributions > 0-->
+              <a id="button_{{duvida.id}}" class="waves-effect btn-flat" data-ng-click="buscaRespostas(duvida)">
                 <span>Ver Respostas</span>
               </a>
             </div>
@@ -113,7 +99,7 @@
       </div>
 
       <!--Resposta-->
-      <div class="resposta" data-ng-attr-id="{{doubt.id}}" data-ng-if="doubt.answers.length > 0" data-ng-repeat="answer in doubt.answers">
+      <div class="resposta" data-ng-attr-id="{{duvida.id}}" data-ng-if="duvida.answers.length > 0" data-ng-repeat="answer in duvida.answers">
 
         <div class="resposta__header">
           <span class="autor">{{answer.person.name}}</span>

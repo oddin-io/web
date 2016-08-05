@@ -34,7 +34,7 @@
     <div id="postar-duvida" class="modal bottom-sheet">
       <div class="modal-content modal-criar-item modal-post-duvida">
         <div class="row">
-          <form class="offset-m2 offset-l3 col  s12 m8 l6" data-ng-submit="postaDuvida(doubt)">
+          <form class="offset-m2 offset-l3 col  s12 m8 l6" data-ng-submit="postaDuvida()">
             <h1 class="modal-criar-item__titulo">Postar Dúvida</h1>
             <div class="row">
               <div class="input-field col s12">
@@ -73,7 +73,7 @@
       <div class="card-action pergunta__action">
         <div class="row">
           <div class="col s6 m4">
-            <div class="upvote" data-ng-class="{interactive_checked: duvida.answer}">
+            <div class="upvote" data-ng-class="{interactive_checked: duvida.upvote}">
               <a href="" data-ng-click="likeDoubt(doubt)">
                 <i class="material-icons">keyboard_arrow_up</i>
               </a>
@@ -86,8 +86,8 @@
             </div>
           </div>
           <div class="col s12 m4">
-            <div class="ver-resposta" data-ng-if="duvida.answers.length > 0">
-              <a id="button_{{duvida.id}}" class="waves-effect btn-flat" data-ng-click="fetchAnswer(doubt)">
+            <div class="ver-resposta" data-ng-if="duvida.hasAnswer">
+              <a id="button_{{duvida.id}}" class="waves-effect btn-flat" data-ng-click="buscaResposta(duvida)">
                 Ver Respostas
               </a>
             </div>
