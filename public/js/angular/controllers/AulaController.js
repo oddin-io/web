@@ -55,9 +55,9 @@ angular.module('oddin').controller('AulaController',
         }
 
         $scope.buscaRespostas = function (duvida) {
-            if(duvida.answers == undefined)
+            if(duvida.answers == undefined) {
                 duvida.answers = [];
-
+            }
             if(duvida.answers.length == 0) {
                 $http.get("/api/questions/" + duvida.id + "/answers").success(function (data) {
                     duvida.answers = data;
@@ -69,12 +69,9 @@ angular.module('oddin').controller('AulaController',
         };
 
         $scope.postaResposta = function() {
-
             $http.post("/api/questions/" + $scope.last_doubt.id + "/answers", $scope.resposta).success(function(data) {
-                console.log('respondido');
+                $scope.buscaRespostas($scope.last_doubt);
                 $scope.resposta.text = "";
-                if(!data.question.hasAnswer)
-                    console.log('O status da pergunta era 0, tem que mudar para 1!');
             });
         }
 

@@ -1,7 +1,10 @@
 @import 'variaveis';
 
 //Configurações principais
-$sideBarCompensation: 300px;
+$sideBarCompensation: 240px;
+.side-nav {
+  width: 240px;
+}
 body {
   background-color: $background-color;
 }

@@ -81,13 +81,13 @@
             </div>
           </div>
           <div class="col s6 m4">
-            <div data-ng-class="{'check-entendi': duvida.anwer, 'check-nao-entendi': !duvida.answer}">
+            <div data-ng-class="{'check-entendi': duvida.anwered, 'check-nao-entendi': !duvida.answered}">
               <i class="material-icons">check</i>
             </div>
           </div>
           <div class="col s12 m4">
-            <div class="ver-resposta" data-ng-if="duvida.hasAnswer">
-              <a id="button_{{duvida.id}}" class="waves-effect btn-flat" data-ng-click="buscaResposta(duvida)">
+            <div class="ver-resposta" data-ng-if="duvida.has_answer">
+              <a id="button_{{duvida.id}}" class="waves-effect btn-flat" data-ng-click="buscaRespostas(duvida)">
                 Ver Respostas
               </a>
             </div>
@@ -96,7 +96,7 @@
       </div>
 
       <!--Resposta-->
-      <div class="resposta" data-ng-attr-id="{{doubt.id}}" data-ng-if="doubt.answers.length > 0" data-ng-repeat="answer in doubt.answers">
+      <div class="resposta" data-ng-attr-id="{{doubt.id}}" data-ng-repeat="answer in duvida.answers">
         <div class="resposta__header">
           <span class="autor">{{answer.person.name}}</span>
           <span class="datahora">{{answer.createdat}}<!--{{answer.date}} {{answer.time}}--></span>
@@ -111,11 +111,13 @@
             <a href="" data-ng-click="likeDoubt(doubt)">
               <i class="material-icons">keyboard_arrow_up</i>
             </a>
-            <span class="custom-badge">{{doubt.likes}}</span>
+            <span class="custom-badge">{{answer.upvotes}}</span>
           </div>
-          <div class="check-entendi">
+
+          <div data-ng-class="{'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}">
             <i class="material-icons">check</i>
           </div>
+
         </div>
       </div>
     </div>

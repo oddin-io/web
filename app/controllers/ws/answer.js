@@ -23,7 +23,6 @@ function index(req, res, next) {
 
 function show(req, res, next) {
   var session = req.cookies.session;
-
   request(
       {
         uri: app.utils.constants.ws.uri + '/answers/' + req.params.id,
@@ -45,7 +44,6 @@ function show(req, res, next) {
 
 function create(req, res, next) {
     var session = req.cookies.session;
-    console.log('requisicao de resposta chegou!. ID da dúvida é: ' + req.params.id);
     request(
         {
             uri: app.utils.constants.ws.uri + '/questions/' + req.params.id + '/answers',
