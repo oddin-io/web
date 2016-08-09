@@ -1,3 +1,3 @@
-angular.module('oddin').factory('Login', function($resource) {
+oddin.factory('Login', function($resource) {
   return $resource('/login');
 });

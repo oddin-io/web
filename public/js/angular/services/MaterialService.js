@@ -1,3 +1,3 @@
-angular.module('oddin').factory('Material', function($resource) {
+oddin.factory('Material', function($resource) {
   return $resource('/api/materials/:id')
 });

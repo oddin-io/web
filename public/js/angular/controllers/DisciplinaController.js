@@ -1,4 +1,4 @@
-angular.module('oddin').controller('DisciplinaController',
+oddin.controller('DisciplinaController',
   function($http, $scope, $stateParams, $state, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
     function buscaInfo() {
       Disciplina.get({id: $stateParams.disciplinaID},

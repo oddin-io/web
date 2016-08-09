@@ -1,4 +1,4 @@
-angular.module('oddin').controller('AulaController',
+oddin.controller('AulaController',
     function($scope, $stateParams, Aula, Duvida, Resposta, $http) {
         $scope.duvidas = {};
         $scope.duvida = new Duvida();

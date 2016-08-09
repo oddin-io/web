@@ -13,6 +13,9 @@ function login(req, res, next) {
       if (response.statusCode == 401) {
         res.status(401);
         res.end();
+      } else if(response.statusCode == 404) {
+        res.status(404);
+        res.end();
       }
       else {
         res.cookie('session', body);

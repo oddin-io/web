@@ -1,3 +1,3 @@
-angular.module('oddin').factory('Duvida', function($resource) {
+oddin.factory('Duvida', function($resource) {
   return $resource('/api/presentations/:id/questions');
 });

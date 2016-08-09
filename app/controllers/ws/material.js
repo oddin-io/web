@@ -1,45 +1,27 @@
-var materiais = [
-  {
-    "id": 1,
-    "name": "example.pdf",
-    "mime": "application/pdf",
-    "checked": true,
-    "uploaded_at": "asdf",
-    "person": {
-      "id": 1,
-      "name": "Example"
-    }
-  },
-  {
-    "id": 2,
-    "name": "example2.pdf",
-    "mime": "application/pdf",
-    "checked": true,
-    "uploaded_at": "asdf",
-    "person": {
-      "id": 1,
-      "name": "Example"
-    }
-  },
-  {
-    "id": 3,
-    "name": "example3.pdf",
-    "mime": "application/pdf",
-    "checked": true,
-    "uploaded_at": "asdf",
-    "person": {
-      "id": 1,
-      "name": "Example"
-    }
-  }
-];
+var request = require('request');
 
 function index(req, res, next) {
-  console.log('instruction#index')
 }
 
 function show(req, res, next) {
-
+  var session = req.cookies.session;
+  request(
+      {
+        uri: app.utils.constants.ws.uri + '/materials/' + req.params.id,
+        method: 'GET',
+        headers: {
+          'x-session-token': session.token
+        }
+      }, function (error, response, body) {
+        if (response.statusCode == 401) {
+          res.status(401);
+          res.end();
+        }
+        else {
+          res.json(JSON.parse(body));
+        }
+      }
+  );
 }
 
 function create(req, res, next) {

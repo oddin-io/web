@@ -1,4 +1,4 @@
-angular.module('oddin').controller('DisciplinasController',
+oddin.controller('DisciplinasController',
   function($scope, Disciplina) {
     function buscaDisciplinas() {
       Disciplina.query(

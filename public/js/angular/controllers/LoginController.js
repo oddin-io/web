@@ -1,4 +1,4 @@
-angular.module('oddin').controller('LoginController',
+oddin.controller('LoginController',
   function($scope, $window, $http, $cookies, Login) {
     $scope.user = new Login();
     $scope.login = function() {
