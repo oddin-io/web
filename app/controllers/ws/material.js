@@ -29,7 +29,29 @@ function create(req, res, next) {
 }
 
 function update(req, res, next) {
-
+    var session = req.cookies.session;
+    console.log(req.body.name + " - " + req.body.mime);
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/materials/' + req.params.id,
+            method: 'PUT',
+            headers: {
+                'x-session-token': session.token
+            },
+            json: {
+                'name': req.body.name,
+                'mime': req.body.mime
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.end();
+            }
+        }
+    );
 }
 
 function destroy(req, res, next) {

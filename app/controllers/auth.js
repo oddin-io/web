@@ -3,7 +3,7 @@ var request = require('request');
 function login(req, res, next) {
   request(
     {
-      uri: 'http://rws-edupanel.herokuapp.com/session',
+      uri: 'http://ws-edupanel.herokuapp.com/session',
       method: 'POST',
       json: {
         email: req.body.email,
@@ -29,7 +29,7 @@ function logout(req, res, next) {
   var session = req.cookies.session;
   request(
       {
-        uri: 'http://rws-edupanel.herokuapp.com/session',
+        uri: 'http://ws-edupanel.herokuapp.com/session',
         method: 'DELETE',
         headers: {
           'x-session-token': session.token

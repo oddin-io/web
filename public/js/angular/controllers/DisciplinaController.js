@@ -25,6 +25,7 @@ oddin.controller('DisciplinaController',
         }
       );
     };
+
     $scope.buscaParticipantes = function() {
       DisciplinaParticipante.query({id: $stateParams.disciplinaID},
         function (participantes) {
@@ -37,6 +38,7 @@ oddin.controller('DisciplinaController',
         }
       );
     };
+
     $scope.buscaMateriais = function() {
       DisciplinaMaterial.query({id: $stateParams.disciplinaID},
         function (materiais) {
@@ -49,6 +51,7 @@ oddin.controller('DisciplinaController',
         }
       );
     };
+
     $scope.criaAula = function() {
         $scope.aula.$save({id: $stateParams.disciplinaID})
             .then(function() {
@@ -60,15 +63,44 @@ oddin.controller('DisciplinaController',
                 $scope.mensagem = {texto: 'Não foi possível salvar'};
             });
     };
+
     $scope.fechaAula = function(aula) {
         $http.post('api/presentations/' + aula.id + "/close")
             .success(function(data) {
                 $scope.buscaAulas();
             });
     };
+
     $scope.uploadMaterial = function() {
-        alert('upload de material');
+        var file = document.forms.uploadArchive.file.files[0];
+        var fd = new FormData();
+        $http.get('api/instructions/' + $scope.disciplina.id + "/materials/new")
+            .success(function(data) {
+                for (var key in data.fields) {
+                    fd.append(key, data.fields[key]);
+                }
+                fd.append('file', file);
+                $http.post(data.url, fd, {headers: {'Content-Type': undefined}})
+                    .success(function() {
+                        $http.put('api/materials/' + data.id, {'name':file.name, 'mime': file.type})
+                            .success(function() {
+                                console.log('Upload Realizado');
+                                $scope.buscaMateriais();
+                            })
+                    });
+            })
+    }
+
+    $scope.downloadMaterial = function(material) {
+        $http.get('api/materials/' + material.id)
+            .success(function(data) {
+                var link = document.createElement('a');
+                link.setAttribute('href', data.url);
+                link.setAttribute('download', true);
+                link.click();
+            });
     }
     buscaInfo();
   }
 );
+

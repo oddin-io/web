@@ -10,6 +10,7 @@ module.exports = function (app) {
   app.get('/api/instructions/:id/presentations', controller.showPresentations);
   app.post('/api/instructions/:id/presentations', controller.createPresentation);
 
+  app.get('/api/instructions/:id/materials/new', controller.createMaterial);
   app.get('/api/instructions/:id/materials', controller.showMaterials);
   app.get('/api/instructions/:id/participants', controller.showParticipants);
 

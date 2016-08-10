@@ -75,6 +75,10 @@ oddin.controller('AulaController',
             });
         }
 
+        $scope.upvoteDuvida = function(duvida) {
+            alert(duvida.text);
+        }
+
         //var socket = io.connect("/socket/presentation");
         //socket.on("new question", function (data) {
         //    Duvida.query({id: data.id},

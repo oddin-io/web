@@ -102,6 +102,30 @@ function createPresentation(req, res, next) {
     );
 }
 
+function createMaterial(req, res, next) {
+    console.log('criar material');
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/instructions/' + req.params.id + '/materials/new',
+            method: 'GET',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function(error, response, body) {
+            if(response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            } else if(response.statusCode == 404) {
+                res.status(404);
+                res.end();
+            } else {
+                res.json(JSON.parse(body));
+            }
+        }
+    )
+}
+
 function showMaterials(req, res, next) {
     var session = req.cookies.session;
     request(
@@ -177,6 +201,7 @@ module.exports = function (application) {
     destroy: destroy,
     showPresentations: showPresentations,
     createPresentation: createPresentation,
+    createMaterial: createMaterial,
     showMaterials: showMaterials,
     showParticipants: showParticipants,
     showProfile: showProfile
