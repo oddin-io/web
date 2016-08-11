@@ -6,10 +6,15 @@
 //colocar em outro scss
 .custom-badge {
   color: white;
-  background-color: $grey-light-color;
+  background-color: $secondary-color;
   padding: 2px 6px 2px 6px;
   border-radius: 3px;
   font-size: 13px;
+}
+
+.custom-badge-disabled {
+  @extend .custom-badge;
+  background-color: $grey-light-color;
 }
 
 //
@@ -145,7 +150,7 @@
       padding: 8px 0 8px 0;
       i {
         vertical-align: middle;
-        color: $grey-color;
+        color: $secondary-color;
       }
       a {
         margin-right: 0 !important;
@@ -155,11 +160,27 @@
         @extend .upvote;
         display: inline-block;
       }
+      &:hover {
+        i {
+          color: $secondary-color-hover;
+        }
+      }
+    }
+    .upvote-disabled {
+      @extend .upvote;
+      pointer-events: none;
+      i {
+        color: $grey-light-color;
+      }
+      &--prof {
+        @extend .upvote-disabled;
+        display: inline-block;
+      }
     }
     .check-entendi {
       padding: 8px 0 8px 0;
       text-align: center !important;
-      i {
+      i{
         vertical-align: middle;
         color: $green-light-color;
       }
@@ -258,22 +279,44 @@
       }
       a {
         margin-right: 0 !important;
-        color: $grey-color !important;
+        color: $secondary-color !important;
+      }
+      &:hover {
+        i {
+          color: $secondary-color-hover;
+        }
+      }
+    }
+    .upvote-disabled {
+      @extend .upvote;
+      pointer-events: none;
+      a {
+        color: $grey-light-color !important;
       }
     }
     .check-entendi {
       display: inline-block;
       margin-left: 24px;
       padding: 16px 0 16px 0;
-      i {
+      i,a {
         vertical-align: middle;
         color: $green-light-color;
       }
     }
     .check-nao-entendi {
       @extend .check-entendi;
-      i {
+      i,a {
         color: $grey-light-color;
+      }
+      &:hover {
+        color: $green-light-color-hover;
+      }
+    }
+    .check-disabled {
+      @extend .check-entendi;
+      pointer-events: none;
+      i,a {
+        color: $grey-light-color2;
       }
     }
   }

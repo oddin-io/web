@@ -69,9 +69,9 @@
         <div class="row">
           <div class="col  s12 m4">
             <div class="status">
-              <div class="upvote--prof" data-ng-class="{interactive_checked: doubt.upvote}">
+              <div class="upvote-disabled--prof">
                 <i class="material-icons">keyboard_arrow_up</i>
-                <span class="custom-badge">{{duvida.upvotes}}</span>
+                <span class="custom-badge-disabled">{{duvida.upvotes}}</span>
               </div>
               <div data-ng-class="{'check-entendi--prof': duvida.anwered, 'check-nao-entendi--prof': !duvida.answered}">
                 <i class="material-icons">check</i>
@@ -103,7 +103,7 @@
 
         <div class="resposta__header">
           <span class="autor">{{answer.person.name}}</span>
-          <span class="datahora">{{answer.createdat}}<!--{{answer.date}} {{answer.time}}--></span>
+          <span class="datahora">{{answer.created_at}}<!--{{answer.date}} {{answer.time}}--></span>
         </div>
 
         <div class="resposta__content">
@@ -114,11 +114,11 @@
 
         <div class="resposta__action">
 
-          <div class="upvote" data-ng-class="{interactive_checked: doubt.like}">
-            <a href="" data-ng-click="likeDoubt(doubt)">
+          <div class="upvote-disabled">
+            <a href="">
               <i class="material-icons">keyboard_arrow_up</i>
             </a>
-            <span class="custom-badge">{{answer.upvotes}}</span>
+            <span class="custom-badge-disabled">{{answer.upvotes}}</span>
           </div>
 
           <div data-ng-class="{'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}">

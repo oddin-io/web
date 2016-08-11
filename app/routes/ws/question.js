@@ -6,4 +6,5 @@ module.exports = function (app) {
   app.post('/api/questions', controller.create);
   app.put('/api/questions/:id', controller.update);
   app.delete('/api/questions/:id', controller.destroy);
+  app.post('/api/questions/:id/upvote', controller.upvote);
 };

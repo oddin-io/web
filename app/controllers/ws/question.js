@@ -1,50 +1,4 @@
-var duvidas = [
-  {
-    "id": 1,
-    "text": "Can I use nested for loops?",
-    "anonymous": true,
-    "created_at": "2016-08-01T17:42:16.987Z",
-    "presentation": {
-      "id": 1,
-      "subject": "Teste",
-      "status": 0
-    },
-    "person": {
-      "id": 4,
-      "name": "Célia"
-    }
-  },
-  {
-    "id": 2,
-    "text": "Can I use nested for loops?",
-    "anonymous": false,
-    "created_at": "2016-08-01T17:42:16.987Z",
-    "presentation": {
-      "id": 1,
-      "subject": "Teste",
-      "status": 0
-    },
-    "person": {
-      "id": 4,
-      "name": "Célia"
-    }
-  },
-  {
-    "id": 3,
-    "text": "Can I use nested for loops?",
-    "anonymous": true,
-    "created_at": "2016-08-01T17:42:16.987Z",
-    "presentation": {
-      "id": 1,
-      "subject": "Teste",
-      "status": 0
-    },
-    "person": {
-      "id": 4,
-      "name": "Célia"
-    }
-  }
-];
+var request = require('request');
 
 function index(req, res) {
   res.json(duvidas);
@@ -70,12 +24,34 @@ function destroy(req, res, next) {
 
 }
 
+function upvote(req, res, next) {
+  var session = req.cookies.session;
+  request(
+      {
+        uri: app.utils.constants.ws.uri + '/questions/' + req.params.id + '/upvote',
+        method: 'POST',
+        headers: {
+          'x-session-token': session.token
+        }
+      }, function (error, response, body) {
+        if (response.statusCode == 401) {
+          res.status(401);
+          res.end();
+        }
+        else {
+          res.json(JSON.parse(body));
+        }
+      }
+  );
+}
+
 module.exports = function (app) {
   return {
     index: index,
     show: show,
     create: create,
     update: update,
-    destroy: destroy
+    destroy: destroy,
+    upvote: upvote
   };
 };

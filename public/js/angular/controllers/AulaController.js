@@ -1,5 +1,5 @@
 oddin.controller('AulaController',
-    function($scope, $stateParams, Aula, Duvida, Resposta, $http) {
+    function($scope, $stateParams, Aula, Duvida, Resposta, $http, $cookies) {
         $scope.duvidas = {};
         $scope.duvida = new Duvida();
         $scope.last_doubt = {};
@@ -76,7 +76,19 @@ oddin.controller('AulaController',
         }
 
         $scope.upvoteDuvida = function(duvida) {
-            alert(duvida.text);
+            $http.post("/api/questions/" + duvida.id + "/upvote")
+                .success(function(data) {
+                    $scope.duvidas[duvida.id].upvotes++;
+                    $scope.duvidas[duvida.id].my_vote = 1;
+                })
+        }
+
+        $scope.upvoteResposta = function(resposta) {
+            $http.post("/api/answers/" + resposta.id + "/upvote")
+                .success(function() {
+                    resposta.upvotes++;
+                    resposta.my_vote = 1;
+                })
         }
 
         //var socket = io.connect("/socket/presentation");
@@ -134,6 +146,8 @@ oddin.controller('AulaController',
         //    answer.accepted = false;
         //    $scope.duvidas[answer.question.id].answer = null;
         //});
+        $scope.current_user = JSON.parse($cookies.get('session').substring(2)).user;
+        console.log($scope.current_user);
         buscaInfo();
     }
 );

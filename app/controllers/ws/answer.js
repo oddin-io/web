@@ -74,6 +74,27 @@ function destroy(req, res, next) {
 
 }
 
+function upvote(req, res, next) {
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/answers/' + req.params.id + '/upvote',
+            method: 'POST',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.json(JSON.parse(body));
+            }
+        }
+    );
+}
+
 module.exports = function (application) {
   app = application;
 
@@ -82,6 +103,7 @@ module.exports = function (application) {
     show: show,
     create: create,
     update: update,
-    destroy: destroy
+    destroy: destroy,
+    upvote: upvote
   };
 };
