@@ -8,7 +8,7 @@ module.exports = function () {
   var app = express();
 
   //configuração de ambiente
-  app.set('port', 3000);
+  app.set('port', (process.env.PORT || 3000));
   app.set('view engine', 'ejs');
   app.set('views', 'public/pages');
 
