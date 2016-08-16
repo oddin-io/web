@@ -73,11 +73,14 @@
       <div class="card-action pergunta__action">
         <div class="row">
           <div class="col s6 m4">
-            <div class="upvote" data-ng-class="{'upvote-disabled': duvida.person.id == current_user.id || duvida.my_vote != 0}">
-              <a href="" data-ng-click="upvoteDuvida(duvida)">
+            <div class="upvote" data-ng-class="{'upvote-disabled': duvida.person.id == current_user.id}">
+              <a href="" data-ng-click="upvoteDuvida(duvida)" data-ng-if="duvida.my_vote == 0">
                 <i class="material-icons">keyboard_arrow_up</i>
               </a>
-              <span class="custom-badge" data-ng-class="{'custom-badge-disabled': duvida.person.id == current_user.id || duvida.my_vote != 0}">{{duvida.upvotes}}</span>
+              <a href="" data-ng-click="cancelVoteDuvida(duvida)" data-ng-if="duvida.my_vote != 0">
+                <i class="material-icons cancel-vote">close</i>
+              </a>
+              <span class="custom-badge" data-ng-class="{'custom-badge-disabled': duvida.person.id == current_user.id}">{{duvida.upvotes}}</span>
             </div>
           </div>
           <div class="col s6 m4">
@@ -107,15 +110,18 @@
           </p>
         </div>
         <div class="resposta__action">
-          <div class="upvote" data-ng-class="{'upvote-disabled': answer.my_vote != 0}">
-            <a href="" data-ng-click="upvoteResposta(answer)">
+          <div class="upvote">
+            <a href="" data-ng-if="answer.my_vote == 0" data-ng-click="upvoteResposta(answer)">
               <i class="material-icons">keyboard_arrow_up</i>
             </a>
-            <span class="custom-badge" data-ng-class="{'custom-badge-disabled': answer.my_vote != 0}">{{answer.upvotes}}</span>
+            <a href="" data-ng-if="answer.my_vote != 0" data-ng-click="cancelVoteResposta(answer)">
+              <i class="material-icons cancel-vote">close</i>
+            </a>
+            <span class="custom-badge">{{answer.upvotes}}</span>
           </div>
 
-          <div data-ng-class="{'check-disabled': duvida.person.id != current_user.id, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}">
-            <a href="" class="material-icons">check</a>
+          <div data-ng-class="{'check-disabled': duvida.person.id != current_user.id || duvida.answered && !answer.accepted, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}">
+            <a href="" data-ng-click="answer.accepted ? recusaResposta(answer) : aceitaResposta(answer)" class="material-icons">check</a>
           </div>
         </div>
       </div>

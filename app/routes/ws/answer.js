@@ -7,4 +7,7 @@ module.exports = function (app) {
   app.put('/api/answers/:id', controller.update);
   app.delete('/api/answers/:id', controller.destroy);
   app.post('/api/answers/:id/upvote', controller.upvote);
+  app.delete('/api/answers/:id/vote', controller.cancelvote);
+  app.post('/api/answers/:id/accept', controller.accept);
+  app.delete('/api/answers/:id/accept', controller.unaccept);
 };

@@ -45,6 +45,27 @@ function upvote(req, res, next) {
   );
 }
 
+function cancelvote(req, res, next) {
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/questions/' + req.params.id + '/vote',
+            method: 'DELETE',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.end();
+            }
+        }
+    );
+}
+
 module.exports = function (app) {
   return {
     index: index,
@@ -52,6 +73,7 @@ module.exports = function (app) {
     create: create,
     update: update,
     destroy: destroy,
-    upvote: upvote
+    upvote: upvote,
+    cancelvote: cancelvote
   };
 };

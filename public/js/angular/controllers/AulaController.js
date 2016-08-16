@@ -78,8 +78,18 @@ oddin.controller('AulaController',
         $scope.upvoteDuvida = function(duvida) {
             $http.post("/api/questions/" + duvida.id + "/upvote")
                 .success(function(data) {
-                    $scope.duvidas[duvida.id].upvotes++;
-                    $scope.duvidas[duvida.id].my_vote = 1;
+                    //$scope.duvidas[duvida.id].upvotes++;
+                    //$scope.duvidas[duvida.id].my_vote = 1;
+                    duvida.upvotes++;
+                    duvida.my_vote = 1;
+                })
+        }
+
+        $scope.cancelVoteDuvida = function(duvida) {
+            $http.delete("/api/questions/" + duvida.id + "/vote")
+                .success(function(data) {
+                    duvida.upvotes--;
+                    duvida.my_vote = 0;
                 })
         }
 
@@ -88,6 +98,30 @@ oddin.controller('AulaController',
                 .success(function() {
                     resposta.upvotes++;
                     resposta.my_vote = 1;
+                })
+        }
+
+        $scope.cancelVoteResposta = function(resposta) {
+            $http.delete("/api/answers/" + resposta.id + "/vote")
+                .success(function() {
+                    resposta.upvotes--;
+                    resposta.my_vote = 0;
+                })
+        }
+
+        $scope.aceitaResposta = function(resposta) {
+            $http.post("/api/answers/" + resposta.id + "/accept")
+                .success(function() {
+                    resposta.accepted = true;
+                    $scope.duvidas[resposta.question.id].answered = true;
+                })
+        }
+
+        $scope.recusaResposta = function(resposta) {
+            $http.delete("/api/answers/" + resposta.id + "/accept")
+                .success(function() {
+                    resposta.accepted = false;
+                    $scope.duvidas[resposta.question.id].answered = false;
                 })
         }
 

@@ -17,6 +17,12 @@
   background-color: $grey-light-color;
 }
 
+.cancel-vote {
+  font-size: 1.3em;
+  padding-right: 2px;
+  padding-left: 2px;
+}
+
 //
 .modal-criar-item {
   &__titulo {
@@ -151,6 +157,9 @@
       i {
         vertical-align: middle;
         color: $secondary-color;
+        &:hover {
+          color:$secondary-color-hover;
+        }
       }
       a {
         margin-right: 0 !important;
@@ -159,11 +168,6 @@
       &--prof {
         @extend .upvote;
         display: inline-block;
-      }
-      &:hover {
-        i {
-          color: $secondary-color-hover;
-        }
       }
     }
     .upvote-disabled {
@@ -276,15 +280,13 @@
       height: 36px;
       i {
         vertical-align: middle;
+        &:hover {
+          color: $secondary-color-hover;
+        }
       }
       a {
         margin-right: 0 !important;
         color: $secondary-color !important;
-      }
-      &:hover {
-        i {
-          color: $secondary-color-hover;
-        }
       }
     }
     .upvote-disabled {
@@ -309,7 +311,9 @@
         color: $grey-light-color;
       }
       &:hover {
-        color: $green-light-color-hover;
+        i,a {
+          color: $green-light-color-hover;
+        }
       }
     }
     .check-disabled {

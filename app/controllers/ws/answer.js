@@ -95,6 +95,69 @@ function upvote(req, res, next) {
     );
 }
 
+function cancelvote(req, res, next) {
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/answers/' + req.params.id + '/vote',
+            method: 'DELETE',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.end();
+            }
+        }
+    );
+}
+
+function accept(req, res, next) {
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/answers/' + req.params.id + '/accept',
+            method: 'POST',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.json(body);
+            }
+        }
+    )
+}
+
+function unaccept(req, res, next) {
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/answers/' + req.params.id + '/accept',
+            method: 'DELETE',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.json(body);
+            }
+        }
+    )
+}
+
 module.exports = function (application) {
   app = application;
 
@@ -104,6 +167,9 @@ module.exports = function (application) {
     create: create,
     update: update,
     destroy: destroy,
-    upvote: upvote
+    upvote: upvote,
+    cancelvote: cancelvote,
+    accept: accept,
+    unaccept: unaccept
   };
 };
