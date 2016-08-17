@@ -108,6 +108,9 @@ main {
   padding-right: 2px;
   padding-left: 2px; }
 
+.downvote-margin {
+  margin-right: 5px; }
+
 .modal-criar-item__titulo {
   margin: 0;
   font-size: 20px;

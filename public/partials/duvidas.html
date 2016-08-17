@@ -110,12 +110,14 @@
           </p>
         </div>
         <div class="resposta__action">
-          <div class="upvote">
-            <a href="" data-ng-if="answer.my_vote == 0" data-ng-click="upvoteResposta(answer)">
+          <div class="upvote" data-ng-class="{'upvote': answer.my_vote != 1, 'upvote-disabled': answer.my_vote == 1}">
+            <a href="" data-ng-click="answer.my_vote == 0 ? upvoteResposta(answer) : cancelVoteResposta(answer)">
               <i class="material-icons">keyboard_arrow_up</i>
             </a>
-            <a href="" data-ng-if="answer.my_vote != 0" data-ng-click="cancelVoteResposta(answer)">
-              <i class="material-icons cancel-vote">close</i>
+          </div>
+          <div class="upvote" data-ng-class="{'upvote': answer.my_vote != -1, 'upvote-disabled': answer.my_vote == -1}">
+            <a href="" data-ng-click="answer.my_vote == 0 ? downvoteResposta(answer) : cancelVoteResposta(answer)">
+              <i class="material-icons downvote-margin">keyboard_arrow_down</i>
             </a>
             <span class="custom-badge">{{answer.upvotes}}</span>
           </div>

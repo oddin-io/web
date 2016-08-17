@@ -95,6 +95,27 @@ function upvote(req, res, next) {
     );
 }
 
+function downvote(req, res, next) {
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/answers/' + req.params.id + '/downvote',
+            method: 'POST',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.json(JSON.parse(body));
+            }
+        }
+    );
+}
+
 function cancelvote(req, res, next) {
     var session = req.cookies.session;
     request(
@@ -168,6 +189,7 @@ module.exports = function (application) {
     update: update,
     destroy: destroy,
     upvote: upvote,
+    downvote: downvote,
     cancelvote: cancelvote,
     accept: accept,
     unaccept: unaccept

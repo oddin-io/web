@@ -101,10 +101,21 @@ oddin.controller('AulaController',
                 })
         }
 
+        $scope.downvoteResposta = function(resposta) {
+            $http.post("/api/answers/" + resposta.id + "/downvote")
+                .success(function() {
+                    resposta.upvotes--;
+                    resposta.my_vote = -1;
+                })
+        }
+
         $scope.cancelVoteResposta = function(resposta) {
             $http.delete("/api/answers/" + resposta.id + "/vote")
                 .success(function() {
-                    resposta.upvotes--;
+                    if(resposta.my_vote == 1)
+                        resposta.upvotes--;
+                    else
+                        resposta.upvotes++;
                     resposta.my_vote = 0;
                 })
         }
