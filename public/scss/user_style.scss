@@ -6,27 +6,29 @@
 //colocar em outro scss
 .custom-badge {
   color: white;
-  background-color: $secondary-color;
+  background-color: $grey-color;
   padding: 2px 6px 2px 6px;
   border-radius: 3px;
   font-size: 13px;
 }
 
-.custom-badge-disabled {
+.custom-badge-voted {
   @extend .custom-badge;
-  background-color: $grey-light-color;
+  background-color: $secondary-color;
 }
 
-.cancel-vote {
-  font-size: 1.3em;
-  padding-right: 2px;
-  padding-left: 2px;
+.custom-badge-disabled {
+  @extend .custom-badge;
+  background-color: $grey-light-color-disabled;
+  &--prof {
+    @extend .custom-badge;
+    background-color: $grey-light-color;
+  }
 }
 
 .downvote-margin {
   margin-right: 5px;
 }
-
 //
 .modal-criar-item {
   &__titulo {
@@ -160,9 +162,9 @@
       padding: 8px 0 8px 0;
       i {
         vertical-align: middle;
-        color: $secondary-color;
+        color: $grey-color;
         &:hover {
-          color:$secondary-color-hover;
+          color:$grey-light-color;
         }
       }
       a {
@@ -174,11 +176,20 @@
         display: inline-block;
       }
     }
+    .upvote-voted {
+      @extend .upvote;
+      i {
+        color: $secondary-color;
+        &:hover {
+          color: $secondary-color-hover;
+        }
+      }
+    }
     .upvote-disabled {
       @extend .upvote;
       pointer-events: none;
       i {
-        color: $grey-light-color;
+        color: $grey-light-color-disabled;
       }
       &--prof {
         @extend .upvote-disabled;
@@ -207,7 +218,7 @@
     .check-nao-entendi {
       @extend .check-entendi;
       i {
-        color: $grey-light-color;
+        color: $grey-light-color-disabled;
       }
       &--prof {
         @extend .check-nao-entendi;
@@ -285,19 +296,34 @@
       i {
         vertical-align: middle;
         &:hover {
-          color: $secondary-color-hover;
+          color: $grey-light-color;
         }
       }
       a {
         margin-right: 0 !important;
-        color: $secondary-color !important;
+        color: $grey-color !important;
       }
     }
     .upvote-disabled {
       @extend .upvote;
       pointer-events: none;
       a {
-        color: $grey-light-color !important;
+        color: $grey-light-color-disabled !important;
+      }
+      &--prof {
+        @extend .upvote-disabled;
+        a {
+          color: $grey-light-color !important;
+        }
+      }
+    }
+    .upvote-voted {
+      @extend .upvote;
+      i:hover {
+        color: $secondary-color-hover;
+      }
+      a {
+        color: $secondary-color !important;
       }
     }
     .check-entendi {
@@ -308,16 +334,16 @@
         vertical-align: middle;
         color: $green-light-color;
       }
+      &:hover {
+        i,a {
+          color: $green-light-color-hover;
+        }
+      }
     }
     .check-nao-entendi {
       @extend .check-entendi;
       i,a {
         color: $grey-light-color;
-      }
-      &:hover {
-        i,a {
-          color: $green-light-color-hover;
-        }
       }
     }
     .check-disabled {

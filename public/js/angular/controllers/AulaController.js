@@ -96,7 +96,10 @@ oddin.controller('AulaController',
         $scope.upvoteResposta = function(resposta) {
             $http.post("/api/answers/" + resposta.id + "/upvote")
                 .success(function() {
-                    resposta.upvotes++;
+                    if(resposta.my_vote == 0)
+                        resposta.upvotes++;
+                    else if(resposta.my_vote == -1)
+                        resposta.upvotes += 2;
                     resposta.my_vote = 1;
                 })
         }
@@ -104,7 +107,10 @@ oddin.controller('AulaController',
         $scope.downvoteResposta = function(resposta) {
             $http.post("/api/answers/" + resposta.id + "/downvote")
                 .success(function() {
-                    resposta.upvotes--;
+                    if(resposta.my_vote == 0)
+                        resposta.upvotes--;
+                    else if(resposta.my_vote == 1)
+                        resposta.upvotes -= 2;
                     resposta.my_vote = -1;
                 })
         }

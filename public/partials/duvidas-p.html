@@ -114,14 +114,14 @@
 
         <div class="resposta__action">
 
-          <div class="upvote-disabled">
+          <div class="upvote-disabled--prof">
             <a href="">
               <i class="material-icons">keyboard_arrow_up</i>
             </a>
-            <span class="custom-badge-disabled">{{answer.upvotes}}</span>
+            <span class="custom-badge-disabled--prof">{{answer.upvotes}}</span>
           </div>
 
-          <div data-ng-class="{'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}">
+          <div data-ng-class="{'check-entendi': answer.accepted, 'check-disabled': !answer.accepted}">
             <i class="material-icons">check</i>
           </div>
 
