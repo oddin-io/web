@@ -63,7 +63,8 @@
       <div class="card-content">
         <div class="pergunta__header">
           <span class="autor">{{duvida.person.name}}</span>
-          <span class="datahora">{{duvida.created_at}}</span>
+          <span class="datahora">{{duvida.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span>
+        </p>
         </div>
         <div class="pergunta__content">
           <p>{{duvida.text}}
@@ -77,7 +78,7 @@
               <a href="" data-ng-click="duvida.my_vote == 0 ? upvoteDuvida(duvida) : cancelVoteDuvida(duvida)">
                 <i class="material-icons">keyboard_arrow_up</i>
               </a>
-              <span data-ng-class="{'custom-badge': duvida.my_vote == 0, 'custom-badge-voted': duvida.my_vote != 0, 'custom-badge-disabled': current_user.id == duvida.person.id}">{{duvida.upvotes}}</span>
+              <span data-ng-class="{'custom-badge': duvida.my_vote == 0, 'custom-badge-voted': duvida.my_vote != 0, 'custom-badge-disabled': current_user.id == duvida.person.id}">{{duvida.upvotes - duvida.downvotes}}</span>
             </div>
           </div>
           <div class="col s6 m4">
@@ -99,7 +100,7 @@
       <div class="resposta" data-ng-attr-id="{{answer.id}}" data-ng-repeat="answer in duvida.answers">
         <div class="resposta__header">
           <span class="autor">{{answer.person.name}}</span>
-          <span class="datahora">{{answer.createdat}}<!--{{answer.date}} {{answer.time}}--></span>
+          <span class="datahora">{{answer.created_at | date:"dd/MM/yyyy à's' HH:mm"}}<!--{{answer.date}} {{answer.time}}--></span>
         </div>
         <div class="resposta__content">
           <p>
@@ -116,7 +117,7 @@
             <a href="" data-ng-click="answer.my_vote != -1 ? downvoteResposta(answer) : cancelVoteResposta(answer)">
               <i class="material-icons downvote-margin">keyboard_arrow_down</i>
             </a>
-            <span data-ng-class="{'custom-badge': answer.my_vote == 0, 'custom-badge-voted': answer.my_vote != 0}">{{answer.upvotes}}</span>
+            <span data-ng-class="{'custom-badge': answer.my_vote == 0, 'custom-badge-voted': answer.my_vote != 0}">{{answer.upvotes - answer.downvotes}}</span>
           </div>
 
           <div data-ng-class="{'check-disabled': duvida.person.id != current_user.id || duvida.answered && !answer.accepted, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}">

@@ -58,7 +58,7 @@
       <div class="card-content">
         <div class="pergunta__header">
           <span class="autor">{{duvida.person.name}}</span>
-          <span class="datahora">{{duvida.created_at}}</span>
+          <span class="datahora">{{duvida.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span>
         </div>
         <div class="pergunta__content">
           <p>{{duvida.text}}
@@ -71,7 +71,7 @@
             <div class="status">
               <div class="upvote-disabled--prof">
                 <i class="material-icons">keyboard_arrow_up</i>
-                <span class="custom-badge-disabled">{{duvida.upvotes}}</span>
+                <span class="custom-badge-disabled">{{duvida.upvotes - duvidas.downvotes}}</span>
               </div>
               <div data-ng-class="{'check-entendi--prof': duvida.answered, 'check-nao-entendi--prof': !duvida.answered}">
                 <i class="material-icons">check</i>
@@ -103,7 +103,7 @@
 
         <div class="resposta__header">
           <span class="autor">{{answer.person.name}}</span>
-          <span class="datahora">{{answer.created_at}}<!--{{answer.date}} {{answer.time}}--></span>
+          <span class="datahora">{{answer.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span>
         </div>
 
         <div class="resposta__content">
@@ -118,7 +118,7 @@
             <a href="">
               <i class="material-icons">keyboard_arrow_up</i>
             </a>
-            <span class="custom-badge-disabled--prof">{{answer.upvotes}}</span>
+            <span class="custom-badge-disabled--prof">{{answer.upvotes - answer.downvotes}}</span>
           </div>
 
           <div data-ng-class="{'check-entendi': answer.accepted, 'check-disabled': !answer.accepted}">
