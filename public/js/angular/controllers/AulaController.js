@@ -197,6 +197,12 @@ oddin.controller('AulaController',
         //    answer.accepted = false;
         //    $scope.duvidas[answer.question.id].answer = null;
         //});
+
+        $scope.usuario = {
+            'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
+            'email': JSON.parse($cookies.get('session').substring(2)).user.email
+        }
+
         $scope.current_user = JSON.parse($cookies.get('session').substring(2)).user;
         console.log($scope.current_user);
         buscaInfo();
