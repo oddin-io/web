@@ -97,6 +97,28 @@ oddin.config(function($stateProvider, $urlRouterProvider) {
                 "viewContent": {templateUrl: "partials/duvidas-p.html", controller: "AulaController"}
             }
         })
+        .state('material-aula',  {
+            url: "/aulas/:aulaID/material",
+            controllerProvider: function($state, $stateParams) {
+                if(profile == 0) {
+                    $state.go('material-aula-a', {aulaID: $stateParams.aulaID});
+                } else if (profile == 1) {
+                    $state.go('material-aula-p', {aulaID: $stateParams.aulaID});
+                }
+            }
+        })
+        .state('material-aula-a', {
+            url: "/aulas/:aulaID/material-a",
+            views: {
+                "viewContent": {templateUrl: "partials/material-aula.html", controller: 'AulaController'}
+            }
+        })
+        .state('material-aula-p', {
+            url: "/aulas/:aulaID/material-p",
+            views: {
+                "viewContent": {templateUrl: "partials/material-aula-p.html"}
+            }
+        })
 }).run(function($window, $location, $state) {
     if($window.location.pathname == '/home')
         $state.go('disciplinas');

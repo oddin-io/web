@@ -17,8 +17,9 @@
       <p class="barra-lateral__user-name">{{usuario.nome}}</p>
       <p class="barra-lateral__user-email">{{usuario.email}}</p>
     </div>
-    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplina/{{aula.instruction.id}}/aulas">Sair de {{aula.subject}}</a></li>
-    <li class="no-padding barra-lateral__item"><a href="#/disciplinas">Voltar Para Disciplinas</a></li>
+    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplina/{{aula.instruction.id}}/aulas">Aulas</a></li>
+    <li class="no-padding barra-lateral__item"><a href="#/disciplinas">Disciplinas</a></li>
+    <li class="no-padding barra-lateral__item"><a href="#/aulas/{{aula.id}}/material">Material</a></li>
     <li data-ng-controller="LoginController" class="no-padding barra-lateral__item"><a href="" data-ng-click="logout()">Logout</a></li>
   </ul>
 </header>
