@@ -29,7 +29,7 @@ function logout(req, res, next) {
   var session = req.cookies.session;
   request(
       {
-        uri: 'http://ws-edupanel.herokuapp.com/session',
+        uri: app.utils.constants.ws.uri + "/session",
         method: 'DELETE',
         headers: {
           'x-session-token': session.token
