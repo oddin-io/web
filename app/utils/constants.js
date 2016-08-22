@@ -1,5 +1,5 @@
 module.exports = {
   ws: {
-    uri: 'https://ws-edupanel.herokuapp.com'
+    uri: (process.env.WS_URL) || 'https://ws-edupanel.herokuapp.com'
   }
 };
