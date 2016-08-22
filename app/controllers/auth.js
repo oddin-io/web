@@ -3,7 +3,7 @@ var request = require('request');
 function login(req, res, next) {
   request(
     {
-      uri: 'http://ws-edupanel.herokuapp.com/session',
+      uri: app.utils.constants.ws.uri + "/session",
       method: 'POST',
       json: {
         email: req.body.email,
