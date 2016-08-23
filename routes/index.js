@@ -1,9 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const router = require('express').Router()
+const controller = require('../controllers/index')
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', controller.index)
+router.get('/recover-password', controller.recoverPassword)
 
-module.exports = router;
+module.exports = router
