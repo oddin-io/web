@@ -14,8 +14,8 @@
   <ul id="slide-out" class="side-nav fixed barra-lateral">
     <div class="barra-lateral__header">
       <i class="barra-lateral__user-avatar material-icons">account_circle</i>
-      <p class="barra-lateral__user-name">Aluno Teste</p>
-      <p class="barra-lateral__user-email">aluno@email.com</p>
+      <p class="barra-lateral__user-name">{{usuario.nome}}</p>
+      <p class="barra-lateral__user-email">{{usuario.email}}</p>
     </div>
     <li class="no-padding">
       <ul class="collapsible" data-collapsible="expandable">
@@ -33,7 +33,7 @@
         </li>
       </ul>
     </li>
-    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplinas">Voltar Para Disciplinas</a></li>
+    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplinas">Disciplinas</a></li>
     <li data-ng-controller="LoginController" class="no-padding barra-lateral__item"><a href="" data-ng-click="logout()">Logout</a></li>
   </ul>
 </header>

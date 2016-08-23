@@ -9,5 +9,7 @@ module.exports = function (app) {
   app.delete('/api/presentations/:id', controller.destroy);
   app.get('/api/presentations/:id/questions', controller.showQuestions);
   app.post('/api/presentations/:id/questions', controller.postQuestion);
+  app.get('/api/presentation/:id/materials', controller.showMaterials);
+  app.get('/api/presentation/:id/materials/new', controller.createMaterial);
 };
 

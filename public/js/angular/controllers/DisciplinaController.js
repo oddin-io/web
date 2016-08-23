@@ -1,5 +1,5 @@
 oddin.controller('DisciplinaController',
-  function($http, $scope, $stateParams, $state, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
+  function($http, $scope, $stateParams, $state, $cookies, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
     function buscaInfo() {
       Disciplina.get({id: $stateParams.disciplinaID},
         function(disciplina) {
@@ -100,6 +100,12 @@ oddin.controller('DisciplinaController',
                 link.click();
             });
     }
+
+    $scope.usuario = {
+        'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
+        'email': JSON.parse($cookies.get('session').substring(2)).user.email
+    }
+
     buscaInfo();
   }
 );

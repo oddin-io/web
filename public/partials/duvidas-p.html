@@ -14,11 +14,26 @@
   <ul id="slide-out" class="side-nav fixed barra-lateral">
     <div class="barra-lateral__header">
       <i class="barra-lateral__user-avatar material-icons">account_circle</i>
-      <p class="barra-lateral__user-name">Professor Teste</p>
-      <p class="barra-lateral__user-email">professor@email.com</p>
+      <p class="barra-lateral__user-name">{{usuario.nome}}</p>
+      <p class="barra-lateral__user-email">{{usuario.email}}</p>
     </div>
-    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplina/{{aula.instruction.id}}/aulas">Sair de {{aula.subject}}</a></li>
-    <li class="no-padding barra-lateral__item"><a href="#/disciplinas">Voltar Para Disciplinas</a></li>
+    <li class="no-padding">
+      <ul class="collapsible" data-collapsible="expandable">
+        <li class="barra-lateral__item">
+          <a class="barra-lateral__item--collapsible collapsible-header active truncate">
+            {{aula.subject}}
+          </a>
+          <div class="collapsible-body">
+            <ul>
+              <li class="barra-lateral__subitem active"><p>Dúvidas</p></li>
+              <li class="barra-lateral__subitem"><a href="#/aulas/{{aula.id}}/material">Material</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplina/{{aula.instruction.id}}/aulas">Aulas</a></li>
+    <li class="no-padding barra-lateral__item"><a href="#/disciplinas">Disciplinas</a></li>
     <li data-ng-controller="LoginController" class="no-padding barra-lateral__item"><a href="" data-ng-click="logout()">Logout</a></li>
   </ul>
 </header>
@@ -58,7 +73,7 @@
       <div class="card-content">
         <div class="pergunta__header">
           <span class="autor">{{duvida.person.name}}</span>
-          <span class="datahora">{{duvida.created_at}}</span>
+          <span class="datahora">{{duvida.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span>
         </div>
         <div class="pergunta__content">
           <p>{{duvida.text}}
@@ -71,7 +86,7 @@
             <div class="status">
               <div class="upvote-disabled--prof">
                 <i class="material-icons">keyboard_arrow_up</i>
-                <span class="custom-badge-disabled">{{duvida.upvotes}}</span>
+                <span class="custom-badge-disabled">{{duvida.upvotes - duvidas.downvotes}}</span>
               </div>
               <div data-ng-class="{'check-entendi--prof': duvida.answered, 'check-nao-entendi--prof': !duvida.answered}">
                 <i class="material-icons">check</i>
@@ -103,7 +118,7 @@
 
         <div class="resposta__header">
           <span class="autor">{{answer.person.name}}</span>
-          <span class="datahora">{{answer.created_at}}<!--{{answer.date}} {{answer.time}}--></span>
+          <span class="datahora">{{answer.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span>
         </div>
 
         <div class="resposta__content">
@@ -118,7 +133,7 @@
             <a href="">
               <i class="material-icons">keyboard_arrow_up</i>
             </a>
-            <span class="custom-badge-disabled--prof">{{answer.upvotes}}</span>
+            <span class="custom-badge-disabled--prof">{{answer.upvotes - answer.downvotes}}</span>
           </div>
 
           <div data-ng-class="{'check-entendi': answer.accepted, 'check-disabled': !answer.accepted}">

@@ -1,5 +1,5 @@
 oddin.controller('DisciplinasController',
-  function($scope, Disciplina) {
+  function($scope, Disciplina, $cookies) {
     function buscaDisciplinas() {
       Disciplina.query(
         function(disciplinas) {
@@ -11,6 +11,12 @@ oddin.controller('DisciplinasController',
         }
       );
     }
+
+    $scope.usuario = {
+        'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
+        'email': JSON.parse($cookies.get('session').substring(2)).user.email
+    }
+
     $scope.titulo = "Disciplinas";
     buscaDisciplinas();
   }

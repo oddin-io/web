@@ -12,8 +12,8 @@
   <ul id="slide-out" class="side-nav fixed barra-lateral">
     <div class="barra-lateral__header">
       <i class="barra-lateral__user-avatar material-icons">account_circle</i>
-      <p class="barra-lateral__user-name">Usuário Teste</p>
-      <p class="barra-lateral__user-email">usuario@email.com</p>
+      <p class="barra-lateral__user-name">{{usuario.nome}}</p>
+      <p class="barra-lateral__user-email">{{usuario.email}}</p>
     </div>
     <li data-ng-controller="LoginController" class="no-padding barra-lateral__item"><a href="" data-ng-click="logout()">Logout</a></li>
   </ul>
