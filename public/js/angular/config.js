@@ -1,74 +1,55 @@
 oddin.config(function($stateProvider, $urlRouterProvider) {
-    var profile;
     $stateProvider
         .state('disciplinas', {
             url: "/disciplinas",
-            views: {
-                "viewContent": {templateUrl: "partials/disciplinas.html", controller: "DisciplinasController"}
-            }
+            templateUrl: "partials/disciplinas.html",
+            controller: "DisciplinasController"
         })
-        .state('disciplina', {
-            url: "/disciplina/:disciplinaID",
-            controllerProvider: function(Profile, $stateParams, $state) {
-                if(profile !== undefined)
-                    $state.go('aulas', {disciplinaID: $stateParams.disciplinaID});
-                if(profile === undefined) {
-                    Profile.get({id: $stateParams.disciplinaID},
-                        function (data) {
-                            profile = data.profile;
-                            $state.go('aulas', {disciplinaID: $stateParams.disciplinaID})
-                        },
-                        function (erro) {
-                            console.log("Erro ao encontrar perfil");
-                        }
-                    );
-                }
-            }
-        })
+
         .state('aulas', {
             url: "/disciplina/:disciplinaID/aulas",
-            controllerProvider: function($state, $stateParams) {
-                if (profile == 0) {
-                    $state.go('aulas-aluno', {disciplinaID: $stateParams.disciplinaID});
-                } else if (profile == 1) {
-                    $state.go('aulas-professor', {disciplinaID: $stateParams.disciplinaID});
+            templateUrl:"partials/aulas.html",
+            controller: function($cookies, $state) {
+                if ($cookies.get('profile') == 0) {
+                    $state.go('aulas.aluno');
+                } else {
+                    $state.go('aulas.professor');
                 }
             }
         })
-        .state('aulas-aluno', {
-            url: "/disciplina/:disciplinaID/aulas-a",
-            views: {
-                "viewContent": {templateUrl: "partials/aulas.html", controller: "DisciplinaController"}
-            }
+        .state('aulas.aluno', {
+            url: "/aluno",
+            templateUrl:'partials/aulas-a.html',
+            controller: "DisciplinaController"
         })
-        .state('aulas-professor', {
-            url: "/disciplina/:disciplinaID/aulas-p",
-            views: {
-                "viewContent": {templateUrl: "partials/aulas-p.html", controller: "DisciplinaController"}
-            }
+        .state('aulas.professor', {
+            url: "/professor",
+            templateUrl:'partials/aulas-p.html',
+            controller: "DisciplinaController"
         })
+
         .state('materiais', {
             url: "/disciplina/:disciplinaID/materiais",
-            controllerProvider: function($state, $stateParams) {
-                if (profile == 0) {
-                    $state.go('materiais-aluno', {disciplinaID: $stateParams.disciplinaID});
-                } else if (profile == 1) {
-                    $state.go('materiais-professor', {disciplinaID: $stateParams.disciplinaID});
+            templateUrl:"partials/materiais.html",
+            controller: function($cookies, $state) {
+                if ($cookies.get('profile') == 0) {
+                    $state.go('materiais.aluno');
+                } else {
+                    $state.go('materiais.professor');
                 }
             }
         })
-        .state('materiais-aluno', {
-            url: "/disciplina/:disciplinaID/materiais-a",
-            views: {
-                "viewContent": {templateUrl: "partials/materiais.html", controller: "DisciplinaController"}
-            }
+        .state('materiais.aluno', {
+            url: "/aluno",
+            templateUrl:'partials/materiais-a.html',
+            controller: "DisciplinaController"
         })
-        .state('materiais-professor', {
-            url: "/disciplina/:disciplinaID/materiais-p",
-            views: {
-                "viewContent": {templateUrl: "partials/materiais-p.html", controller: "DisciplinaController"}
-            }
+        .state('materiais.professor', {
+            url: "/professor",
+            templateUrl:'partials/materiais-p.html',
+            controller: "DisciplinaController"
         })
+
         .state('participantes', {
             url: "/disciplina/:disciplinaID/participantes",
             views: {

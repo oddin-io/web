@@ -1,5 +1,5 @@
 oddin.controller('DisciplinasController',
-  function($scope, Disciplina, $cookies) {
+  function($scope, Disciplina, $cookies, Profile, $stateParams, $state) {
     function buscaDisciplinas() {
       Disciplina.query(
         function(disciplinas) {
@@ -11,6 +11,38 @@ oddin.controller('DisciplinasController',
         }
       );
     }
+    $scope.buscarPerfil = function(disciplina) {
+        if(!$cookies.get('profile')) {
+            Profile.get({id: disciplina.id},
+                function(data) {
+                    $cookies.put('profile', data.profile);
+                    $state.go('aulas', {'disciplinaID': disciplina.id});
+                },
+                function(erro) {
+                    console.log("Erro ao encontrar perfil");
+                }
+            );
+        } else {
+            $state.go('aulas', {'disciplinaID': disciplina.id});
+        }
+    }
+
+      //controllerProvider: function(Profile, $stateParams, $state) {
+      //    if(profile !== undefined) {
+      //        $state.transitionTo('disciplina.aulas', {disciplinaID: $stateParams.disciplinaID});
+      //    }
+      //    if(profile === undefined) {
+      //        Profile.get({id: $stateParams.disciplinaID},
+      //            function(data) {
+      //                profile = data.profile;
+      //                $state.transitionTo('disciplina.aulas', {disciplinaID: $stateParams.disciplinaID});
+      //            },
+      //            function(erro) {
+      //                console.log("Erro ao encontrar perfil");
+      //            }
+      //        );
+      //    }
+      //}
 
     $scope.usuario = {
         'nome': JSON.parse($cookies.get('session').substring(2)).person.name,

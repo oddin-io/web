@@ -1,0 +1,80 @@
+<header>
+  <div class="navbar-fixed">
+    <nav class="navbar-fixed barra-navegacao">
+      <div class="nav-wrapper barra-navegacao__container">
+        <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only" data-sidenav="left" data-closeonclick="true"><i class=" material-icons">menu</i></a>
+        <a class="barra-navegacao__voltar hide-on-med-and-down" href="#/disciplinas"><i class="material-icons">arrow_back</i></a>
+        <h1 class="barra-navegacao__title truncate">{{disciplina.lecture.name}} - Aulas</h1>
+        <a href="/" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
+      </div>
+    </nav>
+  </div>
+  <!--Barra de navegação lateral-->
+  <ul id="slide-out" class="side-nav fixed barra-lateral">
+    <div class="barra-lateral__header">
+      <i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">{{usuario.nome}}</p>
+      <p class="barra-lateral__user-email">{{usuario.email}}</p>
+    </div>
+
+    <li class="no-padding">
+      <ul class="collapsible" data-collapsible="expandable">
+        <li class="barra-lateral__item">
+          <a class="barra-lateral__item--collapsible collapsible-header active truncate">
+            {{disciplina.lecture.name}}
+          </a>
+          <div class="collapsible-body">
+            <ul>
+              <li class="barra-lateral__subitem active"><p>Aulas</p></li>
+              <li class="barra-lateral__subitem"><a href="#/disciplina/{{disciplina.id}}/materiais">Material</a></li>
+              <li class="barra-lateral__subitem"><a href="#/disciplina/{{disciplina.id}}/participantes">Participantes</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplinas">Disciplinas</a></li>
+    <li data-ng-controller="LoginController" class="no-padding barra-lateral__item"><a href="" data-ng-click="logout()">Logout</a></li>
+  </ul>
+  <!---->
+</header>
+<main data-ng-init="buscaAulas()">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <ul tabs reload="allTabContentLoaded" class="tabs lista-tab">
+          <li class="tab col s6 lista-tab__item"><a href="#aulas-abertas">Abertas</a></li>
+          <li class="tab col s6 lista-tab__item"><a href="#aulas-encerradas">Encerradas</a></li>
+        </ul>
+      </div>
+      <div id="aulas-abertas" class="col s12">
+        <ul class="collection lista-aulas">
+          <li data-ng-repeat="aula in aulas | filter: {status: 0}: true" class="collection-item avatar lista-aulas__item">
+            <i class="material-icons circle green lighten-2">lock_open</i>
+            <a href="#/disciplina/{{aula.instruction.id}}/aula/{{aula.id}}">
+              <span class="title">{{aula.subject}}</span>
+              <p>{{aula.created_at | date:'dd/MM/yyyy'}} <br>
+                {{aula.created_at | date:'HH:mm:ss'}}
+              </p>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div id="aulas-encerradas" class="col s12">
+        <ul class="collection lista-aulas">
+          <li data-ng-repeat="aula in aulas | filter: {status: 1}: true" class="collection-item avatar lista-aulas__item">
+            <i class="material-icons circle red lighten-2">lock_outline</i>
+            <a href="#/disciplina/{{aula.instruction.id}}/aula/{{aula.id}}">
+              <span class="title">
+                {{aula.subject}}  <!-- ID: {{presentation.id}}-->
+              </span>
+              <p>{{aula.created_at | date:'dd/MM/yyyy'}} <br>
+                {{aula.created_at | date:'HH:mm:ss'}}
+              </p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
