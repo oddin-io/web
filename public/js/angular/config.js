@@ -56,28 +56,29 @@ oddin.config(function($stateProvider, $urlRouterProvider) {
                 "viewContent": {templateUrl: "partials/participantes.html", controller: "DisciplinaController"}
             }
         })
+
         .state('duvidas', {
             url: "/disciplina/:disciplinaID/aula/:aulaID",
-            controllerProvider: function($state, $stateParams) {
-                if (profile == 0) {
-                    $state.go('duvidas-aluno', {disciplinaID: $stateParams.disciplinaID, aulaID: $stateParams.aulaID});
-                } else if (profile == 1) {
-                    $state.go('duvidas-professor', {disciplinaID: $stateParams.disciplinaID, aulaID: $stateParams.aulaID});
+            templateUrl:"partials/duvidas.html",
+            controller: function($cookies, $state) {
+                if ($cookies.get('profile') == 0) {
+                    $state.go('duvidas.aluno');
+                } else {
+                    $state.go('duvidas.professor');
                 }
             }
         })
-        .state('duvidas-aluno', {
-            url: "/disciplina/:disciplinaID/aula-a/:aulaID",
-            views: {
-                "viewContent": {templateUrl: "partials/duvidas.html", controller: "AulaController"}
-            }
+        .state('duvidas.aluno', {
+            url: "/aluno",
+            templateUrl:'partials/duvidas-a.html',
+            controller: "AulaController"
         })
-        .state('duvidas-professor', {
-            url: "/disciplina/:disciplinaID/aula-p/:aulaID",
-            views: {
-                "viewContent": {templateUrl: "partials/duvidas-p.html", controller: "AulaController"}
-            }
+        .state('duvidas.professor', {
+            url: "/professor",
+            templateUrl:'partials/duvidas-p.html',
+            controller: "AulaController"
         })
+
         .state('material-aula',  {
             url: "/aulas/:aulaID/material",
             controllerProvider: function($state, $stateParams) {
