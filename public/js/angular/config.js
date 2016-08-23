@@ -116,7 +116,7 @@ oddin.config(function($stateProvider, $urlRouterProvider) {
         .state('material-aula-p', {
             url: "/aulas/:aulaID/material-p",
             views: {
-                "viewContent": {templateUrl: "partials/material-aula-p.html"}
+                "viewContent": {templateUrl: "partials/material-aula-p.html", controller: 'AulaController'}
             }
         })
 }).run(function($window, $location, $state) {

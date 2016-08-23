@@ -80,6 +80,50 @@ function showQuestions(req, res, next){
   );
 }
 
+function showMaterials(req, res, next) {
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/presentations/' + req.params.id + '/materials',
+            method: 'GET',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function (error, response, body) {
+            if (response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            }
+            else {
+                res.json(JSON.parse(body));
+            }
+        }
+    )
+}
+
+function createMaterial(req, res, next) {
+    var session = req.cookies.session;
+    request(
+        {
+            uri: app.utils.constants.ws.uri + '/presentations/' + req.params.id + '/materials/new',
+            method: 'GET',
+            headers: {
+                'x-session-token': session.token
+            }
+        }, function(error, response, body) {
+            if(response.statusCode == 401) {
+                res.status(401);
+                res.end();
+            } else if(response.statusCode == 404) {
+                res.status(404);
+                res.end();
+            } else {
+                res.json(JSON.parse(body));
+            }
+        }
+    )
+}
+
 function postQuestion(req, res, next){
   var session = req.cookies.session;
   request(
@@ -114,6 +158,8 @@ module.exports = function (app) {
     destroy: destroy,
     close: close,
     showQuestions: showQuestions,
-    postQuestion: postQuestion
+    postQuestion: postQuestion,
+    showMaterials: showMaterials,
+    createMaterial: createMaterial
   };
 };

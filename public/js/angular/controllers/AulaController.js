@@ -22,6 +22,43 @@ oddin.controller('AulaController',
             $scope.duvidas[duvida.id] = duvida;
         }
 
+        $scope.buscaMateriais = function() {
+            $http.get('/api/presentation/' + $stateParams.aulaID + '/materials')
+                .success(function(data) {
+                    $scope.materiais = data;
+                })
+        };
+
+        $scope.uploadMaterial = function() {
+            var file = document.forms.uploadArchive.file.files[0];
+            var fd = new FormData();
+            $http.get('api/presentation/' + $stateParams.aulaID + "/materials/new")
+                .success(function(data) {
+                    for (var key in data.fields) {
+                        fd.append(key, data.fields[key]);
+                    }
+                    fd.append('file', file);
+                    $http.post(data.url, fd, {headers: {'Content-Type': undefined}})
+                        .success(function() {
+                            $http.put('api/materials/' + data.id, {'name':file.name, 'mime': file.type})
+                                .success(function() {
+                                    console.log('Upload Realizado');
+                                    $scope.buscaMateriais();
+                                })
+                        });
+                })
+        }
+
+        $scope.downloadMaterial = function(material) {
+            $http.get('api/materials/' + material.id)
+                .success(function(data) {
+                    var link = document.createElement('a');
+                    link.setAttribute('href', data.url);
+                    link.setAttribute('download', true);
+                    link.click();
+                });
+        }
+
         $scope.setLastDoubt = function(duvida) {
             $scope.last_doubt = duvida;
         }
@@ -202,9 +239,7 @@ oddin.controller('AulaController',
             'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
             'email': JSON.parse($cookies.get('session').substring(2)).user.email
         }
-
         $scope.current_user = JSON.parse($cookies.get('session').substring(2)).user;
-        console.log($scope.current_user);
         buscaInfo();
     }
 );
