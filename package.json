@@ -2,35 +2,46 @@
   "name": "oddin",
   "version": "1.0.0",
   "description": "Front end for Oddin Web Service",
-  "main": "server.js",
+  "author": "Heitor Kuba <hjkuba@yahoo.com>",
+  "private": true,
+  "main": "./bin/www",
   "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "postinstall": "bower install",
+    "dev": "nodemon",
+    "acceptance-tests": "cucumberjs",
+    "unit-tests": "jasmine",
+    "start": "node ./bin/www"
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com:hjkuba/oddin.git"
+    "url": "https://gitlab.com/hjkuba/oddin"
   },
-  "author": "Heitor Kuba <hjkuba@yahoo.com>",
   "license": "UNLICENSED",
   "dependencies": {
-    "body-parser": "^1.15.2",
+    "body-parser": "~1.15.1",
     "bower": "^1.7.9",
-    "cookie-parser": "^1.4.3",
-    "ejs": "^2.4.2",
-    "express": "^4.14.0",
-    "express-load": "^1.1.15",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
     "method-override": "^2.3.6",
+    "morgan": "~1.7.0",
+    "node-sass-middleware": "0.8.0",
+    "pug": "^2.0.0-beta5",
     "request": "^2.74.0",
-    "socket.io": "^1.4.8"
+    "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "cucumber": "^1.2.2",
+    "eslint": "^3.3.1",
+    "eslint-plugin-import": "^1.14.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.6",
     "gulp-uglify": "^1.5.4",
-    "nodemon": "^1.10.0"
+    "jasmine": "^2.4.1",
+    "nodemon": "^1.10.0",
+    "sass-lint": "^1.9.0",
+    "zombie": "^4.2.1"
   }
 }

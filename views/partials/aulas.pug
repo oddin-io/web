@@ -1,0 +1,68 @@
+header
+  .navbar-fixed
+    nav.navbar-fixed.barra-navegacao
+      .nav-wrapper.barra-navegacao__container
+        a.button-collapse.hide-on-large-only(data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+          i.material-icons menu
+        a.barra-navegacao__voltar.hide-on-med-and-down(href="#/disciplinas")
+          i.material-icons arrow_back
+        h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Aulas
+        a.brand-logo.right.hide-on-small-only(href="/"): img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+
+  ul#slide-out.side-nav.fixed.barra-lateral
+    .barra-lateral__header
+      i.barra-lateral__user-avatar.material-icons account_circle
+      p.barra-lateral__user-name {{usuario.nome}}
+      p.barra-lateral__user-email {{usuario.email}}
+
+    li.no-padding
+      ul.collapsible(data-collapsible="expandable")
+        li.barra-lateral__item
+          a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{disciplina.lecture.name}}
+          .collapsible-body
+            ul
+              li.barra-lateral__subitem.active
+                p Aulas
+              li.barra-lateral__subitem
+                a(href="#/disciplina/{{disciplina.id}}/materiais") Material
+              li.barra-lateral__subitem
+                a(href="#/disciplina/{{disciplina.id}}/participantes") Participantes
+
+    li.hide-on-large-only.no-padding.barra-lateral__item
+      a(href="#/disciplinas") Disciplinas
+
+    li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+      a(data-ng-click="logout()") Logout
+
+main(data-ng-init="buscaAulas()")
+  .container
+    .row
+      .col.s12
+        ul.tabs.lista-tab(tabs, reload="allTabContentLoaded")
+          li.tab.col.s6.lista-tab__item
+            a(href="#aulas-abertas") Abertas
+          li.tab.col.s6.lista-tab__item
+            a(href="#aulas-encerradas") Encerradas
+
+      #aulas-abertas.col.s12
+        ul.collection.lista-aulas
+          li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 0}: true")
+            i.material-icons.circle.green.lighten-2 lock_open
+
+            a(href="#/disciplina/{{aula.instruction.id}}/aula/{{aula.id}}")
+              span.title {{aula.subject}}
+              p
+                | {{aula.created_at | date:"dd/MM/yyyy"}}
+                br
+                |  {{aula.created_at | date:"HH:mm:ss"}}
+
+      #aulas-encerradas.col.s12
+        ul.collection.lista-aulas
+          li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 1}: true")
+            i.material-icons.circle.red.lighten-2 lock_outline
+            a(href="#/disciplina/{{aula.instruction.id}}/aula/{{aula.id}}")
+              span.title {{aula.subject}}
+              p
+                | {{aula.created_at | date:"dd/MM/yyyy"}}
+                br
+                |  {{aula.created_at | date:"HH:mm:ss"}}
