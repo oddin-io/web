@@ -2,7 +2,7 @@ header
   .navbar-fixed
     nav.barra-navegacao
       .nav-wrapper.barra-navegacao__container
-        a.button-collapse.hide-on-large-only(href="#", data-activates="slide-out", data-sidenav="left", data-closeonclick="true"): i.material-icons menu
+        a.button-collapse.hide-on-large-only(data-activates="slide-out", data-sidenav="left", data-closeonclick="true"): i.material-icons menu
         a.barra-navegacao__voltar.hide-on-med-and-down(href="#/disciplinas"): i.material-icons arrow_back
         h1.barra-navegacao__title.truncate {{disciplina.lecture.name}}
         a.brand-logo.right.hide-on-small-only(href="/"): img.barra-navegacao__logo(src="/images/oddin_horizontal_logo.png")
@@ -41,7 +41,7 @@ main(data-ng-init="buscaAulas()")
             h1.modal-criar-item__titulo Criar Nova Aula
             .row
               .input-field.col.s12
-                input#presentation-subject(type="text",data-ng-model="aula.subject")
+                input#presentation-subject(type="text",data-ng-model="aula.subject")/
                 label(for="presentation-subject") Tema
 
             button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Iniciar

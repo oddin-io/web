@@ -1,54 +1,45 @@
-<header>
-  <!--Barra de navegação superior-->
-  <div class="navbar-fixed">
-    <nav class="navbar-fixed barra-navegacao">
-      <div class="nav-wrapper barra-navegacao__container">
-        <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only" data-sidenav="left" data-closeonclick="true"><i class=" material-icons">menu</i></a>
-        <a class="barra-navegacao__voltar hide-on-med-and-down" href="#/disciplina/{{aula.instruction.id}}/aulas"><i class="material-icons">arrow_back</i></a>
-        <h1 class="barra-navegacao__title truncate">{{aula.subject}} - Material</h1>
-        <a href="/" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="../img/oddin_horizontal_logo.png"/></a>
-      </div>
-    </nav>
-  </div>
-  <!--Barra de navegação lateral-->
-  <ul id="slide-out" class="side-nav fixed barra-lateral">
-    <div class="barra-lateral__header">
-      <i class="barra-lateral__user-avatar material-icons">account_circle</i>
-      <p class="barra-lateral__user-name">{{usuario.nome}}</p>
-      <p class="barra-lateral__user-email">{{usuario.email}}</p>
-    </div>
-    <li class="no-padding">
-      <ul class="collapsible" data-collapsible="expandable">
-        <li class="barra-lateral__item">
-          <a class="barra-lateral__item--collapsible collapsible-header active truncate">
-            {{aula.subject}}
-          </a>
-          <div class="collapsible-body">
-            <ul>
-              <li class="barra-lateral__subitem"><a href="#/disciplina/{{aula.instruction.id}}/aula/{{aula.id}}">Dúvidas</a></li>
-              <li class="barra-lateral__subitem active"><p>Material</p></li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </li>
-    <li class="hide-on-large-only no-padding barra-lateral__item"><a href="#/disciplina/{{aula.instruction.id}}/aulas">Aulas</a></li>
-    <li class="no-padding barra-lateral__item"><a href="#/disciplinas">Disciplinas</a></li>
-    <li data-ng-controller="LoginController" class="no-padding barra-lateral__item"><a href="" data-ng-click="logout()">Logout</a></li>
-  </ul>
-</header>
-<main data-ng-init="buscaMateriais()">
-  <div class="container">
-    <ul class="collection with-header lista-material">
-      <li class="collection-header lista-material__header"><h2>Material da Aula</h2></li>
-      <li data-ng-repeat="material in materiais" class="collection-item avatar lista-material__item">
-        <i class="material-icons circle">insert_drive_file</i>
-        <span class="title"><a href="" data-ng-click="downloadMaterial(material)">{{material.name}}</a></span>
-        <p>{{material.mime}}</p>
-      </li>
-    </ul>
-  </div>
-</main>
-</body>
-</html>
+header
+  .navbar-fixed
+    nav.navbar-fixed.barra-navegacao
+      .nav-wrapper.barra-navegacao__container
+        a.button-collapse.hide-on-large-only(data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+          i.material-icons menu
+        a.barra-navegacao__voltar.hide-on-med-and-down(href="#/disciplina/{{aula.instruction.id}}/aulas")
+          i.material-icons arrow_back
+        h1.barra-navegacao__title.truncate {{aula.subject}} - Material
+        a.brand-logo.right.hide-on-small-only(href="/")
+          img.barra-navegacao__logo(src="/images/horizontal_logo.png")
 
+  ul#slide-out.side-nav.fixed.barra-lateral
+    .barra-lateral__header
+      i.barra-lateral__user-avatar.material-icons account_circle
+      p.barra-lateral__user-name {{usuario.nome}}
+      p.barra-lateral__user-email {{usuario.email}}
+
+    li.no-padding
+      ul.collapsible(data-collapsible="expandable")
+        li.barra-lateral__item
+          a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{aula.subject}}
+          .collapsible-body
+            ul
+              li.barra-lateral__subitem
+                a(href="#/disciplina/{{aula.instruction.id}}/aula/{{aula.id}}") D&uacute;vidas
+              li.barra-lateral__subitem.active
+                p Material
+    li.hide-on-large-only.no-padding.barra-lateral__item
+      a(href="#/disciplina/{{aula.instruction.id}}/aulas") Aulas
+    li.no-padding.barra-lateral__item
+      a(href="#/disciplinas") Disciplinas
+    li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+      a(data-ng-click="logout()") Logout
+
+main(data-ng-init="buscaMateriais()")
+  .container
+    ul.collection.with-header.lista-material
+      li.collection-header.lista-material__header
+        h2 Material da Aula
+      li.collection-item.avatar.lista-material__item(data-ng-repeat="material in materiais")
+        i.material-icons.circle insert_drive_file
+        span.title
+          a(data-ng-click="downloadMaterial(material)") {{material.name}}
+        p {{material.mime}}
