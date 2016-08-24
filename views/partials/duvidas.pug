@@ -80,7 +80,7 @@ main(data-ng-init="buscaDuvidas()")
       .resposta(data-ng-attr-id="{{answer.id}}", data-ng-repeat="answer in duvida.answers")
         .resposta__header
           span.autor {{answer.person.name}}
-          span.datahora {{answer.created_at | date"dd/MM/yyyy à's' HH:mm"}}
+          span.datahora {{answer.created_at | date:"dd/MM/yyyy à's' HH:mm"}}
         .resposta__content
           p  {{answer.text}}
         .resposta__action

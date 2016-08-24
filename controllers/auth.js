@@ -10,16 +10,12 @@ function login(req, res) {
       password: req.body.password,
     },
   }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else if (response.statusCode === 404) {
-      res.status(404)
-      res.end()
-    } else {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       res.cookie('session', body)
-      res.end()
     }
+
+    res.status(response.statusCode)
+    res.end()
   })
 }
 
@@ -33,13 +29,12 @@ function logout(req, res) {
       'x-session-token': session.token,
     },
   }, function responseHandler(error, response) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.status(204)
-      res.end()
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      res.clearCookie('session')
     }
+
+    res.status(response.statusCode)
+    res.end()
   })
 }
 

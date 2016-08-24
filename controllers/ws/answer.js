@@ -10,14 +10,7 @@ function index(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function show(req, res) {
@@ -29,14 +22,7 @@ function show(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function create(req, res) {
@@ -51,14 +37,7 @@ function create(req, res) {
     json: {
       text: req.body.text,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(body)
-    }
-  })
+  }).pipe(res)
 }
 
 function update() {}
@@ -74,14 +53,7 @@ function upvote(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function downvote(req, res) {
@@ -93,14 +65,7 @@ function downvote(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function cancelvote(req, res) {
@@ -112,14 +77,7 @@ function cancelvote(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.end()
-    }
-  })
+  }).pipe(res)
 }
 
 function accept(req, res) {
@@ -131,14 +89,7 @@ function accept(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(body)
-    }
-  })
+  }).pipe(res)
 }
 
 function unaccept(req, res) {
@@ -150,14 +101,7 @@ function unaccept(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(body)
-    }
-  })
+  }).pipe(res)
 }
 
 module.exports = {

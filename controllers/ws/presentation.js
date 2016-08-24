@@ -12,14 +12,7 @@ function show(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function create() {}
@@ -37,15 +30,7 @@ function closePresentation(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-      res.end()
-    }
-  })
+  }).pipe(res)
 }
 
 function showQuestions(req, res) {
@@ -57,14 +42,7 @@ function showQuestions(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function showMaterials(req, res) {
@@ -76,14 +54,7 @@ function showMaterials(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function createMaterial(req, res) {
@@ -95,17 +66,7 @@ function createMaterial(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else if (response.statusCode === 404) {
-      res.status(404)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function postQuestion(req, res) {
@@ -121,14 +82,7 @@ function postQuestion(req, res) {
       text: req.body.text,
       anonymous: req.body.anonymous,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(body)
-    }
-  })
+  }).pipe(res)
 }
 
 module.exports = {

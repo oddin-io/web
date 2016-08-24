@@ -20,14 +20,7 @@ function upvote(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function cancelvote(req, res) {
@@ -39,14 +32,7 @@ function cancelvote(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.end()
-    }
-  })
+  }).pipe(res)
 }
 
 module.exports = {

@@ -10,14 +10,7 @@ function index(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function show(req, res) {
@@ -29,14 +22,7 @@ function show(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function create() {}
@@ -54,14 +40,7 @@ function showPresentations(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function createPresentation(req, res) {
@@ -76,37 +55,19 @@ function createPresentation(req, res) {
     json: {
       subject: req.body.subject,
     },
-  }, function responseHandler(error, response) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.end()
-    }
-  })
+  }).pipe(res)
 }
 
 function createMaterial(req, res) {
   const session = req.cookies.session
 
-  request(
-    {
-      uri: `${constants.uri}/instructions/${req.params.id}/materials/new`,
-      method: 'GET',
-      headers: {
-        'x-session-token': session.token,
-      },
-    }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else if (response.statusCode === 404) {
-      res.status(404)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}/materials/new`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }).pipe(res)
 }
 
 function showMaterials(req, res) {
@@ -118,14 +79,7 @@ function showMaterials(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function showParticipants(req, res) {
@@ -137,14 +91,7 @@ function showParticipants(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function showProfile(req, res) {
@@ -156,14 +103,7 @@ function showProfile(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 module.exports = {

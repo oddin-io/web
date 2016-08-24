@@ -12,14 +12,7 @@ function show(req, res) {
     headers: {
       'x-session-token': session.token,
     },
-  }, function responseHandler(error, response, body) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.json(JSON.parse(body))
-    }
-  })
+  }).pipe(res)
 }
 
 function create() {}
@@ -37,14 +30,7 @@ function update(req, res) {
       name: req.body.name,
       mime: req.body.mime,
     },
-  }, function responseHandler(error, response) {
-    if (response.statusCode === 401) {
-      res.status(401)
-      res.end()
-    } else {
-      res.end()
-    }
-  })
+  }).pipe(res)
 }
 
 function destroy() {}
