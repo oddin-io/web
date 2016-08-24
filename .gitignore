@@ -1,4 +1,13 @@
+# IDE
 .idea/
+
+# Cache
 .sass-cache/
+
+# Dependencies
 node_modules/
 vendor/
+
+# Compiled files
+*.css
+*.css.*
