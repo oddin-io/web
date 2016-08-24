@@ -1,9 +1,10 @@
-module.exports = function (app) {
-  var controller = app.controllers.ws.material;
+const router = require('express').Router()
+const controller = require('../../controllers/ws/material')
 
-  app.get('/api/materials', controller.index);
-  app.get('/api/materials/:id', controller.show);
-  app.post('/api/materials', controller.create);
-  app.put('/api/materials/:id', controller.update);
-  app.delete('/api/materials/:id', controller.destroy);
-};
+router.get('/materials', controller.index)
+router.get('/materials/:id', controller.show)
+router.post('/materials', controller.create)
+router.put('/materials/:id', controller.update)
+router.delete('/materials/:id', controller.destroy)
+
+module.exports = router

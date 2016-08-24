@@ -51,23 +51,45 @@ main(data-ng-init="buscaDuvidas()")
               .col.s12.m9
                 p.modal-post-duvida__checkbox
                   input#checkbox-anonimo.filled-in(type="checkbox", data-ng-model="duvida.anonymous")/
-                  label(for="checkbox-anonimo") Enviar como an&ocirc;nimo
+                  label(for="checkbox-anonimo") Enviar como anônimo
               .col.s12.m3
                 button.btn.waves-effect.waves-light.modal-post-duvida__submit.modal-close(type="submit", name="action") Enviar
 
-    .resposta(data-ng-attr-id="{{answer.id}}", data-ng-repeat="answer in duvida.answers")
-      .resposta__header
-        span.autor {{answer.person.name}}
-        span.datahora {{answer.created_at | date"dd/MM/yyyy à's' HH:mm"}}
-      .resposta__content
-        p  {{answer.text}}
-      .resposta__action
-        div(data-ng-class="{'upvote-voted': answer.my_vote == 1, 'upvote': answer.my_vote != 1}")
-          a(data-ng-click="answer.my_vote != 1 ? upvoteResposta(answer) : cancelVoteResposta(answer)")
-            i.material-icons keyboard_arrow_up
-        div(data-ng-class="{'upvote-voted': answer.my_vote == -1, 'upvote': answer.my_vote != -1}")
-          a(data-ng-click="answer.my_vote != -1 ? downvoteResposta(answer) : cancelVoteResposta(answer)")
-            i.material-icons.downvote-margin keyboard_arrow_down
-          span(data-ng-class="{'custom-badge': answer.my_vote == 0, 'custom-badge-voted': answer.my_vote != 0}") {{answer.upvotes - answer.downvotes}}
-        div(data-ng-class="{'check-disabled': duvida.person.id != current_user.id || duvida.answered && !answer.accepted, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}")
-          a.material-icons(data-ng-click="answer.accepted ? recusaResposta(answer) : aceitaResposta(answer)") check
+    .card.pergunta(data-ng-repeat="duvida in duvidas")
+      .card-content
+        .pergunta__header
+          span.autor {{duvida.person.name}}
+          span.datahora {{duvida.created_at | date:"dd/MM/yyyy à's' HH:mm"}}
+        .pergunta__content
+          p {{duvida.text}}
+
+      .card-action.pergunta__action
+        .row
+          .col.s6.m4
+            .upvote(data-ng-class="{'upvote-disabled': duvida.person.id == current_user.id, 'upvote-voted': duvida.my_vote == 1}")
+              a(data-ng-click="duvida.my_vote == 0 ? upvoteDuvida(duvida) : cancelVoteDuvida(duvida)")
+                i.material-icons keyboard_arrow_up
+              span(data-ng-class="{'custom-badge': duvida.my_vote == 0, 'custom-badge-voted': duvida.my_vote != 0, 'custom-badge-disabled': current_user.id == duvida.person.id}") {{duvida.upvotes - duvida.downvotes}}
+          .col.s6.m4
+            .div(data-ng-class="{'check-entendi': duvida.answered, 'check-nao-entendi': !duvida.answered}")
+              i.material-icons check
+          .col.s12.m4
+            .ver-resposta(data-ng-if="duvida.has_answer")
+              a.waves-effect.btn-flat(data-ng-attr-id="button_{{duvida.id}}", data-ng-click="buscaRespostas(duvida)") Ver Respostas
+
+      .resposta(data-ng-attr-id="{{answer.id}}", data-ng-repeat="answer in duvida.answers")
+        .resposta__header
+          span.autor {{answer.person.name}}
+          span.datahora {{answer.created_at | date"dd/MM/yyyy à's' HH:mm"}}
+        .resposta__content
+          p  {{answer.text}}
+        .resposta__action
+          div(data-ng-class="{'upvote-voted': answer.my_vote == 1, 'upvote': answer.my_vote != 1}")
+            a(data-ng-click="answer.my_vote != 1 ? upvoteResposta(answer) : cancelVoteResposta(answer)")
+              i.material-icons keyboard_arrow_up
+          div(data-ng-class="{'upvote-voted': answer.my_vote == -1, 'upvote': answer.my_vote != -1}")
+            a(data-ng-click="answer.my_vote != -1 ? downvoteResposta(answer) : cancelVoteResposta(answer)")
+              i.material-icons.downvote-margin keyboard_arrow_down
+            span(data-ng-class="{'custom-badge': answer.my_vote == 0, 'custom-badge-voted': answer.my_vote != 0}") {{answer.upvotes - answer.downvotes}}
+          div(data-ng-class="{'check-disabled': duvida.person.id != current_user.id || duvida.answered && !answer.accepted, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}")
+            a.material-icons(data-ng-click="answer.accepted ? recusaResposta(answer) : aceitaResposta(answer)") check

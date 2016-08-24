@@ -1,11 +1,12 @@
-module.exports = function (app) {
-  var controller = app.controllers.ws.question;
+const router = require('express').Router()
+const controller = require('../../controllers/ws/question')
 
-  app.get('/api/questions', controller.index);
-  app.get('/api/questions/:id', controller.show);
-  app.post('/api/questions', controller.create);
-  app.put('/api/questions/:id', controller.update);
-  app.delete('/api/questions/:id', controller.destroy);
-  app.post('/api/questions/:id/upvote', controller.upvote);
-  app.delete('/api/questions/:id/vote', controller.cancelvote);
-};
+router.get('/questions', controller.index)
+router.get('/questions/:id', controller.show)
+router.post('/questions', controller.create)
+router.put('/questions/:id', controller.update)
+router.delete('/questions/:id', controller.destroy)
+router.post('/questions/:id/upvote', controller.upvote)
+router.delete('/questions/:id/vote', controller.cancelvote)
+
+module.exports = router

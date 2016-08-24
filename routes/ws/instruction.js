@@ -1,18 +1,16 @@
-module.exports = function (app) {
-  var controller = app.controllers.ws.instruction;
+const router = require('express').Router()
+const controller = require('../../controllers/ws/instruction')
 
-  app.get('/api/instructions', controller.index);
-  app.get('/api/instructions/:id', controller.show);
-  app.post('/api/instructions', controller.create);
-  app.put('/api/instructions/:id', controller.update);
-  app.delete('/api/instructions/:id', controller.destroy);
+router.get('/instructions', controller.index)
+router.get('/instructions/:id', controller.show)
+router.post('/instructions', controller.create)
+router.put('/instructions/:id', controller.update)
+router.delete('/instructions/:id', controller.destroy)
+router.get('/instructions/:id/presentations', controller.showPresentations)
+router.post('/instructions/:id/presentations', controller.createPresentation)
+router.get('/instructions/:id/materials/new', controller.createMaterial)
+router.get('/instructions/:id/materials', controller.showMaterials)
+router.get('/instructions/:id/participants', controller.showParticipants)
+router.get('/instructions/:id/profile', controller.showProfile)
 
-  app.get('/api/instructions/:id/presentations', controller.showPresentations);
-  app.post('/api/instructions/:id/presentations', controller.createPresentation);
-
-  app.get('/api/instructions/:id/materials/new', controller.createMaterial);
-  app.get('/api/instructions/:id/materials', controller.showMaterials);
-  app.get('/api/instructions/:id/participants', controller.showParticipants);
-
-  app.get('/api/instructions/:id/profile', controller.showProfile);
-};
+module.exports = router

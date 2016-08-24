@@ -80,6 +80,7 @@ main(data-ng-init="buscaDuvidas()")
             .ver-resposta--prof(data-ng-if="duvida.has_answer")
               a.waves-effect.btn-flat(id="button_{{duvida.id}}", data-ng-click="buscaRespostas(duvida)")
                 span Ver Respostas
+                
       .resposta(data-ng-attr-id="{{answer.id}}", data-ng-repeat="answer in duvida.answers")
         .resposta__header
           span.autor {{answer.person.name}}

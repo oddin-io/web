@@ -1,15 +1,15 @@
-module.exports = function (app) {
-  var controller = app.controllers.ws.presentation;
+const router = require('express').Router()
+const controller = require('../../controllers/ws/presentation')
 
-  app.get('/api/presentations', controller.index);
-  app.get('/api/presentations/:id', controller.show);
-  app.post('/api/presentations', controller.create);
-  app.post('/api/presentations/:id/close', controller.close);
-  app.put('/api/presentations/:id', controller.update);
-  app.delete('/api/presentations/:id', controller.destroy);
-  app.get('/api/presentations/:id/questions', controller.showQuestions);
-  app.post('/api/presentations/:id/questions', controller.postQuestion);
-  app.get('/api/presentation/:id/materials', controller.showMaterials);
-  app.get('/api/presentation/:id/materials/new', controller.createMaterial);
-};
+router.get('/presentations', controller.index)
+router.get('/presentations/:id', controller.show)
+router.post('/presentations', controller.create)
+router.post('/presentations/:id/close', controller.closePresentation)
+router.put('/presentations/:id', controller.update)
+router.delete('/presentations/:id', controller.destroy)
+router.get('/presentations/:id/questions', controller.showQuestions)
+router.post('/presentations/:id/questions', controller.postQuestion)
+router.get('/presentation/:id/materials', controller.showMaterials)
+router.get('/presentation/:id/materials/new', controller.createMaterial)
 
+module.exports = router

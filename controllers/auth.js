@@ -2,15 +2,14 @@ const request = require('request')
 const constants = require('../config/constants')
 
 function login(req, res) {
-  request(
-    {
-      uri: `${constants.uri}/session`,
-      method: 'POST',
-      json: {
-        email: req.body.email,
-        password: req.body.password,
-      },
-    }, function responseHandler(error, response, body) {
+  request({
+    uri: `${constants.uri}/session`,
+    method: 'POST',
+    json: {
+      email: req.body.email,
+      password: req.body.password,
+    },
+  }, function responseHandler(error, response, body) {
     if (response.statusCode === 401) {
       res.status(401)
       res.end()
@@ -25,16 +24,15 @@ function login(req, res) {
 }
 
 function logout(req, res) {
-  var session = req.cookies.session
+  const session = req.cookies.session
 
-  request(
-    {
-      uri: `${constants.uri}/session`,
-      method: 'DELETE',
-      headers: {
-        'x-session-token': session.token,
-      },
-    }, function responseHandler(error, response) {
+  request({
+    uri: `${constants.uri}/session`,
+    method: 'DELETE',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response) {
     if (response.statusCode === 401) {
       res.status(401)
       res.end()

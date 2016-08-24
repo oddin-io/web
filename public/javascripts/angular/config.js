@@ -38,13 +38,13 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
         .state('aulas-aluno', {
           url: '/disciplina/:disciplinaID/aulas-a',
           views: {
-            'viewContent': { templateUrl: 'partials/aulas.html', controller: 'DisciplinaController' },
+            'viewContent': { templateUrl: 'partials/aulas', controller: 'DisciplinaController' },
           },
         })
         .state('aulas-professor', {
           url: '/disciplina/:disciplinaID/aulas-p',
           views: {
-            'viewContent': { templateUrl: 'partials/aulas-p.html', controller: 'DisciplinaController' },
+            'viewContent': { templateUrl: 'partials/aulas-p', controller: 'DisciplinaController' },
           },
         })
         .state('materiais', {
@@ -60,19 +60,19 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
         .state('materiais-aluno', {
           url: '/disciplina/:disciplinaID/materiais-a',
           views: {
-            'viewContent': { templateUrl: 'partials/materiais.html', controller: 'DisciplinaController' },
+            'viewContent': { templateUrl: 'partials/materiais', controller: 'DisciplinaController' },
           },
         })
         .state('materiais-professor', {
           url: '/disciplina/:disciplinaID/materiais-p',
           views: {
-            'viewContent': { templateUrl: 'partials/materiais-p.html', controller: 'DisciplinaController' },
+            'viewContent': { templateUrl: 'partials/materiais-p', controller: 'DisciplinaController' },
           },
         })
         .state('participantes', {
           url: '/disciplina/:disciplinaID/participantes',
           views: {
-            'viewContent': { templateUrl: 'partials/participantes.html', controller: 'DisciplinaController' },
+            'viewContent': { templateUrl: 'partials/participantes', controller: 'DisciplinaController' },
           },
         })
         .state('duvidas', {
@@ -88,13 +88,13 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
         .state('duvidas-aluno', {
           url: '/disciplina/:disciplinaID/aula-a/:aulaID',
           views: {
-            'viewContent': { templateUrl: 'partials/duvidas.html', controller: 'AulaController' },
+            'viewContent': { templateUrl: 'partials/duvidas', controller: 'AulaController' },
           },
         })
         .state('duvidas-professor', {
           url: '/disciplina/:disciplinaID/aula-p/:aulaID',
           views: {
-            'viewContent': { templateUrl: 'partials/duvidas-p.html', controller: 'AulaController' },
+            'viewContent': { templateUrl: 'partials/duvidas-p', controller: 'AulaController' },
           },
         })
         .state('material-aula', {
@@ -110,13 +110,13 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
         .state('material-aula-a', {
           url: '/aulas/:aulaID/material-a',
           views: {
-            'viewContent': { templateUrl: 'partials/material-aula.html', controller: 'AulaController' },
+            'viewContent': { templateUrl: 'partials/material-aula', controller: 'AulaController' },
           },
         })
         .state('material-aula-p', {
           url: '/aulas/:aulaID/material-p',
           views: {
-            'viewContent': { templateUrl: 'partials/material-aula-p.html', controller: 'AulaController' },
+            'viewContent': { templateUrl: 'partials/material-aula-p', controller: 'AulaController' },
           },
         })
 }).run(function ($window, $location, $state) {

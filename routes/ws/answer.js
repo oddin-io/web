@@ -1,14 +1,15 @@
-module.exports = function (app) {
-  var controller = app.controllers.ws.answer;
+const router = require('express').Router()
+const controller = require('../../controllers/ws/answer')
 
-  app.get('/api/questions/:id/answers', controller.index);
-  app.get('/api/answers/:id', controller.show);
-  app.post('/api/questions/:id/answers', controller.create);
-  app.put('/api/answers/:id', controller.update);
-  app.delete('/api/answers/:id', controller.destroy);
-  app.post('/api/answers/:id/upvote', controller.upvote);
-  app.post('/api/answers/:id/downvote', controller.downvote);
-  app.delete('/api/answers/:id/vote', controller.cancelvote);
-  app.post('/api/answers/:id/accept', controller.accept);
-  app.delete('/api/answers/:id/accept', controller.unaccept);
-};
+router.get('/questions/:id/answers', controller.index)
+router.get('/answers/:id', controller.show)
+router.post('/questions/:id/answers', controller.create)
+router.put('/answers/:id', controller.update)
+router.delete('/answers/:id', controller.destroy)
+router.post('/answers/:id/upvote', controller.upvote)
+router.post('/answers/:id/downvote', controller.downvote)
+router.delete('/answers/:id/vote', controller.cancelvote)
+router.post('/answers/:id/accept', controller.accept)
+router.delete('/answers/:id/accept', controller.unaccept)
+
+module.exports = router

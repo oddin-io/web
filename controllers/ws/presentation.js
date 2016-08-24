@@ -1,165 +1,145 @@
-var request = require('request');
+const request = require('request')
+const constants = require('../../config/constants')
 
-function index(req, res, next) {
+function index() {}
 
+function show(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/presentations/${req.params.id}`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(JSON.parse(body))
+    }
+  })
 }
 
-function show(req, res, next) {
-  var session = req.cookies.session;
-  request(
-      {
-        uri: app.utils.constants.ws.uri + '/presentations/' + req.params.id,
-        method: 'GET',
-        headers: {
-          'x-session-token': session.token
-        }
-      }, function (error, response, body) {
-        if (response.statusCode == 401) {
-          res.status(401);
-          res.end();
-        }
-        else {
-          res.json(JSON.parse(body));
-        }
-      }
-  );
+function create() {}
+
+function update() {}
+
+function destroy() {}
+
+function closePresentation(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/presentations/${req.params.id}/close`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(JSON.parse(body))
+      res.end()
+    }
+  })
 }
 
-function create(req, res, next) {
+function showQuestions(req, res) {
+  const session = req.cookies.session
 
+  request({
+    uri: `${constants.uri}/presentations/${req.params.id}/questions`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(JSON.parse(body))
+    }
+  })
 }
 
-function update(req, res, next) {
+function showMaterials(req, res) {
+  const session = req.cookies.session
 
+  request({
+    uri: `${constants.uri}/presentations/${req.params.id}/materials`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(JSON.parse(body))
+    }
+  })
 }
 
-function destroy(req, res, next) {
+function createMaterial(req, res) {
+  const session = req.cookies.session
 
+  request({
+    uri: `${constants.uri}/presentations/${req.params.id}/materials/new`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else if (response.statusCode === 404) {
+      res.status(404)
+      res.end()
+    } else {
+      res.json(JSON.parse(body))
+    }
+  })
 }
 
-function close(req, res, next) {
-  var session = req.cookies.session;
-  request(
-      {
-        uri: app.utils.constants.ws.uri + '/presentations/' + req.params.id + '/close',
-        method: 'POST',
-        headers: {
-          'x-session-token': session.token
-        }
-      }, function (error, response, body) {
-        if (response.statusCode == 401) {
-          res.status(401);
-          res.end();
-        }
-        else {
-          res.json(JSON.parse(body));
-          res.end();
-        }
-      }
-  );
+function postQuestion(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/presentations/${req.params.id}/questions`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+    json: {
+      text: req.body.text,
+      anonymous: req.body.anonymous,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(body)
+    }
+  })
 }
 
-function showQuestions(req, res, next){
-  var session = req.cookies.session;
-  request(
-      {
-        uri: app.utils.constants.ws.uri + '/presentations/' + req.params.id + '/questions',
-        method: 'GET',
-        headers: {
-          'x-session-token': session.token
-        }
-      }, function (error, response, body) {
-        if (response.statusCode == 401) {
-          res.status(401);
-          res.end();
-        }
-        else {
-          res.json(JSON.parse(body));
-        }
-      }
-  );
+module.exports = {
+  index,
+  show,
+  create,
+  update,
+  destroy,
+  closePresentation,
+  showQuestions,
+  postQuestion,
+  showMaterials,
+  createMaterial,
 }
-
-function showMaterials(req, res, next) {
-    var session = req.cookies.session;
-    request(
-        {
-            uri: app.utils.constants.ws.uri + '/presentations/' + req.params.id + '/materials',
-            method: 'GET',
-            headers: {
-                'x-session-token': session.token
-            }
-        }, function (error, response, body) {
-            if (response.statusCode == 401) {
-                res.status(401);
-                res.end();
-            }
-            else {
-                res.json(JSON.parse(body));
-            }
-        }
-    )
-}
-
-function createMaterial(req, res, next) {
-    var session = req.cookies.session;
-    request(
-        {
-            uri: app.utils.constants.ws.uri + '/presentations/' + req.params.id + '/materials/new',
-            method: 'GET',
-            headers: {
-                'x-session-token': session.token
-            }
-        }, function(error, response, body) {
-            if(response.statusCode == 401) {
-                res.status(401);
-                res.end();
-            } else if(response.statusCode == 404) {
-                res.status(404);
-                res.end();
-            } else {
-                res.json(JSON.parse(body));
-            }
-        }
-    )
-}
-
-function postQuestion(req, res, next){
-  var session = req.cookies.session;
-  request(
-      {
-        uri: app.utils.constants.ws.uri + '/presentations/' + req.params.id + '/questions',
-        method: 'POST',
-        headers: {
-          'x-session-token': session.token
-        },
-        json: {
-          text: req.body.text,
-          anonymous: req.body.anonymous
-        }
-      }, function (error, response, body) {
-        if (response.statusCode == 401) {
-          res.status(401);
-          res.end();
-        }
-        else {
-          res.json(body);
-        }
-      }
-  );
-}
-
-module.exports = function (app) {
-  return {
-    index: index,
-    show: show,
-    create: create,
-    update: update,
-    destroy: destroy,
-    close: close,
-    showQuestions: showQuestions,
-    postQuestion: postQuestion,
-    showMaterials: showMaterials,
-    createMaterial: createMaterial
-  };
-};

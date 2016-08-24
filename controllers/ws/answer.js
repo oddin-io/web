@@ -1,197 +1,174 @@
-var request = require('request'),
-    app = undefined;
+const request = require('request')
+const constants = require('../../config/constants')
 
-function index(req, res, next) {
-    var session = req.cookies.session;
-    request(
-        {
-            uri: app.utils.constants.ws.uri + '/questions/' + req.params.id + '/answers',
-            method: 'GET',
-            headers: {
-                'x-session-token': session.token
-            }
-        }, function(error, response, body) {
-            if(response.statusCode == 401) {
-                res.status(401);
-                res.end();
-            } else {
-                res.json(JSON.parse(body));
-            }
-        }
-    );
+function index(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/questions/${req.params.id}/answers`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(JSON.parse(body))
+    }
+  })
 }
 
-function show(req, res, next) {
-  var session = req.cookies.session;
-  request(
-      {
-        uri: app.utils.constants.ws.uri + '/answers/' + req.params.id,
-        method: 'GET',
-        headers: {
-          'x-session-token': session.token
-        }
-      }, function (error, response, body) {
-        if (response.statusCode == 401) {
-          res.status(401);
-          res.end();
-        }
-        else {
-          res.json(JSON.parse(body));
-        }
-      }
-  );
+function show(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/answers/${req.params.id}`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(JSON.parse(body))
+    }
+  })
 }
 
-function create(req, res, next) {
-    var session = req.cookies.session;
-    request(
-        {
-            uri: app.utils.constants.ws.uri + '/questions/' + req.params.id + '/answers',
-            method: 'POST',
-            headers: {
-                'x-session-token': session.token
-            },
-            json: {
-                text: req.body.text
-            }
-        }, function (error, response, body) {
-            if (response.statusCode == 401) {
-                res.status(401);
-                res.end();
-            }
-            else {
-                res.json(body);
-            }
-        }
-    );
+function create(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/questions/${req.params.id}/answers`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+    json: {
+      text: req.body.text,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(body)
+    }
+  })
 }
 
-function update(req, res, next) {
+function update() {}
 
+function destroy() {}
+
+function upvote(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/answers/${req.params.id}/upvote`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(JSON.parse(body))
+    }
+  })
 }
 
-function destroy(req, res, next) {
+function downvote(req, res) {
+  const session = req.cookies.session
 
+  request({
+    uri: `${constants.uri}/answers/${req.params.id}/downvote`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(JSON.parse(body))
+    }
+  })
 }
 
-function upvote(req, res, next) {
-    var session = req.cookies.session;
-    request(
-        {
-            uri: app.utils.constants.ws.uri + '/answers/' + req.params.id + '/upvote',
-            method: 'POST',
-            headers: {
-                'x-session-token': session.token
-            }
-        }, function (error, response, body) {
-            if (response.statusCode == 401) {
-                res.status(401);
-                res.end();
-            }
-            else {
-                res.json(JSON.parse(body));
-            }
-        }
-    );
+function cancelvote(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/answers/${req.params.id}/vote`,
+    method: 'DELETE',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.end()
+    }
+  })
 }
 
-function downvote(req, res, next) {
-    var session = req.cookies.session;
-    request(
-        {
-            uri: app.utils.constants.ws.uri + '/answers/' + req.params.id + '/downvote',
-            method: 'POST',
-            headers: {
-                'x-session-token': session.token
-            }
-        }, function (error, response, body) {
-            if (response.statusCode == 401) {
-                res.status(401);
-                res.end();
-            }
-            else {
-                res.json(JSON.parse(body));
-            }
-        }
-    );
+function accept(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/answers/${req.params.id}/accept`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(body)
+    }
+  })
 }
 
-function cancelvote(req, res, next) {
-    var session = req.cookies.session;
-    request(
-        {
-            uri: app.utils.constants.ws.uri + '/answers/' + req.params.id + '/vote',
-            method: 'DELETE',
-            headers: {
-                'x-session-token': session.token
-            }
-        }, function (error, response, body) {
-            if (response.statusCode == 401) {
-                res.status(401);
-                res.end();
-            }
-            else {
-                res.end();
-            }
-        }
-    );
+function unaccept(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/answers/${req.params.id}/accept`,
+    method: 'DELETE',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }, function responseHandler(error, response, body) {
+    if (response.statusCode === 401) {
+      res.status(401)
+      res.end()
+    } else {
+      res.json(body)
+    }
+  })
 }
 
-function accept(req, res, next) {
-    var session = req.cookies.session;
-    request(
-        {
-            uri: app.utils.constants.ws.uri + '/answers/' + req.params.id + '/accept',
-            method: 'POST',
-            headers: {
-                'x-session-token': session.token
-            }
-        }, function (error, response, body) {
-            if (response.statusCode == 401) {
-                res.status(401);
-                res.end();
-            }
-            else {
-                res.json(body);
-            }
-        }
-    )
+module.exports = {
+  index,
+  show,
+  create,
+  update,
+  destroy,
+  upvote,
+  downvote,
+  cancelvote,
+  accept,
+  unaccept,
 }
-
-function unaccept(req, res, next) {
-    var session = req.cookies.session;
-    request(
-        {
-            uri: app.utils.constants.ws.uri + '/answers/' + req.params.id + '/accept',
-            method: 'DELETE',
-            headers: {
-                'x-session-token': session.token
-            }
-        }, function (error, response, body) {
-            if (response.statusCode == 401) {
-                res.status(401);
-                res.end();
-            }
-            else {
-                res.json(body);
-            }
-        }
-    )
-}
-
-module.exports = function (application) {
-  app = application;
-
-  return {
-    index: index,
-    show: show,
-    create: create,
-    update: update,
-    destroy: destroy,
-    upvote: upvote,
-    downvote: downvote,
-    cancelvote: cancelvote,
-    accept: accept,
-    unaccept: unaccept
-  };
-};
