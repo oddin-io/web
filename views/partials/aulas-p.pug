@@ -5,7 +5,7 @@ header
         a.button-collapse.hide-on-large-only(data-activates="slide-out", data-sidenav="left", data-closeonclick="true"): i.material-icons menu
         a.barra-navegacao__voltar.hide-on-med-and-down(href="#/disciplinas"): i.material-icons arrow_back
         h1.barra-navegacao__title.truncate {{disciplina.lecture.name}}
-        a.brand-logo.right.hide-on-small-only(href="/"): img.barra-navegacao__logo(src="/images/oddin_horizontal_logo.png")
+        a.brand-logo.right.hide-on-small-only(href="/"): img.barra-navegacao__logo(src="/images/horizontal_logo.png")
 
   ul#slide-out.side-nav.fixed.barra-lateral
     .barra-lateral__header
@@ -29,7 +29,7 @@ header
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController"): a(data-ng-click="logout()") Logout
 
 main(data-ng-init="buscaAulas()")
-  container
+  .container
     .fixed-action-btn(style="bottom: 24px; right: 24px;")
       a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#criar-aula", modal)
         i.large.material-icons add
