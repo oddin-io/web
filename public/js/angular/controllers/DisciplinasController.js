@@ -27,23 +27,6 @@ oddin.controller('DisciplinasController',
         }
     }
 
-      //controllerProvider: function(Profile, $stateParams, $state) {
-      //    if(profile !== undefined) {
-      //        $state.transitionTo('disciplina.aulas', {disciplinaID: $stateParams.disciplinaID});
-      //    }
-      //    if(profile === undefined) {
-      //        Profile.get({id: $stateParams.disciplinaID},
-      //            function(data) {
-      //                profile = data.profile;
-      //                $state.transitionTo('disciplina.aulas', {disciplinaID: $stateParams.disciplinaID});
-      //            },
-      //            function(erro) {
-      //                console.log("Erro ao encontrar perfil");
-      //            }
-      //        );
-      //    }
-      //}
-
     $scope.usuario = {
         'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
         'email': JSON.parse($cookies.get('session').substring(2)).user.email

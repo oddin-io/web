@@ -27,8 +27,8 @@
           <div class="collapsible-body">
             <ul>
               <li class="barra-lateral__subitem active"><p>Aulas</p></li>
-              <li class="barra-lateral__subitem"><a href="#/disciplina/{{disciplina.id}}/materiais">Material</a></li>
-              <li class="barra-lateral__subitem"><a href="#/disciplina/{{disciplina.id}}/participantes">Participantes</a></li>
+              <li class="barra-lateral__subitem"><a href="#/disciplinas/{{disciplina.id}}/materiais">Material</a></li>
+              <li class="barra-lateral__subitem"><a href="#/disciplinas/{{disciplina.id}}/participantes">Participantes</a></li>
             </ul>
           </div>
         </li>
@@ -80,7 +80,7 @@
             <a href="" data-ng-click="fechaAula(aula)">
               <i class="material-icons circle green lighten-2">lock_open</i>
             </a>
-            <a href="#/disciplina/{{aula.instruction.id}}/aula/{{aula.id}}">
+            <a href="#/aulas/{{aula.id}}">
               <span class="title">{{aula.subject}}</span>
               <p>{{aula.created_at | date:'dd/MM/yyyy'}} <br>
                 {{aula.created_at | date:'HH:mm:ss'}}
@@ -93,7 +93,7 @@
         <ul class="collection lista-aulas">
           <li data-ng-repeat="aula in aulas | filter: {status: 1}: true" class="collection-item avatar lista-aulas__item">
             <i class="material-icons circle red lighten-2">lock_outline</i>
-            <a href="#/disciplina/{{aula.instruction.id}}/aula/{{aula.id}}">
+            <a href="#/aulas/{{aula.id}}">
                 <span class="title">
                     {{aula.subject}}  <!-- ID: {{presentation.id}}-->
                 </span>
