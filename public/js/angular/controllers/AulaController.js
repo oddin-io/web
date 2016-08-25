@@ -1,5 +1,5 @@
 oddin.controller('AulaController',
-    function($scope, $stateParams, Aula, Duvida, Resposta, $http, $cookies) {
+    function($scope, $stateParams, Aula, Duvida, Resposta, $http, $state, $cookies) {
         $scope.duvidas = {};
         $scope.duvida = new Duvida();
         $scope.last_doubt = {};
@@ -20,6 +20,30 @@ oddin.controller('AulaController',
 
         function removeDuvida(duvida) {
             $scope.duvidas[duvida.id] = duvida;
+        }
+
+        $scope.backToLectures = function () {
+            if($cookies.get('profile') == 0) {
+                $state.go('aulas.aluno', {'disciplinaID':$scope.aula.instruction.id});
+            } else {
+                $state.go('aulas.professor', {'disciplinaID':$scope.aula.instruction.id});
+            }
+        }
+
+        $scope.goToLectureMaterial = function () {
+            if($cookies.get('profile') == 0) {
+                $state.go('material-aula.aluno', {'aulaID':$scope.aula.id});
+            } else {
+                $state.go('material-aula.professor', {'aulaID':$scope.aula.id});
+            }
+        }
+
+        $scope.goToDoubts = function () {
+            if($cookies.get('profile') == 0) {
+                $state.go('duvidas.aluno', {'aulaID':$scope.aula.id});
+            } else {
+                $state.go('duvidas.professor', {'aulaID':$scope.aula.id});
+            }
         }
 
         $scope.buscaMateriais = function() {

@@ -7,14 +7,7 @@ oddin.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('aulas', {
             url: "/disciplinas/:disciplinaID/aulas",
-            templateUrl:"partials/aulas.html",
-            controller: function($cookies, $state) {
-                if ($cookies.get('profile') == 0) {
-                    $state.go('aulas.aluno');
-                } else {
-                    $state.go('aulas.professor');
-                }
-            }
+            templateUrl:"partials/aulas.html"
         })
             .state('aulas.aluno', {
                 url: "/aluno",
@@ -54,14 +47,7 @@ oddin.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('duvidas', {
             url: "/aulas/:aulaID",
-            templateUrl:"partials/duvidas.html",
-            controller: function($cookies, $state) {
-                if ($cookies.get('profile') == 0) {
-                    $state.go('duvidas.aluno');
-                } else {
-                    $state.go('duvidas.professor');
-                }
-            }
+            templateUrl:"partials/duvidas.html"
         })
             .state('duvidas.aluno', {
                 url: "/aluno",
