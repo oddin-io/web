@@ -13,6 +13,30 @@ oddin.controller('DisciplinaController',
 
     $scope.aula = new DisciplinaAula();
 
+    $scope.goToMaterial = function () {
+        if($cookies.get('profile') == 0) {
+            $state.go('materiais.aluno', {'disciplinaID':$scope.disciplina.id});
+        } else {
+            $state.go('materiais.professor', {'disciplinaID':$scope.disciplina.id});
+        }
+    }
+
+    $scope.goToLectures = function () {
+        if($cookies.get('profile') == 0) {
+            $state.go('aulas.aluno', {'disciplinaID':$scope.disciplina.id});
+        } else {
+            $state.go('aulas.professor', {'disciplinaID':$scope.disciplina.id});
+        }
+    }
+
+    $scope.goToDoubts = function (aula) {
+        if($cookies.get('profile') == 0) {
+            $state.go('duvidas.aluno', {'aulaID':aula.id});
+        } else {
+            $state.go('duvidas.professor', {'aulaID':aula.id});
+        }
+    }
+
     $scope.buscaAulas = function() {
       DisciplinaAula.query({id: $stateParams.disciplinaID},
         function (aulas) {

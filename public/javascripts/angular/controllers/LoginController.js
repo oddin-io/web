@@ -16,6 +16,7 @@ oddin.controller('LoginController',
         $http.post('/logout')
             .success(function(data) {
                 $cookies.remove('session');
+                $cookies.remove('profile');
                 $window.location.href = '/';
             });
     }
