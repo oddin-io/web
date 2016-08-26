@@ -1,9 +1,0 @@
-# Options -Indexes
-
-RewriteEngine on
-
-RewriteRule ^controller/(.*) controller/index.php [L,NC]
-
-RewriteRule ^$ view/pages/login.html [L,NC]
-RewriteRule ^app/?$ view/pages/login.html [L,NC]
-RewriteRule ^app/(.*) app/index.php [L,NC]
