@@ -1,100 +1,90 @@
 <!DOCTYPE html>
 <html data-ng-app="BossEdu">
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Login - BOSS Education</title>
+    <title>Oddin</title>
 
-  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/view/css/custom.css" />
-</head>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <!--<link rel="stylesheet" href="/view/vendor/Materialize/dist/css/materialize.min.css"/>-->
+    <link rel="stylesheet" href="/view/css/build/materialize_custom.min.css" />
+    <link rel="stylesheet" href="/view/css/build/login_style.min.css" />
+    <link rel="shortcut icon" href="/view/img/oddin_favicon.png" type="image/x-icon" />
+  </head>
 
-<body data-ng-controller="loginCtrl" data-ng-cloak="true">
-  <main>
-    <div class="container">
-      <!-- Login Box -->
-      <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-          <div class="login_box">
-            <!-- LOGO -->
-            <div class="row">
-              <div class="col-xs-offset-2 col-xs-8">
-                <div class="div_logo">
-                  <img src="/view/img/LogoComCirculo.png" class="img-responsive center-block"/>
-                </div>
-              </div>
-            </div>
-            <!-- fim LOGO -->
-
-            <!-- Formulário -->
-            <div class="row">
-              <div class="col-sm-offset-2 col-sm-8">
-                <form class="form-horizontal" data-ng-submit="login(user)">
-                  <!-- Usuário -->
-                  <div class="form-group">
-                    <div class="col-xs-12">
+  <body data-ng-controller="loginCtrl" data-ng-cloak="true">
+    <header class="login-header">
+      <!--LOGO-->
+      <img class="login-header__logo" src="/view/img/oddin_logo-01.png"/>
+    </header>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="offset-m2 offset-l3 col s12 m8 l6">
+            <!--card do login-->
+            <div class="card">
+              <div class="login-box">
+                <!-- Título -->
+                <h1 class="login-box__title">Login</h1>
+                <!-- Formulário -->
+                <form data-ng-submit="login(user)">
+                  <div class="row">
+                    <!-- Usuário -->
+                    <div class="input-field col s12">
+                      <input id="user-email" type="text" data-ng-model="user.email"/>
                       <label for="user-email">Usuário</label>
-                      <input id="user-email" type="text" placeholder="Insira seu usuário" data-ng-model="user.email" class="form-control"/>
                     </div>
-                  </div>
-                  <!-- Senha -->
-                  <div class="form-group">
-                    <div class="col-xs-12">
+                    <!-- Senha -->
+                    <div class="input-field col s12">
+                      <input id="user-password" type="password" data-ng-model="user.password"/>
                       <label for="user-password">Senha</label>
-                      <input id="user-password" type="password" placeholder="Insira sua senha" data-ng-model="user.password" class="form-control"/>
                     </div>
                   </div>
-                  <!-- Manter conectado -->
-                  <div class="checkbox">
-                      <label>
-                        <input id="user-persist" type="checkbox" data-ng-model="user.persist" class=""/>
-                        Manter conectado
-                      </label>
-                  </div>
-                  <!-- Recuperar Senha -->
-                  <div class="form-group">
-                    <div class="col-xs-12">
-                      <p id="link_esq_senha"><a href="/app/recover-password">Esqueceu sua senha? Clique aqui</a></p>
+                  <!-- Opções -->
+                  <div class="login-box__options">
+                    <div class="row">
+                      <!-- Manter conectado -->
+                      <div class="col m6 s12">
+                        <p>
+                          <input id="user-persist" type="checkbox" class="filled-in" data-ng-model="user.persist"/>
+                          <label for="user-persist">Manter conectado</label>
+                        </p>
+                      </div>
+                      <!-- Recuperar Senha -->
+                      <div class="col m6 s12">
+                        <a href="/app/recover-password">Esqueci minha senha</a>
+                      </div>
                     </div>
+                  </div>
                   <!-- Botão Submit -->
-                  </div>
-
-                  <div class="form-group">
-                    <div class="col-xs-offset-3 col-xs-6">
-                      <input type="submit" value="Entrar" class="custom-button-lg"/>
-                    </div>
-                  </div>
-                  <!--  -->
+                  <button class="login-box__main-button btn waves-effect waves-light" type="submit" name="entrar">Entrar</button>
                 </form>
+                <!-- Fim formulario -->
+                <!-- Mensagem -->
+                <div data-ng-if="message">
+                  <p class="login-box__message">{{message}}</p>
+                </div>
+                <!-- Fim Mensagem -->
               </div>
             </div>
-            <!-- Fim formulario -->
-
-            <!-- Mensagem -->
-            <div class="row">
-              <div data-ng-if="message" class="usuario_inexistente col-sm-offset-2 col-sm-8">
-                <p class="message alert-danger">{{message}}</p>
-              </div>
-            </div>
-            <!-- Fim Mensagem -->
+            <!-- fim do card -->
+            <!-- info -->
+            <p class="login-info">Lorem ipsum dolor sit amet &#169;</p>
           </div>
         </div>
       </div>
-      <!--Fim Login Box -->
-    </div>
-    <!--Fim Container-->
-  </main>
-  <!-- Fim do main -->
-  <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+    </main>
+      <!-- Fim do main -->
+      <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
+      <script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
 
-  <script src="/view/js/utils.js"></script>
-  <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
+      <script src="/view/js/utils.js"></script>
+      <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
 
-  <script src="/view/vendor/angular/angular.js"></script>
-  <script src="/view/js/app.js"></script>
-  <script src="/view/js/controller/loginCtrl.js"></script>
-</body>
+      <script src="/view/vendor/angular/angular.js"></script>
+      <script src="/view/js/app.js"></script>
+      <script src="/view/js/controller/loginCtrl.js"></script>
+  </body>
 </html>

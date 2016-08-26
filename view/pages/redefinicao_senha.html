@@ -5,64 +5,52 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Redefinir senha</title>
+  <title>Redefinir Senha</title>
 
-  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="/view/css/custom.css" />
+  <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons" >
+  <link rel="stylesheet" href="/view/vendor/Materialize/dist/css/materialize_custom.min.css">
+  <link rel="stylesheet" href="/view/css/build/login_style.min.css" />
+  <link rel="shortcut icon" href="/view/img/oddin_favicon.png" type="image/x-icon" />
 </head>
 <body data-ng-controller="loginCtrl">
-<main>
-  <div class="container">
-    <!--login box-->
-    <div class="row">
-      <div class="col-md-offset-3 col-md-6">
-        <div class="login_box">
-          <!-- LOGO -->
-          <div class="row">
-            <div class="col-xs-offset-2 col-xs-8">
-              <div class="div_logo">
-                <img src="/view/img/LogoComCirculo.png" class="img-responsive center-block"/>
-              </div>
-            </div>
-          </div>
-          <!-- fim LOGO -->
-
-          <!-- Formulario -->
-          <div class="row">
-            <div class="col-sm-offset-2 col-sm-8">
-              <form class="form-horizontal">
-                <!-- Redefinição de senha-->
-                <div class="form-group">
-                  <div class="col-xs-12">
+  <header class="login-header">
+    <!--LOGO-->
+    <img class="login-header__logo" src="/view/img/oddin_logo-01.png"/>
+  </header>
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="offset-m2 offset-l3 col s12 m8 l6">
+          <!--card do login-->
+          <div class="card">
+            <div class="login-box">
+              <!-- Título -->
+              <h1 class="login-box__title">Redefinir Senha</h1>
+              <form>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="usuario-nova-senha" type="password"/>
                     <label for="usuario-nova-senha">Nova Senha</label>
-                    <input id="usuario-nova-senha" type="password" placeholder="Insira sua senha" class="form-control"/>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="usuario-confirmar-nova-senha" type="password"/>
                     <label for="usuario-confirmar-nova-senha">Confirmar Nova Senha</label>
-                    <input id="usuario-confirmar-nova-senha" type="password" placeholder="Insira sua senha novamente" class="form-control"/>
                   </div>
                 </div>
-                <!-- Botões voltar e enviar-->
-                <div class="form-group">
-                  <div class="col-xs-6">
-                    <input type="button" value="Redefinir" role="group" class="custom-button-lg" ng-click=""/>
-                  </div>
-                  <div class="col-xs-6">
-                    <input type="button" value="Voltar" onclick="javascript:history.back()" role="group" class="custom-button-lg"/>
-                  </div>
+                <div class="login-box__buttons">
+                  <input class="btn waves-effect waves-light" type="button" value="Voltar" onclick="javascript:history.back()"/>
+                  <input class="btn waves-effect waves-light" type="button" value="Redefinir"/>
                 </div>
               </form>
             </div>
           </div>
-          <!-- Fim Formulário -->
+          <p class="login-info">Lorem ipsum dolor sit amet &#169;</p>
         </div>
       </div>
     </div>
-    <!-- Fim Login Box -->
-  </div>
-  <!-- Fim do container -->
-</main>
+  </main>
 <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
-<script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
 
 <script src="/view/js/utils.js"></script>
 <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>

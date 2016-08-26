@@ -28,9 +28,21 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/mirageSiena/www.git"
+    "url": "git+https://bitbucket.org/mirageSiena/www.git"
   },
   "dependencies": {
     "bower": "^1.7.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass": "^2.0.6",
+    "gulp-uglify": "^1.5.3"
+  },
+  "homepage": "https://bitbucket.org/mirageSiena/www#readme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

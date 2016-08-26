@@ -136,4 +136,11 @@ app.controller("presentationCtrl", function ($scope, $http) {
 
     delete $scope.answer;
   };
+
+  $scope.modalTrigger = function (doubt) {
+    $scope.fetchAnswerProf(doubt);
+    $scope.modal = {};
+    $scope.modal.doubt = doubt;
+    $('#responder-duvida').openModal()
+  }
 });

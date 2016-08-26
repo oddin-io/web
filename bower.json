@@ -46,7 +46,8 @@
     "owl.carousel": "^2.0.0-beta.3",
     "slick-carousel": "slick.js#~1.4.1",
     "jquery-migrate": "^1.2.1",
-    "angular-slick": "^0.2.1"
+    "angular-slick": "^0.2.1",
+    "Materialize": "materialize#^0.97.5"
   },
   "resolutions": {
     "slick-carousel": "~1.4.1",

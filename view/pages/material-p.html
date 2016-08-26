@@ -2,114 +2,117 @@
 <html ng-app="BossEdu" data-ng-controller="instructionCtrl" data-ng-init="getInfo()">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Material - {{instruction.code}}</title>
-
-  <link rel="stylesheet" href="/view/vendor/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/view/vendor/font-awesome/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="/view/css/custom.css" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{instruction.name}} - Material</title>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons"/>
+  <link rel="stylesheet" href="/view/css/build/materialize_custom.min.css" />
+  <link rel="stylesheet" href="/view/css/build/user_style.min.css" />
+  <link rel="shortcut icon" href="/view/img/oddin_favicon.png" type="image/x-icon" />
 </head>
 <body data-ng-cloak="true">
-  <!-- Inicio do cabecalho -->
   <header>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Mirage</a>
+    <!--Barra de navegação superior-->
+    <div class="navbar-fixed">
+      <nav class="navbar-fixed barra-navegacao">
+        <div class="nav-wrapper barra-navegacao__container">
+          <a href="#" data-activates="slide-out" class="button-collapse"><i class=" material-icons">menu</i></a>
+          <a class="barra-navegacao__voltar hide-on-med-and-down" href="/app/instruction"><i class="material-icons">arrow_back</i></a>
+          <h1 class="barra-navegacao__title truncate">{{instruction.name}} - Material</h1>
+          <a href="#" class="brand-logo right hide-on-small-only"><img class="barra-navegacao__logo" src="/view/img/oddin_logo_horizontal-01.png"/></a>
         </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>  Usuário <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/controller/logout"><span class="glyphicon glyphicon-log-out"></span>  Sair</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav">
-            <li><a href="/app/instruction"><span class="glyphicon glyphicon-chevron-left"></span>Disciplinas</a></li>
-            <li><a href="./presentation/current">Aula Atual</a></li>
-            <li><a href="./historic">Histórico</a></li>
-            <li><a href="./participants">Participantes</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!--Título Página-->
-    <div class="page-header container">
-      <h1>Material - {{lecture.name}}</h1>
+      </nav>
     </div>
-  </header>
-  <!-- Fim do cabecalho -->
-
-  <!-- Conteúdo principal -->
-  <main class="container">
-
-
-    <section class="bordered-section">
-      <div class="section-header">
-        <h2>Upload de material da disciplina</h2>
+    <!--Barra de navegação lateral-->
+    <ul id="slide-out" class="side-nav fixed barra-lateral">
+      <div class="barra-lateral__header">
+        <i class="barra-lateral__user-avatar material-icons">account_circle</i>
+        <p class="barra-lateral__user-name">Professor Teste</p>
+        <p class="barra-lateral__user-email">professor@email.com</p>
       </div>
-      <form enctype="multipart/form-data" data-ng-submit="uploadMaterial(name)" name="uploadArchive">
-        <div class="row">
-          <div class="form-group">
-            <div class="col-sm-12">
-              <label for="material-name">Nome: </label>
-              <input data-ng-model="name" id="material-name" type="text" class="form-control" placeholder="Insira o nome do material a ser enviado"/>
+      <!--<li><a href="./presentation/current">Aula Atual</a></li>-->
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li class="barra-lateral__item">
+            <a class="barra-lateral__item--collapsible collapsible-header active truncate">
+              {{instruction.name}}
+            </a>
+            <div class="collapsible-body">
+              <ul>
+                <li class="barra-lateral__subitem"><a  href="./historic">Aulas</a></li>
+                <li class="barra-lateral__subitem active"><a href="#">Material</a></li>
+                <li class="barra-lateral__subitem"><a href="./participants">Participantes</a></li>
+              </ul>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-12">
-              <label for="material-file">Arquivo</label>
-              <input id="material-file" name="file" type="file" class="custom-file" />
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-2">
-              <input type="submit" class="custom-button-lg" value="Enviar"/>
-            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="hide-on-large-only no-padding barra-lateral__item"><a href="/app/instruction">Voltar Para Disciplinas</a></li>
+      <li class="no-padding barra-lateral__item"><a href="/controller/logout">Logout</a></li>
+    </ul>
+  </header>
+  <main data-ng-init="getMaterials()">
+    <div class="container">
+      <!--FAB-->
+      <div class="fixed-action-btn" style="bottom: 24px; right: 24px;">
+        <a class="btn-floating btn-large waves-effect waves-light modal-trigger" href="#subir-material">
+          <i class="large material-icons">add</i>
+        </a>
+      </div>
+      <!--Criar Aula-->
+      <div id="subir-material" class="modal bottom-sheet">
+        <div class="modal-content modal-criar-item">
+          <div class="row">
+            <form class="offset-m2 offset-l3 col  s12 m8 l6" enctype="multipart/form-data" data-ng-submit="uploadMaterial(name)" name="uploadArchive">
+              <h1 class="modal-criar-item__titulo">Upload de material da disciplina</h1>
+              <div class="file-field input-field">
+                <div class="btn modal-criar-item__file-button">
+                  <span>Arquivo</span>
+                  <input id="material-file" name="file" type="file" multiple>
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="Faça Upload de um ou mais arquivos">
+                </div>
+              </div>
+              <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+              </button>
+            </form>
           </div>
         </div>
-      </form>
-    </section>
+      </div>
 
-    <div>
-      <!-- Aulas abertas -->
-      <section class="bordered-section" data-ng-init="getMaterials()">
-        <div class="section-header">
-          <h2>Material da Disciplina</h2>
-        </div>
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered table-hover">
-            <thead>
-            <tr>
-              <th>Arquivo</th>
-              <th>Tipo</th>
-            </tr>
-            </thead>
+      <!--<div class="card criar-item-card">-->
+        <!--<span class="card-title criar-item-card__titulo">Upload de material da disciplina</span>-->
+        <!--<form class="col s12" enctype="multipart/form-data" data-ng-submit="uploadMaterial(name)" name="uploadArchive">-->
+          <!--<div class="file-field input-field">-->
+            <!--<div class="btn">-->
+              <!--<span>Arquivo</span>-->
+              <!--<input id="material-file" name="file" type="file" multiple>-->
+            <!--</div>-->
+            <!--<div class="file-path-wrapper">-->
+              <!--<input class="file-path validate" type="text" placeholder="Faça Upload de um ou mais arquivos">-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<button class="btn waves-effect waves-light criar-item-card__button" type="submit" name="action">Enviar-->
+          <!--</button>-->
+        <!--</form>-->
+      <!--</div>-->
 
-            <tbody>
-            <tr data-ng-repeat="material in materials">
-              <td><a data-ng-click="downloadMaterial(material)" download="true"><span class="glyphicon glyphicon-save-file"></span>{{material.name}}</a></td>
-              <td>{{material.mime}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <ul class="collection with-header lista-material">
+        <li class="collection-header lista-material__header"><h2>Material da Disciplina</h2></li>
+        <li data-ng-repeat="material in materials" class="collection-item avatar lista-material__item">
+          <i class="material-icons circle">insert_drive_file</i>
+          <span class="title"><a data-ng-attr-href="{{restServerUrl + buildURI(instruction, '/controller', '/material/') + material.id}}" download="true">{{material.name}}</a></span>
+          <p>{{material.mime}}</p>
+        </li>
+      </ul>
+
     </div>
   </main>
 
+  <!-- Scripts -->
   <script src="/view/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/view/vendor/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/view/vendor/Materialize/dist/js/materialize.min.js"></script>
 
   <script src="/view/js/utils.js"></script>
   <script type="application/javascript" src="/controller/config/app?callback=Util.setEnvironment"></script>
@@ -117,6 +120,8 @@
   <script src="/view/vendor/angular/angular.js"></script>
   <script src="/view/js/app.js"></script>
   <script src="/view/js/controller/instructionCtrl.js"></script>
+
+  <script src="/view/js/initMaterialize.js"></script>
 </body>
 </html>
 
