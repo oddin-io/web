@@ -12,6 +12,10 @@
     "unit-tests": "jasmine",
     "start": "node ./bin/www"
   },
+  "engines": {
+    "node": ">= 6.4.0",
+    "npm": ">= 3.10.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/hjkuba/oddin"
