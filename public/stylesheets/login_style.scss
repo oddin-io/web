@@ -69,7 +69,7 @@ body {
   &__buttons {
     text-align: center;
     .btn {
-      margin-top: $min;
+      margin: $min $min 0 $min;
       @include unraise-button;
     }
   }

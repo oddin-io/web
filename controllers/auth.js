@@ -38,7 +38,24 @@ function logout(req, res) {
   })
 }
 
+function recoverPassword(req, res) {
+  request({
+    uri: `${constants.uri}/recover-password`,
+    method: 'POST',
+    json: {
+      email:req.body.email
+    }
+  }, function responseHandler(error, response) {
+    if(response.statusCode >= 200 && response.statusCode < 300) {
+      res.end();
+    }
+    res.status(response.statusCode);
+    res.end();
+  })
+}
+
 module.exports = {
   login,
   logout,
+  recoverPassword
 }
