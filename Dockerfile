@@ -1,9 +1,12 @@
 FROM node
 
-ENV INSTALL_PATH=/app
+RUN useradd --shell /bin/bash --create-home app
+USER app
+
+ENV INSTALL_PATH=/home/app
 
 WORKDIR $INSTALL_PATH
-COPY package.json package.json
+COPY ["package.json", "bower.json", ".bowerrc", "./"]
 RUN npm install
 
 COPY . .

@@ -1,7 +1,7 @@
 {
   "name": "oddin",
   "version": "1.0.0",
-  "description": "Front end for Oddin Web Service",
+  "description": "Default front end for Oddin Web Service",
   "author": "Heitor Kuba <hjkuba@yahoo.com>",
   "private": true,
   "main": "./bin/www",
