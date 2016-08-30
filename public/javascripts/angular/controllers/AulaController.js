@@ -23,6 +23,7 @@ oddin.controller('AulaController',
       }
 
       $scope.backToLectures = function () {
+        $('.button-collapse').sideNav('hide');
         if ($cookies.get('profile') == 0) {
           $state.go('aulas.aluno', { 'disciplinaID': $scope.aula.instruction.id })
         } else {
@@ -31,6 +32,7 @@ oddin.controller('AulaController',
       }
 
       $scope.goToLectureMaterial = function () {
+        $('.button-collapse').sideNav('hide');
         if ($cookies.get('profile') == 0) {
           $state.go('material-aula.aluno', { 'aulaID': $scope.aula.id })
         } else {
@@ -39,6 +41,7 @@ oddin.controller('AulaController',
       }
 
       $scope.goToDoubts = function () {
+        $('.button-collapse').sideNav('hide');
         if ($cookies.get('profile') == 0) {
           $state.go('duvidas.aluno', { 'aulaID': $scope.aula.id })
         } else {
@@ -258,12 +261,11 @@ oddin.controller('AulaController',
         //    answer.accepted = false;
         //    $scope.duvidas[answer.question.id].answer = null;
         // });
-
       $scope.usuario = {
+        'id': JSON.parse($cookies.get('session').substring(2)).person.id,
         'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-        'email': JSON.parse($cookies.get('session').substring(2)).person.email,
+        'email': JSON.parse($cookies.get('session').substring(2)).person.email
       }
-      $scope.current_user = JSON.parse($cookies.get('session').substring(2)).person
       buscaInfo()
     }
 )

@@ -13,7 +13,8 @@ oddin.controller('DisciplinaController',
 
     $scope.aula = new DisciplinaAula()
 
-    $scope.goToMaterial = function () {
+    $scope.goToMaterial = function (elem) {
+        $('.button-collapse').sideNav('hide');
       if ($cookies.get('profile') == 0) {
         $state.go('materiais.aluno', { 'disciplinaID': $scope.disciplina.id })
       } else {
@@ -22,6 +23,7 @@ oddin.controller('DisciplinaController',
     }
 
     $scope.goToLectures = function () {
+      $('.button-collapse').sideNav('hide');
       if ($cookies.get('profile') == 0) {
         $state.go('aulas.aluno', { 'disciplinaID': $scope.disciplina.id })
       } else {

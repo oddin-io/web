@@ -3,7 +3,7 @@ header
   .navbar-fixed
     nav.navbar-fixed.barra-navegacao
       .nav-wrapper.barra-navegacao__container
-        a.button-collapse.hide-on-large-only(data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+        a.button-collapse.hide-on-large-only(href="", data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
           i.material-icons menu
         a.barra-navegacao__voltar.hide-on-med-and-down(href="#/disciplinas")
           i.material-icons arrow_back
@@ -24,13 +24,13 @@ header
               li.barra-lateral__subitem.active
                 p Aulas
               li.barra-lateral__subitem
-                a(data-ng-click="goToMaterial()") Material
+                a(href="" data-ng-click="goToMaterial()") Material
               li.barra-lateral__subitem
                 a(href="#/disciplinas/{{disciplina.id}}/participantes") Participantes
     li.hide-on-large-only.no-padding.barra-lateral__item
       a(href="#/disciplinas") Disciplinas
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-      a(data-ng-click="logout()") Logout
+      a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaAulas()")
   .container
     .row
@@ -44,7 +44,7 @@ main(data-ng-init="buscaAulas()")
         ul.collection.lista-aulas
           li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 0}: true")
             i.material-icons.circle.green.lighten-2 lock_open
-            a(data-ng-click="goToDoubts(aula)")
+            a(href="" data-ng-click="goToDoubts(aula)")
               span.title {{aula.subject}}
               p
                 | {{aula.created_at | date:&apos;dd/MM/yyyy&apos;}}
@@ -54,7 +54,7 @@ main(data-ng-init="buscaAulas()")
         ul.collection.lista-aulas
           li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 1}: true")
             i.material-icons.circle.red.lighten-2 lock_outline
-            a(data-ng-click="goToDoubts(aula)")
+            a(href="" data-ng-click="goToDoubts(aula)")
               span.title {{aula.subject}}
               p
                 | {{aula.created_at | date:&apos;dd/MM/yyyy&apos;}}

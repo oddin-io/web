@@ -3,9 +3,9 @@ header
   .navbar-fixed
     nav.navbar-fixed.barra-navegacao
       .nav-wrapper.barra-navegacao__container
-        a.button-collapse.hide-on-large-only(data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+        a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
           i.material-icons menu
-        a.barra-navegacao__voltar.hide-on-med-and-down(data-ng-click="backToLectures()")
+        a.barra-navegacao__voltar.hide-on-med-and-down(href="" data-ng-click="backToLectures()")
           i.material-icons arrow_back
         h1.barra-navegacao__title.truncate {{aula.subject}}
         a.brand-logo.right.hide-on-small-only(href="/")
@@ -24,13 +24,13 @@ header
               li.barra-lateral__subitem.active
                 p D&uacute;vidas
               li.barra-lateral__subitem
-                a(data-ng-click="goToLectureMaterial()") Material
+                a(href="" data-ng-click="goToLectureMaterial()") Material
     li.hide-on-large-only.no-padding.barra-lateral__item
       a(data-ng-click="backToLectures()") Aulas
     li.no-padding.barra-lateral__item
       a(href="#/disciplinas") Disciplinas
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-      a(data-ng-click="logout()") Logout
+      a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaDuvidas()")
   .container
     #responder-duvida.modal.bottom-sheet

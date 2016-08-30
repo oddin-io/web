@@ -3,7 +3,7 @@ header
   .navbar-fixed
     nav
       .nav-wrapper.barra-navegacao__container
-        a.button-collapse(data-activates="slide-out", data-sidenav="left")
+        a.button-collapse(href="" data-activates="slide-out", data-sidenav="left")
           i.material-icons menu
         h1.barra-navegacao__title {{titulo}}
         a.brand-logo.right.hide-on-small-only(href="/")
@@ -15,7 +15,7 @@ header
       p.barra-lateral__user-name {{usuario.nome}}
       p.barra-lateral__user-email {{usuario.email}}
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-      a(data-ng-click="logout()") Logout
+      a(href="" data-ng-click="logout()") Logout
 main
   .container
     ul.collapsible.lista-disciplinas(data-collapsible="expandable", watch="")
