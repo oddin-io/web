@@ -54,5 +54,5 @@ main(data-ng-init="buscaMateriais()")
       li.collection-item.avatar.lista-material__item(data-ng-repeat="material in materiais")
         i.material-icons.circle insert_drive_file
         span.title
-          a(data-ng-click="downloadMaterial(material)") {{material.name}}
+          a(href="" data-ng-click="downloadMaterial(material)") {{material.name}}
         p {{material.mime}}
