@@ -1,5 +1,7 @@
 FROM node
 
+MAINTAINER Bruno Felipe Leal Delfino <bruno.delfino1995@gmail.com>
+
 RUN useradd --shell /bin/bash --create-home app
 USER app
 

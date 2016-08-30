@@ -18,9 +18,9 @@
   "dependencies": {
     "angular": "^1.5.7",
     "angular-resource": "^1.5.7",
-    "Materialize": "materialize#^0.97.6",
     "angular-ui-router": "^0.3.1",
     "angular-materialize": "^0.1.9",
-    "angular-cookies": "^1.5.8"
+    "angular-cookies": "^1.5.8",
+    "materialize": "^0.97.6"
   }
 }
