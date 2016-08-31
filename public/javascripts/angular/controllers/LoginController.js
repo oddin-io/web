@@ -5,12 +5,12 @@ oddin.controller('LoginController',
         $scope.login = function() {
             $scope.user.$save()
                 .then(function(data) {
-                    //$window.sessionStorage = data;
                     $window.location.href = '/home';
                 })
                 .catch(function(erro) {
-                    //delete $window.sessionStorage.token;
-                    $scope.mensagem = "Usuário ou senha inválida";
+                    Materialize.toast('Usuário ou senha inválida', 5000);
+                    $scope.user.email = "";
+                    $scope.user.password = "";
                 });
         }
         $scope.logout = function() {
@@ -24,10 +24,11 @@ oddin.controller('LoginController',
         $scope.recoverPassword = function() {
             $http.post('/recover-password', $scope.recover)
                 .success(function(data) {
-                    console.log(data);
+                    Materialize.toast('Um Email com o link para recuperação de senha será enviado para ' + $scope.recover.email, 3000);
                 })
                 .error(function(data) {
                     console.log('erro');
+                    Materialize.toast('Não foi possível enviar o email de recuperação de senha', 8000);
                     $scope.recover.email = "";
                 })
         }
