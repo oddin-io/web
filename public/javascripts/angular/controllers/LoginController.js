@@ -1,5 +1,5 @@
 oddin.controller('LoginController',
-    function ($scope, $window, $http, $cookies, $location, Login) {
+    function ($scope, $window, $http, $cookies, $location, Login, $state) {
       $scope.recover = {}
       $scope.user = new Login()
       $scope.login = function () {
@@ -27,17 +27,13 @@ oddin.controller('LoginController',
       $scope.recoverPassword = function () {
         $http.post('/recover-password', $scope.recover)
                 .success(function (data) {
-                  Materialize.toast('Um Email com o link para recuperação de senha será enviado para ' + $scope.recover.email, 3000)
-                })
-      }
-      $scope.recoverPassword = function () {
-        $http.post('/recover-password', $scope.recover)
-                .success(function (data) {
-                  Materialize.toast('Um Email com o link para recuperação de senha será enviado para ' + $scope.recover.email, 3000)
+                  Materialize.toast('Um Email com o link para recuperação de senha será enviado para ' + $scope.recover.email, 5000)
+                  $state.go('login');
                 })
                 .error(function (data) {
                   console.log('erro')
-                  Materialize.toast('Não foi possível enviar o email de recuperação de senha', 8000)
+                  Materialize.toast('Não foi possível enviar o email de recuperação de senha', 5000)
+                  $state.go('login');
                   $scope.recover.email = ''
                 })
       }
@@ -56,10 +52,13 @@ oddin.controller('LoginController',
         $http.post('/redefine-password', body)
           .success(function (data) {
             Materialize.toast('Senha redefinida com sucesso', 3000)
+            $state.go('login');
           })
           .error(function (data) {
             console.log('erro')
-            Materialize.toast('Senha inválida', 8000)
+            Materialize.toast('Senha inválida', 3000)
+            password = "";
+            passwordConfirmation = "";
           })
       }
     }
