@@ -61,7 +61,7 @@ main(data-ng-init="buscaAulas()")
         ul.collection.lista-aulas
           li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 0}: true")
             a(href="" data-ng-click="fechaAula(aula)")
-              i.material-icons.circle.green.lighten-2 lock_open
+              i.material-icons.circle lock_open
             a(href="" data-ng-click="goToDoubts(aula)")
               span.title {{aula.subject}}
               p

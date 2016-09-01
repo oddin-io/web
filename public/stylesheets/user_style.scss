@@ -87,6 +87,12 @@
       span {
         @include type-list-primary(!important);
       }
+      & > .circle {
+        background-color: $green-light-color !important;
+        &:hover {
+          background-color: $green-light-color-hover !important;
+        }
+      }
     }
     p {
       @include type-list-secondary;
@@ -113,8 +119,16 @@
       @include type-list-secondary;
       color: $type-secondary-color;
     }
-    i {
+    & > i {
       background-color: $secondary-color !important;
+    }
+    .secondary-content {
+      i {
+        color: $grey-color;
+        &:hover {
+          color: $grey-light-color
+        }
+      }
     }
   }
 }

@@ -1,210 +1,232 @@
 oddin.controller('AulaController',
     function ($scope, $stateParams, Aula, Duvida, Resposta, $http, $state, $cookies) {
-      $scope.duvidas = {}
-      $scope.duvida = new Duvida()
-      $scope.last_doubt = {}
-      function buscaInfo() {
-        Aula.get({ id: $stateParams.aulaID },
+        $scope.duvidas = {}
+        $scope.duvida = new Duvida()
+        $scope.last_doubt = {}
+        $scope.data_loaded = true;
+        function buscaInfo() {
+            Aula.get({ id: $stateParams.aulaID },
                 function (aula) {
-                  $scope.aula = aula
+                    $scope.aula = aula
                 },
                 function (erro) {
-                  $scope.mensagem = { texto: 'Não foi possível obter o resultado.' }
+                    $scope.mensagem = { texto: 'Não foi possível obter o resultado.' }
                 }
             )
-      }
-
-      function addDuvida(duvida) {
-        $scope.duvidas[duvida.id] = duvida
-      }
-
-      function removeDuvida(duvida) {
-        $scope.duvidas[duvida.id] = duvida
-      }
-
-      $scope.backToLectures = function () {
-        $('.button-collapse').sideNav('hide');
-        if ($cookies.get('profile') == 0) {
-          $state.go('aulas.aluno', { 'disciplinaID': $scope.aula.instruction.id })
-        } else {
-          $state.go('aulas.professor', { 'disciplinaID': $scope.aula.instruction.id })
         }
-      }
 
-      $scope.goToLectureMaterial = function () {
-        $('.button-collapse').sideNav('hide');
-        if ($cookies.get('profile') == 0) {
-          $state.go('material-aula.aluno', { 'aulaID': $scope.aula.id })
-        } else {
-          $state.go('material-aula.professor', { 'aulaID': $scope.aula.id })
-        }
-      }
-
-      $scope.goToDoubts = function () {
-        $('.button-collapse').sideNav('hide');
-        if ($cookies.get('profile') == 0) {
-          $state.go('duvidas.aluno', { 'aulaID': $scope.aula.id })
-        } else {
-          $state.go('duvidas.professor', { 'aulaID': $scope.aula.id })
-        }
-      }
-
-      $scope.buscaMateriais = function () {
-        $http.get('/api/presentation/' + $stateParams.aulaID + '/materials')
+        function feedbackReloadMaterial(msg) {
+            $http.get('/api/presentation/' + $stateParams.aulaID + '/materials')
                 .success(function (data) {
-                  $scope.materiais = data
+                    $scope.materiais = data;
+                    $scope.data_loaded = true;
+                    Materialize.toast(msg, 4000);
                 })
-      }
+        }
 
-      $scope.uploadMaterial = function () {
-        var file = document.forms.uploadArchive.file.files[0]
-        var fd = new FormData()
-        $http.get('api/presentation/' + $stateParams.aulaID + '/materials/new')
+        function addDuvida(duvida) {
+            $scope.duvidas[duvida.id] = duvida
+        }
+
+        function removeDuvida(duvida) {
+            $scope.duvidas[duvida.id] = duvida
+        }
+
+        $scope.backToLectures = function () {
+            $('.button-collapse').sideNav('hide');
+            if ($cookies.get('profile') == 0) {
+                $state.go('aulas.aluno', { 'disciplinaID': $scope.aula.instruction.id })
+            } else {
+                $state.go('aulas.professor', { 'disciplinaID': $scope.aula.instruction.id })
+            }
+        }
+
+        $scope.goToLectureMaterial = function () {
+            $('.button-collapse').sideNav('hide');
+            if ($cookies.get('profile') == 0) {
+                $state.go('material-aula.aluno', { 'aulaID': $scope.aula.id })
+            } else {
+                $state.go('material-aula.professor', { 'aulaID': $scope.aula.id })
+            }
+        }
+
+        $scope.goToDoubts = function () {
+            $('.button-collapse').sideNav('hide');
+            if ($cookies.get('profile') == 0) {
+                $state.go('duvidas.aluno', { 'aulaID': $scope.aula.id })
+            } else {
+                $state.go('duvidas.professor', { 'aulaID': $scope.aula.id })
+            }
+        }
+
+        $scope.buscaMateriais = function () {
+            $http.get('/api/presentation/' + $stateParams.aulaID + '/materials')
                 .success(function (data) {
-                  for (var key in data.fields) {
-                    fd.append(key, data.fields[key])
-                  }
-                  fd.append('file', file)
-                  $http.post(data.url, fd, { headers: { 'Content-Type': undefined } })
+                    $scope.materiais = data
+                })
+        }
+
+        $scope.uploadMaterial = function () {
+            $scope.data_loaded = false;
+            var file = document.forms.uploadArchive.file.files[0]
+            var fd = new FormData()
+            $http.post('api/presentation/' + $stateParams.aulaID + '/materials')
+                .success(function (data) {
+                    for (var key in data.fields) {
+                        fd.append(key, data.fields[key])
+                    }
+                    fd.append('file', file)
+                    $http.post(data.url, fd, { headers: { 'Content-Type': undefined } })
                         .success(function () {
-                          $http.put('api/materials/' + data.id, { 'name': file.name, 'mime': file.type })
+                            $http.put('api/materials/' + data.id, { 'name': file.name, 'mime': file.type })
                                 .success(function () {
-                                  console.log('Upload Realizado')
-                                  $scope.buscaMateriais()
+                                    console.log('Upload Realizado')
+                                    feedbackReloadMaterial('O arquivo ' + file.name + ' foi postado');
                                 })
                         })
                 })
-      }
+        }
 
-      $scope.downloadMaterial = function (material) {
-        $http.get('api/materials/' + material.id)
+        $scope.downloadMaterial = function (material) {
+            $scope.data_loaded = false;
+            $http.get('api/materials/' + material.id)
                 .success(function (data) {
-                  var link = document.createElement('a')
-                  link.setAttribute('href', data.url)
-                  link.setAttribute('download', true)
-                  link.click()
+                    var link = document.createElement('a')
+                    link.setAttribute('href', data.url)
+                    link.setAttribute('download', true)
+                    link.click()
+                    $scope.data_loaded = true;
+                    Materialize.toast('Fazendo download de ' + material.name, 4000)
                 })
-      }
+        }
 
-      $scope.setLastDoubt = function (duvida) {
-        $scope.last_doubt = duvida
-      }
+        $scope.deleteMaterial = function (material) {
+            $scope.data_loaded = false;
+            $http.delete('api/materials/' + material.id)
+                .success(function (data) {
+                    feedbackReloadMaterial('Arquivo deletado');
+                })
+        }
 
-      $scope.buscaDuvidas = function () {
-        Duvida.query({ id: $stateParams.aulaID },
+        $scope.setLastDoubt = function (duvida) {
+            $scope.last_doubt = duvida
+        }
+
+        $scope.buscaDuvidas = function () {
+            Duvida.query({ id: $stateParams.aulaID },
                 function (duvidas) {
-                  duvidas.forEach(function (elem) {
-                    addDuvida(elem)
-                  })
+                    duvidas.forEach(function (elem) {
+                        addDuvida(elem)
+                    })
                 },
                 function (erro) {
-                  $scope.mensagem = {
-                    texto: 'Não foi possível obter o resultado.',
-                  }
+                    $scope.mensagem = {
+                        texto: 'Não foi possível obter o resultado.',
+                    }
                 }
             )
-      }
+        }
 
-      $scope.postaDuvida = function () {
-        if ($scope.duvida.anonymous === undefined) $scope.duvida.anonymous = false
-        $scope.duvida.$save({ id: $stateParams.aulaID })
+        $scope.postaDuvida = function () {
+            if ($scope.duvida.anonymous === undefined) $scope.duvida.anonymous = false
+            $scope.duvida.$save({ id: $stateParams.aulaID })
                 .then(function (data) {
-                  addDuvida(data)
-                  $scope.duvida = new Duvida()
+                    addDuvida(data)
+                    $scope.duvida = new Duvida()
                 })
                 .catch(function (erro) {
-                  $scope.mensagem = { texto: 'Não foi possível postar a dúvida' }
-                  $scope.duvida = new Duvida()
+                    $scope.mensagem = { texto: 'Não foi possível postar a dúvida' }
+                    $scope.duvida = new Duvida()
                 })
-      }
-
-      $scope.buscaRespostas = function (duvida) {
-        if (duvida.answers == undefined) {
-          duvida.answers = []
         }
-        if (duvida.answers.length == 0) {
-          $http.get('/api/questions/' + duvida.id + '/answers').success(function (data) {
-            duvida.answers = data
-          })
-        }
-        else {
-          duvida.answers = []
-        }
-      }
 
-      $scope.postaResposta = function () {
-        $http.post('/api/questions/' + $scope.last_doubt.id + '/answers', $scope.resposta).success(function (data) {
-          $scope.buscaRespostas($scope.last_doubt)
-          $scope.resposta.text = ''
-        })
-      }
+        $scope.buscaRespostas = function (duvida) {
+            if (duvida.answers == undefined) {
+                duvida.answers = []
+            }
+            if (duvida.answers.length == 0) {
+                $http.get('/api/questions/' + duvida.id + '/answers').success(function (data) {
+                    duvida.answers = data
+                })
+            }
+            else {
+                duvida.answers = []
+            }
+        }
 
-      $scope.upvoteDuvida = function (duvida) {
-        $http.post('/api/questions/' + duvida.id + '/upvote')
+        $scope.postaResposta = function () {
+            $http.post('/api/questions/' + $scope.last_doubt.id + '/answers', $scope.resposta).success(function (data) {
+                $scope.buscaRespostas($scope.last_doubt)
+                $scope.resposta.text = ''
+            })
+        }
+
+        $scope.upvoteDuvida = function (duvida) {
+            $http.post('/api/questions/' + duvida.id + '/upvote')
                 .success(function (data) {
                     // $scope.duvidas[duvida.id].upvotes++;
                     // $scope.duvidas[duvida.id].my_vote = 1;
-                  duvida.upvotes++
-                  duvida.my_vote = 1
+                    duvida.upvotes++
+                    duvida.my_vote = 1
                 })
-      }
+        }
 
-      $scope.cancelVoteDuvida = function (duvida) {
-        $http.delete('/api/questions/' + duvida.id + '/vote')
+        $scope.cancelVoteDuvida = function (duvida) {
+            $http.delete('/api/questions/' + duvida.id + '/vote')
                 .success(function (data) {
-                  duvida.upvotes--
-                  duvida.my_vote = 0
+                    duvida.upvotes--
+                    duvida.my_vote = 0
                 })
-      }
+        }
 
-      $scope.upvoteResposta = function (resposta) {
-        $http.post('/api/answers/' + resposta.id + '/upvote')
+        $scope.upvoteResposta = function (resposta) {
+            $http.post('/api/answers/' + resposta.id + '/upvote')
                 .success(function () {
-                  if (resposta.my_vote == 0)
-                    resposta.upvotes++
-                  else if (resposta.my_vote == -1)
-                    resposta.upvotes += 2
-                  resposta.my_vote = 1
-                })
-      }
-
-      $scope.downvoteResposta = function (resposta) {
-        $http.post('/api/answers/' + resposta.id + '/downvote')
-                .success(function () {
-                  if (resposta.my_vote == 0)
-                    resposta.upvotes--
-                  else if (resposta.my_vote == 1)
-                    resposta.upvotes -= 2
-                  resposta.my_vote = -1
-                })
-      }
-
-      $scope.cancelVoteResposta = function (resposta) {
-        $http.delete('/api/answers/' + resposta.id + '/vote')
-                .success(function () {
-                  if (resposta.my_vote == 1)
-                    resposta.upvotes--
-                  else
+                    if (resposta.my_vote == 0)
                         resposta.upvotes++
-                  resposta.my_vote = 0
+                    else if (resposta.my_vote == -1)
+                        resposta.upvotes += 2
+                    resposta.my_vote = 1
                 })
-      }
+        }
 
-      $scope.aceitaResposta = function (resposta) {
-        $http.post('/api/answers/' + resposta.id + '/accept')
+        $scope.downvoteResposta = function (resposta) {
+            $http.post('/api/answers/' + resposta.id + '/downvote')
                 .success(function () {
-                  resposta.accepted = true
-                  $scope.duvidas[resposta.question.id].answered = true
+                    if (resposta.my_vote == 0)
+                        resposta.upvotes--
+                    else if (resposta.my_vote == 1)
+                        resposta.upvotes -= 2
+                    resposta.my_vote = -1
                 })
-      }
+        }
 
-      $scope.recusaResposta = function (resposta) {
-        $http.delete('/api/answers/' + resposta.id + '/accept')
+        $scope.cancelVoteResposta = function (resposta) {
+            $http.delete('/api/answers/' + resposta.id + '/vote')
                 .success(function () {
-                  resposta.accepted = false
-                  $scope.duvidas[resposta.question.id].answered = false
+                    if (resposta.my_vote == 1)
+                        resposta.upvotes--
+                    else
+                        resposta.upvotes++
+                    resposta.my_vote = 0
                 })
-      }
+        }
+
+        $scope.aceitaResposta = function (resposta) {
+            $http.post('/api/answers/' + resposta.id + '/accept')
+                .success(function () {
+                    resposta.accepted = true
+                    $scope.duvidas[resposta.question.id].answered = true
+                })
+        }
+
+        $scope.recusaResposta = function (resposta) {
+            $http.delete('/api/answers/' + resposta.id + '/accept')
+                .success(function () {
+                    resposta.accepted = false
+                    $scope.duvidas[resposta.question.id].answered = false
+                })
+        }
 
         // var socket = io.connect("/socket/presentation");
         // socket.on("new question", function (data) {
@@ -261,11 +283,11 @@ oddin.controller('AulaController',
         //    answer.accepted = false;
         //    $scope.duvidas[answer.question.id].answer = null;
         // });
-      $scope.usuario = {
-        'id': JSON.parse($cookies.get('session').substring(2)).person.id,
-        'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-        'email': JSON.parse($cookies.get('session').substring(2)).person.email
-      }
-      buscaInfo()
+        $scope.usuario = {
+            'id': JSON.parse($cookies.get('session').substring(2)).person.id,
+            'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
+            'email': JSON.parse($cookies.get('session').substring(2)).person.email
+        }
+        buscaInfo()
     }
 )

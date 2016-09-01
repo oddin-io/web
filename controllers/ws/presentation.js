@@ -61,8 +61,8 @@ function createMaterial(req, res) {
   const session = req.cookies.session
 
   request({
-    uri: `${constants.uri}/presentations/${req.params.id}/materials/new`,
-    method: 'GET',
+    uri: `${constants.uri}/presentations/${req.params.id}/materials`,
+    method: 'POST',
     headers: {
       'x-session-token': session.token,
     },

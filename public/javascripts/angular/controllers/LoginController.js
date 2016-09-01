@@ -8,7 +8,10 @@ oddin.controller('LoginController',
                     $window.location.href = '/home';
                 })
                 .catch(function(erro) {
-                    Materialize.toast('Usuário ou senha inválida', 5000);
+                    if(erro.status == 401)
+                        Materialize.toast('Usuário ou senha inválida', 5000);
+                    if(erro.status >= 500)
+                        Materialize.toast('Erro no servidor', 5000);
                     $scope.user.email = "";
                     $scope.user.password = "";
                 });

@@ -24,8 +24,23 @@ oddin.controller('DisciplinaController',
                 function (aulas) {
                     $scope.aulas = aulas
                     $scope.data_loaded = true;
-                    Materialize.toast(msg, 3000);
+                    Materialize.toast(msg, 4000);
                     $scope.aula = new DisciplinaAula()
+                },
+                function (erro) {
+                    $scope.mensagem = {
+                        texto: 'Não foi possível obter o resultado.',
+                    }
+                }
+            )
+        }
+
+        function feedbackReloadMaterial(msg) {
+            DisciplinaMaterial.query({ id: $stateParams.disciplinaID },
+                function (materiais) {
+                    $scope.materiais = materiais
+                    $scope.data_loaded = true;
+                    Materialize.toast(msg, 4000);
                 },
                 function (erro) {
                     $scope.mensagem = {
@@ -120,9 +135,10 @@ oddin.controller('DisciplinaController',
         }
 
         $scope.uploadMaterial = function () {
+            $scope.data_loaded = false;
             var file = document.forms.uploadArchive.file.files[0]
             var fd = new FormData()
-            $http.get('api/instructions/' + $scope.disciplina.id + '/materials/new')
+            $http.post('api/instructions/' + $scope.disciplina.id + '/materials')
                 .success(function (data) {
                     for (var key in data.fields) {
                         fd.append(key, data.fields[key])
@@ -133,19 +149,30 @@ oddin.controller('DisciplinaController',
                             $http.put('api/materials/' + data.id, { 'name': file.name, 'mime': file.type })
                                 .success(function () {
                                     console.log('Upload Realizado')
-                                    $scope.buscaMateriais()
+                                    feedbackReloadMaterial('O arquivo ' + file.name + ' foi postado');
                                 })
                         })
                 })
         }
 
         $scope.downloadMaterial = function (material) {
+            $scope.data_loaded = false;
             $http.get('api/materials/' + material.id)
                 .success(function (data) {
                     var link = document.createElement('a')
                     link.setAttribute('href', data.url)
                     link.setAttribute('download', true)
                     link.click()
+                    $scope.data_loaded = true;
+                    Materialize.toast('Fazendo download de ' + material.name, 4000)
+                })
+        }
+
+        $scope.deleteMaterial = function (material) {
+            $scope.data_loaded = false;
+            $http.delete('api/materials/' + material.id)
+                .success(function (data) {
+                    feedbackReloadMaterial('Arquivo deletado');
                 })
         }
         buscaInfo()

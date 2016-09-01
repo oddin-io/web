@@ -10,6 +10,6 @@ router.delete('/presentations/:id', controller.destroy)
 router.get('/presentations/:id/questions', controller.showQuestions)
 router.post('/presentations/:id/questions', controller.postQuestion)
 router.get('/presentation/:id/materials', controller.showMaterials)
-router.get('/presentation/:id/materials/new', controller.createMaterial)
+router.post('/presentation/:id/materials', controller.createMaterial)
 
 module.exports = router

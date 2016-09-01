@@ -5,7 +5,7 @@ header
       .nav-wrapper.barra-navegacao__container
         a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
           i.material-icons menu
-        a.barra-navegacao__voltar.hide-on-med-and-down(data-ng-click="backToLectures()")
+        a.barra-navegacao__voltar.hide-on-med-and-down(href="" data-ng-click="backToLectures()")
           i.material-icons arrow_back
         h1.barra-navegacao__title.truncate {{aula.subject}} - Material
         a.brand-logo.right.hide-on-small-only(href="/")
@@ -32,6 +32,10 @@ header
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
       a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaMateriais()")
+  .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+    .spinner-layer
+      .circle-clipper.left
+        .circle
   .container
     .fixed-action-btn(style="bottom: 24px; right: 24px;")
       a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#subir-material", modal)
@@ -56,3 +60,5 @@ main(data-ng-init="buscaMateriais()")
         span.title
           a(href="" data-ng-click="downloadMaterial(material)") {{material.name}}
         p {{material.mime}}
+        a.secondary-content(href="" data-ng-click="deleteMaterial(material)")
+          i.material-icons delete

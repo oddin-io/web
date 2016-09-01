@@ -33,7 +33,16 @@ function update(req, res) {
   }).pipe(res)
 }
 
-function destroy() {}
+function destroy(req, res) {
+  const session = req.cookies.session
+  request({
+    uri: `${constants.uri}/materials/${req.params.id}`,
+    method: 'DELETE',
+    headers: {
+      'x-session-token': session.token
+    }
+  }).pipe(res)
+}
 
 module.exports = {
   index,
