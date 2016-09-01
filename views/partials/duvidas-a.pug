@@ -32,6 +32,10 @@ header
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
       a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaDuvidas()")
+  .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+    .spinner-layer
+      .circle-clipper.left
+        .circle
   .container
     .fixed-action-btn(style="bottom: 24px; right: 24px;")
       a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#postar-duvida", modal)

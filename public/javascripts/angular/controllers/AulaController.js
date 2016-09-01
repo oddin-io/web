@@ -128,11 +128,14 @@ oddin.controller('AulaController',
         }
 
         $scope.postaDuvida = function () {
+            $scope.data_loaded = false;
             if ($scope.duvida.anonymous === undefined) $scope.duvida.anonymous = false
             $scope.duvida.$save({ id: $stateParams.aulaID })
                 .then(function (data) {
                     addDuvida(data)
+                    $scope.data_loaded = true;
                     $scope.duvida = new Duvida()
+                    Materialize.toast('Dúvida postada', 1000);
                 })
                 .catch(function (erro) {
                     $scope.mensagem = { texto: 'Não foi possível postar a dúvida' }
@@ -155,7 +158,10 @@ oddin.controller('AulaController',
         }
 
         $scope.postaResposta = function () {
+            $scope.data_loaded = false;
             $http.post('/api/questions/' + $scope.last_doubt.id + '/answers', $scope.resposta).success(function (data) {
+                $scope.data_loaded = true;
+                Materialize.toast('Resposta postada', 1000);
                 $scope.buscaRespostas($scope.last_doubt)
                 $scope.resposta.text = ''
             })
