@@ -32,6 +32,14 @@ header
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
       a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaAulas()")
+  #modal-fecha-aula.modal
+    .modal-content
+      h4.custom-modal__header Finalizar Aula
+      p Tem certeza que deseja finalizar '{{modalContent.subject}}'?
+    .modal-footer
+      a(href='' data-ng-click="fechaAula(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+      a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+
   .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
     .spinner-layer
       .circle-clipper.left
@@ -60,7 +68,7 @@ main(data-ng-init="buscaAulas()")
       #aulas-abertas.col.s12
         ul.collection.lista-aulas
           li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 0}: true")
-            a(href="" data-ng-click="fechaAula(aula)")
+            a(href="" data-ng-click="openModalCloseLecture(aula)")
               i.material-icons.circle lock_open
             a(href="" data-ng-click="goToDoubts(aula)")
               span.title {{aula.subject}}

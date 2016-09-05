@@ -27,8 +27,26 @@
 .custom-preloader {
   position: fixed;
   z-index: 399;
-  right: 21px;
-  bottom: 100px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 50%;
+  @media (min-width: $min-desktop-size) {
+    left: 240px;
+  }
+}
+
+.custom-modal {
+  &__header {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  &__button {
+    color: $secondary-color;
+    @media(max-width: $max-mobile-size) {
+      padding: 0 10px 0 10px;
+    }
+  }
 }
 
 .downvote-margin {

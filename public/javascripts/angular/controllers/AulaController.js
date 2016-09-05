@@ -87,6 +87,11 @@ oddin.controller('AulaController',
                 })
         }
 
+        $scope.openModalDeleteMaterial = function (material) {
+            $scope.modalContent = material;
+            $('#modal-deleta-material').openModal();
+        }
+
         $scope.downloadMaterial = function (material) {
             $scope.data_loaded = false;
             $http.get('api/materials/' + material.id)

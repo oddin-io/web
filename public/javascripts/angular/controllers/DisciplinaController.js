@@ -134,6 +134,16 @@ oddin.controller('DisciplinaController',
                 })
         }
 
+        $scope.openModalCloseLecture = function (aula) {
+            $scope.modalContent = aula;
+              $('#modal-fecha-aula').openModal();
+        }
+
+        $scope.openModalDeleteMaterial = function (material) {
+            $scope.modalContent = material;
+              $('#modal-deleta-material').openModal();
+        }
+
         $scope.uploadMaterial = function () {
             $scope.data_loaded = false;
             var file = document.forms.uploadArchive.file.files[0]

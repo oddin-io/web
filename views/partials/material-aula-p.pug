@@ -32,6 +32,14 @@ header
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
       a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaMateriais()")
+  #modal-deleta-material.modal
+    .modal-content
+      h4.custom-modal__header Excluir Material
+      p Tem certeza que deseja excluir '{{modalContent.name}}'?
+    .modal-footer
+      a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+      a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+
   .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
     .spinner-layer
       .circle-clipper.left
@@ -60,5 +68,5 @@ main(data-ng-init="buscaMateriais()")
         span.title
           a(href="" data-ng-click="downloadMaterial(material)") {{material.name}}
         p {{material.mime}}
-        a.secondary-content(href="" data-ng-click="deleteMaterial(material)")
+        a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
           i.material-icons delete
