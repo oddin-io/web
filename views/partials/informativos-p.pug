@@ -1,0 +1,54 @@
+doctype html
+header
+    .navbar-fixed
+        nav.navbar-fixed.barra-navegacao
+            .nav-wrapper.barra-navegacao__container
+                a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+                    i.material-icons menu
+                a.barra-navegacao__voltar.hide-on-med-and-down(href="#/disciplinas")
+                    i.material-icons arrow_back
+                h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Informativos
+                a.brand-logo.right.hide-on-small-only(href="/")
+                    img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+    ul#slide-out.side-nav.fixed.barra-lateral
+        .barra-lateral__header
+            i.barra-lateral__user-avatar.material-icons account_circle
+            p.barra-lateral__user-name {{usuario.nome}}
+            p.barra-lateral__user-email {{usuario.email}}
+        li.no-padding
+            ul.collapsible(data-collapsible="expandable")
+                li.barra-lateral__item
+                    a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{disciplina.lecture.name}}
+                    .collapsible-body
+                        ul
+                            li.barra-lateral__subitem
+                                a(href="" data-ng-click="goToLectures()") Aulas
+                            li.barra-lateral__subitem
+                                a(href="" data-ng-click="goToNotices()") Avisos
+                            li.barra-lateral__subitem.active
+                                p Informativos
+                            li.barra-lateral__subitem
+                                a(href="" data-ng-click="goToMaterial()") Material
+                            li.barra-lateral__subitem
+                                a(href="#/disciplinas/{{disciplina.id}}/participantes") Participantes
+        li.hide-on-large-only.no-padding.barra-lateral__item
+            a(href="#/disciplinas") Disciplinas
+        li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+            a(href="" data-ng-click="logout()") Logout
+main(data-ng-init="buscaInformativos()")
+    .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+        .spinner-layer
+            .circle-clipper.left
+                .circle
+    .container
+        .fixed-action-btn(style="bottom: 24px; right: 24px;")
+            a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#postar-informativo", modal)
+                i.large.material-icons add
+        #postar-informativo.modal.bottom-sheet
+            .modal-content.modal-criar-item
+                .row
+                    form.offset-m2.offset-l3.col.s12.m8.l6()
+                        h1.modal-criar-item__titulo Postar informativo
+                        button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+
+

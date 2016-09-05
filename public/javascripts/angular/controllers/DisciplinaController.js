@@ -68,6 +68,24 @@ oddin.controller('DisciplinaController',
             }
         }
 
+        $scope.goToNotices = function () {
+            $('.button-collapse').sideNav('hide');
+            if ($cookies.get('profile') == 0) {
+                $state.go('avisos.aluno', { 'disciplinaID': $scope.disciplina.id })
+            } else {
+                $state.go('avisos.professor', { 'disciplinaID': $scope.disciplina.id })
+            }
+        }
+
+        $scope.goToInfo = function () {
+            $('.button-collapse').sideNav('hide');
+            if ($cookies.get('profile') == 0) {
+                $state.go('informativos.aluno', { 'disciplinaID': $scope.disciplina.id })
+            } else {
+                $state.go('informativos.professor', { 'disciplinaID': $scope.disciplina.id })
+            }
+        }
+
         $scope.goToDoubts = function (aula) {
             if ($cookies.get('profile') == 0) {
                 $state.go('duvidas.aluno', { 'aulaID': aula.id })

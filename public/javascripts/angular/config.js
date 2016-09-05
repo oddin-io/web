@@ -34,6 +34,48 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: '/partials/aulas-p',
             controller: 'DisciplinaController'
         })
+        .state('avisos', {
+            url: '/disciplinas/:disciplinaID/avisos',
+            templateUrl: '/partials/avisos',
+            controller: function ($cookies, $state) {
+                if($cookies.get('profile') == 0) {
+                    $state.go('avisos.aluno')
+                } else {
+                    $state.go('avisos.professor')
+                }
+            }
+        })
+        .state('avisos.aluno', {
+            url: '/aluno',
+            templateUrl: '/partials/avisos-a',
+            controller: 'DisciplinaController'
+        })
+        .state('avisos.professor', {
+            url: '/professor',
+            templateUrl: '/partials/avisos-p',
+            controller: 'DisciplinaController'
+        })
+        .state('informativos', {
+            url: '/disciplinas/:disciplinaID/informativos',
+            templateUrl: '/partials/informativos',
+            controller: function ($cookies, $state) {
+                if($cookies.get('profile') == 0) {
+                    $state.go('informativos.aluno')
+                } else {
+                    $state.go('informativos.professor')
+                }
+            }
+        })
+        .state('informativos.aluno', {
+            url: '/aluno',
+            templateUrl: '/partials/informativos-a',
+            controller: 'DisciplinaController'
+        })
+        .state('informativos.professor', {
+            url: '/professor',
+            templateUrl: '/partials/informativos-p',
+            controller: 'DisciplinaController'
+        })
         .state('materiais', {
             url: '/disciplinas/:disciplinaID/materiais',
             templateUrl: '/partials/materiais',
@@ -95,6 +137,7 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: '/partials/material-aula-p',
             controller: 'AulaController'
         })
+
 }).run(function ($window, $location, $state, $cookies) {
     if ($window.location.pathname == '/home')
         $state.go('disciplinas')
