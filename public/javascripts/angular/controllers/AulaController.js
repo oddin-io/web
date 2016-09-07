@@ -32,33 +32,6 @@ oddin.controller('AulaController',
             $scope.duvidas[duvida.id] = duvida
         }
 
-        $scope.backToLectures = function () {
-            $('.button-collapse').sideNav('hide');
-            if ($cookies.get('profile') == 0) {
-                $state.go('aulas.aluno', { 'disciplinaID': $scope.aula.instruction.id })
-            } else {
-                $state.go('aulas.professor', { 'disciplinaID': $scope.aula.instruction.id })
-            }
-        }
-
-        $scope.goToLectureMaterial = function () {
-            $('.button-collapse').sideNav('hide');
-            if ($cookies.get('profile') == 0) {
-                $state.go('material-aula.aluno', { 'aulaID': $scope.aula.id })
-            } else {
-                $state.go('material-aula.professor', { 'aulaID': $scope.aula.id })
-            }
-        }
-
-        $scope.goToDoubts = function () {
-            $('.button-collapse').sideNav('hide');
-            if ($cookies.get('profile') == 0) {
-                $state.go('duvidas.aluno', { 'aulaID': $scope.aula.id })
-            } else {
-                $state.go('duvidas.professor', { 'aulaID': $scope.aula.id })
-            }
-        }
-
         $scope.buscaMateriais = function () {
             $http.get('/api/presentation/' + $stateParams.aulaID + '/materials')
                 .success(function (data) {

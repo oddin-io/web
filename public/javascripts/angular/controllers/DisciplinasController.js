@@ -16,22 +16,14 @@ oddin.controller('DisciplinasController',
         Profile.get({ id: disciplina.id },
                 function (data) {
                   $cookies.put('profile', data.profile)
-                  if ($cookies.get('profile') == 0) {
-                    $state.go('aulas.aluno', { 'disciplinaID': disciplina.id })
-                  } else {
-                    $state.go('aulas.professor', { 'disciplinaID': disciplina.id })
-                  }
+                  $state.go('aulas', {'disciplinaID': disciplina.id})
                 },
                 function (erro) {
                   console.log('Erro ao encontrar perfil')
                 }
             )
       } else {
-        if ($cookies.get('profile') == 0) {
-          $state.go('aulas.aluno', { 'disciplinaID': disciplina.id })
-        } else {
-          $state.go('aulas.professor', { 'disciplinaID': disciplina.id })
-        }
+        $state.go('aulas', {'disciplinaID': disciplina.id})
       }
     }
 

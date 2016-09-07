@@ -5,7 +5,7 @@ header
       .nav-wrapper.barra-navegacao__container
         a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
           i.material-icons menu
-        a.barra-navegacao__voltar.hide-on-med-and-down(href="#/disciplinas")
+        a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='disciplinas')
           i.material-icons arrow_back
         h1.barra-navegacao__title.truncate {{disciplina.lecture.name}}
         a.brand-logo.right.hide-on-small-only(href="/")
@@ -24,15 +24,15 @@ header
               li.barra-lateral__subitem.active
                 p Aulas
               li.barra-lateral__subitem
-                a(href="" data-ng-click="goToNotices()") Avisos
+                a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
               li.barra-lateral__subitem
-                a(href="" data-ng-click="goToInfo()") Informativos
+                a(ui-sref="informativos({disciplinaID: disciplina.id})") Informativos
               li.barra-lateral__subitem
-                a(href="" data-ng-click="goToMaterial()") Material
+                a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
               li.barra-lateral__subitem
-                a(href="#/disciplinas/{{disciplina.id}}/participantes") Participantes
+                a(ui-sref="participantes({disciplinaID: disciplina.id})") Participantes
     li.hide-on-large-only.no-padding.barra-lateral__item
-      a(href="#/disciplinas") Disciplinas
+      a(ui-sref='disciplinas') Disciplinas
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
       a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaAulas()")
@@ -74,7 +74,7 @@ main(data-ng-init="buscaAulas()")
           li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 0}: true")
             a(href="" data-ng-click="openModalCloseLecture(aula)")
               i.material-icons.circle lock_open
-            a(href="" data-ng-click="goToDoubts(aula)")
+            a(ui-sref="duvidas({aulaID: aula.id})")
               span.title {{aula.subject}}
               p
                 | {{aula.created_at | date:&apos;dd/MM/yyyy&apos;}}
@@ -84,7 +84,7 @@ main(data-ng-init="buscaAulas()")
         ul.collection.lista-aulas
           li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 1}: true")
             i.material-icons.circle.red.lighten-2 lock_outline
-            a(href="" data-ng-click="goToDoubts(aula)")
+            a(ui-sref="duvidas({aulaID: aula.id})")
               span.title {{aula.subject}}
               p
                 | {{aula.created_at | date:&apos;dd/MM/yyyy&apos;}}

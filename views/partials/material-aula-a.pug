@@ -5,7 +5,7 @@ header
       .nav-wrapper.barra-navegacao__container
         a.button-collapse.hide-on-large-only(href="", data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
           i.material-icons menu
-        a.barra-navegacao__voltar.hide-on-med-and-down(href="", data-ng-click="backToLectures()")
+        a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref="aulas({disciplinaID: aula.instruction.id})")
           i.material-icons arrow_back
         h1.barra-navegacao__title.truncate {{aula.subject}} - Material
         a.brand-logo.right.hide-on-small-only(href="/")
@@ -22,13 +22,13 @@ header
           .collapsible-body
             ul
               li.barra-lateral__subitem
-                a(href="" data-ng-click="goToDoubts()") D&uacute;vidas
+                a(ui-sref="duvidas({aulaID: aula.id})") D&uacute;vidas
               li.barra-lateral__subitem.active
                 p Material
     li.hide-on-large-only.no-padding.barra-lateral__item
-      a(href="" data-ng-click="backToLectures()") Aulas
+      a(ui-sref="aulas({disciplinaID: aula.instruction.id})") Aulas
     li.no-padding.barra-lateral__item
-      a(href="#/disciplinas") Disciplinas
+      a(ui-sref='disciplinas') Disciplinas
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
       a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaMateriais()")

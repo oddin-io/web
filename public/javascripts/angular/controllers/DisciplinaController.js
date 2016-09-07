@@ -50,50 +50,6 @@ oddin.controller('DisciplinaController',
             )
         }
 
-        $scope.goToMaterial = function (elem) {
-            $('.button-collapse').sideNav('hide');
-            if ($cookies.get('profile') == 0) {
-                $state.go('materiais.aluno', { 'disciplinaID': $scope.disciplina.id })
-            } else {
-                $state.go('materiais.professor', { 'disciplinaID': $scope.disciplina.id })
-            }
-        }
-
-        $scope.goToLectures = function () {
-            $('.button-collapse').sideNav('hide');
-            if ($cookies.get('profile') == 0) {
-                $state.go('aulas.aluno', { 'disciplinaID': $scope.disciplina.id })
-            } else {
-                $state.go('aulas.professor', { 'disciplinaID': $scope.disciplina.id })
-            }
-        }
-
-        $scope.goToNotices = function () {
-            $('.button-collapse').sideNav('hide');
-            if ($cookies.get('profile') == 0) {
-                $state.go('avisos.aluno', { 'disciplinaID': $scope.disciplina.id })
-            } else {
-                $state.go('avisos.professor', { 'disciplinaID': $scope.disciplina.id })
-            }
-        }
-
-        $scope.goToInfo = function () {
-            $('.button-collapse').sideNav('hide');
-            if ($cookies.get('profile') == 0) {
-                $state.go('informativos.aluno', { 'disciplinaID': $scope.disciplina.id })
-            } else {
-                $state.go('informativos.professor', { 'disciplinaID': $scope.disciplina.id })
-            }
-        }
-
-        $scope.goToDoubts = function (aula) {
-            if ($cookies.get('profile') == 0) {
-                $state.go('duvidas.aluno', { 'aulaID': aula.id })
-            } else {
-                $state.go('duvidas.professor', { 'aulaID': aula.id })
-            }
-        }
-
         $scope.buscaAulas = function () {
             DisciplinaAula.query({ id: $stateParams.disciplinaID },
                 function (aulas) {
