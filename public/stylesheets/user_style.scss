@@ -168,6 +168,17 @@
 }
 
 //Tela de Perguntas(Aluno)
+.dropdown-row {
+  margin-bottom: 12px;
+  .custom-dropdown {
+    display: block;
+    text-align: center;
+  }
+}
+.filter-item-active {
+  background-color: $secondary-color-hover;
+  color: white !important;
+}
 .pergunta {
   &__header {
     margin-bottom: 8px;
