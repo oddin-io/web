@@ -7,7 +7,7 @@ header
                     i.material-icons menu
                 a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='disciplinas')
                     i.material-icons arrow_back
-                h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Informativos
+                h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Datas Importantes
                 a.brand-logo.right.hide-on-small-only(href="/")
                     img.barra-navegacao__logo(src="/images/horizontal_logo.png")
     ul#slide-out.side-nav.fixed.barra-lateral
@@ -26,7 +26,7 @@ header
                             li.barra-lateral__subitem
                                 a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
                             li.barra-lateral__subitem.active
-                                p Informativos
+                                p Datas Importantes
                             li.barra-lateral__subitem
                                 a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
                             li.barra-lateral__subitem
@@ -35,20 +35,9 @@ header
             a(ui-sref='disciplinas') Disciplinas
         li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
             a(href="" data-ng-click="logout()") Logout
-main(data-ng-init="buscaInformativos()")
+main(data-ng-init="buscaDatas()")
     .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
         .spinner-layer
             .circle-clipper.left
                 .circle
     .container
-        .fixed-action-btn(style="bottom: 24px; right: 24px;")
-            a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#postar-informativo", modal)
-                i.large.material-icons add
-        #postar-informativo.modal.bottom-sheet
-            .modal-content.modal-criar-item
-                .row
-                    form.offset-m2.offset-l3.col.s12.m8.l6()
-                        h1.modal-criar-item__titulo Postar informativo
-                        button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
-
-

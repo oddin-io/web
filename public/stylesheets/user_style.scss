@@ -49,6 +49,24 @@
   }
 }
 
+.custom-card {
+  &__header {
+    margin-bottom: 8px;
+    .title {
+      @include type-list-section-title;
+    }
+    .secondary-info {
+      float: right;
+      @media (max-width: $max-mobile-size) {
+        display: block;
+        float: none;
+      }
+      @include type-list-section-title;
+      color: $type-secondary-color;
+    }
+  }
+}
+
 .downvote-margin {
   margin-right: 5px;
 }

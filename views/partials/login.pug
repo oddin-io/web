@@ -14,7 +14,7 @@ form(ng-submit="login()")
         .row
             .col.m6.s12
                 p
-                    input#user-persist(type="checkbox" class="filled-in")/
+                    input#user-persist(type="checkbox" class="filled-in" ng-model="user.persist")/
                     label(for="user-persist") Manter conectado
 
             .col.m6.s12

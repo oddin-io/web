@@ -40,13 +40,13 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
             },
             controller: 'DisciplinaController'
         })
-        .state('informativos', {
-            url: '/disciplinas/:disciplinaID/informativos',
+        .state('datas', {
+            url: '/disciplinas/:disciplinaID/datas',
             templateProvider: function ($cookies, $templateFactory) {
                 if($cookies.get('profile') == 0)
-                    return $templateFactory.fromUrl("/partials/informativos-a");
+                    return $templateFactory.fromUrl("/partials/datas-a");
                 if($cookies.get('profile') == 1)
-                    return $templateFactory.fromUrl("/partials/informativos-p");
+                    return $templateFactory.fromUrl("/partials/datas-p");
             },
             controller: 'DisciplinaController'
         })

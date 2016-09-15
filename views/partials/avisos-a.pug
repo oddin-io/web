@@ -26,7 +26,7 @@ header
                             li.barra-lateral__subitem.active
                                 p Avisos
                             li.barra-lateral__subitem
-                                a(ui-sref="informativos({disciplinaID: disciplina.id})") Informativos
+                                a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
                             li.barra-lateral__subitem
                                 a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
                             li.barra-lateral__subitem
@@ -41,3 +41,9 @@ main(data-ng-init="buscaAvisos()")
             .circle-clipper.left
                 .circle
     .container
+      .card.custom-card(data-ng-repeat="aviso in avisos")
+        .card-content
+          .custom-card__header
+            span.title {{aviso.subject}}
+            span.secondary-info {{aviso.created_at | date:&quot;dd/MM/yyyy &agrave;&apos;s&apos; HH:mm&quot;}}
+          p {{aviso.text}}

@@ -7,7 +7,7 @@ oddin.controller('DisciplinaController',
         }
         $scope.aula = new DisciplinaAula();
         $scope.data_loaded = true;
-        
+
         function buscaInfo() {
             Disciplina.get({ id: $stateParams.disciplinaID },
                 function (disciplina) {
@@ -50,6 +50,15 @@ oddin.controller('DisciplinaController',
             )
         }
 
+        function feedbackReloadNotices(msg) {
+          $http.get('/api/instructions/' + $stateParams.disciplinaID + '/notices')
+              .success(function (data) {
+                  $scope.avisos = data
+                  $scope.data_loaded = true;
+                  Materialize.toast(msg, 4000);
+              })
+        }
+
         $scope.buscaAulas = function () {
             DisciplinaAula.query({ id: $stateParams.disciplinaID },
                 function (aulas) {
@@ -74,6 +83,29 @@ oddin.controller('DisciplinaController',
                     }
                 }
             )
+        }
+
+        $scope.buscaAvisos = function () {
+          $http.get('/api/instructions/' + $stateParams.disciplinaID + '/notices')
+              .success(function (data) {
+                  $scope.avisos = data
+              })
+        }
+
+        $scope.postaAviso = function () {
+          $scope.data_loaded = false;
+          $http.post('/api/instructions/' + $stateParams.disciplinaID + "/notices", $scope.aviso)
+              .success(function () {
+                $scope.aviso = null;
+                feedbackReloadNotices('O aviso foi postado');
+              })
+        }
+
+        $scope.buscaDatas = function () {
+          $http.get('/api/instructions/' + $stateParams.disciplinaID + '/dates')
+              .success(function (data) {
+                  $scope.datas = data
+              })
         }
 
         $scope.buscaMateriais = function () {

@@ -66,8 +66,28 @@ function createMaterial(req, res) {
     method: 'POST',
     headers: {
       'x-session-token': session.token,
-    },
+    }
   }).pipe(res)
+}
+
+function createNotice(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}/notices`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+    json: {
+      'subject': req.body.subject,
+      'text': req.body.text
+    }
+  }).pipe(res)
+}
+
+function createDate(req, res) {
+
 }
 
 function showMaterials(req, res) {
@@ -87,6 +107,31 @@ function showParticipants(req, res) {
 
   request({
     uri: `${constants.uri}/instructions/${req.params.id}/participants`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }).pipe(res)
+}
+
+function showNotices(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}/notices`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }).pipe(res)
+}
+
+function showDates(req, res) {
+  const session = req.cookies.session
+  console.log('datas');
+
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}/dates`,
     method: 'GET',
     headers: {
       'x-session-token': session.token,
@@ -115,7 +160,11 @@ module.exports = {
   showPresentations,
   createPresentation,
   createMaterial,
+  createNotice,
+  createDate,
   showMaterials,
   showParticipants,
+  showNotices,
+  showDates,
   showProfile,
 }

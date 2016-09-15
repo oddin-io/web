@@ -26,7 +26,7 @@ header
                             li.barra-lateral__subitem.active
                                 p Avisos
                             li.barra-lateral__subitem
-                                a(ui-sref="informativos({disciplinaID: disciplina.id})") Informativos
+                                a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
                             li.barra-lateral__subitem
                                 a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
                             li.barra-lateral__subitem
@@ -47,10 +47,19 @@ main(data-ng-init="buscaAvisos()")
         #postar-aviso.modal.bottom-sheet
             .modal-content.modal-criar-item
                 .row
-                    form.offset-m2.offset-l3.col.s12.m8.l6()
+                    form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="postaAviso()")
                         h1.modal-criar-item__titulo Postar aviso
+                        .row
+                          .input-field.col.s12
+                            input#titulo_aviso(type="text", name="titulo", data-ng-model="aviso.subject" required)
+                            label(for="titulo_aviso") Título
+                          .input-field.col.s12
+                            textarea#textarea_aviso.materialize-textarea(name="texto", data-ng-model="aviso.text" required)
+                            label(for="textarea_aviso") Descrição
                         button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
-
-
-
-
+        .card.custom-card(data-ng-repeat="aviso in avisos")
+          .card-content
+            .custom-card__header
+              span.title {{aviso.subject}}
+              span.secondary-info {{aviso.created_at | date:&quot;dd/MM/yyyy &agrave;&apos;s&apos; HH:mm&quot;}}
+            p {{aviso.text}}
