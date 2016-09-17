@@ -1,6 +1,6 @@
 oddin.controller('AulaController',
     function ($scope, $stateParams, Aula, Duvida, Resposta, $http, $state, $cookies) {
-        $scope.duvidas = {}
+        $scope.filter = false;
         $scope.duvida = new Duvida()
         $scope.last_doubt = {}
         $scope.data_loaded = true;
@@ -30,6 +30,18 @@ oddin.controller('AulaController',
 
         function removeDuvida(duvida) {
             $scope.duvidas[duvida.id] = duvida
+        }
+
+        $scope.enableFilter = function () {
+            $scope.filter = true;
+            $('#post-order').removeClass('filter-item-active');
+            $('#ranking-order').addClass('filter-item-active');
+        }
+
+        $scope.disableFilter = function () {
+            $scope.filter = false;
+            $('#ranking-order').removeClass('filter-item-active');
+            $('#post-order').addClass('filter-item-active');
         }
 
         $scope.buscaMateriais = function () {
@@ -93,9 +105,7 @@ oddin.controller('AulaController',
         $scope.buscaDuvidas = function () {
             Duvida.query({ id: $stateParams.aulaID },
                 function (duvidas) {
-                    duvidas.forEach(function (elem) {
-                        addDuvida(elem)
-                    })
+                    $scope.duvidas = duvidas;
                 },
                 function (erro) {
                     $scope.mensagem = {
@@ -110,7 +120,7 @@ oddin.controller('AulaController',
             if ($scope.duvida.anonymous === undefined) $scope.duvida.anonymous = false
             $scope.duvida.$save({ id: $stateParams.aulaID })
                 .then(function (data) {
-                    addDuvida(data)
+                    $scope.duvidas.unshift(data);
                     $scope.data_loaded = true;
                     $scope.duvida = new Duvida()
                     Materialize.toast('Dúvida postada', 1000);
@@ -121,18 +131,14 @@ oddin.controller('AulaController',
                 })
         }
 
+        $scope.fecharRespostas = function (duvida) {
+            duvida.answers = undefined;
+        }
+
         $scope.buscaRespostas = function (duvida) {
-            if (duvida.answers == undefined) {
-                duvida.answers = []
-            }
-            if (duvida.answers.length == 0) {
-                $http.get('/api/questions/' + duvida.id + '/answers').success(function (data) {
-                    duvida.answers = data
-                })
-            }
-            else {
-                duvida.answers = []
-            }
+            $http.get('/api/questions/' + duvida.id + '/answers').success(function (data) {
+                duvida.answers = data;
+            })
         }
 
         $scope.postaResposta = function () {

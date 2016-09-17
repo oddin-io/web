@@ -59,7 +59,15 @@ main(data-ng-init="buscaDuvidas()")
                     i.material-icons attach_file
               .col.s12.m3
                 button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(type="submit", name="action") Enviar
-    .card.pergunta(data-ng-repeat="duvida in duvidas")
+    .row.dropdown-row
+      .offset-m3.col.m6.s12
+        a.dropdown-button.btn.custom-dropdown(href='' data-activates='dropdownOrderBy' data-beloworigin="true" data-alignment="right" data-hover="true" dropdown) Ordenar Dúvidas
+        ul#dropdownOrderBy.dropdown-content
+          li
+            a#post-order.filter-item-active(href='' data-ng-click="disableFilter()") Por Postagem
+          li
+            a#ranking-order(href='' data-ng-click="enableFilter()") Por Ranking
+    .card.pergunta(data-ng-repeat="duvida in duvidas | orderBy: ((filter || '') && '(upvotes - downvotes)') : (filter ? true : false)")
       .card-content
         .pergunta__header
           span.autor {{duvida.person.name}}
@@ -80,7 +88,7 @@ main(data-ng-init="buscaDuvidas()")
               a.waves-effect.btn-flat.modal-trigger(data-ng-click="setLastDoubt(duvida)", href="#responder-duvida", modal) Responder
           .col.m4
             .ver-resposta--prof(data-ng-if="duvida.has_answer")
-              a.waves-effect.btn-flat(id="button_{{duvida.id}}", data-ng-click="buscaRespostas(duvida)")
+              a.waves-effect.btn-flat(id="button_{{duvida.id}}", data-ng-click="duvida.answers ? fecharRespostas(duvida) : buscaRespostas(duvida)")
                 span Ver Respostas
       .resposta(data-ng-attr-id="{{answer.id}}", data-ng-repeat="answer in duvida.answers")
         .resposta__header
