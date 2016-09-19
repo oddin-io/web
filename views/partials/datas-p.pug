@@ -47,19 +47,25 @@ main(data-ng-init="buscaDatas()")
         #postar-informativo.modal.bottom-sheet
             .modal-content.modal-criar-item
                 .row
-                    form.offset-m2.offset-l3.col.s12.m8.l6()
+                    form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="postaData()")
                       h1.modal-criar-item__titulo Postar Data
                       .row
                         .input-field.col.s12
-                          input#assunto_data(type="text", name="titulo", data-ng-model="data.assunto")
+                          input#assunto_data(type="text", name="titulo", data-ng-model="date.subject")
                           label(for="assunto_data") Assunto
                         .input-field.col.s12
-                          textarea#textarea_data.materialize-textarea(name="texto", data-ng-model="data.descricao")
+                          textarea#textarea_data.materialize-textarea(name="texto", data-ng-model="date.text")
                           label(for="textarea_data") Descrição
                         .input-field.col.m6
-                          input(name="data" type="text" data-ng-model="data.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}")
+                          input(name="data" type="text" data-ng-model="date.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}")
                           label(for="data") Data
                         .input-field.col.m6
-                          input(name="hora" type="text" data-ng-model="data.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
+                          input(name="hora" type="text" data-ng-model="date.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
                           label(for="hora") Hora
                       button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+        .card.custom-card(data-ng-repeat="date in datas")
+          .card-content
+            .custom-card__header
+              span.title {{date.subject}}
+              span.secondary-info--leading {{date.date | date:"dd/MM/yyyy à's' HH:mm"}}
+            p {{date.text}}

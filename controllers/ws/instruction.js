@@ -87,7 +87,21 @@ function createNotice(req, res) {
 }
 
 function createDate(req, res) {
+  const session = req.cookies.session
+  console.log("Data: " + req.body.date);
 
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}/dates`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+    json: {
+      'subject': req.body.subject,
+      'text': req.body.text,
+      'date': req.body.date
+    }
+  }).pipe(res)
 }
 
 function showMaterials(req, res) {

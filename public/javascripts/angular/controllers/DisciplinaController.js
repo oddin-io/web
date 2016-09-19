@@ -19,6 +19,12 @@ oddin.controller('DisciplinaController',
             )
         }
 
+        function convertDate(date, time) {
+          var convertedDate = date.substring(4, 8) + "-" + date.substring(2, 4) + "-" + date.substring(0,2) +
+          "T" + time.substring(0,2) + ":" + time.substring(2,4) + ":00.000Z";
+          return convertedDate;
+        }
+
         function feedbackReloadAulas(msg) {
             DisciplinaAula.query({ id: $stateParams.disciplinaID },
                 function (aulas) {
@@ -54,6 +60,15 @@ oddin.controller('DisciplinaController',
           $http.get('/api/instructions/' + $stateParams.disciplinaID + '/notices')
               .success(function (data) {
                   $scope.avisos = data
+                  $scope.data_loaded = true;
+                  Materialize.toast(msg, 4000);
+              })
+        }
+
+        function feedbackReloadDates(msg) {
+          $http.get('/api/instructions/' + $stateParams.disciplinaID + '/dates')
+              .success(function (data) {
+                  $scope.datas = data
                   $scope.data_loaded = true;
                   Materialize.toast(msg, 4000);
               })
@@ -98,6 +113,17 @@ oddin.controller('DisciplinaController',
               .success(function () {
                 $scope.aviso = null;
                 feedbackReloadNotices('O aviso foi postado');
+              })
+        }
+
+        $scope.postaData = function () {
+          $scope.date.date = convertDate($scope.date.date, $scope.date.time);
+          delete $scope.date['time'];
+          $scope.data_loaded = false;
+          $http.post('/api/instructions/' + $stateParams.disciplinaID + "/dates", $scope.date)
+              .success(function () {
+                $scope.date = null;
+                feedbackReloadDates('A Data foi postada');
               })
         }
 
