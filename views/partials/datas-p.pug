@@ -28,6 +28,8 @@ header
                             li.barra-lateral__subitem.active
                                 p Datas Importantes
                             li.barra-lateral__subitem
+                                a(ui-sref="tarefas({disciplinaID: disciplina.id})") Tarefas
+                            li.barra-lateral__subitem
                                 a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
                             li.barra-lateral__subitem
                                 a(ui-sref="participantes({disciplinaID: disciplina.id})") Participantes
@@ -36,6 +38,13 @@ header
         li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
             a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaDatas()")
+    #modal-delete-date.modal
+      .modal-content
+        h4.custom-modal__header Excluir Data
+        p Tem certeza que deseja excluir '{{modalContent.subject}}'?
+      .modal-footer
+        a(href='' data-ng-click="deleteDate(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+        a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
     .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
         .spinner-layer
             .circle-clipper.left
@@ -51,21 +60,48 @@ main(data-ng-init="buscaDatas()")
                       h1.modal-criar-item__titulo Postar Data
                       .row
                         .input-field.col.s12
-                          input#assunto_data(type="text", name="titulo", data-ng-model="date.subject")
+                          input#assunto_data(type="text", name="titulo", data-ng-model="date.subject" required)
                           label(for="assunto_data") Assunto
                         .input-field.col.s12
-                          textarea#textarea_data.materialize-textarea(name="texto", data-ng-model="date.text")
+                          textarea#textarea_data.materialize-textarea(name="texto", data-ng-model="date.text" required)
                           label(for="textarea_data") Descrição
                         .input-field.col.m6
-                          input(name="data" type="text" data-ng-model="date.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}")
+                          input(name="data" type="text" data-ng-model="date.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
                           label(for="data") Data
                         .input-field.col.m6
-                          input(name="hora" type="text" data-ng-model="date.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
+                          input(name="hora" type="text" data-ng-model="date.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required)
                           label(for="hora") Hora
                       button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+        #modal-editar-data.modal.bottom-sheet
+            .modal-content.modal-criar-item
+                .row
+                    form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateDate()")
+                      h1.modal-criar-item__titulo Editar Data
+                      .row
+                        .input-field.col.s12
+                          input#assunto_data(type="text", name="titulo", data-ng-model="modalContent.subject" required)
+                          label(for="assunto_data") Assunto
+                        .input-field.col.s12
+                          textarea#textarea_data.materialize-textarea(name="texto", data-ng-model="modalContent.text" required)
+                          label(for="textarea_data") Descrição
+                        .input-field.col.m6
+                          input(name="data" type="text" data-ng-model="modalContent.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+                          label(for="data") Data
+                        .input-field.col.m6
+                          input(name="hora" type="text" data-ng-model="modalContent.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required)
+                          label(for="hora") Hora
+                      button.btn.waves-effect.waves-light.modal-close.modal-criar-item__multiple-button(type="button" name="action") Cancelar
+                      button.btn.waves-effect.waves-light.modal-close.modal-criar-item__multiple-button(type="submit", name="action") Atualizar
         .card.custom-card(data-ng-repeat="date in datas")
           .card-content
             .custom-card__header
               span.title {{date.subject}}
               span.secondary-info--leading {{date.date | date:"dd/MM/yyyy à's' HH:mm"}}
             p {{date.text}}
+          .card-action.custom-card__action
+              .row
+                .col.m4
+                  a(href='' data-ng-click="openModalDeleteDate(date)")
+                    i.material-icons delete
+                  a(href='' data-ng-click="openModalEditDate(date)")
+                    i.material-icons edit

@@ -11,6 +11,7 @@ ws.instruction = require('../routes/ws/instruction')
 ws.material = require('../routes/ws/material')
 ws.presentation = require('../routes/ws/presentation')
 ws.question = require('../routes/ws/question')
+ws.date = require('../routes/ws/date')
 
 module.exports = function routesConfig(app) {
   app.use('/', index)
@@ -25,4 +26,5 @@ module.exports = function routesConfig(app) {
   app.use('/api', ws.material)
   app.use('/api', ws.presentation)
   app.use('/api', ws.question)
+  app.use('/api', ws.date)
 }

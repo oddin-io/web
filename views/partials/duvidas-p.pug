@@ -70,7 +70,7 @@ main(data-ng-init="buscaDuvidas()")
     .card.pergunta(data-ng-repeat="duvida in duvidas | orderBy: ((filter || '') && '(upvotes - downvotes)') : (filter ? true : false)")
       .card-content
         .pergunta__header
-          span.autor {{duvida.person.name}}
+          span.autor {{duvida.anonymous ? 'Anônimo' : duvida.person.name}}
           span.datahora {{duvida.created_at | date:&quot;dd/MM/yyyy &agrave;&apos;s&apos; HH:mm&quot;}}
         .pergunta__content
           p {{duvida.text}}

@@ -70,6 +70,17 @@
       }
     }
   }
+  &__action {
+    .row {
+      margin-bottom: 0;
+    }
+    i {
+      color: $grey-color;
+      &:hover {
+        color: $grey-light-color;
+      }
+    }
+  }
 }
 
 .downvote-margin {
@@ -88,6 +99,10 @@
     @include unraise-button;
     color: $secondary-color;
     background-color: #fafafa !important;
+  }
+  &__multiple-button {
+    margin-right: 15px;
+    margin-bottom: 15px;
   }
 }
 

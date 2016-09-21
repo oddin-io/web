@@ -50,6 +50,16 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
             },
             controller: 'DisciplinaController'
         })
+        .state('tarefas', {
+            url: '/disciplinas/:disciplinaID/tarefas',
+            templateProvider: function ($cookies, $templateFactory) {
+                if($cookies.get('profile') == 0)
+                    return $templateFactory.fromUrl("/partials/tarefas-a");
+                if($cookies.get('profile') == 1)
+                    return $templateFactory.fromUrl("/partials/tarefas-p");
+            },
+            controller: 'DisciplinaController'
+        })
         .state('materiais', {
             url: '/disciplinas/:disciplinaID/materiais',
             templateProvider: function ($cookies, $templateFactory) {

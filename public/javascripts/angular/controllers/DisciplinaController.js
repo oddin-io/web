@@ -21,7 +21,7 @@ oddin.controller('DisciplinaController',
 
         function convertDate(date, time) {
           var convertedDate = date.substring(4, 8) + "-" + date.substring(2, 4) + "-" + date.substring(0,2) +
-          "T" + time.substring(0,2) + ":" + time.substring(2,4) + ":00.000Z";
+          "T" + time.substring(0,2) + ":" + time.substring(2,4) + ":00.0Z";
           return convertedDate;
         }
 
@@ -176,6 +176,33 @@ oddin.controller('DisciplinaController',
               $('#modal-deleta-material').openModal();
         }
 
+        $scope.openModalDeleteDate = function (date) {
+          $scope.modalContent = date;
+          $('#modal-delete-date').openModal();
+        }
+
+        $scope.openModalEditDate = function (date) {
+          $scope.modalContent = angular.copy(date);
+          var formatDate = $scope.modalContent.date.substring(8, 10) + $scope.modalContent.date.substring(5, 7) + $scope.modalContent.date.substring(0,4);
+          var formatTime = $scope.modalContent.date.substring(11, 16);
+          $scope.modalContent.date = formatDate;
+          $scope.modalContent.time = formatTime;
+          $('#modal-editar-data').openModal();
+        }
+
+        $scope.updateDate = function () {
+          $scope.data_loaded = false;
+          $scope.modalContent.date = convertDate($scope.modalContent.date, $scope.modalContent.time);
+          $http.put('api/dates/' +  $scope.modalContent.id, $scope.modalContent)
+                .success(function (data) {
+                  feedbackReloadDates('Data atualizada');
+                })
+                .error(function (data) {
+                  $scope.data_loaded = true;
+                  Materialize.toast('Erro no servidor!', 3000);
+                })
+        }
+
         $scope.uploadMaterial = function () {
             $scope.data_loaded = false;
             var file = document.forms.uploadArchive.file.files[0]
@@ -215,6 +242,14 @@ oddin.controller('DisciplinaController',
             $http.delete('api/materials/' + material.id)
                 .success(function (data) {
                     feedbackReloadMaterial('Arquivo deletado');
+                })
+        }
+
+        $scope.deleteDate = function (date) {
+          $scope.data_loaded = false;
+          $http.delete('api/dates/' +  date.id)
+                .success(function (data) {
+                  feedbackReloadDates('Data deletada');
                 })
         }
         buscaInfo()

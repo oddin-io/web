@@ -7,7 +7,7 @@ header
                     i.material-icons menu
                 a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='disciplinas')
                     i.material-icons arrow_back
-                h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Datas Importantes
+                h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Tarefas
                 a.brand-logo.right.hide-on-small-only(href="/")
                     img.barra-navegacao__logo(src="/images/horizontal_logo.png")
     ul#slide-out.side-nav.fixed.barra-lateral
@@ -25,10 +25,10 @@ header
                                 a(ui-sref="aulas({disciplinaID: disciplina.id})") Aulas
                             li.barra-lateral__subitem
                                 a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
-                            li.barra-lateral__subitem.active
-                                p Datas Importantes
                             li.barra-lateral__subitem
-                                a(ui-sref="tarefas({disciplinaID: disciplina.id})") Tarefas          
+                                a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
+                            li.barra-lateral__subitem.active
+                                p Tarefas
                             li.barra-lateral__subitem
                                 a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
                             li.barra-lateral__subitem
@@ -37,15 +37,22 @@ header
             a(ui-sref='disciplinas') Disciplinas
         li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
             a(href="" data-ng-click="logout()") Logout
-main(data-ng-init="buscaDatas()")
+main(data-ng-init="buscaTarefas()")
     .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
         .spinner-layer
             .circle-clipper.left
                 .circle
     .container
-      .card.custom-card(data-ng-repeat="date in datas")
-        .card-content
-          .custom-card__header
-            span.title {{date.subject}}
-            span.secondary-info--leading {{date.date | date:"dd/MM/yyyy à's' HH:mm"}}
-          p {{date.text}}
+        .fixed-action-btn(style="bottom: 24px; right: 24px;")
+            a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#criar-tarefa", modal)
+                i.large.material-icons add
+        #criar-tarefa.modal.bottom-sheet
+            .modal-content.modal-criar-item
+                .row
+                    form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="criaTarefa()")
+                        h1.modal-criar-item__titulo Criar tarefa
+                        p Não implementado
+                        button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Criar
+        .card.custom-card(data-ng-repeat="tarefa in tarefas")
+          .card-content
+            .custom-card__header

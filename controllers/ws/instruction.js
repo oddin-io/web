@@ -165,6 +165,18 @@ function showProfile(req, res) {
   }).pipe(res)
 }
 
+function deleteDate(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/dates/${req.params.id}`,
+    method: 'DELETE',
+    headers: {
+      'x-session-token': session.token
+    }
+  }).pipe(res)
+}
+
 module.exports = {
   index,
   show,
@@ -181,4 +193,5 @@ module.exports = {
   showNotices,
   showDates,
   showProfile,
+  deleteDate
 }

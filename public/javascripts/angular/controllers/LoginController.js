@@ -5,6 +5,11 @@ function ($scope, $window, $http, $cookies, $location, Login, $state) {
   $scope.login = function () {
     $scope.user.$save()
     .then(function (data) {
+      if($scope.user.persist) {
+        var expireDate = new Date();
+        expireDate.setMonth(expireDate.getMonth() + 1);
+        $cookies.put('session', $cookies.get('session'), {'expires': expireDate})
+      }
       $window.location.href = '/home'
     })
     .catch(function (erro) {
