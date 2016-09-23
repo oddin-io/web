@@ -43,6 +43,10 @@ main(data-ng-init="buscaTarefas()")
             .circle-clipper.left
                 .circle
     .container
-        .card.custom-card(data-ng-repeat="tarefa in tarefas")
-          .card-content
-            .custom-card__header
+      .card.custom-card(data-ng-repeat="tarefa in tarefas")
+        .card-content
+          .custom-card__header
+            span.title {{tarefa.subject}}
+            span.secondary-info Entrega:&nbsp
+              span.secondary-info--leading {{tarefa.deadline | date:"dd/MM/yyyy"}}
+          p {{tarefa.description}}

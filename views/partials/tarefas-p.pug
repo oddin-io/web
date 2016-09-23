@@ -49,10 +49,35 @@ main(data-ng-init="buscaTarefas()")
         #criar-tarefa.modal.bottom-sheet
             .modal-content.modal-criar-item
                 .row
-                    form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="criaTarefa()")
+                    form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="criaTarefa()" name="uploadArchive")
                         h1.modal-criar-item__titulo Criar tarefa
-                        p Não implementado
+                        .row
+                          .input-field.col.s12.m8
+                            input#tarefa_assunto(type="text", name="assunto", data-ng-model="tarefa.subject" required)
+                            label(for="tarefa_assunto") Assunto
+                          .input-field.col.s12.m4
+                            input#tarefa_data(type="text" name="data" data-ng-model="tarefa.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+                            label(for="tarefa_data") Data de Entrega
+                          .input-field.col.s12
+                            textarea#tarefa_descricao.materialize-textarea(name="descricao", data-ng-model="tarefa.description" required)
+                            label(for="tarefa_descricao") Descrição
+                          .file-field.input-field.col.s12
+                            .btn.modal-criar-item__file-button
+                              span Anexo
+                              input#tarefa_file(name="file", type="file")
+                            .file-path-wrapper
+                              input.file-path.validate(type="text", placeholder="Acresente um arquivo com a descrição do trabalho")
                         button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Criar
-        .card.custom-card(data-ng-repeat="tarefa in tarefas")
+        .card.custom-card(data-ng-repeat="tarefa in tarefas", data-ng-init="buscaTarefaMaterial(tarefa)")
           .card-content
             .custom-card__header
+              span.title {{tarefa.subject}}
+              span.secondary-info Entrega:&nbsp
+                span.secondary-info--leading {{tarefa.deadline | date:"dd/MM/yyyy"}}
+            p {{tarefa.description}}
+          .card-action.custom-card__action(data-ng-if="tarefa.material[0]")
+              .row
+                .col.m4
+                  i.material-icons attachment
+                  a(href='' data-ng-click="openModalDeleteDate(date)")                    
+                    span.card-filename {{tarefa.material[0].name}}

@@ -96,7 +96,7 @@ main(data-ng-init="buscaDatas()")
           .card-content
             .custom-card__header
               span.title {{date.subject}}
-              span.secondary-info--leading {{date.date | date:"dd/MM/yyyy à's' HH:mm"}}
+              span.secondary-info--leading {{date.date.substring(0,23) | date:"dd/MM/yyyy à's' HH:mm"}}
             p {{date.text}}
           .card-action.custom-card__action
               .row

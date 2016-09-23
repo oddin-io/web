@@ -80,6 +80,11 @@
         color: $grey-light-color;
       }
     }
+    .card-filename {
+      text-transform: none;
+      color: $grey-color;
+      margin-left: 5px;
+    }
   }
 }
 

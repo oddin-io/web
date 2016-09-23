@@ -88,8 +88,6 @@ function createNotice(req, res) {
 
 function createDate(req, res) {
   const session = req.cookies.session
-  console.log("Data: " + req.body.date);
-
   request({
     uri: `${constants.uri}/instructions/${req.params.id}/dates`,
     method: 'POST',
@@ -100,6 +98,22 @@ function createDate(req, res) {
       'subject': req.body.subject,
       'text': req.body.text,
       'date': req.body.date
+    }
+  }).pipe(res)
+}
+
+function createWork(req, res) {
+  const session = req.cookies.session
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}/works`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+    json: {
+      'subject': req.body.subject,
+      'description': req.body.description,
+      'deadline': req.body.deadline
     }
   }).pipe(res)
 }
@@ -142,10 +156,19 @@ function showNotices(req, res) {
 
 function showDates(req, res) {
   const session = req.cookies.session
-  console.log('datas');
-
   request({
     uri: `${constants.uri}/instructions/${req.params.id}/dates`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }).pipe(res)
+}
+
+function showWorks(req, res) {
+  const session = req.cookies.session
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}/works`,
     method: 'GET',
     headers: {
       'x-session-token': session.token,
@@ -188,10 +211,12 @@ module.exports = {
   createMaterial,
   createNotice,
   createDate,
+  createWork,
   showMaterials,
   showParticipants,
   showNotices,
   showDates,
+  showWorks,
   showProfile,
   deleteDate
 }

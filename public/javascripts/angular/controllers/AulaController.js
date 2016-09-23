@@ -144,6 +144,7 @@ oddin.controller('AulaController',
         $scope.postaResposta = function () {
             $scope.data_loaded = false;
             $http.post('/api/questions/' + $scope.last_doubt.id + '/answers', $scope.resposta).success(function (data) {
+                $scope.last_doubt.has_answer = true;
                 $scope.data_loaded = true;
                 Materialize.toast('Resposta postada', 1000);
                 $scope.buscaRespostas($scope.last_doubt)

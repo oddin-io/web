@@ -20,7 +20,13 @@ oddin.controller('DisciplinaController',
         }
 
         function convertDate(date, time) {
-          var convertedDate = date.substring(4, 8) + "-" + date.substring(2, 4) + "-" + date.substring(0,2) +
+          var convertedDate;
+          if(time === undefined) {
+            convertedDate = date.substring(4, 8) + "-" + date.substring(2, 4) + "-" + date.substring(0,2) +
+            "T00:00:00.0Z";
+            return convertedDate;
+          }
+          convertedDate = date.substring(4, 8) + "-" + date.substring(2, 4) + "-" + date.substring(0,2) +
           "T" + time.substring(0,2) + ":" + time.substring(2,4) + ":00.0Z";
           return convertedDate;
         }
@@ -74,6 +80,15 @@ oddin.controller('DisciplinaController',
               })
         }
 
+        function feedbackReloadWorks(msg) {
+          $http.get('/api/instructions/' + $stateParams.disciplinaID + '/works')
+              .success(function (data) {
+                  $scope.tarefas = data
+                  $scope.data_loaded = true;
+                  Materialize.toast(msg, 4000);
+              })
+        }
+
         $scope.buscaAulas = function () {
             DisciplinaAula.query({ id: $stateParams.disciplinaID },
                 function (aulas) {
@@ -116,6 +131,64 @@ oddin.controller('DisciplinaController',
               })
         }
 
+        $scope.criaTarefa = function () {
+          $scope.data_loaded = false;
+          $scope.tarefa.deadline = convertDate($scope.tarefa.deadline);
+          $http.post('/api/instructions/' + $stateParams.disciplinaID + "/works", $scope.tarefa)
+              .success(function (data) {
+                var file = document.forms.uploadArchive.file.files[0]
+                var fd = new FormData();
+                $http.post('/api/works/' + data.id + '/materials')
+                  .success(function (data) {
+                    for(var key in data.fields) {
+                      fd.append(key, data.fields[key])
+                    }
+                    fd.append('file', file);
+                    $http.post(data.url, fd, {headers: {'Content-Type': undefined}})
+                      .success(function () {
+                        $http.put('api/materials/' + data.id, {'name': file.name, 'mime': file.type})
+                          .success(function () {
+                            $scope.tarefa = null;
+                            feedbackReloadWorks('A tarefa foi criada');
+                          })
+                      })
+                  })
+              })
+        }
+
+        $scope.buscaTarefaMaterial = function (tarefa) {
+          $http.get('/api/works/' + tarefa.id + '/materials')
+            .success(function (data) {
+              tarefa.material = data;
+            })
+          // $http.get('/api/instructions/' + $stateParams.disciplinaID + '/dates')
+          //     .success(function (data) {
+          //         $scope.datas = data
+          //     })
+          console.log(tarefa);
+        }
+
+        $scope.uploadMaterial = function () {
+            $scope.data_loaded = false;
+            var file = document.forms.uploadArchive.file.files[0]
+            var fd = new FormData()
+            $http.post('api/instructions/' + $scope.disciplina.id + '/materials')
+                .success(function (data) {
+                    for (var key in data.fields) {
+                        fd.append(key, data.fields[key])
+                    }
+                    fd.append('file', file)
+                    $http.post(data.url, fd, { headers: { 'Content-Type': undefined } })
+                        .success(function () {
+                            $http.put('api/materials/' + data.id, { 'name': file.name, 'mime': file.type })
+                                .success(function () {
+                                    console.log('Upload Realizado')
+                                    feedbackReloadMaterial('O arquivo ' + file.name + ' foi postado');
+                                })
+                        })
+                })
+        }
+
         $scope.postaData = function () {
           $scope.date.date = convertDate($scope.date.date, $scope.date.time);
           delete $scope.date['time'];
@@ -131,6 +204,13 @@ oddin.controller('DisciplinaController',
           $http.get('/api/instructions/' + $stateParams.disciplinaID + '/dates')
               .success(function (data) {
                   $scope.datas = data
+              })
+        }
+
+        $scope.buscaTarefas = function () {
+          $http.get('/api/instructions/' + $stateParams.disciplinaID + '/works')
+              .success(function (data) {
+                $scope.tarefas = data;
               })
         }
 
@@ -203,26 +283,6 @@ oddin.controller('DisciplinaController',
                 })
         }
 
-        $scope.uploadMaterial = function () {
-            $scope.data_loaded = false;
-            var file = document.forms.uploadArchive.file.files[0]
-            var fd = new FormData()
-            $http.post('api/instructions/' + $scope.disciplina.id + '/materials')
-                .success(function (data) {
-                    for (var key in data.fields) {
-                        fd.append(key, data.fields[key])
-                    }
-                    fd.append('file', file)
-                    $http.post(data.url, fd, { headers: { 'Content-Type': undefined } })
-                        .success(function () {
-                            $http.put('api/materials/' + data.id, { 'name': file.name, 'mime': file.type })
-                                .success(function () {
-                                    console.log('Upload Realizado')
-                                    feedbackReloadMaterial('O arquivo ' + file.name + ' foi postado');
-                                })
-                        })
-                })
-        }
 
         $scope.downloadMaterial = function (material) {
             $scope.data_loaded = false;
