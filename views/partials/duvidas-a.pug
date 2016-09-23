@@ -83,7 +83,7 @@ main(data-ng-init="buscaDuvidas()")
                 i.material-icons check
           .col.s6.m4
               .ver-resposta(data-ng-if="duvida.has_answer")
-                a.waves-effect.btn-flat(id="button_{{duvida.id}}" data-ng-click="buscaRespostas(duvida)") Ver Respostas
+                a.waves-effect.btn-flat(id="button_{{duvida.id}}" data-ng-click="duvida.answers ? fecharRespostas(duvida) : buscaRespostas(duvida)") Ver Respostas
       .resposta(data-ng-attr-id="{{answer.id}}", data-ng-repeat="answer in duvida.answers")
         .resposta__header
             span.autor {{answer.person.name}}
@@ -99,4 +99,5 @@ main(data-ng-init="buscaDuvidas()")
                     i.material-icons.downvote-margin keyboard_arrow_down
                 span(data-ng-class="{'custom-badge': answer.my_vote == 0, 'custom-badge-voted': answer.my_vote != 0}") {{answer.upvotes - answer.downvotes}}
             div(data-ng-class="{'check-disabled': duvida.person.id != usuario.id || duvida.answered && !answer.accepted, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}")
-                a.material-icons(href="" data-ng-click="answer.accepted ? recusaResposta(answer) : aceitaResposta(answer)") check
+                a.material-icons(href="" data-ng-if="!answer.accepted" data-ng-click="aceitaResposta(answer)" tooltipped  data-position="right" data-tooltip="Selecionar resposta") check
+                a.material-icons(href="" data-ng-if="answer.accepted" data-ng-click="recusaResposta(answer)" tooltipped  data-position="right" data-tooltip="Recusar resposta") check

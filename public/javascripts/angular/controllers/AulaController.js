@@ -207,7 +207,11 @@ oddin.controller('AulaController',
             $http.post('/api/answers/' + resposta.id + '/accept')
                 .success(function () {
                     resposta.accepted = true
-                    $scope.duvidas[resposta.question.id].answered = true
+                    $scope.duvidas.forEach( function (elem) {
+                      if(elem.id === resposta.question.id) {
+                        elem.answered = true;
+                      }
+                    })
                 })
         }
 
@@ -215,7 +219,11 @@ oddin.controller('AulaController',
             $http.delete('/api/answers/' + resposta.id + '/accept')
                 .success(function () {
                     resposta.accepted = false
-                    $scope.duvidas[resposta.question.id].answered = false
+                    $scope.duvidas.forEach( function (elem) {
+                      if(elem.id === resposta.question.id) {
+                        elem.answered = false;
+                      }
+                    })
                 })
         }
 
