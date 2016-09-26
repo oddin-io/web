@@ -10,6 +10,10 @@ function ($scope, $window, $http, $cookies, $location, Login, $state) {
         expireDate.setMonth(expireDate.getMonth() + 1);
         $cookies.put('session', $cookies.get('session'), {'expires': expireDate})
       }
+      //Trocar por teste de perfil (admin)
+      if(data.email == "bruno@email.com") {
+        $cookies.put('admin', true);
+      }
       $window.location.href = '/home'
     })
     .catch(function (erro) {
@@ -26,6 +30,7 @@ function ($scope, $window, $http, $cookies, $location, Login, $state) {
     .success(function (data) {
       $cookies.remove('session')
       $cookies.remove('profile')
+      $cookies.remove('admin')
       $window.location.href = '/'
     })
   }

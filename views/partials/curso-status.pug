@@ -1,0 +1,56 @@
+doctype html
+header
+  .navbar-fixed
+    nav.navbar-fixed.barra-navegacao
+      .nav-wrapper.barra-navegacao__container
+        a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+          i.material-icons menu
+        a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='cursos-admin')
+            i.material-icons arrow_back
+        h1.barra-navegacao__title.truncate Nome do curso
+        a.brand-logo.right.hide-on-small-only(href="/")
+          img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+  ul#slide-out.side-nav.fixed.barra-lateral
+    .barra-lateral__header
+      i.barra-lateral__user-avatar.material-icons account_circle
+      p.barra-lateral__user-name {{usuario.nome}}
+      p.barra-lateral__user-email {{usuario.email}}
+    li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+      a(href="" data-ng-click="logout()") Logout
+main(data-ng-init="buscaCursos()")
+  #modal-deleta-material.modal
+    .modal-content
+      h4.custom-modal__header Excluir Material
+      p Tem certeza que deseja excluir '{{modalContent.name}}'?
+    .modal-footer
+      a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+      a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+  .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+    .spinner-layer
+      .circle-clipper.left
+        .circle
+  .container
+    .fixed-action-btn(style="bottom: 24px; right: 24px;")
+      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#adicionar-disciplina", modal)
+        i.large.material-icons add
+    .card.custom-card
+      .card-content
+        .custom-card__header
+          span.title Informações do curso
+        .custom-card__content
+          span Nome:
+          p blah
+          span Código:
+          p BL
+          span Carga Horária:
+          p 3200
+    ul.collection.with-header.custom-list
+      li.collection-header.custom-list__header
+        h2 Disciplinas do curso
+      li.collection-item.avatar.custom-list__item(data-ng-repeat="curso in cursos")
+        i.material-icons.circle book
+        a(ui-sref='curso-status({cursoID: curso.id})')
+          span.title {{curso.name}}
+          p {{curso.code}}
+        a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+          i.material-icons delete

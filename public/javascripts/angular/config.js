@@ -95,9 +95,34 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
             },
             controller: 'AulaController'
         })
+        .state('cursos-admin', {
+            url: '/cursos-admin',
+            templateUrl: '/partials/admin-cursos',
+            controller: 'AdminCursosController'
+        })
+        .state('curso-status', {
+            url: '/curso/:cursoID',
+            templateUrl: '/partials/curso-status',
+            controller: 'AdminCursosController'
+        })
+        .state('disciplinas-admin', {
+            url: '/disciplinas-admin',
+            templateUrl: '/partials/admin-disciplinas',
+            //controller: 'AdminDisciplinasController'
+        })
+        .state('usuarios-admin', {
+            url: '/usuarios-admin',
+            templateUrl: '/partials/admin-usuarios',
+            //controller: 'AdminUsuariosController'
+        })
 }).run(function ($window, $location, $state, $cookies) {
-    if ($window.location.pathname == '/home')
+    if ($window.location.pathname == '/home') {
+        if($cookies.get('admin')) {
+          $state.go('cursos-admin');
+        } else {
         $state.go('disciplinas')
+      }
+    }
     if($window.location.pathname == '/')
         if(!$cookies.get('session'))
             $state.go('login');

@@ -1,0 +1,62 @@
+doctype html
+header
+  .navbar-fixed
+    nav.navbar-fixed.barra-navegacao
+      .nav-wrapper.barra-navegacao__container
+        a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+          i.material-icons menu
+        h1.barra-navegacao__title.truncate Disciplinas
+        a.brand-logo.right.hide-on-small-only(href="/")
+          img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+  ul#slide-out.side-nav.fixed.barra-lateral
+    .barra-lateral__header
+      i.barra-lateral__user-avatar.material-icons account_circle
+      p.barra-lateral__user-name {{usuario.nome}}
+      p.barra-lateral__user-email {{usuario.email}}
+    li.no-padding.barra-lateral__item
+      a(ui-sref='disciplinas') Cursos
+    li.no-padding.barra-lateral__item
+      a.active Disciplinas
+    li.no-padding.barra-lateral__item
+      a(ui-sref='disciplinas') Usuários
+    li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+      a(href="" data-ng-click="logout()") Logout
+main(data-ng-init="")
+  #modal-deleta-material.modal
+    .modal-content
+      h4.custom-modal__header Excluir Material
+      p Tem certeza que deseja excluir '{{modalContent.name}}'?
+    .modal-footer
+      a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+      a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+
+  .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+    .spinner-layer
+      .circle-clipper.left
+        .circle
+  .container
+    .fixed-action-btn(style="bottom: 24px; right: 24px;")
+      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#subir-material", modal)
+        i.large.material-icons add
+    #subir-material.modal.bottom-sheet
+      .modal-content.modal-criar-item
+        .row
+          form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data", data-ng-submit="uploadMaterial(name)", name="uploadArchive")
+            h1.modal-criar-item__titulo Upload de material da disciplina
+            .file-field.input-field
+              .btn.modal-criar-item__file-button
+                span Arquivo
+                input#material-file(name="file", type="file")
+              .file-path-wrapper
+                input.file-path.validate(type="text", placeholder="Faça Upload de um ou mais arquivos")
+            button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+    ul.collection.with-header.lista-material
+      li.collection-header.lista-material__header
+        h2 Disciplinas cadastradas
+      li.collection-item.avatar.lista-material__item(data-ng-repeat="material in materiais")
+        i.material-icons.circle insert_drive_file
+        span.title
+          a(href="" data-ng-click="downloadMaterial(material)") {{material.name}}
+        p {{material.mime}}
+        a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+          i.material-icons delete

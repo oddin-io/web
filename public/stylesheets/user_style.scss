@@ -88,6 +88,38 @@
   }
 }
 
+.custom-list {
+  &__header {
+    padding: 20px !important;
+    h2 {
+      margin: 0;
+      @include type-list-section-title(!important);
+      color: $primary-color;
+    }
+  }
+  &__item {
+    span {
+      @include type-list-primary(!important);
+      color: $type-primary-color;
+    }
+    p {
+      @include type-list-secondary;
+      color: $type-secondary-color;
+    }
+    & > i {
+      background-color: $secondary-color !important;
+    }
+    .secondary-content {
+      i {
+        color: $grey-color;
+        &:hover {
+          color: $grey-light-color
+        }
+      }
+    }
+  }
+}
+
 .downvote-margin {
   margin-right: 5px;
 }
