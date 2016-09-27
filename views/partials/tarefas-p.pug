@@ -75,9 +75,14 @@ main(data-ng-init="buscaTarefas()")
               span.secondary-info Entrega:&nbsp
                 span.secondary-info--leading {{tarefa.deadline | date:"dd/MM/yyyy"}}
             p {{tarefa.description}}
-          .card-action.custom-card__action(data-ng-if="tarefa.material[0]")
+          .card-action.custom-card__action
               .row
-                .col.m4
-                  i.material-icons attachment
-                  a(href='' data-ng-click="openModalDeleteDate(date)")                    
-                    span.card-filename {{tarefa.material[0].name}}
+                .col.m6
+                  .card-attachment(data-ng-if="tarefa.material[0]")
+                    p Especificação:&nbsp
+                    a(href='' data-ng-click="downloadEspecificacao(tarefa)")
+                      //- i.material-icons attachment
+                      span.card-filename {{tarefa.material[0].name}}
+                .col.m6
+                  .card-right-button
+                    a.btn-flat(ui-sref="tarefa-status({tarefaID: tarefa.id})") Ver status

@@ -131,6 +131,13 @@ oddin.controller('DisciplinaController',
               })
         }
 
+        $scope.postaTarefaTeste = function (tarefa) {
+          $http.post('/api/works/' + tarefa.id + '/submissions', {'text': "Teste de submissão de trabalho"})
+            .success(function (data) {
+              console.log("postou! " + data);
+            })
+        }
+
         $scope.criaTarefa = function () {
           $scope.data_loaded = false;
           $scope.tarefa.deadline = convertDate($scope.tarefa.deadline);
@@ -156,16 +163,24 @@ oddin.controller('DisciplinaController',
               })
         }
 
+        $scope.downloadEspecificacao = function (tarefa) {
+          $scope.data_loaded = false;
+          $http.get('api/materials/' + tarefa.material[0].id)
+            .success(function (data) {
+              var link = document.createElement('a');
+              link.setAttribute('href', data.url);
+              link.setAttribute('download', true);
+              link.click()
+              $scope.data_loaded = true;
+              Materialize.toast('Baixando especificação: ' + tarefa.material[0].name, 3000)
+            })
+        }
+
         $scope.buscaTarefaMaterial = function (tarefa) {
           $http.get('/api/works/' + tarefa.id + '/materials')
             .success(function (data) {
               tarefa.material = data;
             })
-          // $http.get('/api/instructions/' + $stateParams.disciplinaID + '/dates')
-          //     .success(function (data) {
-          //         $scope.datas = data
-          //     })
-          console.log(tarefa);
         }
 
         $scope.uploadMaterial = function () {

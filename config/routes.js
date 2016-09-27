@@ -14,6 +14,7 @@ ws.question = require('../routes/ws/question')
 ws.date = require('../routes/ws/date')
 ws.works = require('../routes/ws/works')
 ws.event = require('../routes/ws/event')
+ws.submissions = require('../routes/ws/submissions')
 
 module.exports = function routesConfig(app) {
   app.use('/', index)
@@ -31,4 +32,5 @@ module.exports = function routesConfig(app) {
   app.use('/api', ws.date)
   app.use('/api', ws.works)
   app.use('/api', ws.event)
+  app.use('/api', ws.submissions)
 }

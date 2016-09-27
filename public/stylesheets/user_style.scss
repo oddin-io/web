@@ -69,6 +69,15 @@
         font-weight: bold;
       }
     }
+    .datahora {
+      float: right;
+      @media (max-width: $max-mobile-size) {
+        display: block;
+        float: none;
+      }
+      @include type-list-section-title;
+      color: $type-secondary-color;
+    }
   }
   &__action {
     .row {
@@ -80,10 +89,31 @@
         color: $grey-light-color;
       }
     }
-    .card-filename {
-      text-transform: none;
-      color: $grey-color;
-      margin-left: 5px;
+    .card-attachment {
+      p {
+        display: inline-block;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: $grey-color;
+      }
+      .card-filename {
+        text-transform: none;
+        margin-left: 5px;
+        color: $primary-color;
+        text-decoration:underline;
+      }
+    }
+    .card-right-button {
+      @media (min-width: $min-tablet-size) {
+        text-align: right;
+      }
+      .btn-flat {
+        margin-right: 0 !important;
+        padding: 0;
+        color: $secondary-color !important;
+      }
     }
   }
 }

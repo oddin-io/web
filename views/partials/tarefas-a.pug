@@ -43,10 +43,22 @@ main(data-ng-init="buscaTarefas()")
             .circle-clipper.left
                 .circle
     .container
-      .card.custom-card(data-ng-repeat="tarefa in tarefas")
+      .card.custom-card(data-ng-repeat="tarefa in tarefas"  data-ng-init="buscaTarefaMaterial(tarefa)")
         .card-content
           .custom-card__header
             span.title {{tarefa.subject}}
             span.secondary-info Entrega:&nbsp
               span.secondary-info--leading {{tarefa.deadline | date:"dd/MM/yyyy"}}
           p {{tarefa.description}}
+        .card-action.custom-card__action
+            .row
+              .col.m6
+                .card-attachment(data-ng-if="tarefa.material[0]")
+                  p Especificação:&nbsp
+                  a(href='' data-ng-click="downloadEspecificacao(tarefa)")
+                    //- i.material-icons attachment
+                    span.card-filename {{tarefa.material[0].name}}
+              .col.m6
+                .card-right-button
+                  a.btn-flat(ui-sref="tarefa-status({tarefaID: tarefa.id})") Ver status
+                //- a(href='' data-ng-click="postaTarefaTeste(tarefa)") Postar tarefa teste! :)

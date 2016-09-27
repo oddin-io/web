@@ -1,0 +1,73 @@
+doctype html
+header
+    .navbar-fixed
+        nav.navbar-fixed.barra-navegacao
+            .nav-wrapper.barra-navegacao__container
+                a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+                    i.material-icons menu
+                a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='tarefas({disciplinaID: tarefa.instruction_id})')
+                    i.material-icons arrow_back
+                h1.barra-navegacao__title.truncate {{tarefa.subject}} - Tarefas
+                a.brand-logo.right.hide-on-small-only(href="/")
+                    img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+    ul#slide-out.side-nav.fixed.barra-lateral
+        .barra-lateral__header
+            i.barra-lateral__user-avatar.material-icons account_circle
+            p.barra-lateral__user-name {{usuario.nome}}
+            p.barra-lateral__user-email {{usuario.email}}
+        li.hide-on-large-only.no-padding.barra-lateral__item
+            a(ui-sref='tarefas({disciplinaID: tarefa.instruction_id})') Tarefas
+        li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+            a(href="" data-ng-click="logout()") Logout
+main(data-ng-init="buscaSubmissoesAluno()")
+    .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+        .spinner-layer
+            .circle-clipper.left
+                .circle
+    .container
+      #submeter-trabalho.modal.bottom-sheet
+          .modal-content.modal-criar-item
+              .row
+                  form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="createSubmission()" name="uploadArchive")
+                    h1.modal-criar-item__titulo Submeter trabalho
+                    .row
+                      .input-field.col.s12
+                        textarea#textarea_submission.materialize-textarea(name="texto", data-ng-model="submission.text" required)
+                        label(for="textarea_submission") Descrição
+                      .file-field.input-field.col.s12
+                        .btn.modal-criar-item__file-button
+                          span Arquivo
+                          input#submission_file(name="file", type="file")
+                        .file-path-wrapper
+                          input.file-path.validate(type="text", placeholder="Adicione o arquivo com o seu trabalho")
+                    button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+      .card.custom-card(data-ng-if="submissoes.length === 0")
+        .card-content
+          .custom-card__header
+            span.title Nenhum arquivo foi postado
+            span.secondary-info Entrega:&nbsp
+              span.secondary-info--leading {{tarefa.deadline | date:"dd/MM/yyyy"}}
+        .card-action.custom-card__action
+            .row
+              .offset-m6.col.m6
+                .card-right-button
+                  a.btn-flat(href="#submeter-trabalho", modal) Postar tarefa
+      .card.custom-card(data-ng-repeat="submissao in submissoes" data-ng-init="buscaSubmissaoMaterial(submissao)")
+        .card-content
+          .custom-card__header
+            a(href='' data-ng-click="downloadSubmission(submissao)")
+              span.title {{submissao.material[0].name}}
+              span.datahora {{submissao.updated_at | date:"dd/MM/yyyy à's' HH:mm"}}
+          p {{submissao.text}}
+        .card-action.custom-card__action
+            .row
+              .col.m6
+                .card-attachment(data-ng-if="tarefa.material[0]")
+                  p Especificação:&nbsp
+                  a(href='' data-ng-click="downloadEspecificacao(tarefa)")
+                    //- i.material-icons attachment
+                    span.card-filename {{tarefa.material[0].name}}
+              .col.m6
+                .card-right-button
+                  a.btn-flat(href='' data-ng-click="submeteTarefaTeste()") Postar tarefa
+                //- a(href='' data-ng-click="postaTarefaTeste(tarefa)") Postar tarefa teste! :)

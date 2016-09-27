@@ -95,6 +95,16 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
             },
             controller: 'AulaController'
         })
+        .state('tarefa-status',  {
+            url: '/tarefas/:tarefaID',
+            templateProvider: function ($cookies, $templateFactory) {
+              if($cookies.get('profile') == 0)
+                return $templateFactory.fromUrl("/partials/tarefa-status-a");
+              if($cookies.get('profile') == 1)
+                return $templateFactory.fromUrl("/partials/tarefa-status-p");
+            },
+            controller: 'TarefasController'
+        })
         .state('cursos-admin', {
             url: '/cursos-admin',
             templateUrl: '/partials/admin-cursos',
