@@ -104,6 +104,7 @@ function createDate(req, res) {
 
 function createWork(req, res) {
   const session = req.cookies.session
+  console.log('create work');
   request({
     uri: `${constants.uri}/instructions/${req.params.id}/works`,
     method: 'POST',

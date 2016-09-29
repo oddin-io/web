@@ -46,6 +46,13 @@ main(data-ng-init="buscaTarefas()")
         .fixed-action-btn(style="bottom: 24px; right: 24px;")
             a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#criar-tarefa", modal)
                 i.large.material-icons add
+        #modal-deleta-tarefa.modal
+          .modal-content
+            h4.custom-modal__header Excluir Tarefa
+            p Tem certeza que deseja excluir '{{modalContent.subject}}'?
+          .modal-footer
+            a(href='' data-ng-click="deletaTarefa(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+            a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
         #criar-tarefa.modal.bottom-sheet
             .modal-content.modal-criar-item
                 .row
@@ -53,36 +60,61 @@ main(data-ng-init="buscaTarefas()")
                         h1.modal-criar-item__titulo Criar tarefa
                         .row
                           .input-field.col.s12.m8
-                            input#tarefa_assunto(type="text", name="assunto", data-ng-model="tarefa.subject" required)
-                            label(for="tarefa_assunto") Assunto
+                            input#create_tarefa_assunto(type="text", name="assunto", data-ng-model="tarefa.subject" required)
+                            label(for="create_tarefa_assunto") Assunto
                           .input-field.col.s12.m4
-                            input#tarefa_data(type="text" name="data" data-ng-model="tarefa.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
-                            label(for="tarefa_data") Data de Entrega
+                            input#create_tarefa_data(type="text" name="data" data-ng-model="tarefa.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+                            label(for="create_tarefa_data") Data de Entrega
                           .input-field.col.s12
-                            textarea#tarefa_descricao.materialize-textarea(name="descricao", data-ng-model="tarefa.description" required)
-                            label(for="tarefa_descricao") Descrição
+                            textarea#create_tarefa_descricao.materialize-textarea(name="descricao", data-ng-model="tarefa.description" required)
+                            label(for="create_tarefa_descricao") Descrição
                           .file-field.input-field.col.s12
                             .btn.modal-criar-item__file-button
                               span Anexo
-                              input#tarefa_file(name="file", type="file")
+                              input#create_tarefa_file(name="file", type="file")
                             .file-path-wrapper
-                              input.file-path.validate(type="text", placeholder="Acresente um arquivo com a descrição do trabalho")
+                              input.file-path.validate(type="text", ng-model="tarefa.materials[0]" placeholder="Acresente um arquivo com a descrição do trabalho")
                         button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Criar
+        #editar-tarefa.modal.bottom-sheet
+            .modal-content.modal-criar-item
+                .row
+                    form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="atualizaTarefa()" name="updateArchive")
+                        h1.modal-criar-item__titulo Editar tarefa
+                        .row
+                          .input-field.col.s12.m8
+                            input#edit_tarefa_assunto(type="text", name="assunto", data-ng-model="modalContent.subject" required)
+                            label(for="edit_tarefa_assunto") Assunto
+                          .input-field.col.s12.m4
+                            input#edit_tarefa_data(type="text" name="data" data-ng-model="modalContent.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+                            label(for="edit_tarefa_data") Data de Entrega
+                          .input-field.col.s12
+                            textarea#edit_tarefa_descricao.materialize-textarea(name="descricao", data-ng-model="modalContent.description" required)
+                            label(for="edit_tarefa_descricao") Descrição
+                          .file-field.input-field.col.s12
+                            .btn.modal-criar-item__file-button
+                              span Anexo
+                              input#edit_tarefa_file(name="file", type="file")
+                            .file-path-wrapper
+                              input.file-path.validate(type="text", ng-model="modalContent.materialName" placeholder="Acresente um arquivo com a descrição do trabalho")
+                        button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
         .card.custom-card(data-ng-repeat="tarefa in tarefas", data-ng-init="buscaTarefaMaterial(tarefa)")
           .card-content
             .custom-card__header
-              span.title {{tarefa.subject}}
+              a(ui-sref="tarefa-status({tarefaID: tarefa.id})")
+                span.title.link-title {{tarefa.subject}}
               span.secondary-info Entrega:&nbsp
-                span.secondary-info--leading {{tarefa.deadline | date:"dd/MM/yyyy"}}
+                span.secondary-info--leading {{tarefa.deadline.substring(0,23) | date:"dd/MM/yyyy"}}
             p {{tarefa.description}}
           .card-action.custom-card__action
               .row
                 .col.m6
-                  .card-attachment(data-ng-if="tarefa.material[0]")
+                  a(href='' data-ng-click="openModalDeleteWork(tarefa)")
+                    i.material-icons delete
+                  a(href='' data-ng-click="openModalEditWork(tarefa)")
+                    i.material-icons edit
+                .col.m6.s12
+                  .card-attachment(data-ng-if="tarefa.materials[0]")
                     p Especificação:&nbsp
                     a(href='' data-ng-click="downloadEspecificacao(tarefa)")
                       //- i.material-icons attachment
-                      span.card-filename {{tarefa.material[0].name}}
-                .col.m6
-                  .card-right-button
-                    a.btn-flat(ui-sref="tarefa-status({tarefaID: tarefa.id})") Ver status
+                      span.card-filename(data-ng-if="tarefa.materials") {{tarefa.materials[0].name}}

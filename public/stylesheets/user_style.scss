@@ -55,6 +55,14 @@
     .title {
       @include type-list-section-title;
     }
+    .file-title {
+      color: $primary-color;
+      text-decoration: underline;
+    }
+    .link-title {
+      color: #000;
+      text-decoration: underline;
+    }
     .secondary-info {
       float: right;
       @media (max-width: $max-mobile-size) {
@@ -90,6 +98,14 @@
       }
     }
     .card-attachment {
+      float: right;
+      @media(max-width: $max-mobile-size) {
+        margin-top: 10px;
+        float: none;
+      }
+      a {
+        margin-right: 0 !important;
+      }
       p {
         display: inline-block;
         margin-top: 0;
@@ -105,6 +121,11 @@
         text-decoration:underline;
       }
     }
+    .attachment-unique {
+      float: none;
+      margin-top: 0;
+    }
+
     .card-right-button {
       @media (min-width: $min-tablet-size) {
         text-align: right;

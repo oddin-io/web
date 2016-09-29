@@ -5,9 +5,9 @@ header
             .nav-wrapper.barra-navegacao__container
                 a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
                     i.material-icons menu
-                a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='tarefas({disciplinaID: tarefa.instruction_id})')
+                a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='tarefas({disciplinaID: tarefa.instruction.id})')
                     i.material-icons arrow_back
-                h1.barra-navegacao__title.truncate {{tarefa.subject}} - Tarefas
+                h1.barra-navegacao__title.truncate {{tarefa.subject}} - Submissões
                 a.brand-logo.right.hide-on-small-only(href="/")
                     img.barra-navegacao__logo(src="/images/horizontal_logo.png")
     ul#slide-out.side-nav.fixed.barra-lateral
@@ -16,7 +16,9 @@ header
             p.barra-lateral__user-name {{usuario.nome}}
             p.barra-lateral__user-email {{usuario.email}}
         li.hide-on-large-only.no-padding.barra-lateral__item
-            a(ui-sref='tarefas({disciplinaID: tarefa.instruction_id})') Tarefas
+            a(ui-sref='tarefas({disciplinaID: tarefa.instruction.id})') Tarefas
+        li.no-padding.barra-lateral__item
+            a(ui-sref='disciplinas') Disciplinas
         li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
             a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaSubmissoes()")
@@ -25,17 +27,17 @@ main(data-ng-init="buscaSubmissoes()")
             .circle-clipper.left
                 .circle
     .container
-      .card.custom-card(data-ng-repeat="submissao in submissoes" data-ng-init="buscaSubmissaoMaterial(submissao)")
+      .card.custom-card(data-ng-repeat="submissao in submissoes | orderBy: 'person.name'" data-ng-init="buscaSubmissaoMaterial(submissao)")
         .card-content
           .custom-card__header
-            span.title {{submissao.person_id}}
-            span.datahora {{submissao.updated_at | date:"dd/MM/yyyy à's' HH:mm"}}
+            span.title {{submissao.person.name}}
+            span.datahora {{submissao.created_at | date:"dd/MM/yyyy à's' HH:mm"}}
           p {{submissao.text}}
         .card-action.custom-card__action
             .row
               .col.m6
-                .card-attachment(data-ng-if="submissao.material[0]")
+                .card-attachment.attachment-unique(data-ng-if="submissao.materials[0]")
                   p Baixar trabalho:&nbsp
                   a(href='' data-ng-click="downloadSubmission(submissao)")
                     //- i.material-icons attachment
-                    span.card-filename {{submissao.material[0].name}}
+                    span.card-filename {{submissao.materials[0].name}}
