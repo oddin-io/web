@@ -62,6 +62,7 @@ oddin.controller('TarefasController',
                 for(var i = 0; i < $scope.submissoes.length; i++) {
                   if($scope.submissoes[i].id === submission.id) {
                     $scope.submissoes.splice(i, 1);
+                    break;
                   }
                 }
                 $scope.data_loaded = true;

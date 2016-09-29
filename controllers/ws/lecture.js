@@ -4,7 +4,7 @@ const constants = require('../../config/constants')
 function index(req, res) {
   const session = req.cookies.session
   request({
-    uri: `${constants.uri}/events`,
+    uri: `${constants.uri}/lectures`,
     method: 'GET',
     headers: {
       'x-session-token': session.token,
@@ -14,8 +14,9 @@ function index(req, res) {
 
 function create(req, res) {
   const session = req.cookies.session
+  console.log('criar disciplina')
   request({
-    uri: `${constants.uri}/events`,
+    uri: `${constants.uri}/lectures`,
     method: 'POST',
     headers: {
       'x-session-token': session.token,
@@ -31,16 +32,16 @@ function create(req, res) {
 function destroy(req, res) {
   const session = req.cookies.session
   request({
-    uri: `${constants.uri}/events/${req.params.id}`,
+    uri: `${constants.uri}/lectures/${req.params.id}`,
     method: 'DELETE',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
 module.exports = {
   index,
-  create,
-  destroy
+  destroy,
+  create
 }

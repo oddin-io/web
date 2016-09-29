@@ -118,12 +118,12 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
         .state('disciplinas-admin', {
             url: '/disciplinas-admin',
             templateUrl: '/partials/admin-disciplinas',
-            //controller: 'AdminDisciplinasController'
+            controller: 'AdminDisciplinasController'
         })
         .state('usuarios-admin', {
             url: '/usuarios-admin',
             templateUrl: '/partials/admin-usuarios',
-            //controller: 'AdminUsuariosController'
+            controller: 'AdminUsersController'
         })
 }).run(function ($window, $location, $state, $cookies) {
     if ($window.location.pathname == '/home') {

@@ -16,18 +16,18 @@ header
     li.no-padding.barra-lateral__item
       a.active Cursos
     li.no-padding.barra-lateral__item
-      a(ui-sref='disciplinas') Disciplinas
+      a(ui-sref='disciplinas-admin') Disciplinas
     li.no-padding.barra-lateral__item
-      a(ui-sref='disciplinas') Usuários
+      a(ui-sref='usuarios-admin') Usuários
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
       a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaCursos()")
-  #modal-deleta-material.modal
+  #modal-deleta-curso.modal
     .modal-content
-      h4.custom-modal__header Excluir Material
+      h4.custom-modal__header Excluir Curso
       p Tem certeza que deseja excluir '{{modalContent.name}}'?
     .modal-footer
-      a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+      a(href='' data-ng-click="deleteCurso(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
       a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
   .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
     .spinner-layer
@@ -48,7 +48,7 @@ main(data-ng-init="buscaCursos()")
                 label(for="nome-curso") Nome
               .input-field.col.s12
                 input#codigo-curso(type="text", data-ng-model="curso.code")
-                label(for="nome-curso") Código
+                label(for="codigo-curso") Código
               .input-field.col.s12
                 input#carga-curso(type="text", data-ng-model="curso.workload")
                 label(for="carga-curso") Carga Horária
@@ -61,5 +61,5 @@ main(data-ng-init="buscaCursos()")
         a(ui-sref='curso-status({cursoID: curso.id})')
           span.title {{curso.name}}
           p {{curso.code}}
-        a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+        a.secondary-content(href="" data-ng-click="openModalDeleteCurso(curso)")
           i.material-icons delete

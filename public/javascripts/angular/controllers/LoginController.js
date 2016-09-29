@@ -1,17 +1,19 @@
 oddin.controller('LoginController',
 function ($scope, $window, $http, $cookies, $location, Login, $state) {
   $scope.recover = {}
-  $scope.user = new Login()
+  $scope.user = {}
   $scope.login = function () {
-    $scope.user.$save()
+    $http.post('/login', $scope.user)
     .then(function (data) {
+      data = data.data
       if($scope.user.persist) {
         var expireDate = new Date();
         expireDate.setMonth(expireDate.getMonth() + 1);
         $cookies.put('session', $cookies.get('session'), {'expires': expireDate})
       }
       //Trocar por teste de perfil (admin)
-      if(data.email == "bruno@email.com") {
+      console.log(data)
+      if(data.person.admin) {
         $cookies.put('admin', true);
       }
       $window.location.href = '/home'

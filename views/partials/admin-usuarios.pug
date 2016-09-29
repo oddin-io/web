@@ -14,9 +14,9 @@ header
       p.barra-lateral__user-name {{usuario.nome}}
       p.barra-lateral__user-email {{usuario.email}}
     li.no-padding.barra-lateral__item
-      a(ui-sref='disciplinas') Cursos
+      a(ui-sref='cursos-admin') Cursos
     li.no-padding.barra-lateral__item
-      a(ui-sref='disciplinas') Disciplinas
+      a(ui-sref='disciplinas-admin') Disciplinas
     li.no-padding.barra-lateral__item
       a.active Usuários
     li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
@@ -29,26 +29,19 @@ main(data-ng-init="")
     .modal-footer
       a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
       a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-
   .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
     .spinner-layer
       .circle-clipper.left
         .circle
   .container
     .fixed-action-btn(style="bottom: 24px; right: 24px;")
-      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#subir-material", modal)
+      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#criar-usuario", modal)
         i.large.material-icons add
-    #subir-material.modal.bottom-sheet
+    #criar-usuario.modal.bottom-sheet
       .modal-content.modal-criar-item
         .row
-          form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data", data-ng-submit="uploadMaterial(name)", name="uploadArchive")
-            h1.modal-criar-item__titulo Upload de material da disciplina
-            .file-field.input-field
-              .btn.modal-criar-item__file-button
-                span Arquivo
-                input#material-file(name="file", type="file")
-              .file-path-wrapper
-                input.file-path.validate(type="text", placeholder="Faça Upload de um ou mais arquivos")
+          form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="createUser()")
+            h1.modal-criar-item__titulo Criar novo usuário
             button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
     ul.collection.with-header.lista-material
       li.collection-header.lista-material__header
