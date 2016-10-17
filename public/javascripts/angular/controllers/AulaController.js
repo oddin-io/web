@@ -4,6 +4,10 @@ oddin.controller('AulaController',
       $scope.duvida = new Duvida()
       $scope.last_doubt = {}
       $scope.data_loaded = true
+      const duvidas = {}
+      const socket = io.connect('http://socket-oddin.rhcloud.com:8000/presentation')
+
+
       function buscaInfo() {
         Aula.get({ id: $stateParams.aulaID },
                 function (aula) {
@@ -25,7 +29,10 @@ oddin.controller('AulaController',
       }
 
       function addDuvida(duvida) {
-        $scope.duvidas[duvida.id] = duvida
+        console.log(duvida)
+        duvidas[duvida.id] = duvida
+        $scope.duvidas.unshift(duvida)
+        $scope.duvida = new Duvida()
       }
 
       function removeDuvida(duvida) {
@@ -120,9 +127,9 @@ oddin.controller('AulaController',
         if ($scope.duvida.anonymous === undefined) $scope.duvida.anonymous = false
         $scope.duvida.$save({ id: $stateParams.aulaID })
                 .then(function (data) {
-                  $scope.duvidas.unshift(data)
                   $scope.data_loaded = true
-                  $scope.duvida = new Duvida()
+                  // addDuvida(data)
+                  socket.emit('POST /questions', [data])
                   Materialize.toast('Dúvida postada', 1000)
                 })
                 .catch(function (erro) {
@@ -174,9 +181,9 @@ oddin.controller('AulaController',
         $http.post('/api/answers/' + resposta.id + '/upvote')
                 .success(function () {
                   if (resposta.my_vote == 0)
-                    resposta.upvotes++
+                    { resposta.upvotes++ }
                   else if (resposta.my_vote == -1)
-                    resposta.upvotes += 2
+                    { resposta.upvotes += 2 }
                   resposta.my_vote = 1
                 })
       }
@@ -185,9 +192,9 @@ oddin.controller('AulaController',
         $http.post('/api/answers/' + resposta.id + '/downvote')
                 .success(function () {
                   if (resposta.my_vote == 0)
-                    resposta.upvotes--
+                    { resposta.upvotes-- }
                   else if (resposta.my_vote == 1)
-                    resposta.upvotes -= 2
+                    { resposta.upvotes -= 2 }
                   resposta.my_vote = -1
                 })
       }
@@ -196,9 +203,9 @@ oddin.controller('AulaController',
         $http.delete('/api/answers/' + resposta.id + '/vote')
                 .success(function () {
                   if (resposta.my_vote == 1)
-                    resposta.upvotes--
+                    { resposta.upvotes-- }
                   else
-                        resposta.upvotes++
+                        { resposta.upvotes++ }
                   resposta.my_vote = 0
                 })
       }
@@ -227,10 +234,11 @@ oddin.controller('AulaController',
                 })
       }
 
-      const socket = io.connect('http://socket-oddin.rhcloud.com/presentation')
-      socket.emit('new/doubt', { text: 'Hello' })
-      socket.on('new/doubt', function (data) {
-        console.log(data)
+      socket.on('POST /questions', function (data) {
+        $scope.$apply(function () { data.forEach(el => {
+          addDuvida(el)
+        })
+        })
       })
 
       $scope.usuario = {
