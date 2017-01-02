@@ -1,4 +1,4 @@
-oddin.controller('DisciplinasController',
+oddin.controller('InstructionsController',
   function ($scope, Disciplina, $cookies, Profile, $stateParams, $state) {
     function buscaDisciplinas() {
       Disciplina.query(

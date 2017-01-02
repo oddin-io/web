@@ -18,7 +18,7 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
         .state('disciplinas', {
             url: '/disciplinas',
             templateUrl: '/partials/disciplinas',
-            controller: 'DisciplinasController'
+            controller: 'InstructionsController'
         })
         .state('aulas', {
             url: '/disciplinas/:disciplinaID/aulas',
@@ -28,7 +28,7 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
                 if($cookies.get('profile') == 1)
                     return $templateFactory.fromUrl("/partials/aulas-p");
             },
-            controller: 'DisciplinaController'
+            controller: 'PresentationsController'
         })
         .state('avisos', {
             url: '/disciplinas/:disciplinaID/avisos',
@@ -38,7 +38,7 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
                 if($cookies.get('profile') == 1)
                     return $templateFactory.fromUrl("/partials/avisos-p");
             },
-            controller: 'DisciplinaController'
+            controller: 'NoticesController'
         })
         .state('datas', {
             url: '/disciplinas/:disciplinaID/datas',
@@ -48,7 +48,7 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
                 if($cookies.get('profile') == 1)
                     return $templateFactory.fromUrl("/partials/datas-p");
             },
-            controller: 'DisciplinaController'
+            controller: 'DatesController'
         })
         .state('tarefas', {
             url: '/disciplinas/:disciplinaID/tarefas',
@@ -58,7 +58,7 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
                 if($cookies.get('profile') == 1)
                     return $templateFactory.fromUrl("/partials/tarefas-p");
             },
-            controller: 'DisciplinaController'
+            controller: 'WorksController'
         })
         .state('materiais', {
             url: '/disciplinas/:disciplinaID/materiais',
