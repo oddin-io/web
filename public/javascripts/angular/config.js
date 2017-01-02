@@ -68,12 +68,12 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
                 if($cookies.get('profile') == 1)
                     return $templateFactory.fromUrl("/partials/materiais-p");
             },
-            controller: 'DisciplinaController'
+            controller: 'MaterialsController'
         })
         .state('participantes', {
             url: '/disciplinas/:disciplinaID/participantes',
             templateUrl: '/partials/participantes',
-            controller: 'DisciplinaController'
+            controller: 'ParticipantsController'
         })
         .state('duvidas', {
             url: '/aulas/:aulaID',
@@ -83,7 +83,7 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
                 if($cookies.get('profile') == 1)
                     return $templateFactory.fromUrl("/partials/duvidas-p");
             },
-            controller: 'AulaController'
+            controller: 'PresentationShowController'
         })
         .state('material-aula', {
             url: '/aulas/:aulaID/material',
@@ -93,7 +93,7 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
                 if($cookies.get('profile') == 1)
                     return $templateFactory.fromUrl("/partials/material-aula-p");
             },
-            controller: 'AulaController'
+            controller: 'PresentationMaterialController'
         })
         .state('tarefa-status',  {
             url: '/tarefas/:tarefaID',
@@ -103,17 +103,17 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
               if($cookies.get('profile') == 1)
                 return $templateFactory.fromUrl("/partials/tarefa-status-p");
             },
-            controller: 'TarefasController'
+            controller: 'WorkShowController'
         })
         .state('cursos-admin', {
             url: '/cursos-admin',
             templateUrl: '/partials/admin-cursos',
-            controller: 'AdminCursosController'
+            controller: 'AdminEventsController'
         })
         .state('curso-status', {
             url: '/curso/:cursoID',
             templateUrl: '/partials/curso-status',
-            controller: 'AdminCursosController'
+            controller: 'AdminEventsController'
         })
         .state('disciplinas-admin', {
             url: '/disciplinas-admin',

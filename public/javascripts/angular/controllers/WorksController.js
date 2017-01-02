@@ -28,6 +28,18 @@ oddin.controller('WorksController',
               })
         }
 
+        function convertDate(date, time) {
+          var convertedDate;
+          if(time === undefined) {
+            convertedDate = date.substring(4, 8) + "-" + date.substring(2, 4) + "-" + date.substring(0,2) +
+            "T00:00:00.0Z";
+            return convertedDate;
+          }
+          convertedDate = date.substring(4, 8) + "-" + date.substring(2, 4) + "-" + date.substring(0,2) +
+          "T" + time.substring(0,2) + ":" + time.substring(2,4) + ":00.0Z";
+          return convertedDate;
+        }
+
         $scope.openModalEditWork = function (tarefa) {
           $scope.modalContent = angular.copy(tarefa);
           $scope.modalContent.deadline = formatDate($scope.modalContent.deadline);
