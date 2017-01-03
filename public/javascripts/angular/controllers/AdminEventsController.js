@@ -1,4 +1,4 @@
-oddin.controller('AdminCursosController',
+oddin.controller('AdminEventsController',
 function ($http, $scope, $stateParams, $cookies) {
   $scope.usuario = {
     'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
