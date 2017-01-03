@@ -16,6 +16,7 @@ ws.works = require('../routes/ws/works')
 ws.event = require('../routes/ws/event')
 ws.submissions = require('../routes/ws/submissions')
 ws.lecture = require('../routes/ws/lecture')
+ws.person = require('../routes/ws/person')
 
 module.exports = function routesConfig(app) {
   app.use('/', index)
@@ -35,4 +36,5 @@ module.exports = function routesConfig(app) {
   app.use('/api', ws.event)
   app.use('/api', ws.submissions)
   app.use('/api', ws.lecture)
+  app.use('/api', ws.person)
 }

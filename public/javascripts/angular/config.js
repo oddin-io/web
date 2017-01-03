@@ -115,6 +115,11 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
 		templateUrl: '/partials/curso-status',
 		controller: 'AdminEventShowController'
 	})
+	.state('instruction-show', {
+		url: '/curso-disciplinas/:disciplinaID',
+		templateUrl: '/partials/admin-instruction-show',
+		controller: 'AdminInstructionShowController'
+	})
 	.state('disciplinas-admin', {
 		url: '/disciplinas-admin',
 		templateUrl: '/partials/admin-disciplinas',

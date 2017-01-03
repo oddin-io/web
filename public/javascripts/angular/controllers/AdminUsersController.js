@@ -6,12 +6,13 @@ oddin.controller('AdminUsersController',
     }
     $scope.data_loaded = true;
 
-    $scope.buscaCursos = function () {
-      $http.get('/api/events')
+    $scope.buscaUsuarios = function () {
+      $http.get('/api/person')
       .success(function (data) {
-        $scope.cursos = data;
+        $scope.users = data;
       })
     }
+
     $scope.cadastraCurso =  function () {
       $http.post('/api/events', $scope.curso)
       .success(function (data) {

@@ -53,6 +53,22 @@ main(data-ng-init="buscaDisciplinas()")
                 input#carga-curso(type="text", data-ng-model="disciplina.workload")
                 label(for="carga-disciplina") Carga Horária
                 button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Cadastrar
+    #modal-edita-disciplina.modal.bottom-sheet
+      .modal-content.modal-criar-item
+        .row
+          form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateDisciplina(modalContent)")
+            h1.modal-criar-item__titulo Atualiza disciplina
+            .row
+              .input-field.col.s12
+                input#nome-disciplina(type="text", data-ng-model="modalContent.name")
+                label(for="nome-disciplina") Nome
+              .input-field.col.s12
+                input#codigo-disciplina(type="text", data-ng-model="modalContent.code")
+                label(for="codigo-disciplina") Código
+              .input-field.col.s12
+                input#carga-curso(type="text", data-ng-model="modalContent.workload")
+                label(for="carga-disciplina") Carga Horária
+                button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
     ul.collection.with-header.custom-list
       li.collection-header.custom-list__header
         h2 Disciplinas cadastradas
@@ -61,5 +77,8 @@ main(data-ng-init="buscaDisciplinas()")
         a(ui-sref='disciplina-status({disciplinaID: disciplina.id})')
           span.title {{disciplina.name}}
           p {{disciplina.code}}
-        a.secondary-content(href="" data-ng-click="openModalDeleteDisciplina(disciplina)")
-          i.material-icons delete
+        .secondary-content
+          a.list-double-secondary(href="" data-ng-click="openModalEditDisciplina(disciplina)")
+            i.material-icons edit
+          a(href="" data-ng-click="openModalDeleteDisciplina(disciplina)")
+            i.material-icons delete

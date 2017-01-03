@@ -63,6 +63,9 @@
       color: #000;
       text-decoration: underline;
     }
+    .info-title {
+      color: $primary-color;
+    }
     .secondary-info {
       float: right;
       @media (max-width: $max-mobile-size) {
@@ -134,6 +137,14 @@
         margin-right: 0 !important;
         padding: 0;
         color: $secondary-color !important;
+      }
+    }
+  }
+  &__content {
+    .info {
+      span {
+        color: $grey-color;
+        font-size: 0.82em;
       }
     }
   }

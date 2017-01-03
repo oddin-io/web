@@ -7,7 +7,7 @@ header
           i.material-icons menu
         a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='cursos-admin')
             i.material-icons arrow_back
-        h1.barra-navegacao__title.truncate {{curso.name}}
+        h1.barra-navegacao__title.truncate Instruction Show <= mudar aqui
         a.brand-logo.right.hide-on-small-only(href="/")
           img.barra-navegacao__logo(src="/images/horizontal_logo.png")
   ul#slide-out.side-nav.fixed.barra-lateral
@@ -36,7 +36,7 @@ main(data-ng-init="buscaInfo()")
     .card.custom-card
       .card-content
         .custom-card__header
-          span.title.info-title Informações do curso
+          span.title.info-title Informações da disciplina
         .custom-card__content
           ul.info
             li
@@ -50,7 +50,7 @@ main(data-ng-init="buscaInfo()")
               p {{curso.workload}}
     ul.collection.with-header.custom-list
       li.collection-header.custom-list__header
-        h2 Disciplinas do curso
+        h2 Professor da disciplina
       //- Search for this event's instructions here
 
       //- li.collection-item.avatar.custom-list__item(data-ng-repeat="curso in cursos")
@@ -61,7 +61,26 @@ main(data-ng-init="buscaInfo()")
       //-   a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
       //-     i.material-icons delete
       li.collection-item.avatar.custom-list__item
-        i.material-icons.circle book
+        i.material-icons.circle person
+        a(ui-sref="instruction-show({disciplinaID: 1})")
+          span.title Curso X
+          p Código
+        a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+          i.material-icons remove_circle
+    ul.collection.with-header.custom-list
+      li.collection-header.custom-list__header
+        h2 Alunos da disciplina
+      //- Search for this event's instructions here
+
+      //- li.collection-item.avatar.custom-list__item(data-ng-repeat="curso in cursos")
+      //-   i.material-icons.circle book
+      //-   a(ui-sref='curso-status({cursoID: curso.id})')
+      //-     span.title {{curso.name}}
+      //-     p {{curso.code}}
+      //-   a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+      //-     i.material-icons delete
+      li.collection-item.avatar.custom-list__item
+        i.material-icons.circle person
         a(ui-sref="instruction-show({disciplinaID: 1})")
           span.title Curso X
           p Código

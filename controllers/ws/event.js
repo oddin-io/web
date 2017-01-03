@@ -12,6 +12,17 @@ function index(req, res) {
   }).pipe(res)
 }
 
+function show(req, res) {
+  const session = req.cookies.session
+  request({
+    uri: `${constants.uri}/events/${req.params.id}`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token
+    }
+  }).pipe(res)
+}
+
 function create(req, res) {
   const session = req.cookies.session
   request({
@@ -60,5 +71,6 @@ module.exports = {
   index,
   create,
   destroy,
-	update
+	update,
+  show
 }
