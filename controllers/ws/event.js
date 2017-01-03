@@ -28,6 +28,23 @@ function create(req, res) {
   }).pipe(res)
 }
 
+function update(req, res) {
+  const session = req.cookies.session
+	console.log(req.params);
+  request({
+    uri: `${constants.uri}/events/${req.params.id}`,
+    method: 'PUT',
+    headers: {
+      'x-session-token': session.token,
+    },
+    json: {
+			'code': req.body.code,
+      'name': req.body.name,
+      'workload': req.body.workload
+    }
+  }).pipe(res)
+}
+
 function destroy(req, res) {
   const session = req.cookies.session
   request({
@@ -42,5 +59,6 @@ function destroy(req, res) {
 module.exports = {
   index,
   create,
-  destroy
+  destroy,
+	update
 }
