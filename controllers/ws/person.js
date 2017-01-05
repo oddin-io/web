@@ -5,7 +5,7 @@ const constants = require('../../config/constants')
 function index(req, res) {
   const session = req.cookies.session
   request({
-    uri: `${constants.uri}/person`,
+    uri: `${constants.uri}/people`,
     method: 'GET',
     headers: {
       'x-session-token': session.token,
@@ -16,34 +16,30 @@ function index(req, res) {
 function create(req, res) {
   const session = req.cookies.session
   request({
-    uri: `${constants.uri}/person`,
+    uri: `${constants.uri}/people`,
     method: 'POST',
     headers: {
       'x-session-token': session.token,
     },
     json: {
-      // Person JSON here!
-      // 'code': req.body.code,
-      // 'name': req.body.name,
-      // 'workload': req.body.workload
+      'name': req.body.name,
+      'email': req.body.email,
+      'password': req.body.password
     }
   }).pipe(res)
 }
 
 function update(req, res) {
   const session = req.cookies.session
-	console.log(req.params);
   request({
-    uri: `${constants.uri}/person/${req.params.id}`,
+    uri: `${constants.uri}/people/${req.params.id}`,
     method: 'PUT',
     headers: {
       'x-session-token': session.token,
     },
     json: {
-      // Person JSON here!
-			// 'code': req.body.code,
-      // 'name': req.body.name,
-      // 'workload': req.body.workload
+      'name': req.body.name,
+      'email': req.body.email
     }
   }).pipe(res)
 }
@@ -51,7 +47,7 @@ function update(req, res) {
 function destroy(req, res) {
   const session = req.cookies.session
   request({
-    uri: `${constants.uri}/person/${req.params.id}`,
+    uri: `${constants.uri}/people/${req.params.id}`,
     method: 'DELETE',
     headers: {
       'x-session-token': session.token,
