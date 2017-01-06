@@ -582,3 +582,12 @@
 .list-double-secondary:first-child {
 	margin-right: 20px;
 }
+
+.list-checkbox {
+  margin-top: 5px !important;
+  label {
+    padding-left: 25px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.54);
+  }
+}

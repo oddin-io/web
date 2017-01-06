@@ -16,6 +16,10 @@ header, main, footer {
   }
 }
 
+.add-header, .add-main, .add-footer {
+  padding-left: 0;
+}
+
 .navbar-fixed {
   z-index: 997;
 }

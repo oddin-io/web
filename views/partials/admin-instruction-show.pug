@@ -29,9 +29,22 @@ main(data-ng-init="buscaInfo()")
     .spinner-layer
       .circle-clipper.left
         .circle
+  #modal-adiciona-participantes.modal.modal-fixed-footer
+    .modal-content
+      h4.custom-modal__header Adicionar Participantes
+      ul.collection.custom-list
+        li.collection-item.avatar.custom-list__item
+          i.material-icons.circle person
+          span.title Nome Sobrenome
+          p email@email.com
+          a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+            i.material-icons remove_circle
+    .modal-footer
+      a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+      a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
   .container(data-ng-init="buscaParticipants()")
     .fixed-action-btn(style="bottom: 24px; right: 24px;")
-      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#adicionar-disciplina", modal)
+      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref="add-participants({disciplinaID: disciplina.id})")
         i.large.material-icons add
     .card.custom-card
       .card-content

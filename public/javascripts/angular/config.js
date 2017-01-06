@@ -130,6 +130,11 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
 		templateUrl: '/partials/admin-usuarios',
 		controller: 'AdminUsersController'
 	})
+	.state('add-participants', {
+		url: '/add-participants/:disciplinaID',
+		templateUrl: '/partials/admin-add-participants',
+		controller: 'AdminInstructionShowController'
+	})
 }).run(function ($window, $location, $state, $cookies) {
 	if ($window.location.pathname == '/home') {
 		if($cookies.get('admin')) {
