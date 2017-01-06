@@ -5,9 +5,9 @@ header
       .nav-wrapper.barra-navegacao__container
         a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
           i.material-icons menu
-        a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='cursos-admin')
+        a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='curso-status({cursoID: disciplina.event.id})')
             i.material-icons arrow_back
-        h1.barra-navegacao__title.truncate Instruction Show <= mudar aqui
+        h1.barra-navegacao__title.truncate {{disciplina.lecture.name}}
         a.brand-logo.right.hide-on-small-only(href="/")
           img.barra-navegacao__logo(src="/images/horizontal_logo.png")
   ul#slide-out.side-nav.fixed.barra-lateral
@@ -29,7 +29,7 @@ main(data-ng-init="buscaInfo()")
     .spinner-layer
       .circle-clipper.left
         .circle
-  .container
+  .container(data-ng-init="buscaParticipants()")
     .fixed-action-btn(style="bottom: 24px; right: 24px;")
       a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#adicionar-disciplina", modal)
         i.large.material-icons add
@@ -41,48 +41,28 @@ main(data-ng-init="buscaInfo()")
           ul.info
             li
               span Nome:
-              p {{curso.name}}
+              p {{disciplina.lecture.name}}
             li
               span Código:
-              p {{curso.code}}
+              p {{disciplina.lecture.code}}
             li
               span Carga Horária:
-              p {{curso.workload}}
+              p {{disciplina.lecture.workload}}
     ul.collection.with-header.custom-list
       li.collection-header.custom-list__header
         h2 Professor da disciplina
-      //- Search for this event's instructions here
-
-      //- li.collection-item.avatar.custom-list__item(data-ng-repeat="curso in cursos")
-      //-   i.material-icons.circle book
-      //-   a(ui-sref='curso-status({cursoID: curso.id})')
-      //-     span.title {{curso.name}}
-      //-     p {{curso.code}}
-      //-   a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
-      //-     i.material-icons delete
-      li.collection-item.avatar.custom-list__item
+      li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 1")
         i.material-icons.circle person
-        a(ui-sref="instruction-show({disciplinaID: 1})")
-          span.title Curso X
-          p Código
+        span.title {{participant.person.name}}
+        p {{participant.person.email}}
         a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
           i.material-icons remove_circle
     ul.collection.with-header.custom-list
       li.collection-header.custom-list__header
         h2 Alunos da disciplina
-      //- Search for this event's instructions here
-
-      //- li.collection-item.avatar.custom-list__item(data-ng-repeat="curso in cursos")
-      //-   i.material-icons.circle book
-      //-   a(ui-sref='curso-status({cursoID: curso.id})')
-      //-     span.title {{curso.name}}
-      //-     p {{curso.code}}
-      //-   a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
-      //-     i.material-icons delete
-      li.collection-item.avatar.custom-list__item
+      li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 0")
         i.material-icons.circle person
-        a(ui-sref="instruction-show({disciplinaID: 1})")
-          span.title Curso X
-          p Código
+        span.title {{participant.person.name}}
+        p {{participant.person.email}}
         a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
           i.material-icons remove_circle

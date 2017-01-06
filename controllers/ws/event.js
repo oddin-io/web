@@ -67,10 +67,22 @@ function destroy(req, res) {
   }).pipe(res)
 }
 
+function instructions(req, res) {
+  const session = req.cookies.session
+  request({
+    uri: `${constants.uri}/events/${req.params.id}/instructions`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token
+    }
+  }).pipe(res)
+}
+
 module.exports = {
   index,
   create,
   destroy,
 	update,
-  show
+  show,
+	instructions
 }

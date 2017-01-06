@@ -7,6 +7,20 @@ oddin.controller('AdminInstructionShowController', function ($http, $scope, $sta
 
   $scope.data_loaded = true;
 
+	$scope.buscaInfo = function () {
+    $http.get('api/instructions/' + $stateParams.disciplinaID)
+    .success(function (data) {
+      $scope.disciplina = data;
+    });
+  }
+
+	$scope.buscaParticipants = function () {
+		$http.get('api/instructions/' + $stateParams.disciplinaID + '/participants')
+		.success(function (data) {
+			$scope.participants = data;
+		})
+	}
+
   // $scope.buscaInfo = function () {
   //   $http.get('api/events/' + $stateParams.cursoID)
   //   .success(function (data) {

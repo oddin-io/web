@@ -48,22 +48,13 @@ main(data-ng-init="buscaInfo()")
             li
               span Carga Horária:
               p {{curso.workload}}
-    ul.collection.with-header.custom-list
+    ul.collection.with-header.custom-list(data-ng-init="buscaInstructions()")
       li.collection-header.custom-list__header
-        h2 Disciplinas do curso
-      //- Search for this event's instructions here
-
-      //- li.collection-item.avatar.custom-list__item(data-ng-repeat="curso in cursos")
-      //-   i.material-icons.circle book
-      //-   a(ui-sref='curso-status({cursoID: curso.id})')
-      //-     span.title {{curso.name}}
-      //-     p {{curso.code}}
-      //-   a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
-      //-     i.material-icons delete
-      li.collection-item.avatar.custom-list__item
+        h2 Disciplinas do curso    
+      li.collection-item.avatar.custom-list__item(data-ng-repeat="disciplina in disciplinas")
         i.material-icons.circle book
-        a(ui-sref="instruction-show({disciplinaID: 1})")
-          span.title Curso X
-          p Código
+        a(ui-sref="instruction-show({disciplinaID: disciplina.id})")
+          span.title {{disciplina.lecture.name}} - Turma: {{disciplina.class_number}}
+          p {{disciplina.lecture.code}}
         a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
           i.material-icons remove_circle

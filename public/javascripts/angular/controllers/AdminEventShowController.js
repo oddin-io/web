@@ -14,4 +14,10 @@ oddin.controller('AdminEventShowController', function ($http, $scope, $statePara
     });
   }
 
+	$scope.buscaInstructions = function () {
+		$http.get('api/events/' + $stateParams.cursoID + '/instructions')
+		.success(function (data) {
+			$scope.disciplinas = data;
+		})
+	}
 });
