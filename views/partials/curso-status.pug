@@ -31,7 +31,7 @@ main(data-ng-init="buscaInfo()")
         .circle
   .container
     .fixed-action-btn(style="bottom: 24px; right: 24px;")
-      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#adicionar-disciplina", modal)
+      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref="add-instructions({cursoID: curso.id})")
         i.large.material-icons add
     .card.custom-card
       .card-content
@@ -50,8 +50,8 @@ main(data-ng-init="buscaInfo()")
               p {{curso.workload}}
     ul.collection.with-header.custom-list(data-ng-init="buscaInstructions()")
       li.collection-header.custom-list__header
-        h2 Disciplinas do curso    
-      li.collection-item.avatar.custom-list__item(data-ng-repeat="disciplina in disciplinas")
+        h2 Disciplinas do curso
+      li.collection-item.avatar.custom-list__item(data-ng-repeat="disciplina in instructions")
         i.material-icons.circle book
         a(ui-sref="instruction-show({disciplinaID: disciplina.id})")
           span.title {{disciplina.lecture.name}} - Turma: {{disciplina.class_number}}

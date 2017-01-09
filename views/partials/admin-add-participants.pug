@@ -1,50 +1,60 @@
 doctype html
 header.add-header
-  .navbar-fixed
-    nav.navbar-fixed.barra-navegacao
-      .nav-wrapper.barra-navegacao__container
-        a.barra-navegacao__voltar(ui-sref='instruction-show({disciplinaID: disciplina.id})')
-            i.material-icons close
-        h1.barra-navegacao__title.truncate Adicionar Participantes
+	.navbar-fixed
+		nav.navbar-fixed.barra-navegacao
+			.nav-wrapper.barra-navegacao__container
+				a.barra-navegacao__voltar(ui-sref='instruction-show({disciplinaID: disciplina.id})')
+						i.material-icons close
+				h1.barra-navegacao__title.truncate Adicionar Participantes
 main.add-main(data-ng-init="buscaInfo()")
-  #modal-adiciona-participantes.modal
-    .modal-content
-      h4.custom-modal__header Adicionar Participantes
-      ul.collection.custom-list
-        li.collection-item.avatar.custom-list__item
-          i.material-icons.circle person
-          span.title Nome Sobrenome
-          p email@email.com
-          a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
-            i.material-icons remove_circle
-    .modal-footer
-      a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-      a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-  .container(data-ng-init="setRegistrableUsers()")
-    .fixed-action-btn(style="bottom: 24px; right: 24px;")
-      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#modal-adiciona-participantes", modal)
-        i.large.material-icons check
-    .row
-      .col.l6.s12
-        ul.collection.with-header.custom-list
-          li.collection-header.custom-list__header
-            h2 Usuários
-          li.collection-item.avatar.custom-list__item(data-ng-repeat="user in registrableUsers")
-            i.material-icons.circle person
-            span.title {{user.name}}
-            p {{user.email}}
-            p.list-checkbox
-              input#user-persist(type="checkbox" class="filled-in" ng-model="user.persist")/
-              label(for="user-persist") Professor
-            a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
-              i.material-icons add_circle
-      .col.l6.s12
-        ul.collection.with-header.custom-list
-          li.collection-header.custom-list__header
-            h2 Adicionar em '{{disciplina.lecture.name}}'
-          li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 0")
-            i.material-icons.circle person
-            span.title {{participant.person.name}}
-            p {{participant.person.email}}
-            a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
-              i.material-icons remove_circle
+	#modal-adiciona-participantes.modal
+		.modal-content
+			h4.custom-modal__header Adicionar Participantes
+			ul.collection.custom-list
+				li.collection-item.avatar.custom-list__item
+					i.material-icons.circle person
+					span.title Nome Sobrenome
+					p email@email.com
+					a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+						i.material-icons remove_circle
+		.modal-footer
+			a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	.container(data-ng-init="setRegistrableUsers()")
+		.fixed-action-btn(style="bottom: 24px; right: 24px;")
+			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref='instruction-show({disciplinaID: disciplina.id})')
+				i.large.material-icons check
+		h5.main-title {{disciplina.lecture.name}} - Turma {{disciplina.class_number}}
+		.row
+			.col.l6.s12
+				ul.collection.with-header.custom-list
+					li.collection-header.custom-list__header
+						h2 Usuários Disponíveis
+					li.collection-item.avatar.custom-list__item(data-ng-repeat="user in availableUsers")
+						i.material-icons.circle person
+						span.title {{user.name}}
+						p {{user.email}}
+						p.list-checkbox
+							input#user-persist(type="checkbox" class="filled-in" ng-model="user.persist")/
+							label(for="user-persist") Professor
+						a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+							i.material-icons add_circle
+			.col.l6.s12
+				ul.collection.with-header.custom-list
+					li.collection-header.custom-list__header
+						h2 Professores Cadastrados
+					li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 1")
+						i.material-icons.circle person
+						span.title {{participant.person.name}}
+						p {{participant.person.email}}
+						a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+							i.material-icons remove_circle
+				ul.collection.with-header.custom-list
+					li.collection-header.custom-list__header
+						h2 Alunos Matriculados
+					li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 0")
+						i.material-icons.circle person
+						span.title {{participant.person.name}}
+						p {{participant.person.email}}
+						a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+							i.material-icons remove_circle

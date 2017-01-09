@@ -25,7 +25,25 @@ function show(req, res) {
   }).pipe(res)
 }
 
-function create() {}
+function create(req, res) {
+	console.log('aqui')
+	const session = req.cookies.session
+
+	request({
+		uri: `${constants.uri}/instructions`,
+		method: 'POST',
+		headers: {
+			'x-session-token': session.token
+		},
+		json: {
+			'event_id': req.body.event,
+			'lecture_id': req.body.lecture,
+			'class_number': req.body.class_number,
+			'start_date': req.body.start_date,
+			'end_date': req.body.end_date
+		}
+	}).pipe(res)
+}
 
 function update() {}
 

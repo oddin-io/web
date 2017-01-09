@@ -27,25 +27,20 @@ oddin.controller('AdminInstructionShowController', function ($http, $scope, $sta
       $http.get('api/person')
       .success(function (data) {
         $scope.users = data;
-        console.log('2');
         (function () {
       		$http.get('api/instructions/' + $stateParams.disciplinaID + '/participants')
       		.success(function (data) {
       			$scope.participants = data;
-
-            console.log($scope.users);
-            console.log($scope.participants);
-
-            $scope.registrableUsers = $scope.users.filter(function (user, i) {
+            $scope.availableUsers = $scope.users.filter(function (user, i) {
               var result = true;
-              $scope.participants.every(function (participants, i) {
-                if(user.id != participants.person.id) {
-                  
-                }
-              })
+							for(var i = 0; i < $scope.participants.length; i++) {
+								if(user.id == $scope.participants[i].person.id) {
+									result = false;
+									break;
+								}
+							}
               return result;
             });
-            console.log($scope.registrableUsers)
       		})
       	})();
       })

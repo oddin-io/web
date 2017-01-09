@@ -591,3 +591,13 @@
     color: rgba(0, 0, 0, 0.54);
   }
 }
+
+.main-title {
+	color: $primary-color;
+}
+
+.collection-item {
+	.title {
+		margin-right: 25px;
+	}
+}
