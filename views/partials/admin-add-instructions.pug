@@ -7,6 +7,13 @@ header.add-header
 						i.material-icons close
 				h1.barra-navegacao__title.truncate Adicionar Disciplinas
 main.add-main(data-ng-init="buscaInfo()")
+	#modal-delete-instruction.modal
+		.modal-content
+			h4.custom-modal__header Remover Disciplina
+			p Tem certeza que deseja remover '{{modalContent.lecture.name}}'?
+		.modal-footer
+			a(href='' data-ng-click="deleteInstruction(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
 	#modal-add-disciplina.modal.modal-fixed-footer
 		.modal-content
 			h4.custom-modal__header Adicionar '{{modalContent.name}}'
@@ -23,6 +30,10 @@ main.add-main(data-ng-init="buscaInfo()")
 		.modal-footer
 			a(href='' data-ng-click="createInstruction(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
 			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+		.spinner-layer
+			.circle-clipper.left
+				.circle
 	.container(data-ng-init="setRegistrableUsers()")
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref='curso-status({cursoID: curso.id})')

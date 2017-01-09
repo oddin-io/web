@@ -35,7 +35,7 @@ oddin.controller('AdminEventShowController', function ($http, $scope, $statePara
 
 	$scope.openModalDeleteInstruction = function (instruction) {
 		$scope.modalContent = instruction;
-		$('#modal-deleta-tarefa').openModal();
+		$('#modal-delete-instruction').openModal();
 	}
 
 	$scope.createInstruction = function () {
@@ -61,6 +61,19 @@ oddin.controller('AdminEventShowController', function ($http, $scope, $statePara
 		$http.post('api/instructions', instruction)
 		.success(function (data) {
 			$scope.instructions.push(data);
+			$scope.modalContent = null;
+		})
+	}
+
+	$scope.deleteInstruction = function () {
+		$http.delete('api/instructions/' + $scope.modalContent.id)
+		.success(function (data) {
+			for(var i = 0; i < $scope.instructions.length; i++) {
+				if(data.id == $scope.instructions[i].id) {
+					$scope.instructions.splice(i, 1);
+					break;
+				}
+			}
 			$scope.modalContent = null;
 		})
 	}

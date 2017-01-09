@@ -26,7 +26,6 @@ function show(req, res) {
 }
 
 function create(req, res) {
-	console.log('aqui')
 	const session = req.cookies.session
 
 	request({
@@ -47,7 +46,17 @@ function create(req, res) {
 
 function update() {}
 
-function destroy() {}
+function destroy(req, res) {
+	const session = req.cookies.session
+
+	request({
+		uri: `${constants.uri}/instructions/${req.params.id}`,
+		method: 'DELETE',
+		headers: {
+			'x-session-token': session.token
+		}
+	}).pipe(res);
+}
 
 function showPresentations(req, res) {
   const session = req.cookies.session
