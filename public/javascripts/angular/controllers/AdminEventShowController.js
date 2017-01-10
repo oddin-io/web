@@ -29,12 +29,12 @@ oddin.controller('AdminEventShowController', function ($http, $scope, $statePara
 	}
 
 	$scope.openModalAddLecture = function (lecture) {
-		$scope.modalContent = lecture;
+		$scope.modalContent = angular.copy(lecture);
 		$('#modal-add-disciplina').openModal();
 	}
 
 	$scope.openModalDeleteInstruction = function (instruction) {
-		$scope.modalContent = instruction;
+		$scope.modalContent = angular.copy(instruction);
 		$('#modal-delete-instruction').openModal();
 	}
 

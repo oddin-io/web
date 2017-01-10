@@ -47,6 +47,37 @@ oddin.controller('AdminInstructionShowController', function ($http, $scope, $sta
     })();
   };
 
+	$scope.createEnroll = function (user) {
+		var enroll = {};
+		enroll.person_id = user.id;
+		enroll.instruction_id = $scope.disciplina.id;
+		enroll.profile = user.enrollProfile ? 1 : 0;
+
+		$http.post('api/enrolls', enroll)
+		.success(function (data) {
+			console.log(data)
+			$scope.participants.push(data);
+		})
+	}
+
+	$scope.removeEnroll = function () {
+		$http.delete('api/enrolls/' + $scope.modalContent.id)
+		.success(function (data) {
+			for(var i = 0; i < $scope.participants.length; i++) {
+				if(data.id == $scope.participants[i].id) {
+					$scope.participants.splice(i, 1);
+					break;
+				}
+			}
+			$scope.modalContent = null;
+		})
+	}
+
+	$scope.openModalRemoveParticipant = function (participant) {
+		$scope.modalContent = angular.copy(participant);
+		$('#modal-remove-participant').openModal();
+	}
+
 
   // $scope.buscaInfo = function () {
   //   $http.get('api/events/' + $stateParams.cursoID)

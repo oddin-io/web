@@ -1,81 +1,81 @@
 doctype html
 header
-  .navbar-fixed
-    nav.navbar-fixed.barra-navegacao
-      .nav-wrapper.barra-navegacao__container
-        a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
-          i.material-icons menu
-        a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='curso-status({cursoID: disciplina.event.id})')
-            i.material-icons arrow_back
-        h1.barra-navegacao__title.truncate {{disciplina.lecture.name}}
-        a.brand-logo.right.hide-on-small-only(href="/")
-          img.barra-navegacao__logo(src="/images/horizontal_logo.png")
-  ul#slide-out.side-nav.fixed.barra-lateral
-    .barra-lateral__header
-      i.barra-lateral__user-avatar.material-icons account_circle
-      p.barra-lateral__user-name {{usuario.nome}}
-      p.barra-lateral__user-email {{usuario.email}}
-    li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-      a(href="" data-ng-click="logout()") Logout
+	.navbar-fixed
+		nav.navbar-fixed.barra-navegacao
+			.nav-wrapper.barra-navegacao__container
+				a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+					i.material-icons menu
+				a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='curso-status({cursoID: disciplina.event.id})')
+						i.material-icons arrow_back
+				h1.barra-navegacao__title.truncate {{disciplina.lecture.name}}
+				a.brand-logo.right.hide-on-small-only(href="/")
+					img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+	ul#slide-out.side-nav.fixed.barra-lateral
+		.barra-lateral__header
+			i.barra-lateral__user-avatar.material-icons account_circle
+			p.barra-lateral__user-name {{usuario.nome}}
+			p.barra-lateral__user-email {{usuario.email}}
+		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+			a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaInfo()")
-  #modal-deleta-material.modal
-    .modal-content
-      h4.custom-modal__header Excluir Material
-      p Tem certeza que deseja excluir '{{modalContent.name}}'?
-    .modal-footer
-      a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-      a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-  .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-    .spinner-layer
-      .circle-clipper.left
-        .circle
-  #modal-adiciona-participantes.modal.modal-fixed-footer
-    .modal-content
-      h4.custom-modal__header Adicionar Participantes
-      ul.collection.custom-list
-        li.collection-item.avatar.custom-list__item
-          i.material-icons.circle person
-          span.title Nome Sobrenome
-          p email@email.com
-          a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
-            i.material-icons remove_circle
-    .modal-footer
-      a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-      a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-  .container(data-ng-init="buscaParticipants()")
-    .fixed-action-btn(style="bottom: 24px; right: 24px;")
-      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref="add-participants({disciplinaID: disciplina.id})")
-        i.large.material-icons add
-    .card.custom-card
-      .card-content
-        .custom-card__header
-          span.title.info-title Informações da disciplina
-        .custom-card__content
-          ul.info
-            li
-              span Nome:
-              p {{disciplina.lecture.name}}
-            li
-              span Código:
-              p {{disciplina.lecture.code}}
-            li
-              span Carga Horária:
-              p {{disciplina.lecture.workload}}
-    ul.collection.with-header.custom-list
-      li.collection-header.custom-list__header
-        h2 Professor da disciplina
-      li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 1")
-        i.material-icons.circle person
-        span.title {{participant.person.name}}
-        p {{participant.person.email}}
-        a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
-          i.material-icons remove_circle
-    ul.collection.with-header.custom-list
-      li.collection-header.custom-list__header
-        h2 Alunos da disciplina
-      li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 0")
-        i.material-icons.circle person
-        span.title {{participant.person.name}}
-        p {{participant.person.email}}
-        a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
-          i.material-icons remove_circle
+	#modal-remove-participant.modal
+		.modal-content
+			h4.custom-modal__header Remover Usuário
+			p Tem certeza que deseja remover '{{modalContent.person.name}}'?
+		.modal-footer
+			a(href='' data-ng-click="removeEnroll(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+		.spinner-layer
+			.circle-clipper.left
+				.circle
+	#modal-adiciona-participantes.modal.modal-fixed-footer
+		.modal-content
+			h4.custom-modal__header Adicionar Participantes
+			ul.collection.custom-list
+				li.collection-item.avatar.custom-list__item
+					i.material-icons.circle person
+					span.title Nome Sobrenome
+					p email@email.com
+					a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+						i.material-icons remove_circle
+		.modal-footer
+			a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	.container(data-ng-init="buscaParticipants()")
+		.fixed-action-btn(style="bottom: 24px; right: 24px;")
+			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref="add-participants({disciplinaID: disciplina.id})")
+				i.large.material-icons add
+		.card.custom-card
+			.card-content
+				.custom-card__header
+					span.title.info-title Informações da disciplina
+				.custom-card__content
+					ul.info
+						li
+							span Nome:
+							p {{disciplina.lecture.name}}
+						li
+							span Código:
+							p {{disciplina.lecture.code}}
+						li
+							span Carga Horária:
+							p {{disciplina.lecture.workload}}
+		ul.collection.with-header.custom-list
+			li.collection-header.custom-list__header
+				h2 Professor da disciplina
+			li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 1")
+				i.material-icons.circle person
+				span.title {{participant.person.name}}
+				p {{participant.person.email}}
+				a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+					i.material-icons remove_circle
+		ul.collection.with-header.custom-list
+			li.collection-header.custom-list__header
+				h2 Alunos da disciplina
+			li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 0")
+				i.material-icons.circle person
+				span.title {{participant.person.name}}
+				p {{participant.person.email}}
+				a.secondary-content(href="" data-ng-click="openModalRemoveParticipant(participant)")
+					i.material-icons remove_circle

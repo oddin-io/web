@@ -7,19 +7,17 @@ header.add-header
 						i.material-icons close
 				h1.barra-navegacao__title.truncate Adicionar Participantes
 main.add-main(data-ng-init="buscaInfo()")
-	#modal-adiciona-participantes.modal
+	#modal-remove-participant.modal
 		.modal-content
-			h4.custom-modal__header Adicionar Participantes
-			ul.collection.custom-list
-				li.collection-item.avatar.custom-list__item
-					i.material-icons.circle person
-					span.title Nome Sobrenome
-					p email@email.com
-					a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
-						i.material-icons remove_circle
+			h4.custom-modal__header Remover Usuário
+			p Tem certeza que deseja remover '{{modalContent.person.name}}'?
 		.modal-footer
-			a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='' data-ng-click="removeEnroll(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
 			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+		.spinner-layer
+			.circle-clipper.left
+				.circle
 	.container(data-ng-init="setRegistrableUsers()")
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref='instruction-show({disciplinaID: disciplina.id})')
@@ -35,9 +33,9 @@ main.add-main(data-ng-init="buscaInfo()")
 						span.title {{user.name}}
 						p {{user.email}}
 						p.list-checkbox
-							input#user-persist(type="checkbox" class="filled-in" ng-model="user.persist")/
-							label(for="user-persist") Professor
-						a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+							input(id="user-{{user.id}}" type="checkbox" class="filled-in" data-ng-model="user.enrollProfile")/
+							label(for="user-{{user.id}}") Professor
+						a.secondary-content(href="" data-ng-click="createEnroll(user)")
 							i.material-icons add_circle
 			.col.l6.s12
 				ul.collection.with-header.custom-list
@@ -47,7 +45,7 @@ main.add-main(data-ng-init="buscaInfo()")
 						i.material-icons.circle person
 						span.title {{participant.person.name}}
 						p {{participant.person.email}}
-						a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+						a.secondary-content(href="" data-ng-click="openModalRemoveParticipant(participant)")
 							i.material-icons remove_circle
 				ul.collection.with-header.custom-list
 					li.collection-header.custom-list__header
@@ -56,5 +54,5 @@ main.add-main(data-ng-init="buscaInfo()")
 						i.material-icons.circle person
 						span.title {{participant.person.name}}
 						p {{participant.person.email}}
-						a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+						a.secondary-content(href="" data-ng-click="openModalRemoveParticipant(participant)")
 							i.material-icons remove_circle
