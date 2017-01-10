@@ -29,6 +29,7 @@ function ($http, $scope, $stateParams, $cookies) {
 			$scope.cursos.push(data);
 			$scope.curso = null;
 			$scope.data_loaded = true;
+			Materialize.toast('Curso cadastrado', 3000)
 		})
 	}
 

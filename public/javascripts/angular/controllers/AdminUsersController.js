@@ -19,6 +19,7 @@ oddin.controller('AdminUsersController', function ($http, $scope, $stateParams, 
 			$scope.users.push(data);
 			$scope.user = null;
 			$scope.data_loaded = true;
+      Materialize.toast('Usuário cadastrado', 3000)
 		})
 	}
 
@@ -33,7 +34,7 @@ oddin.controller('AdminUsersController', function ($http, $scope, $stateParams, 
 				}
 			});
 			$scope.data_loaded = true;
-			Materialize.toast('Curso atualizado', 3000);
+			Materialize.toast('Usuário atualizado', 3000);
 		})
 	}
 
@@ -58,7 +59,7 @@ oddin.controller('AdminUsersController', function ($http, $scope, $stateParams, 
 				}
 			}
 			$scope.data_loaded = true;
-			Materialize.toast('Curso deletado', 3000);
+			Materialize.toast('Usuário deletado', 3000);
 		})
 		.error(function () {
 			Materialize.toast('Este usuário não pôde ser deletado', 3000)

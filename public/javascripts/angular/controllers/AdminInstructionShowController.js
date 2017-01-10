@@ -48,6 +48,7 @@ oddin.controller('AdminInstructionShowController', function ($http, $scope, $sta
   };
 
 	$scope.createEnroll = function (user) {
+    $scope.data_loaded = false;
 		var enroll = {};
 		enroll.person_id = user.id;
 		enroll.instruction_id = $scope.disciplina.id;
@@ -55,12 +56,29 @@ oddin.controller('AdminInstructionShowController', function ($http, $scope, $sta
 
 		$http.post('api/enrolls', enroll)
 		.success(function (data) {
-			console.log(data)
 			$scope.participants.push(data);
+
+      console.log($scope.availableUsers);
+      console.log(data);
+
+      $scope.availableUsers = $scope.users.filter(function (user, i) {
+        var result = true;
+        for(var i = 0; i < $scope.participants.length; i++) {
+          if(user.id == $scope.participants[i].person.id) {
+            result = false;
+            break;
+          }
+        }
+        return result;
+      });
+
+      $scope.data_loaded = true;
+      Materialize.toast('Usuário cadastrado', 3000)
 		})
 	}
 
 	$scope.removeEnroll = function () {
+    $scope.data_loaded = false;
 		$http.delete('api/enrolls/' + $scope.modalContent.id)
 		.success(function (data) {
 			for(var i = 0; i < $scope.participants.length; i++) {
@@ -69,7 +87,10 @@ oddin.controller('AdminInstructionShowController', function ($http, $scope, $sta
 					break;
 				}
 			}
+      $scope.availableUsers.push(data.person);
+      $scope.data_loaded = true;
 			$scope.modalContent = null;
+      Materialize.toast('Usuário removido', 3000)
 		})
 	}
 
@@ -77,12 +98,4 @@ oddin.controller('AdminInstructionShowController', function ($http, $scope, $sta
 		$scope.modalContent = angular.copy(participant);
 		$('#modal-remove-participant').openModal();
 	}
-
-
-  // $scope.buscaInfo = function () {
-  //   $http.get('api/events/' + $stateParams.cursoID)
-  //   .success(function (data) {
-  //     $scope.curso = data;
-  //   });
-  // }
 });

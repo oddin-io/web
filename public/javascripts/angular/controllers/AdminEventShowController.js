@@ -39,6 +39,7 @@ oddin.controller('AdminEventShowController', function ($http, $scope, $statePara
 	}
 
 	$scope.createInstruction = function () {
+    $scope.data_loaded = false;
 		var startDate = {
 			year: parseInt($scope.modalContent.start_date.substring(4, 8)),
 			month: parseInt($scope.modalContent.start_date.substring(2, 4)) - 1,
@@ -62,10 +63,13 @@ oddin.controller('AdminEventShowController', function ($http, $scope, $statePara
 		.success(function (data) {
 			$scope.instructions.push(data);
 			$scope.modalContent = null;
+      $scope.data_loaded = true;
+      Materialize.toast('Disciplina Adicionada', 3000)
 		})
 	}
 
 	$scope.deleteInstruction = function () {
+    $scope.data_loaded = false;
 		$http.delete('api/instructions/' + $scope.modalContent.id)
 		.success(function (data) {
 			for(var i = 0; i < $scope.instructions.length; i++) {
@@ -75,6 +79,8 @@ oddin.controller('AdminEventShowController', function ($http, $scope, $statePara
 				}
 			}
 			$scope.modalContent = null;
+      $scope.data_loaded = true;
+      Materialize.toast('Disciplina removida', 3000)
 		})
 	}
 });

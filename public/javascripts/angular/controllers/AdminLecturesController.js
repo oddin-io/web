@@ -30,6 +30,7 @@ oddin.controller('AdminLecturesController', function ($http, $scope, $stateParam
 			$scope.disciplinas.push(data);
 			$scope.disciplina = null;
 			$scope.data_loaded = true;
+			Materialize.toast('Disciplina cadastrada', 3000)
 		})
 	}
 
