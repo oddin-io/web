@@ -1,4 +1,19 @@
+# IDE
 .idea/
+
+# Cache
+.sass-cache/
+
+# Dependencies
 node_modules/
 vendor/
-*.min.*
+
+# Compiled files
+*.css
+*.css.*
+
+# Log files
+*.log
+
+# Environment files
+*.env

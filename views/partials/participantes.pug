@@ -1,0 +1,45 @@
+doctype html
+header
+  .navbar-fixed
+    nav.navbar-fixed.barra-navegacao
+      .nav-wrapper.barra-navegacao__container
+        a.button-collapse.hide-on-large-only(href="", data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+          i.material-icons menu
+        a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='disciplinas')
+          i.material-icons arrow_back
+        h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Participantes
+        a.brand-logo.right.hide-on-small-only(href="/")
+          img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+  ul#slide-out.side-nav.fixed.barra-lateral
+    .barra-lateral__header
+      i.barra-lateral__user-avatar.material-icons account_circle
+      p.barra-lateral__user-name {{usuario.nome}}
+      p.barra-lateral__user-email {{usuario.email}}
+    li.no-padding
+      ul.collapsible(data-collapsible="expandable")
+        li.barra-lateral__item
+          a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{disciplina.lecture.name}}
+          .collapsible-body
+            ul
+              li.barra-lateral__subitem
+                a(ui-sref="aulas({disciplinaID: disciplina.id})") Aulas
+              li.barra-lateral__subitem
+                a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
+              li.barra-lateral__subitem
+                a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
+              li.barra-lateral__subitem
+                a(ui-sref="tarefas({disciplinaID: disciplina.id})") Tarefas
+              li.barra-lateral__subitem
+                a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
+              li.barra-lateral__subitem.active
+                p Participantes
+    li.hide-on-large-only.no-padding.barra-lateral__item
+      a(ui-sref='disciplinas') Disciplinas
+    li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+      a(href="" data-ng-click="logout()") Logout
+main(data-ng-init="buscaParticipantes()")
+  .container
+    ul.collection.lista-participantes
+      li.collection-item.avatar.lista-participantes__item(data-ng-repeat="participante in participantes")
+        i.material-icons.circle(data-ng-class="{'user--online' : participante.person.online}") person
+        span.title {{participante.person.name}}

@@ -1,0 +1,83 @@
+@import 'variaveis';
+
+body {
+  background-color: $background-color;
+}
+
+.login-header {
+  &__logo {
+    display: block;
+    width: auto;
+    height: auto;
+    margin: (4 * $min) auto (2 * $min) auto;
+    max-height: 140px;
+  }
+}
+
+.login-box {
+  padding: 4 * $min;
+  @media (max-width: $max-mobile-size) {
+    padding: 3 * $min;
+  }
+  &__title {
+    margin: 0 auto 0 auto;
+    text-align: center;
+    @include type-title;
+    color: $primary-color-darker;
+  }
+  &__options {
+    @include type-caption;
+    p {
+      margin: 0;
+      text-align: left;
+      label {
+        margin: 0 0 $min 0;
+        font-size: inherit;
+      }
+    }
+    a {
+      display: block;
+      margin-top: 3px;
+      text-align: right;
+      @media (max-width: $max-mobile-size) {
+        text-align: left;
+      }
+    }
+  }
+  &__main-button {
+    display: block;
+    margin: (3 * $min) auto 0 auto;
+    @include unraise-button;
+  }
+  &__message {
+    margin: $min auto 0 auto;
+    text-align: center;
+    color: $error-color;
+    @include type-body1;
+  }
+  &__alert {
+    margin: (3 * $min) 0 $min 0;
+    border-radius: 4px;
+    border: 1px solid $secondary-color;
+    p {
+      margin: 0;
+      padding: $min;
+      @include type-body1;
+      color: $secondary-color;
+    }
+  }
+  &__buttons {
+    text-align: center;
+    .btn {
+      margin: $min $min 0 $min;
+      @include unraise-button;
+    }
+  }
+}
+
+.login-info {
+  margin: (3 * $min) 0 (3 * $min) 0;
+  text-align: center;
+  @include type-subheading;
+  color: $grey-color;
+}

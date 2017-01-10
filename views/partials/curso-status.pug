@@ -1,0 +1,72 @@
+doctype html
+header
+	.navbar-fixed
+		nav.navbar-fixed.barra-navegacao
+			.nav-wrapper.barra-navegacao__container
+				a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+					i.material-icons menu
+				a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='cursos-admin')
+						i.material-icons arrow_back
+				h1.barra-navegacao__title.truncate {{curso.name}}
+				a.brand-logo.right.hide-on-small-only(href="/")
+					img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+	ul#slide-out.side-nav.fixed.barra-lateral
+		.barra-lateral__header
+			i.barra-lateral__user-avatar.material-icons account_circle
+			p.barra-lateral__user-name {{usuario.nome}}
+			p.barra-lateral__user-email {{usuario.email}}
+		li.no-padding
+			ul.collapsible(data-collapsible="expandable")
+				li.barra-lateral__item
+					a.barra-lateral__item--collapsible.collapsible-header.active.truncate Principal
+					.collapsible-body
+						ul
+							li.barra-lateral__subitem
+								a(ui-sref="cursos-admin") Cursos
+							li.barra-lateral__subitem
+								a(ui-sref="disciplinas-admin") Disciplinas
+							li.barra-lateral__subitem
+								a(ui-sref="usuarios-admin") Usuarios							
+		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+			a(href="" data-ng-click="logout()") Logout
+main(data-ng-init="buscaInfo()")
+	#modal-delete-instruction.modal
+		.modal-content
+			h4.custom-modal__header Remover Disciplina
+			p Tem certeza que deseja remover '{{modalContent.lecture.name}}'?
+		.modal-footer
+			a(href='' data-ng-click="deleteInstruction(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+		.spinner-layer
+			.circle-clipper.left
+				.circle
+	.container
+		.fixed-action-btn(style="bottom: 24px; right: 24px;")
+			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref="add-instructions({cursoID: curso.id})")
+				i.large.material-icons add
+		.card.custom-card
+			.card-content
+				.custom-card__header
+					span.title.info-title Informações do curso
+				.custom-card__content
+					ul.info
+						li
+							span Nome:
+							p {{curso.name}}
+						li
+							span Código:
+							p {{curso.code}}
+						li
+							span Carga Horária:
+							p {{curso.workload}}
+		ul.collection.with-header.custom-list(data-ng-init="buscaInstructions()")
+			li.collection-header.custom-list__header
+				h2 Disciplinas do curso
+			li.collection-item.avatar.custom-list__item(data-ng-repeat="disciplina in instructions")
+				i.material-icons.circle book
+				a(ui-sref="instruction-show({disciplinaID: disciplina.id})")
+					span.title {{disciplina.lecture.name}} - Turma: {{disciplina.class_number}}
+					p {{disciplina.lecture.code}}
+				a.secondary-content(href="" data-ng-click="openModalDeleteInstruction(disciplina)")
+					i.material-icons remove_circle

@@ -1,0 +1,67 @@
+doctype html
+header
+    .navbar-fixed
+        nav.navbar-fixed.barra-navegacao
+            .nav-wrapper.barra-navegacao__container
+                a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+                    i.material-icons menu
+                a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='disciplinas')
+                    i.material-icons arrow_back
+                h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Avisos
+                a.brand-logo.right.hide-on-small-only(href="/")
+                    img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+    ul#slide-out.side-nav.fixed.barra-lateral
+        .barra-lateral__header
+            i.barra-lateral__user-avatar.material-icons account_circle
+            p.barra-lateral__user-name {{usuario.nome}}
+            p.barra-lateral__user-email {{usuario.email}}
+        li.no-padding
+            ul.collapsible(data-collapsible="expandable")
+                li.barra-lateral__item
+                    a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{disciplina.lecture.name}}
+                    .collapsible-body
+                        ul
+                            li.barra-lateral__subitem
+                                a(ui-sref="aulas({disciplinaID: disciplina.id})") Aulas
+                            li.barra-lateral__subitem.active
+                                p Avisos
+                            li.barra-lateral__subitem
+                                a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
+                            li.barra-lateral__subitem
+                                a(ui-sref="tarefas({disciplinaID: disciplina.id})") Tarefas          
+                            li.barra-lateral__subitem
+                                a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
+                            li.barra-lateral__subitem
+                                a(ui-sref="participantes({disciplinaID: disciplina.id})") Participantes
+        li.hide-on-large-only.no-padding.barra-lateral__item
+            a(ui-sref='disciplinas') Disciplinas
+        li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+            a(href="" data-ng-click="logout()") Logout
+main(data-ng-init="buscaAvisos()")
+    .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+        .spinner-layer
+            .circle-clipper.left
+                .circle
+    .container
+        .fixed-action-btn(style="bottom: 24px; right: 24px;")
+            a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#postar-aviso", modal)
+                i.large.material-icons add
+        #postar-aviso.modal.bottom-sheet
+            .modal-content.modal-criar-item
+                .row
+                    form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="postaAviso()")
+                        h1.modal-criar-item__titulo Postar aviso
+                        .row
+                          .input-field.col.s12
+                            input#titulo_aviso(type="text", name="titulo", data-ng-model="aviso.subject" required)
+                            label(for="titulo_aviso") Título
+                          .input-field.col.s12
+                            textarea#textarea_aviso.materialize-textarea(name="texto", data-ng-model="aviso.text" required)
+                            label(for="textarea_aviso") Descrição
+                        button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+        .card.custom-card(data-ng-repeat="aviso in avisos")
+          .card-content
+            .custom-card__header
+              span.title {{aviso.subject}}
+              span.secondary-info {{aviso.created_at | date:&quot;dd/MM/yyyy &agrave;&apos;s&apos; HH:mm&quot;}}
+            p {{aviso.text}}

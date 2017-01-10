@@ -1,0 +1,103 @@
+doctype html
+header
+  .navbar-fixed
+    nav.navbar-fixed.barra-navegacao
+      .nav-wrapper.barra-navegacao__container
+        a.button-collapse.hide-on-large-only(href="", data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+          i.material-icons menu
+        a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref="aulas({disciplinaID: aula.instruction.id})")
+          i.material-icons arrow_back
+        h1.barra-navegacao__title.truncate {{aula.subject}}
+        a.brand-logo.right.hide-on-small-only(href="/")
+          img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+  ul#slide-out.side-nav.fixed.barra-lateral
+    .barra-lateral__header
+      i.barra-lateral__user-avatar.material-icons account_circle
+      p.barra-lateral__user-name {{usuario.nome}}
+      p.barra-lateral__user-email {{usuario.email}}
+    li.no-padding
+      ul.collapsible(data-collapsible="expandable")
+        li.barra-lateral__item
+          a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{aula.subject}}
+          .collapsible-body
+            ul
+              li.barra-lateral__subitem.active
+                p D&uacute;vidas
+              li.barra-lateral__subitem
+                a(ui-sref="material-aula({aulaID: aula.id})") Material
+    li.hide-on-large-only.no-padding.barra-lateral__item
+      a(ui-sref="aulas({disciplinaID: aula.instruction.id})") Aulas
+    li.no-padding.barra-lateral__item
+      a(ui-sref='disciplinas') Disciplinas
+    li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+      a(href="" data-ng-click="logout()") Logout
+main(data-ng-init="buscaDuvidas()")
+  .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+    .spinner-layer
+      .circle-clipper.left
+        .circle
+  .container
+    .fixed-action-btn(style="bottom: 24px; right: 24px;")
+      a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#postar-duvida", modal)
+        i.large.material-icons add
+    #postar-duvida.modal.bottom-sheet
+      .modal-content.modal-criar-item.modal-post-duvida
+        .row
+          form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="postaDuvida()")
+            h1.modal-criar-item__titulo Postar D&uacute;vida
+            .row
+              .input-field.col.s12
+                textarea#textarea_duvida.materialize-textarea(name="texto", data-ng-model="duvida.text")
+                label(for="textarea_duvida") D&uacute;vida
+            .row
+              .col.s12.m9
+                p.modal-post-duvida__checkbox
+                  input#checkbox-anonimo.filled-in(type="checkbox", data-ng-model="duvida.anonymous")
+                  label(for="checkbox-anonimo") Enviar como an&ocirc;nimo
+              .col.s12.m3
+                button.btn.waves-effect.waves-light.modal-post-duvida__submit.modal-close(type="submit", name="action") Enviar
+    .row.dropdown-row
+      .offset-m3.col.m6.s12
+        a.dropdown-button.btn.custom-dropdown(href='' data-activates='dropdownOrderBy' data-beloworigin="true" data-alignment="right" data-hover="true" dropdown) Ordenar Dúvidas
+        ul#dropdownOrderBy.dropdown-content
+          li
+            a#post-order.filter-item-active(href='' data-ng-click="disableFilter()") Por Postagem
+          li
+            a#ranking-order(href='' data-ng-click="enableFilter()") Por Ranking
+    .card.pergunta(data-ng-repeat="duvida in duvidas | orderBy: ((filter || '') && '(upvotes - downvotes)') : (filter ? true : false)")
+      .card-content
+        .pergunta__header
+          span.autor {{duvida.anonymous ? 'Anônimo' : duvida.person.name}}
+          span.datahora {{duvida.created_at | date:"dd/MM/yyyy à's' HH:mm"}}
+        .pergunta__content
+          p {{duvida.text}}
+      .card-action.pergunta__action
+        .row
+          .col.s6.m4
+            .upvote(data-ng-class="{'upvote-disabled': duvida.person.id == usuario.id, 'upvote-voted': duvida.my_vote == 1}")
+              a(href="" data-ng-click="duvida.my_vote == 0 ? upvoteDuvida(duvida) : cancelVoteDuvida(duvida)")
+                i.material-icons keyboard_arrow_up
+              span(data-ng-class="{'custom-badge': duvida.my_vote == 0, 'custom-badge-voted': duvida.my_vote != 0, 'custom-badge-disabled': usuario.id == duvida.person.id}") {{duvida.upvotes - duvida.downvotes}}
+          .col.s6.m4
+              div(data-ng-class="{'check-entendi': duvida.answered, 'check-nao-entendi': !duvida.answered}")
+                i.material-icons check
+          .col.s6.m4
+              .ver-resposta(data-ng-if="duvida.has_answer")
+                a.waves-effect.btn-flat(id="button_{{duvida.id}}" data-ng-click="duvida.answers ? fecharRespostas(duvida) : buscaRespostas(duvida)") Ver Respostas
+      .resposta(data-ng-attr-id="{{answer.id}}", data-ng-repeat="answer in duvida.answers")
+        .resposta__header
+            span.autor {{answer.person.name}}
+            span.datahora {{answer.created_at | date:&quot;dd/MM/yyyy &agrave;&apos;s&apos; HH:mm&quot;}}
+        .resposta__content
+            p  {{answer.text}}
+        .resposta__action
+            div(data-ng-class="{'upvote-voted': answer.my_vote == 1, 'upvote': answer.my_vote != 1}")
+                a(href="" data-ng-click="answer.my_vote != 1 ? upvoteResposta(answer) : cancelVoteResposta(answer)")
+                    i.material-icons keyboard_arrow_up
+            div(data-ng-class="{'upvote-voted': answer.my_vote == -1, 'upvote': answer.my_vote != -1}")
+                a(href="" data-ng-click="answer.my_vote != -1 ? downvoteResposta(answer) : cancelVoteResposta(answer)")
+                    i.material-icons.downvote-margin keyboard_arrow_down
+                span(data-ng-class="{'custom-badge': answer.my_vote == 0, 'custom-badge-voted': answer.my_vote != 0}") {{answer.upvotes - answer.downvotes}}
+            div(data-ng-class="{'check-disabled': duvida.person.id != usuario.id || duvida.answered && !answer.accepted, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}")
+                a.material-icons(href="" data-ng-if="!answer.accepted" data-ng-click="aceitaResposta(answer)" tooltipped  data-position="right" data-tooltip="Selecionar resposta") check
+                a.material-icons(href="" data-ng-if="answer.accepted" data-ng-click="recusaResposta(answer)" tooltipped  data-position="right" data-tooltip="Recusar resposta") check

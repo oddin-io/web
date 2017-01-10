@@ -1,0 +1,51 @@
+doctype html
+header
+    .navbar-fixed
+        nav.navbar-fixed.barra-navegacao
+            .nav-wrapper.barra-navegacao__container
+                a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+                    i.material-icons menu
+                a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='disciplinas')
+                    i.material-icons arrow_back
+                h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Datas Importantes
+                a.brand-logo.right.hide-on-small-only(href="/")
+                    img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+    ul#slide-out.side-nav.fixed.barra-lateral
+        .barra-lateral__header
+            i.barra-lateral__user-avatar.material-icons account_circle
+            p.barra-lateral__user-name {{usuario.nome}}
+            p.barra-lateral__user-email {{usuario.email}}
+        li.no-padding
+            ul.collapsible(data-collapsible="expandable")
+                li.barra-lateral__item
+                    a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{disciplina.lecture.name}}
+                    .collapsible-body
+                        ul
+                            li.barra-lateral__subitem
+                                a(ui-sref="aulas({disciplinaID: disciplina.id})") Aulas
+                            li.barra-lateral__subitem
+                                a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
+                            li.barra-lateral__subitem.active
+                                p Datas Importantes
+                            li.barra-lateral__subitem
+                                a(ui-sref="tarefas({disciplinaID: disciplina.id})") Tarefas
+                            li.barra-lateral__subitem
+                                a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
+                            li.barra-lateral__subitem
+                                a(ui-sref="participantes({disciplinaID: disciplina.id})") Participantes
+        li.hide-on-large-only.no-padding.barra-lateral__item
+            a(ui-sref='disciplinas') Disciplinas
+        li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+            a(href="" data-ng-click="logout()") Logout
+main(data-ng-init="buscaDatas()")
+    .preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+        .spinner-layer
+            .circle-clipper.left
+                .circle
+    .container
+      .card.custom-card(data-ng-repeat="date in datas")
+        .card-content
+          .custom-card__header
+            span.title {{date.subject}}
+            span.secondary-info--leading {{date.date.substring(0,23) | date:"dd/MM/yyyy à's' HH:mm"}}
+          p {{date.text}}
