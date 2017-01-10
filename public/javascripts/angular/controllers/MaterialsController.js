@@ -77,12 +77,18 @@ oddin.controller('MaterialsController',
             $scope.data_loaded = false;
             $http.get('api/materials/' + material.id)
                 .success(function (data) {
-                    var link = document.createElement('a')
-                    link.setAttribute('href', data.url)
-                    link.setAttribute('download', true)
-                    link.click()
-                    $scope.data_loaded = true;
-                    Materialize.toast('Fazendo download de ' + material.name, 4000)
+                  var link = document.createElement('a')
+                  link.setAttribute('href', data.url)
+                  link.setAttribute('download', true)
+
+                  hiddenLink = document.getElementById("hidden-link")
+                  hiddenLink.appendChild(link)
+
+                  link.click()
+                  $scope.data_loaded = true;
+                  Materialize.toast('Fazendo download de ' + material.name, 4000)
+
+                  hiddenLink.removeChild(link)
                 })
         }
 

@@ -16,6 +16,10 @@ header, main, footer {
   }
 }
 
+.add-header, .add-main, .add-footer {
+  padding-left: 0;
+}
+
 .navbar-fixed {
   z-index: 997;
 }
@@ -98,6 +102,24 @@ main {
         }
       }
     }
+
+    & > p {
+      padding-left: 2 * $min !important;
+      font-weight: 500;
+      margin: 0;
+      &:hover {
+        color: $secondary-color !important;
+        background-color: transparent !important;
+      }
+      &.active {
+        color: $primary-color !important;
+        &:hover {
+          color: $secondary-color !important;
+          background-color: transparent !important;
+        }
+      }
+    }
+
     &--collapsible {
       margin: 0 !important;
     }

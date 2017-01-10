@@ -25,11 +25,38 @@ function show(req, res) {
   }).pipe(res)
 }
 
-function create() {}
+function create(req, res) {
+	const session = req.cookies.session
+
+	request({
+		uri: `${constants.uri}/instructions`,
+		method: 'POST',
+		headers: {
+			'x-session-token': session.token
+		},
+		json: {
+			'event_id': req.body.event,
+			'lecture_id': req.body.lecture,
+			'class_number': req.body.class_number,
+			'start_date': req.body.start_date,
+			'end_date': req.body.end_date
+		}
+	}).pipe(res)
+}
 
 function update() {}
 
-function destroy() {}
+function destroy(req, res) {
+	const session = req.cookies.session
+
+	request({
+		uri: `${constants.uri}/instructions/${req.params.id}`,
+		method: 'DELETE',
+		headers: {
+			'x-session-token': session.token
+		}
+	}).pipe(res);
+}
 
 function showPresentations(req, res) {
   const session = req.cookies.session

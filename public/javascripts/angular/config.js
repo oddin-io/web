@@ -115,6 +115,11 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
 		templateUrl: '/partials/curso-status',
 		controller: 'AdminEventShowController'
 	})
+	.state('instruction-show', {
+		url: '/curso-disciplinas/:disciplinaID',
+		templateUrl: '/partials/admin-instruction-show',
+		controller: 'AdminInstructionShowController'
+	})
 	.state('disciplinas-admin', {
 		url: '/disciplinas-admin',
 		templateUrl: '/partials/admin-disciplinas',
@@ -124,6 +129,16 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
 		url: '/usuarios-admin',
 		templateUrl: '/partials/admin-usuarios',
 		controller: 'AdminUsersController'
+	})
+	.state('add-participants', {
+		url: '/add-participants/:disciplinaID',
+		templateUrl: '/partials/admin-add-participants',
+		controller: 'AdminInstructionShowController'
+	})
+	.state('add-instructions', {
+		url: '/add-instructions/:cursoID',
+		templateUrl: '/partials/admin-add-instructions',
+		controller: 'AdminEventShowController'
 	})
 }).run(function ($window, $location, $state, $cookies) {
 	if ($window.location.pathname == '/home') {

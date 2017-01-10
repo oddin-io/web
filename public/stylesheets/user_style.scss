@@ -63,6 +63,9 @@
       color: #000;
       text-decoration: underline;
     }
+    .info-title {
+      color: $primary-color;
+    }
     .secondary-info {
       float: right;
       @media (max-width: $max-mobile-size) {
@@ -134,6 +137,14 @@
         margin-right: 0 !important;
         padding: 0;
         color: $secondary-color !important;
+      }
+    }
+  }
+  &__content {
+    .info {
+      span {
+        color: $grey-color;
+        font-size: 0.82em;
       }
     }
   }
@@ -566,4 +577,27 @@
       float: right;
     }
   }
+}
+
+.list-double-secondary:first-child {
+	margin-right: 20px;
+}
+
+.list-checkbox {
+  margin-top: 5px !important;
+  label {
+    padding-left: 25px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.54);
+  }
+}
+
+.main-title {
+	color: $primary-color;
+}
+
+.collection-item {
+	.title {
+		margin-right: 25px;
+	}
 }

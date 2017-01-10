@@ -41,5 +41,5 @@ main(data-ng-init="buscaParticipantes()")
   .container
     ul.collection.lista-participantes
       li.collection-item.avatar.lista-participantes__item(data-ng-repeat="participante in participantes")
-        i.material-icons.circle(data-ng-class="{'user--online' : participante.online}") person
-        span.title {{participante.name}}
+        i.material-icons.circle(data-ng-class="{'user--online' : participante.person.online}") person
+        span.title {{participante.person.name}}

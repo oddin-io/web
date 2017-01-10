@@ -11,6 +11,11 @@ oddin.controller('AdminLecturesController', function ($http, $scope, $stateParam
 		$('#modal-deleta-disciplina').openModal();
 	}
 
+	$scope.openModalEditDisciplina = function (disciplina) {
+		$scope.modalContent = angular.copy(disciplina);
+		$('#modal-edita-disciplina').openModal();
+	}
+
 	$scope.buscaDisciplinas = function () {
 		$http.get('/api/lectures')
 		.success(function (data) {
@@ -20,14 +25,31 @@ oddin.controller('AdminLecturesController', function ($http, $scope, $stateParam
 
 	$scope.cadastraDisciplina =  function () {
 		$scope.data_loaded = false;
-		$http.post('/api/lectures', $scope.curso)
+		$http.post('/api/lectures', $scope.disciplina)
 		.success(function (data) {
 			$scope.disciplinas.push(data);
 			$scope.disciplina = null;
 			$scope.data_loaded = true;
+			Materialize.toast('Disciplina cadastrada', 3000)
 		})
 	}
 
+	//Implementar Atualização no Backend
+	$scope.updateDisciplina = function (modalContent) {
+		$scope.data_loaded = false;
+		$http.put('/api/lectures/' + modalContent.id, $scope.modalContent)
+		.success(function (data) {
+			$scope.disciplinas.forEach( function (elem, i) {
+				if(elem.id == modalContent.id) {
+					$scope.disciplinas[i] = data;
+				}
+			});
+			$scope.data_loaded = true;
+			Materialize.toast('Disciplina atualizada', 3000);
+		})
+	}
+
+	//Corrigir exclusão de disciplina no Backend
 	$scope.deleteDisciplina = function (modalContent) {
 		$scope.data_loaded = false;
 		$http.delete('/api/lectures/' + modalContent.id)
