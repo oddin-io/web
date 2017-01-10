@@ -40,7 +40,7 @@ oddin.controller('AdminLecturesController', function ($http, $scope, $stateParam
 		.success(function (data) {
 			$scope.disciplinas.forEach( function (elem, i) {
 				if(elem.id == modalContent.id) {
-					console.log(data);
+					$scope.disciplinas[i] = data;
 				}
 			});
 			$scope.data_loaded = true;

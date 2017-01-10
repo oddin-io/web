@@ -39,7 +39,7 @@ function ($http, $scope, $stateParams, $cookies) {
 		.success(function (data) {
 			$scope.cursos.forEach( function (elem, i) {
 				if(elem.id == modalContent.id) {
-					console.log(data);
+					$scope.cursos[i] = data;
 				}
 			});
 			$scope.data_loaded = true;

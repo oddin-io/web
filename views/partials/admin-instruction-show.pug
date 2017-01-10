@@ -15,6 +15,20 @@ header
 			i.barra-lateral__user-avatar.material-icons account_circle
 			p.barra-lateral__user-name {{usuario.nome}}
 			p.barra-lateral__user-email {{usuario.email}}
+		li.no-padding
+			ul.collapsible(data-collapsible="expandable")
+				li.barra-lateral__item
+					a.barra-lateral__item--collapsible.collapsible-header.active.truncate Principal
+					.collapsible-body
+						ul
+							li.barra-lateral__subitem
+								a(ui-sref="cursos-admin") Cursos
+							li.barra-lateral__subitem
+								a(ui-sref="disciplinas-admin") Disciplinas
+							li.barra-lateral__subitem
+								a(ui-sref="usuarios-admin") Usuarios
+		li.no-padding.barra-lateral__item
+			a.truncate(ui-sref='curso-status({cursoID: disciplina.event.id})') {{disciplina.event.name}}
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaInfo()")
