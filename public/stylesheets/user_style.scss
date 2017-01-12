@@ -628,6 +628,28 @@
 	}
 }
 
-.survey-description {
+.survey-question {
 	padding-top: 15px;
+}
+
+.survey-answer-list {
+	margin: 0;
+}
+
+.survey-answer-content {
+	padding: 0;
+}
+
+.remove-choice-field {
+	padding-right: 0 !important;
+}
+
+.remove-choice-button {
+	padding-top: 16px !important;
+	a {
+		color: $grey-color;
+		&:hover {
+			color: $grey-light-color;
+		}
+	}
 }
