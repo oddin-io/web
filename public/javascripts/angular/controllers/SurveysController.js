@@ -17,12 +17,12 @@ oddin.controller('SurveysController', function ($http, $scope, $stateParams, $st
 				{
 					id: 1, //criado no backend
 					voteCount: 10, //criado no backend
-					text: "Lorem Ipsum",
+					text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 				},
 				{
 					id: 2,
 					voteCount: 8,
-					text: "Sit Dolor",
+					text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 				},
 			]
 		},
@@ -72,10 +72,19 @@ oddin.controller('SurveysController', function ($http, $scope, $stateParams, $st
 	}
 
 	$scope.displayButton = function (survey) {
-		if($("#answers-" + survey.id).css("display") == "none")
-			return "Ver Respostas"
+		if($("#answers-" + survey.id).css("display") == "none") {
+			if($cookies.get('profile') == 0)
+				return "Ver Alternativas"
+			else {
+				return "Ver Resultado"
+			}
+		}
 		else {
-			return "Ocultar Respostas"
+			if($cookies.get('profile') == 0)
+				return "Ocultar Alternativas"
+			else {
+				return "Ocultar Resultado"
+			}
 		}
 	}
 

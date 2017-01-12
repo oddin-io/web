@@ -1,0 +1,84 @@
+doctype html
+header
+	.navbar-fixed
+		nav.navbar-fixed.barra-navegacao
+			.nav-wrapper.barra-navegacao__container
+				a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+					i.material-icons menu
+				a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='disciplinas')
+					i.material-icons arrow_back
+				h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Enquetes
+				a.brand-logo.right.hide-on-small-only(href="/")
+					img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+	ul#slide-out.side-nav.fixed.barra-lateral
+		.barra-lateral__header
+			i.barra-lateral__user-avatar.material-icons account_circle
+			p.barra-lateral__user-name {{usuario.nome}}
+			p.barra-lateral__user-email {{usuario.email}}
+		li.no-padding
+			ul.collapsible(data-collapsible="expandable")
+				li.barra-lateral__item
+					a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{disciplina.lecture.name}}
+					.collapsible-body
+						ul
+							li.barra-lateral__subitem
+								a(ui-sref="aulas({disciplinaID: disciplina.id})") Aulas
+							li.barra-lateral__subitem
+								a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
+							li.barra-lateral__subitem
+								a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
+							li.barra-lateral__subitem
+								a(ui-sref="tarefas({disciplinaID: disciplina.id})") Tarefas
+							li.barra-lateral__subitem
+								a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
+							li.barra-lateral__subitem
+								a(ui-sref="participantes({disciplinaID: disciplina.id})") Participantes
+							li.barra-lateral__subitem
+								a(ui-sref="faqs({disciplinaID: disciplina.id})") FAQs
+							li.barra-lateral__subitem.active
+								p Enquetes
+		li.hide-on-large-only.no-padding.barra-lateral__item
+			a(ui-sref='disciplinas') Disciplinas
+		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+			a(href="" data-ng-click="logout()") Logout
+main(data-ng-init="buscaAvisos()")
+	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+		.spinner-layer
+			.circle-clipper.left
+				.circle
+	.container
+		#delete-enquete.modal
+			.modal-content
+				h4.custom-modal__header Excluir Enquete
+				p Tem certeza que deseja excluir '{{modalContent.title}}'?
+			.modal-footer
+				a(href='' data-ng-click="deleteSurvey(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+				a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+		#close-enquete.modal
+			.modal-content
+				h4.custom-modal__header Encerrar Enquete
+				p Tem certeza que deseja encerrar '{{modalContent.title}}'?
+			.modal-footer
+				a(href='' data-ng-click="closeSurvey(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+				a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+		.card.pergunta(data-ng-repeat="survey in surveys")
+			.card-content
+				.custom-card__header
+					span.title {{survey.title}}
+					span.secondary-info
+						span.secondary-info--leading {{survey.created_at | date:"dd/MM/yyyy"}}
+					p.survey-question {{survey.question}}
+			.card-action.custom-card__action
+				.row
+					.col.s12
+						.ver-resposta--prof.survey-button-answer
+							a.waves-effect.btn-flat(data-ng-click="displayAnswers(survey)")
+								span {{displayButton(survey)}}
+			.resposta.survey-answer-container(data-ng-attr-id="answers-{{survey.id}}")
+				.resposta__content.choices-content.clearfix
+					form(data-ng-submit="makeChoice()")
+						p(data-ng-repeat="choice in survey.choices")
+							input.with-gap(name="group1", value="{{choice.id}}", type="radio" data-ng-attr-id="choice-{{choice.id}}")
+							label(for="choice-{{choice.id}}") {{choice.text}}
+							span.badge(data-badge-caption="votos") {{choice.voteCount}}
+						button.btn.waves-effect.waves-light.right(type="submit", name="action") Votar
