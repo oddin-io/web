@@ -601,3 +601,63 @@
 		margin-right: 25px;
 	}
 }
+
+.faq-button-answer, .survey-button-answer {
+	float: right;
+	a {
+		margin-right: 0 !important;
+	}
+}
+
+.faq-answer-container, .survey-answer-container {
+  display: none;
+}
+
+.faq-answer {
+  padding-bottom: 10px;
+}
+
+.faq-question {
+	display: block;
+	margin: 0;
+	padding: 30px 15px 30px 15px;
+	line-height: 1.5rem;
+	.faq-index {
+		font-weight: bold;
+		font-size: 18px;
+	}
+}
+
+.survey-question {
+	padding-top: 15px;
+}
+
+.survey-answer-list {
+	margin: 0;
+}
+
+.survey-answer-content {
+	padding: 0;
+}
+
+.remove-choice-field {
+	padding-right: 0 !important;
+}
+
+.remove-choice-button {
+	padding-top: 16px !important;
+	a {
+		color: $grey-color;
+		&:hover {
+			color: $grey-light-color;
+		}
+	}
+}
+
+.choices-content {
+	padding-bottom: 20px;
+}
+
+.clearfix {
+	overflow: auto;
+}
