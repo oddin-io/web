@@ -47,20 +47,6 @@ main(data-ng-init="buscaEnquetes()")
 			.circle-clipper.left
 				.circle
 	.container
-		#delete-enquete.modal
-			.modal-content
-				h4.custom-modal__header Excluir Enquete
-				p Tem certeza que deseja excluir '{{modalContent.title}}'?
-			.modal-footer
-				a(href='' data-ng-click="deleteSurvey(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-				a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-		#close-enquete.modal
-			.modal-content
-				h4.custom-modal__header Encerrar Enquete
-				p Tem certeza que deseja encerrar '{{modalContent.title}}'?
-			.modal-footer
-				a(href='' data-ng-click="closeSurvey(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-				a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
 		.card.pergunta(data-ng-repeat="survey in surveys")
 			.card-content
 				.custom-card__header
@@ -76,9 +62,9 @@ main(data-ng-init="buscaEnquetes()")
 								span {{displayButton(survey)}}
 			.resposta.survey-answer-container(data-ng-attr-id="answers-{{survey.id}}")
 				.resposta__content.choices-content.clearfix
-					form(data-ng-submit="makeChoice()")
+					form(data-ng-submit="makeChoice(survey)")
 						p(data-ng-repeat="alternative in survey.alternatives")
-							input.with-gap(name="group1", value="{{alternative.id}}", type="radio" data-ng-attr-id="alternative-{{alternative.id}}")
+							input.with-gap(name="group-{{survey.id}}", data-ng-model="survey.choice" value="{{alternative.id}}", type="radio" data-ng-attr-id="alternative-{{alternative.id}}")
 							label(for="alternative-{{alternative.id}}") {{alternative.description}}
 							span.badge(data-badge-caption="votos") {{alternative.choice_count}}
 						button.btn.waves-effect.waves-light.right(type="submit", name="action") Votar

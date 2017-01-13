@@ -69,6 +69,22 @@ oddin.controller('SurveysController', function ($http, $scope, $stateParams, $st
 		})
 	}
 
+	$scope.makeChoice = function (survey) {
+		if(!survey.choice) {
+			console.log("Selecione uma alternativa!")
+			return;
+		}
+
+		$http.post('/api/alternatives/' + survey.choice + "/choose")
+		.success(function (data) {
+			$scope.surveys.forEach( function (elem, i) {
+				if(elem.id == data.id) {
+					$scope.surveys[i] = data;
+				}
+			});
+		})
+	}
+
 	$scope.addNewAlternative = function () {
 		// var newItemNo = $scope.choices.length+1;
 		$scope.survey.alternatives.push({});
