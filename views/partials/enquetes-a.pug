@@ -41,7 +41,7 @@ header
 			a(ui-sref='disciplinas') Disciplinas
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
-main(data-ng-init="buscaAvisos()")
+main(data-ng-init="buscaEnquetes()")
 	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
 		.spinner-layer
 			.circle-clipper.left
@@ -77,8 +77,8 @@ main(data-ng-init="buscaAvisos()")
 			.resposta.survey-answer-container(data-ng-attr-id="answers-{{survey.id}}")
 				.resposta__content.choices-content.clearfix
 					form(data-ng-submit="makeChoice()")
-						p(data-ng-repeat="choice in survey.choices")
-							input.with-gap(name="group1", value="{{choice.id}}", type="radio" data-ng-attr-id="choice-{{choice.id}}")
-							label(for="choice-{{choice.id}}") {{choice.text}}
-							span.badge(data-badge-caption="votos") {{choice.voteCount}}
+						p(data-ng-repeat="alternative in survey.alternatives")
+							input.with-gap(name="group1", value="{{alternative.id}}", type="radio" data-ng-attr-id="alternative-{{alternative.id}}")
+							label(for="alternative-{{alternative.id}}") {{alternative.description}}
+							span.badge(data-badge-caption="votos") {{alternative.choice_count}}
 						button.btn.waves-effect.waves-light.right(type="submit", name="action") Votar

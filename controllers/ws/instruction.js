@@ -182,6 +182,18 @@ function showNotices(req, res) {
   }).pipe(res)
 }
 
+function showSurveys(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}/surveys`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }).pipe(res)
+}
+
 function showDates(req, res) {
   const session = req.cookies.session
   request({
@@ -243,6 +255,7 @@ module.exports = {
   showMaterials,
   showParticipants,
   showNotices,
+	showSurveys,
   showDates,
   showWorks,
   showProfile,

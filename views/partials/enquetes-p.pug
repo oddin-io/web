@@ -41,7 +41,7 @@ header
 			a(ui-sref='disciplinas') Disciplinas
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
-main(data-ng-init="buscaAvisos()")
+main(data-ng-init="buscaEnquetes()")
 	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
 		.spinner-layer
 			.circle-clipper.left
@@ -96,15 +96,15 @@ main(data-ng-init="buscaAvisos()")
 							.input-field.col.s12
 								textarea#survey_question.materialize-textarea(name="question", data-ng-model="survey.question" required)
 								label(for="faq_question") Pergunta
-							.choices(data-ng-repeat="choice in survey.choices")
+							.choices(data-ng-repeat="alternative in survey.alternatives")
 								.input-field.col.s11.remove-choice-field
-									input(data-ng-attr-id="choice-{{choice.id}}", type="text", name="choice-{{choice.id}}", data-ng-model="survey.choices[survey.choices.indexOf(choice)].text" required)
-									label(for="choice-{{choice.id}}") Alternativa {{choice.id}}
+									input(id="alternative-{{survey.alternatives.indexOf(alternative)}}", type="text", name="alternative-{{survey.alternatives.indexOf(alternative)}}", data-ng-model="survey.alternatives[survey.alternatives.indexOf(alternative)].description" required)
+									label(for="alternative-{{survey.alternatives.indexOf(alternative)}}") Alternativa {{survey.alternatives.indexOf(alternative) + 1}}
 								.input-field.col.s1.remove-choice-button(data-ng-show="$last")
-									a.right(href='' data-ng-click="removeChoice()")
+									a.right(href='' data-ng-click="removeAlternative()")
 										i.material-icons close
 							.input-field.col.s12
-								a.btn-floating.waves-effect.waves-light.right(data-ng-click="addNewChoice()")
+								a.btn-floating.waves-effect.waves-light.right(data-ng-click="addNewAlternative()")
 									i.material-icons add
 						button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
 
@@ -133,6 +133,6 @@ main(data-ng-init="buscaAvisos()")
 			.resposta.survey-answer-container(data-ng-attr-id="answers-{{survey.id}}")
 				.resposta__content.survey-answer-content
 					ul.collection.survey-answer-list
-						li.collection-item(data-ng-repeat="answer in survey.choices")
-							| {{answer.text}}
-							span.new.badge(data-badge-caption="Votos") {{answer.voteCount}}
+						li.collection-item(data-ng-repeat="alternative in survey.alternatives")
+							| {{alternative.description}}
+							span.new.badge(data-badge-caption="Votos") {{alternative.choice_count}}
