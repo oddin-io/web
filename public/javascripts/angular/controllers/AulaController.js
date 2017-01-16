@@ -91,9 +91,12 @@ oddin.controller('AulaController',
                   var link = document.createElement('a')
                   link.setAttribute('href', data.url)
                   link.setAttribute('download', true)
+									hiddenLink = document.getElementById("hidden-link")
+									hiddenLink.appendChild(link)
                   link.click()
                   $scope.data_loaded = true
                   Materialize.toast('Fazendo download de ' + material.name, 4000)
+									hiddenLink.removeChild(link)
                 })
       }
 

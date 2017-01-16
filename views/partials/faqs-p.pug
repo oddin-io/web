@@ -41,7 +41,7 @@ header
 			a(ui-sref='disciplinas') Disciplinas
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
-main(data-ng-init="buscaAvisos()")
+main(data-ng-init="buscaFAQs()")
 	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
 		.spinner-layer
 			.circle-clipper.left
@@ -60,7 +60,7 @@ main(data-ng-init="buscaAvisos()")
 		#edit-faq.modal.bottom-sheet
 			.modal-content.modal-criar-item
 				.row
-					form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateFAQ()")
+					form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateFAQ(modalContent)")
 						h1.modal-criar-item__titulo Editar FAQ
 						.row
 							.input-field.col.s12
@@ -69,7 +69,7 @@ main(data-ng-init="buscaAvisos()")
 							.input-field.col.s12
 								textarea#faq_answer.materialize-textarea(name="answer", data-ng-model="modalContent.answer" required)
 								label(for="faq_answer") Resposta
-						button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+						button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
 		#postar-faq.modal.bottom-sheet
 			.modal-content.modal-criar-item
 				.row
