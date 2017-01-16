@@ -60,21 +60,66 @@ oddin.controller('SurveysController', function ($http, $scope, $stateParams, $st
 	// }
 
 	$scope.createSurvey = function () {
+		$scope.data_loaded = false;
 		$http.post('/api/instructions/' + $stateParams.disciplinaID + "/surveys", $scope.survey)
 		.success(function (data) {
 			$scope.surveys.push(data);
 			$scope.survey = {
 				choices : [{}]
 			};
+			$scope.data_loaded = true;
+			Materialize.toast('Enquete criada com sucesso', 3000)
+		})
+	}
+
+	$scope.updateSurvey = function (modalContent) {
+		$scope.data_loaded = false;
+		$http.put('/api/surveys/' + modalContent.id, modalContent)
+		.success(function (data) {
+			$scope.surveys.forEach( function (elem, i) {
+				if(elem.id == data.id) {
+					$scope.surveys[i] = data;
+				}
+			});
+			$scope.data_loaded = true;
+			Materialize.toast('Enquete atualizada com sucesso', 3000)
+		})
+	}
+
+	$scope.deleteSurvey = function (modalContent) {
+		$scope.data_loaded = false;
+		$http.delete('/api/surveys/' + modalContent.id, modalContent)
+		.success(function (data) {
+			$scope.surveys.forEach( function (elem, i) {
+				if(elem.id == data.id) {
+					$scope.surveys.splice(i, 1);
+				}
+			});
+			$scope.data_loaded = true;
+			Materialize.toast('Enquete excluída com sucesso', 3000)
+		})
+	}
+
+	$scope.closeSurvey = function (modalContent) {
+		$scope.data_loaded = false;
+		$http.post('/api/surveys/' + modalContent.id + '/close', modalContent)
+		.success(function (data) {
+			$scope.surveys.forEach( function (elem, i) {
+				if(elem.id == data.id) {
+					$scope.surveys[i] = data;
+				}
+			});
+			$scope.data_loaded = true;
+			Materialize.toast('Enquete encerrada com sucesso', 3000)
 		})
 	}
 
 	$scope.makeChoice = function (survey) {
 		if(!survey.choice) {
-			console.log("Selecione uma alternativa!")
+			Materialize.toast('Você deve selecionar uma alternativa antes de votar', 3000)
 			return;
 		}
-
+		$scope.data_loaded = false
 		$http.post('/api/alternatives/' + survey.choice + "/choose")
 		.success(function (data) {
 			$scope.surveys.forEach( function (elem, i) {
@@ -82,6 +127,8 @@ oddin.controller('SurveysController', function ($http, $scope, $stateParams, $st
 					$scope.surveys[i] = data;
 				}
 			});
+			$scope.data_loaded = true;
+			Materialize.toast('Voto realizado com sucesso', 3000)
 		})
 	}
 

@@ -661,3 +661,37 @@
 .clearfix {
 	overflow: auto;
 }
+
+.closed-tag {
+	background-color: #E57373;
+	color: white;
+	font-weight: normal;
+	border-radius: 2px;
+	padding: 0 6px 0 6px;
+	font-size: 0.9rem;
+	margin-right: 10px;
+}
+
+.chosen-tag {
+	background-color: #81C784;
+	color: white;
+	font-weight: normal;
+	border-radius: 2px;
+	padding: 0 6px 0 6px;
+	font-size: 0.9rem;
+	margin-right: 10px;
+}
+
+.chosen-alternative {
+	background-color: #81C784;
+	color: white;
+	font-weight: normal;
+	border-radius: 2px;
+	padding: 0 4px 0 4px;
+	font-size: 0.8rem;
+	margin-left: 10px;
+}
+
+.closed-alternatives {
+	font-size: 15px;
+}

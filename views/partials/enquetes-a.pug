@@ -52,7 +52,9 @@ main(data-ng-init="buscaEnquetes()")
 				.custom-card__header
 					span.title {{survey.title}}
 					span.secondary-info
-						span.secondary-info--leading {{survey.created_at | date:"dd/MM/yyyy"}}
+						span.secondary-info--leading() {{survey.created_at | date:"dd/MM/yyyy"}}
+						span.chosen-tag(data-ng-if="!survey.closed && survey.my_vote") Votada
+						span.closed-tag(data-ng-if="survey.closed") Encerrada
 					p.survey-question {{survey.question}}
 			.card-action.custom-card__action
 				.row
@@ -62,9 +64,14 @@ main(data-ng-init="buscaEnquetes()")
 								span {{displayButton(survey)}}
 			.resposta.survey-answer-container(data-ng-attr-id="answers-{{survey.id}}")
 				.resposta__content.choices-content.clearfix
-					form(data-ng-submit="makeChoice(survey)")
+					form(data-ng-submit="makeChoice(survey)" data-ng-if="!survey.closed && !survey.my_vote")
 						p(data-ng-repeat="alternative in survey.alternatives")
 							input.with-gap(name="group-{{survey.id}}", data-ng-model="survey.choice" value="{{alternative.id}}", type="radio" data-ng-attr-id="alternative-{{alternative.id}}")
 							label(for="alternative-{{alternative.id}}") {{alternative.description}}
 							span.badge(data-badge-caption="votos") {{alternative.choice_count}}
 						button.btn.waves-effect.waves-light.right(type="submit", name="action") Votar
+					p(data-ng-repeat="alternative in survey.alternatives" data-ng-if="survey.closed || survey.my_vote")
+						label.closed-alternatives(for="alternative-{{alternative.id}}") {{alternative.description}}
+						span.chosen-alternative(data-ng-if="survey.my_vote == alternative.id") Meu Voto
+
+						span.badge(data-badge-caption="votos") {{alternative.choice_count}}

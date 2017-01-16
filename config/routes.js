@@ -19,6 +19,7 @@ ws.lecture = require('../routes/ws/lecture')
 ws.person = require('../routes/ws/person')
 ws.enroll = require('../routes/ws/enroll')
 ws.alternative = require('../routes/ws/alternative')
+ws.survey = require('../routes/ws/survey')
 
 module.exports = function routesConfig(app) {
   app.use('/', index)
@@ -41,4 +42,5 @@ module.exports = function routesConfig(app) {
   app.use('/api', ws.person)
 	app.use('/api', ws.enroll)
 	app.use('/api', ws.alternative)
+	app.use('/api', ws.survey)
 }
