@@ -213,9 +213,12 @@ oddin.controller('WorkShowController',
           var link = document.createElement('a');
           link.setAttribute('href', data.url);
           link.setAttribute('download', true);
+					hiddenLink = document.getElementById("hidden-link")
+					hiddenLink.appendChild(link)
           link.click()
           $scope.data_loaded = true;
           Materialize.toast('Baixando trabalho: ' + submissao.materials[0].name, 3000)
+					hiddenLink.removeChild(link)
         })
     }
 
