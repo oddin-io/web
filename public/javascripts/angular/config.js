@@ -75,6 +75,26 @@ oddin.config(function ($stateProvider, $urlRouterProvider) {
 		templateUrl: '/partials/participantes',
 		controller: 'ParticipantsController'
 	})
+	.state('faqs', {
+		url: '/disciplinas/:disciplinaID/faqs',
+		templateProvider: function ($cookies, $templateFactory) {
+			if($cookies.get('profile') == 0)
+			return $templateFactory.fromUrl("/partials/faqs-a");
+			if($cookies.get('profile') == 1)
+			return $templateFactory.fromUrl("/partials/faqs-p");
+		},
+		controller: 'FAQsController'
+	})
+	.state('enquetes', {
+		url: '/disciplinas/:disciplinaID/enquetes',
+		templateProvider: function ($cookies, $templateFactory) {
+			if($cookies.get('profile') == 0)
+			return $templateFactory.fromUrl("/partials/enquetes-a");
+			if($cookies.get('profile') == 1)
+			return $templateFactory.fromUrl("/partials/enquetes-p");
+		},
+		controller: 'SurveysController'
+	})
 	.state('duvidas', {
 		url: '/aulas/:aulaID',
 		templateProvider: function ($cookies, $templateFactory) {

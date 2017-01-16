@@ -7,7 +7,7 @@ header
 					i.material-icons menu
 				a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='disciplinas')
 					i.material-icons arrow_back
-				h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Avisos
+				h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - Enquetes
 				a.brand-logo.right.hide-on-small-only(href="/")
 					img.barra-navegacao__logo(src="/images/horizontal_logo.png")
 	ul#slide-out.side-nav.fixed.barra-lateral
@@ -23,8 +23,8 @@ header
 						ul
 							li.barra-lateral__subitem
 								a(ui-sref="aulas({disciplinaID: disciplina.id})") Aulas
-							li.barra-lateral__subitem.active
-								p Avisos
+							li.barra-lateral__subitem
+								a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
 							li.barra-lateral__subitem
 								a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
 							li.barra-lateral__subitem
@@ -35,21 +35,43 @@ header
 								a(ui-sref="participantes({disciplinaID: disciplina.id})") Participantes
 							li.barra-lateral__subitem
 								a(ui-sref="faqs({disciplinaID: disciplina.id})") FAQs
-							li.barra-lateral__subitem
-								a(ui-sref="enquetes({disciplinaID: disciplina.id})") Enquetes
+							li.barra-lateral__subitem.active
+								p Enquetes
 		li.hide-on-large-only.no-padding.barra-lateral__item
 			a(ui-sref='disciplinas') Disciplinas
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
-main(data-ng-init="buscaAvisos()")
+main(data-ng-init="buscaEnquetes()")
 	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
 		.spinner-layer
 			.circle-clipper.left
 				.circle
 	.container
-		.card.custom-card(data-ng-repeat="aviso in avisos")
+		.card.pergunta(data-ng-repeat="survey in surveys")
 			.card-content
 				.custom-card__header
-					span.title {{aviso.subject}}
-					span.secondary-info {{aviso.created_at | date:&quot;dd/MM/yyyy &agrave;&apos;s&apos; HH:mm&quot;}}
-				p {{aviso.text}}
+					span.title {{survey.title}}
+					span.secondary-info
+						span.secondary-info--leading() {{survey.created_at | date:"dd/MM/yyyy"}}
+						span.chosen-tag(data-ng-if="!survey.closed && survey.my_vote") Votada
+						span.closed-tag(data-ng-if="survey.closed") Encerrada
+					p.survey-question {{survey.question}}
+			.card-action.custom-card__action
+				.row
+					.col.s12
+						.ver-resposta--prof.survey-button-answer
+							a.waves-effect.btn-flat(data-ng-click="displayAnswers(survey)")
+								span {{displayButton(survey)}}
+			.resposta.survey-answer-container(data-ng-attr-id="answers-{{survey.id}}")
+				.resposta__content.choices-content.clearfix
+					form(data-ng-submit="makeChoice(survey)" data-ng-if="!survey.closed && !survey.my_vote")
+						p(data-ng-repeat="alternative in survey.alternatives")
+							input.with-gap(name="group-{{survey.id}}", data-ng-model="survey.choice" value="{{alternative.id}}", type="radio" data-ng-attr-id="alternative-{{alternative.id}}")
+							label(for="alternative-{{alternative.id}}") {{alternative.description}}
+							span.badge(data-badge-caption="votos") {{alternative.choice_count}}
+						button.btn.waves-effect.waves-light.right(type="submit", name="action") Votar
+					p(data-ng-repeat="alternative in survey.alternatives" data-ng-if="survey.closed || survey.my_vote")
+						label.closed-alternatives(for="alternative-{{alternative.id}}") {{alternative.description}}
+						span.chosen-alternative(data-ng-if="survey.my_vote == alternative.id") Meu Voto
+
+						span.badge(data-badge-caption="votos") {{alternative.choice_count}}

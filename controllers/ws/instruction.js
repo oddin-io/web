@@ -113,6 +113,23 @@ function createNotice(req, res) {
   }).pipe(res)
 }
 
+function createSurvey(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}/surveys`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+    json: {
+			'title': req.body.title,
+			'question': req.body.question,
+			'alternatives': req.body.alternatives    
+    }
+  }).pipe(res)
+}
+
 function createDate(req, res) {
   const session = req.cookies.session
   request({
@@ -182,6 +199,18 @@ function showNotices(req, res) {
   }).pipe(res)
 }
 
+function showSurveys(req, res) {
+  const session = req.cookies.session
+
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}/surveys`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }).pipe(res)
+}
+
 function showDates(req, res) {
   const session = req.cookies.session
   request({
@@ -240,9 +269,11 @@ module.exports = {
   createNotice,
   createDate,
   createWork,
+	createSurvey,
   showMaterials,
   showParticipants,
   showNotices,
+	showSurveys,
   showDates,
   showWorks,
   showProfile,
