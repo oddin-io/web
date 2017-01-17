@@ -8,6 +8,10 @@ oddin.controller('WorksController',
 
         $scope.data_loaded = true;
 
+				function formatDate(date) {
+          return date.substring(8,10) + date.substring(5, 7) + date.substring(0, 4);
+        }
+
         function buscaInfo() {
             Disciplina.get({ id: $stateParams.disciplinaID },
                 function (disciplina) {
