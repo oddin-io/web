@@ -1,4 +1,4 @@
-oddin.config(function ($stateProvider, $urlRouterProvider) {
+oddin.config(function ($stateProvider) {
 	$stateProvider
 	.state('login', {
 		url: '/login',

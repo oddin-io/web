@@ -1,13 +1,13 @@
-oddin.controller('AdminEventsController',
-function ($http, $scope, $stateParams, $cookies) {
+oddin.controller('AdminEventsController', function ($http, $scope, $cookies) {
 	$scope.usuario = {
 		'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
 		'email': JSON.parse($cookies.get('session').substring(2)).person.email,
 	}
+
 	$scope.data_loaded = true;
 
 	$scope.openModalDeleteCurso = function (curso) {
-		$scope.modalContent = curso;
+		$scope.modalContent = angular.copy(curso);
 		$('#modal-deleta-curso').openModal();
 	}
 
@@ -22,6 +22,7 @@ function ($http, $scope, $stateParams, $cookies) {
 			$scope.cursos = data;
 		})
 	}
+
 	$scope.cadastraCurso =  function () {
 		$scope.data_loaded = false;
 		$http.post('/api/events', $scope.curso)
@@ -66,5 +67,4 @@ function ($http, $scope, $stateParams, $cookies) {
 			$scope.data_loaded = true;
 		})
 	}
-}
-)
+});

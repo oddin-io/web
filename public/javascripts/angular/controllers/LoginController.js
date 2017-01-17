@@ -1,4 +1,4 @@
-oddin.controller('LoginController', function ($scope, $window, $http, $cookies, $location, Login, $state) {
+oddin.controller('LoginController', function ($scope, $window, $http, $cookies, $location, $state) {
 
 	$scope.login = function (_user) {
 		var user = angular.copy(_user);
@@ -63,7 +63,7 @@ oddin.controller('LoginController', function ($scope, $window, $http, $cookies, 
 		var requestBody = {
 			password: password,
 			token: $location.search().token,
-		}
+		};
 
 		$http.post('/redefine-password', requestBody)
 			.success(function (data) {
