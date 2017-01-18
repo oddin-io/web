@@ -17,7 +17,7 @@ oddin.config(function ($stateProvider) {
 	})
 	.state('disciplinas', {
 		url: '/disciplinas',
-		templateUrl: '/partials/disciplinas',
+		templateUrl: '/partials/instructions-index',
 		controller: 'InstructionsController'
 	})
 	.state('aulas', {

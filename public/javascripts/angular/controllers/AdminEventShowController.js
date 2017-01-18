@@ -1,4 +1,4 @@
-oddin.controller('AdminEventShowController', function ($http, $scope, $stateParams, $cookies) {
+oddin.controller('AdminEventShowController', function ($http, $scope, $stateParams, $cookies, InstructionAPI) {
 
   $scope.usuario = {
     'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
@@ -59,9 +59,9 @@ oddin.controller('AdminEventShowController', function ($http, $scope, $statePara
 		instruction.start_date = new Date(startDate.year, startDate.month, startDate.day);
 		instruction.end_date = new Date(endDate.year, endDate.month, endDate.day);
 
-		$http.post('api/instructions', instruction)
-		.success(function (data) {
-			$scope.instructions.push(data);
+		InstructionAPI.create(instruction)
+		.then(function (response) {
+			$scope.instructions.push(response.data);
 			$scope.modalContent = null;
       $scope.data_loaded = true;
       Materialize.toast('Disciplina Adicionada', 3000)
@@ -70,10 +70,10 @@ oddin.controller('AdminEventShowController', function ($http, $scope, $statePara
 
 	$scope.deleteInstruction = function () {
     $scope.data_loaded = false;
-		$http.delete('api/instructions/' + $scope.modalContent.id)
-		.success(function (data) {
+		InstructionAPI.destroy($scope.modalContent.id)
+		.then(function (response) {
 			for(var i = 0; i < $scope.instructions.length; i++) {
-				if(data.id == $scope.instructions[i].id) {
+				if(response.data.id == $scope.instructions[i].id) {
 					$scope.instructions.splice(i, 1);
 					break;
 				}

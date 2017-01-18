@@ -1,0 +1,27 @@
+doctype html
+header
+	.navbar-fixed
+		nav
+			.nav-wrapper.barra-navegacao__container
+				a.button-collapse(href="" data-activates="slide-out", data-sidenav="left")
+					i.material-icons menu
+				h1.barra-navegacao__title(ng-bind="titulo")
+				a.brand-logo.right.hide-on-small-only(href="/")
+					img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+
+	ul#slide-out.side-nav.fixed.barra-lateral
+		.barra-lateral__header
+			i.barra-lateral__user-avatar.material-icons account_circle
+			p.barra-lateral__user-name {{usuario.name}}
+			p.barra-lateral__user-email {{usuario.email}}
+		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+			a(href="" data-ng-click="logout()") Logout
+main
+	.container
+		ul.collapsible.lista-disciplinas(data-collapsible="expandable", watch="")
+			li
+				.collapsible-header.lista-disciplinas__header.active
+					i.material-icons collections_bookmark
+					|  Disciplinas Correntes
+				.collection.collapsible-body.lista-disciplinas__body
+					a.collection-item(href="", data-ng-click="buscarPerfil(disciplina)", data-ng-repeat="disciplina in disciplinas") {{disciplina.lecture.name}} - Turma: {{disciplina.class_number}}

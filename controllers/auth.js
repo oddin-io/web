@@ -14,14 +14,12 @@ function login(req, res) {
       res.cookie('session', body)
     }
 
-
     res.status(response.statusCode).send(body).end()
   })
 }
 
 function logout(req, res) {
   const session = req.cookies.session
-
   request({
     uri: `${constants.uri}/session`,
     method: 'DELETE',
