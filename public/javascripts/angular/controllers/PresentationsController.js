@@ -39,15 +39,13 @@ oddin.controller('PresentationsController', function ($scope, $stateParams, Inst
 
 	$scope.fechaAula = function (aula) {
 		$scope.data_loaded = false;
+		var index = $scope.aulas.indexOf(aula);
+
 		PresentationAPI.close(aula.id)
 		.then(function (response) {
-			$scope.aulas.forEach( function (elem, i) {
-				if(elem.id == aula.id) {
-					$scope.aulas[i] = response.data;
-				}
-			});
+			$scope.aulas[index] = response.data;
 			$scope.data_loaded = true;
-			Materialize.toast('A aula ' + aula.subject + 'foi finalizada', 3000);
+			Materialize.toast('A aula ' + aula.subject + ' foi finalizada', 3000);
 		})
 		.catch(function (error) {
 			console.log(error.data);

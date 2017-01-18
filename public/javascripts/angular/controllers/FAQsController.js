@@ -1,19 +1,20 @@
-oddin.controller('FAQsController', function ($http, $scope, $stateParams, $state, $cookies, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
+oddin.controller('FAQsController', function ($http, $scope, $stateParams, $state, $cookies, InstructionAPI, DisciplinaMaterial, DisciplinaParticipante) {
+
 	(function () {
-			Disciplina.get({ id: $stateParams.disciplinaID },
-					function (disciplina) {
-							$scope.disciplina = disciplina
-					},
-					function (erro) {
-							$scope.mensagem = { texto: 'Não foi possível obter o resultado.' }
-					}
-			)
+		InstructionAPI.show($stateParams.disciplinaID)
+		.then(function (response) {
+			$scope.disciplina = response.data;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
 	})();
 
 	$scope.usuario = {
 			'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
 			'email': JSON.parse($cookies.get('session').substring(2)).person.email,
 	}
+
 	$scope.data_loaded = true;
 
 	$scope.buscaFAQs = function () {

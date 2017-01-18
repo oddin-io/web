@@ -17,8 +17,17 @@ oddin.factory("InstructionAPI", function ($http) {
 	var _getPresentations = function (id) {
 		return $http.get('/api/instructions/' + id + '/presentations');
 	}
+	var _getNotices = function (id) {
+		return $http.get('/api/instructions/' + id + '/notices');
+	}
+	var _getDates = function (id) {
+		return $http.get('/api/instructions/' + id + '/dates');
+	}
 	var _createPresentation = function (id, presentation) {
 		return $http.post('/api/instructions/' + id + '/presentations', presentation);
+	}
+	var _createNotice = function (id, notice) {
+		return $http.post('/api/instructions/' + id + "/notices", notice)
 	}
 
 	return {
@@ -28,6 +37,9 @@ oddin.factory("InstructionAPI", function ($http) {
 		destroy: _destroy,
 		getProfile: _getProfile,
 		getPresentations: _getPresentations,
-		createPresentation: _createPresentation
+		getNotices: _getNotices,
+		getDates: _getDates,
+		createPresentation: _createPresentation,
+		createNotice: _createNotice
 	}
 })

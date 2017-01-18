@@ -1,4 +1,15 @@
-oddin.controller('SurveysController', function ($http, $scope, $stateParams, $state, $cookies, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
+oddin.controller('SurveysController', function ($http, $scope, $stateParams, $state, $cookies, InstructionAPI, DisciplinaMaterial, DisciplinaParticipante) {
+
+	(function () {
+		InstructionAPI.show($stateParams.disciplinaID)
+		.then(function (response) {
+			$scope.disciplina = response.data;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+	})();
+
 	$scope.usuario = {
 			'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
 			'email': JSON.parse($cookies.get('session').substring(2)).person.email,
@@ -15,17 +26,6 @@ oddin.controller('SurveysController', function ($http, $scope, $stateParams, $st
 			$scope.surveys = data
 		})
 	};
-
-	(function () {
-			Disciplina.get({ id: $stateParams.disciplinaID },
-					function (disciplina) {
-							$scope.disciplina = disciplina
-					},
-					function (erro) {
-							$scope.mensagem = { texto: 'Não foi possível obter o resultado.' }
-					}
-			)
-	})();
 
 	$scope.displayAnswers = function (survey) {
 		if($("#answers-" + survey.id).css("display") == "none")
@@ -51,13 +51,6 @@ oddin.controller('SurveysController', function ($http, $scope, $stateParams, $st
 			}
 		}
 	}
-
-	// $scope.createSurvey = function () {
-	// 	console.log($scope.survey);
-	// 	$scope.survey = {
-	// 		choices : [{}]
-	// 	}
-	// }
 
 	$scope.createSurvey = function () {
 		$scope.data_loaded = false;
@@ -133,27 +126,26 @@ oddin.controller('SurveysController', function ($http, $scope, $stateParams, $st
 	}
 
 	$scope.addNewAlternative = function () {
-		// var newItemNo = $scope.choices.length+1;
 		$scope.survey.alternatives.push({});
 	}
 
 	$scope.removeAlternative = function() {
-	 var lastItem = $scope.survey.alternatives.length-1;
-	 $scope.survey.alternatives.splice(lastItem);
- };
+		var lastItem = $scope.survey.alternatives.length-1;
+		$scope.survey.alternatives.splice(lastItem);
+	};
 
- $scope.openModalDeleteSurvey = function (survey) {
-	 $scope.modalContent = angular.copy(survey);
-	 $('#delete-enquete').openModal();
- }
+	$scope.openModalDeleteSurvey = function (survey) {
+		$scope.modalContent = angular.copy(survey);
+		$('#delete-enquete').openModal();
+	}
 
- $scope.openModalCloseSurvey = function (survey) {
-	 $scope.modalContent = angular.copy(survey);
-	 $('#close-enquete').openModal();
- }
+	$scope.openModalCloseSurvey = function (survey) {
+		$scope.modalContent = angular.copy(survey);
+		$('#close-enquete').openModal();
+	}
 
- $scope.openModalEditSurvey = function (survey) {
-	 $scope.modalContent = angular.copy(survey);
-	 $('#edit-enquete').openModal();
- }
+	$scope.openModalEditSurvey = function (survey) {
+		$scope.modalContent = angular.copy(survey);
+		$('#edit-enquete').openModal();
+	}
 });

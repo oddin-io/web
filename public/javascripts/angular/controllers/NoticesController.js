@@ -1,48 +1,42 @@
-oddin.controller('NoticesController',
-    function ($http, $scope, $stateParams, $cookies, Disciplina) {
+oddin.controller('NoticesController', function ($scope, $stateParams, InstructionAPI, CurrentUser) {
 
-        $scope.usuario = {
-            'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-            'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-        }
+  $scope.usuario = CurrentUser;
+  $scope.data_loaded = true;
 
-        $scope.data_loaded = true;
+	function buscaInfo() {
+		InstructionAPI.show($stateParams.disciplinaID)
+		.then(function (response) {
+			$scope.disciplina = response.data;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+	}
 
-        function buscaInfo() {
-            Disciplina.get({ id: $stateParams.disciplinaID },
-                function (disciplina) {
-                    $scope.disciplina = disciplina
-                },
-                function (erro) {
-                    $scope.mensagem = { texto: 'Não foi possível obter o resultado.' }
-                }
-            )
-        }
+  $scope.buscaAvisos = function () {
+		InstructionAPI.getNotices($stateParams.disciplinaID)
+		.then(function (response) {
+			$scope.avisos = response.data;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+  }
 
-        function feedbackReloadNotices(msg) {
-          $http.get('/api/instructions/' + $stateParams.disciplinaID + '/notices')
-              .success(function (data) {
-                  $scope.avisos = data
-                  $scope.data_loaded = true;
-                  Materialize.toast(msg, 4000);
-              })
-        }
+  $scope.postaAviso = function (notice) {
+		var _notice = angular.copy(notice);
+		delete $scope.aviso;
 
-        $scope.buscaAvisos = function () {
-          $http.get('/api/instructions/' + $stateParams.disciplinaID + '/notices')
-              .success(function (data) {
-                  $scope.avisos = data
-              })
-        }
-
-        $scope.postaAviso = function () {
-          $scope.data_loaded = false;
-          $http.post('/api/instructions/' + $stateParams.disciplinaID + "/notices", $scope.aviso)
-              .success(function () {
-                $scope.aviso = null;
-                feedbackReloadNotices('O aviso foi postado');
-              })
-        }
-        buscaInfo()
-    }
-)
+    $scope.data_loaded = false;
+		InstructionAPI.createNotice($stateParams.disciplinaID, _notice)
+		.then(function (response) {
+			$scope.avisos.push(response.data);
+			$scope.data_loaded = true;
+			Materialize.toast('Aviso postado', 4000);
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+  }
+  buscaInfo();
+});
