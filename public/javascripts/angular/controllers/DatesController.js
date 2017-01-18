@@ -1,9 +1,9 @@
-oddin.controller('DatesController', function ($http, $scope, $stateParams, InstructionAPI, CurrentUser) {
+oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, InstructionAPI, CurrentUser, $filter) {
 
-  $scope.usuario = CurrentUser;
-  $scope.data_loaded = true;
+	$scope.usuario = CurrentUser;
+	$scope.data_loaded = true;
 
-  function buscaInfo() {
+	function buscaInfo() {
 		InstructionAPI.show($stateParams.disciplinaID)
 		.then(function (response) {
 			$scope.disciplina = response.data;
@@ -11,45 +11,43 @@ oddin.controller('DatesController', function ($http, $scope, $stateParams, Instr
 		.catch(function (error) {
 			console.log(error.data);
 		})
-  }
+	}
 
-  function convertDate(date, time) {
-    var convertedDate;
-    if(time === undefined) {
-      convertedDate = date.substring(4, 8) + "-" + date.substring(2, 4) + "-" + date.substring(0,2) +
-      "T00:00:00.0Z";
-      return convertedDate;
-    }
-    convertedDate = date.substring(4, 8) + "-" + date.substring(2, 4) + "-" + date.substring(0,2) +
-    "T" + time.substring(0,2) + ":" + time.substring(2,4) + ":00.0Z";
-    return convertedDate;
-  }
+	function convertToDate (date, time) {
+		var _day = parseInt(date.substring(0, 2));
+		var _month = parseInt(date.substring(2, 4)) - 1;
+		var _year = parseInt(date.substring(4, 8));
+		var _hour = 0;
+		var _minute = 0;
 
-  function formatDate(date) {
-    return date.substring(8,10) + date.substring(5, 7) + date.substring(0, 4);
-  }
+		if(time) {
+			_hour = parseInt(time.substring(0,2));
+			_minute = parseInt(time.substring(2,4));
+		}
 
-  function feedbackReloadDates(msg) {
-    $http.get('/api/instructions/' + $stateParams.disciplinaID + '/dates')
-        .success(function (data) {
-            $scope.datas = data
-            $scope.data_loaded = true;
-            Materialize.toast(msg, 4000);
-        })
-  }
+		return new Date(_year, _month, _day, _hour, _minute);
+	}
 
-  $scope.postaData = function () {
-    $scope.date.date = convertDate($scope.date.date, $scope.date.time);
-    delete $scope.date['time'];
-    $scope.data_loaded = false;
-    $http.post('/api/instructions/' + $stateParams.disciplinaID + "/dates", $scope.date)
-        .success(function () {
-          $scope.date = null;
-          feedbackReloadDates('A Data foi postada');
-        })
-  }
+	$scope.postaData = function (date) {
+		$scope.data_loaded = false;
 
-  $scope.buscaDatas = function () {
+		var _date = angular.copy(date);
+		_date.date = convertToDate(_date.date, _date.time);
+		// delete _date.time;
+		delete $scope.date;
+
+		InstructionAPI.createDate($stateParams.disciplinaID, _date)
+		.then(function (response) {
+			$scope.datas.push(response.data);
+			$scope.data_loaded = true;
+			Materialize.toast("A Data foi postada", 4000);
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+	}
+
+	$scope.buscaDatas = function () {
 		InstructionAPI.getDates($stateParams.disciplinaID)
 		.then(function (response) {
 			$scope.datas = response.data;
@@ -57,41 +55,66 @@ oddin.controller('DatesController', function ($http, $scope, $stateParams, Instr
 		.catch(function (error) {
 			console.log(error.data);
 		})
-  }
+	}
 
-  $scope.openModalDeleteDate = function (date) {
-    $scope.modalContent = date;
-    $('#modal-delete-date').openModal();
-  }
+	$scope.updateDate = function (date) {
+		$scope.data_loaded = false;
 
-  $scope.openModalEditDate = function (date) {
-    $scope.modalContent = angular.copy(date);
-    var formatDate = $scope.modalContent.date.substring(8, 10) + $scope.modalContent.date.substring(5, 7) + $scope.modalContent.date.substring(0,4);
-    var formatTime = $scope.modalContent.date.substring(11, 16);
-    $scope.modalContent.date = formatDate;
-    $scope.modalContent.time = formatTime;
-    $('#modal-editar-data').openModal();
-  }
+		var _date = angular.copy(date);
+		_date.date = convertToDate(_date.date, _date.time);
+		delete _date.time;
+		delete $scope.modalContent;
 
-  $scope.updateDate = function () {
-    $scope.data_loaded = false;
-    $scope.modalContent.date = convertDate($scope.modalContent.date, $scope.modalContent.time);
-    $http.put('api/dates/' +  $scope.modalContent.id, $scope.modalContent)
-          .success(function (data) {
-            feedbackReloadDates('Data atualizada');
-          })
-          .error(function (data) {
-            $scope.data_loaded = true;
-            Materialize.toast('Erro no servidor!', 3000);
-          })
-  }
+		DateAPI.update(_date.id, _date)
+		.then(function (response) {
+			for(var i = 0; i < $scope.datas.length; i++) {
+				if($scope.datas[i].id == response.data.id) {
+					$scope.datas[i] = response.data;
+					break;
+				}
+			}
+			$scope.data_loaded = true;
+			Materialize.toast('Data atualizada', 3000);
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+	}
 
-  $scope.deleteDate = function (date) {
-    $scope.data_loaded = false;
-    $http.delete('api/dates/' +  date.id)
-          .success(function (data) {
-            feedbackReloadDates('Data deletada');
-          })
-  }
-  buscaInfo();
+	$scope.deleteDate = function (date) {
+		$scope.data_loaded = false;
+
+		var _date = angular.copy(date);
+		delete $scope.modalContent;
+
+		DateAPI.destroy(_date.id)
+		.then(function (response) {
+			for(var i = 0; i < $scope.datas.length; i++) {
+				console.log($scope.datas[i]);
+				if($scope.datas[i].id == _date.id) {
+					$scope.datas.splice(i, 1);
+					break;
+				}
+			}
+			$scope.data_loaded = true;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+	}
+
+	$scope.openModalDeleteDate = function (date) {
+		$scope.modalContent = date;
+		$('#modal-delete-date').openModal();
+	}
+
+	$scope.openModalEditDate = function (date) {
+		var _date = date.date;
+		$scope.modalContent = angular.copy(date);
+		$scope.modalContent.date = $filter('date')(_date, 'ddMMyyyy');
+		$scope.modalContent.time = $filter('date')(_date, 'HHmm')
+		$('#modal-editar-data').openModal();
+	}
+
+	buscaInfo();
 });

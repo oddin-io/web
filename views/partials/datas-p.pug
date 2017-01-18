@@ -60,7 +60,7 @@ main(data-ng-init="buscaDatas()")
 				#postar-informativo.modal.bottom-sheet
 						.modal-content.modal-criar-item
 								.row
-										form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="postaData()")
+										form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="postaData(date)")
 											h1.modal-criar-item__titulo Postar Data
 											.row
 												.input-field.col.s12
@@ -73,13 +73,13 @@ main(data-ng-init="buscaDatas()")
 													input(name="data" type="text" data-ng-model="date.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
 													label(for="data") Data
 												.input-field.col.m6
-													input(name="hora" type="text" data-ng-model="date.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required)
+													input(name="hora" type="text" data-ng-model="date.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
 													label(for="hora") Hora
 											button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
 				#modal-editar-data.modal.bottom-sheet
 						.modal-content.modal-criar-item
 								.row
-										form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateDate()")
+										form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateDate(modalContent)")
 											h1.modal-criar-item__titulo Editar Data
 											.row
 												.input-field.col.s12
@@ -100,7 +100,7 @@ main(data-ng-init="buscaDatas()")
 					.card-content
 						.custom-card__header
 							span.title {{date.subject}}
-							span.secondary-info--leading {{date.date.substring(0,23) | date:"dd/MM/yyyy à's' HH:mm"}}
+							span.secondary-info--leading {{date.date | date:"dd/MM/yyyy à's' HH:mm"}}
 						p {{date.text}}
 					.card-action.custom-card__action
 							.row
