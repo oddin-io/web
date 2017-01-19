@@ -34,7 +34,6 @@ oddin.controller('AdminEventsController', function ($http, $scope, $cookies) {
 		})
 	}
 
-	//Implementar Atualização no Backend
 	$scope.updateCurso = function (modalContent) {
 		$scope.data_loaded = false;
 		$http.put('/api/events/' + modalContent.id, $scope.modalContent)

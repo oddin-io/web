@@ -13,7 +13,7 @@ header
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.nome}}
+			p.barra-lateral__user-name {{usuario.name}}
 			p.barra-lateral__user-email {{usuario.email}}
 		li.no-padding
 			ul.collapsible(data-collapsible="expandable")
@@ -62,14 +62,14 @@ main(data-ng-init="buscaMateriais()")
 		#subir-material.modal.bottom-sheet
 			.modal-content.modal-criar-item
 				.row
-					form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data", data-ng-submit="uploadMaterial(name)", name="uploadArchive")
+					form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data", data-ng-submit="uploadMaterial()", name="uploadArchive")
 						h1.modal-criar-item__titulo Upload de material da disciplina
 						.file-field.input-field
 							.btn.modal-criar-item__file-button
 								span Arquivo
 								input#material-file(name="file", type="file")
 							.file-path-wrapper
-								input.file-path.validate(type="text", placeholder="Faça Upload de um ou mais arquivos")
+								input#material-description.file-path.validate(type="text", placeholder="Faça Upload de um ou mais arquivos")
 						button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
 		ul.collection.with-header.lista-material
 			li.collection-header.lista-material__header

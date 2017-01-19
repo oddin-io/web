@@ -33,7 +33,7 @@ oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, Ins
 
 		var _date = angular.copy(date);
 		_date.date = convertToDate(_date.date, _date.time);
-		// delete _date.time;
+		delete _date.time;
 		delete $scope.date;
 
 		InstructionAPI.createDate($stateParams.disciplinaID, _date)
@@ -90,7 +90,6 @@ oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, Ins
 		DateAPI.destroy(_date.id)
 		.then(function (response) {
 			for(var i = 0; i < $scope.datas.length; i++) {
-				console.log($scope.datas[i]);
 				if($scope.datas[i].id == _date.id) {
 					$scope.datas.splice(i, 1);
 					break;

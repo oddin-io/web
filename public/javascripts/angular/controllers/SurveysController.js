@@ -1,4 +1,4 @@
-oddin.controller('SurveysController', function ($http, $scope, $stateParams, $state, $cookies, InstructionAPI, DisciplinaMaterial, DisciplinaParticipante) {
+oddin.controller('SurveysController', function ($http, $scope, $stateParams, $state, $cookies, InstructionAPI) {
 
 	(function () {
 		InstructionAPI.show($stateParams.disciplinaID)

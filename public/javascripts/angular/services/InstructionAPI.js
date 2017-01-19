@@ -23,15 +23,27 @@ oddin.factory("InstructionAPI", function ($http) {
 	var _getDates = function (id) {
 		return $http.get('/api/instructions/' + id + '/dates');
 	};
+	var _getWorks = function (id) {
+		return $http.get('/api/instructions/' + id + '/works');
+	}
+	var _getMaterials = function (id) {
+		return $http.get('/api/instructions/' + id + '/materials');
+	};
+	var _getParticipants = function (id) {
+		return $http.get('/api/instructions/' + id + '/participants');
+	};
 	var _createPresentation = function (id, presentation) {
 		return $http.post('/api/instructions/' + id + '/presentations', presentation);
 	};
 	var _createNotice = function (id, notice) {
-		return $http.post('/api/instructions/' + id + "/notices", notice);
+		return $http.post('/api/instructions/' + id + '/notices', notice);
 	};
 	var _createDate = function (id, date) {
-		return $http.post('/api/instructions/' + id + "/dates", date);
-	}
+		return $http.post('/api/instructions/' + id + '/dates', date);
+	};
+	var _createMaterial = function (id) {
+		return $http.post('api/instructions/' + id + '/materials');
+	};
 
 	return {
 		index: _index,
@@ -42,8 +54,12 @@ oddin.factory("InstructionAPI", function ($http) {
 		getPresentations: _getPresentations,
 		getNotices: _getNotices,
 		getDates: _getDates,
+		getWorks: _getWorks,
+		getMaterials: _getMaterials,
+		getParticipants: _getParticipants,
 		createPresentation: _createPresentation,
 		createNotice: _createNotice,
-		createDate: _createDate
+		createDate: _createDate,
+		createMaterial: _createMaterial
 	}
-})
+});

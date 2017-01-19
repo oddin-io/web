@@ -13,7 +13,7 @@ header
   ul#slide-out.side-nav.fixed.barra-lateral
     .barra-lateral__header
       i.barra-lateral__user-avatar.material-icons account_circle
-      p.barra-lateral__user-name {{usuario.nome}}
+      p.barra-lateral__user-name {{usuario.name}}
       p.barra-lateral__user-email {{usuario.email}}
     li.no-padding
       ul.collapsible(data-collapsible="expandable")
@@ -43,7 +43,7 @@ main(data-ng-init="buscaDuvidas()")
     #postar-duvida.modal.bottom-sheet
       .modal-content.modal-criar-item.modal-post-duvida
         .row
-          form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="postaDuvida()")
+          form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="postaDuvida(duvida)")
             h1.modal-criar-item__titulo Postar D&uacute;vida
             .row
               .input-field.col.s12

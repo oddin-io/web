@@ -1,33 +1,10 @@
-oddin.controller('WorksController', function ($http, $scope, $stateParams, $state, $cookies, InstructionAPI, DisciplinaMaterial, DisciplinaParticipante) {
+oddin.controller('WorksController', function ($http, $scope, $stateParams, InstructionAPI, CurrentUser) {
 
-	$scope.usuario = {
-			'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-			'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-	}
-
+	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
 
 	function formatDate(date) {
 		return date.substring(8,10) + date.substring(5, 7) + date.substring(0, 4);
-	}
-
-	function buscaInfo() {
-		InstructionAPI.show($stateParams.disciplinaID)
-		.then(function (response) {
-			$scope.disciplina = response.data;
-		})
-		.catch(function (error) {
-			console.log(error.data);
-		})
-	}
-
-	function feedbackReloadWorks(msg) {
-		$http.get('/api/instructions/' + $stateParams.disciplinaID + '/works')
-				.success(function (data) {
-						$scope.tarefas = data
-						$scope.data_loaded = true;
-						Materialize.toast(msg, 4000);
-				})
 	}
 
 	function convertDate(date, time) {
@@ -42,18 +19,24 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $stat
 		return convertedDate;
 	}
 
-	$scope.openModalEditWork = function (tarefa) {
-		$scope.modalContent = angular.copy(tarefa);
-		$scope.modalContent.deadline = formatDate($scope.modalContent.deadline);
-		if(tarefa.materials[0]) {
-			$scope.modalContent.materialName = tarefa.materials[0].name;
-		}
-		$('#editar-tarefa').openModal();
+	function buscaInfo() {
+		InstructionAPI.show($stateParams.disciplinaID)
+		.then(function (response) {
+			$scope.disciplina = response.data;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
 	}
 
-	$scope.openModalDeleteWork = function (tarefa) {
-		$scope.modalContent = tarefa;
-		$('#modal-deleta-tarefa').openModal();
+	$scope.buscaTarefas = function () {
+		InstructionAPI.getWorks($stateParams.disciplinaID)
+		.then(function (response) {
+			$scope.tarefas = response.data;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
 	}
 
 	$scope.criaTarefa = function () {
@@ -190,10 +173,26 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $stat
 			})
 	}
 
-	$scope.buscaTarefas = function () {
+	$scope.openModalEditWork = function (tarefa) {
+		$scope.modalContent = angular.copy(tarefa);
+		$scope.modalContent.deadline = formatDate($scope.modalContent.deadline);
+		if(tarefa.materials[0]) {
+			$scope.modalContent.materialName = tarefa.materials[0].name;
+		}
+		$('#editar-tarefa').openModal();
+	}
+
+	$scope.openModalDeleteWork = function (tarefa) {
+		$scope.modalContent = tarefa;
+		$('#modal-deleta-tarefa').openModal();
+	}
+
+	function feedbackReloadWorks(msg) {
 		$http.get('/api/instructions/' + $stateParams.disciplinaID + '/works')
 				.success(function (data) {
-					$scope.tarefas = data;
+						$scope.tarefas = data
+						$scope.data_loaded = true;
+						Materialize.toast(msg, 4000);
 				})
 	}
 	buscaInfo();
