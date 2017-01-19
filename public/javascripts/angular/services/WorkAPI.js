@@ -11,11 +11,15 @@ oddin.factory("WorkAPI", function ($http) {
 	var _createMaterial = function (id) {
 		return $http.post('/api/works/' + id + '/materials');
 	};
+	var _getSubmissions = function (id) {
+		return $http.get('/api/works/' + id + '/submissions');
+	};
 
 	return {
 		show: _show,
 		update: _update,
 		destroy: _destroy,
-		createMaterial: _createMaterial
+		createMaterial: _createMaterial,
+		getSubmissions: _getSubmissions
 	}
 });
