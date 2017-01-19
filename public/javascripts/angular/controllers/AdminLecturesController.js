@@ -34,7 +34,6 @@ oddin.controller('AdminLecturesController', function ($http, $scope, $stateParam
 		})
 	}
 
-	//Implementar Atualização no Backend
 	$scope.updateDisciplina = function (modalContent) {
 		$scope.data_loaded = false;
 		$http.put('/api/lectures/' + modalContent.id, $scope.modalContent)
@@ -49,7 +48,6 @@ oddin.controller('AdminLecturesController', function ($http, $scope, $stateParam
 		})
 	}
 
-	//Corrigir exclusão de disciplina no Backend
 	$scope.deleteDisciplina = function (modalContent) {
 		$scope.data_loaded = false;
 		$http.delete('/api/lectures/' + modalContent.id)

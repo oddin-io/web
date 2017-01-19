@@ -1,4 +1,4 @@
-oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, InstructionAPI, CurrentUser, $filter) {
+oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, InstructionAPI, CurrentUser, $filter, FormatUtil) {
 
 	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
@@ -13,26 +13,11 @@ oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, Ins
 		})
 	}
 
-	function convertToDate (date, time) {
-		var _day = parseInt(date.substring(0, 2));
-		var _month = parseInt(date.substring(2, 4)) - 1;
-		var _year = parseInt(date.substring(4, 8));
-		var _hour = 0;
-		var _minute = 0;
-
-		if(time) {
-			_hour = parseInt(time.substring(0,2));
-			_minute = parseInt(time.substring(2,4));
-		}
-
-		return new Date(_year, _month, _day, _hour, _minute);
-	}
-
 	$scope.postaData = function (date) {
 		$scope.data_loaded = false;
 
 		var _date = angular.copy(date);
-		_date.date = convertToDate(_date.date, _date.time);
+		_date.date = FormatUtil.convertToDate(_date.date, _date.time);
 		delete _date.time;
 		delete $scope.date;
 
@@ -61,7 +46,7 @@ oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, Ins
 		$scope.data_loaded = false;
 
 		var _date = angular.copy(date);
-		_date.date = convertToDate(_date.date, _date.time);
+		_date.date = FormatUtil.convertToDate(_date.date, _date.time);
 		delete _date.time;
 		delete $scope.modalContent;
 

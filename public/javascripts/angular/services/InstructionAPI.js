@@ -41,6 +41,9 @@ oddin.factory("InstructionAPI", function ($http) {
 	var _createDate = function (id, date) {
 		return $http.post('/api/instructions/' + id + '/dates', date);
 	};
+	var _createWork = function (id, work) {
+		return $http.post('/api/instructions/' + id + "/works", work);
+	};
 	var _createMaterial = function (id) {
 		return $http.post('api/instructions/' + id + '/materials');
 	};
@@ -60,6 +63,7 @@ oddin.factory("InstructionAPI", function ($http) {
 		createPresentation: _createPresentation,
 		createNotice: _createNotice,
 		createDate: _createDate,
+		createWork: _createWork,
 		createMaterial: _createMaterial
 	}
 });

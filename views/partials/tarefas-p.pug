@@ -61,7 +61,7 @@ main(data-ng-init="buscaTarefas()")
 				#criar-tarefa.modal.bottom-sheet
 						.modal-content.modal-criar-item
 								.row
-										form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="criaTarefa()" name="uploadArchive")
+										form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="criaTarefa(tarefa)" name="uploadArchive")
 												h1.modal-criar-item__titulo Criar tarefa
 												.row
 													.input-field.col.s12.m8
@@ -83,7 +83,7 @@ main(data-ng-init="buscaTarefas()")
 				#editar-tarefa.modal.bottom-sheet
 						.modal-content.modal-criar-item
 								.row
-										form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="atualizaTarefa()" name="updateArchive")
+										form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="atualizaTarefa(modalContent)" name="updateArchive")
 												h1.modal-criar-item__titulo Editar tarefa
 												.row
 													.input-field.col.s12.m8
@@ -102,13 +102,13 @@ main(data-ng-init="buscaTarefas()")
 														.file-path-wrapper
 															input.file-path.validate(type="text", ng-model="modalContent.materialName" placeholder="Acresente um arquivo com a descrição do trabalho")
 												button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
-				.card.custom-card(data-ng-repeat="tarefa in tarefas", data-ng-init="buscaTarefaMaterial(tarefa)")
+				.card.custom-card(data-ng-repeat="tarefa in tarefas")
 					.card-content
 						.custom-card__header
 							a(ui-sref="tarefa-status({tarefaID: tarefa.id})")
 								span.title.link-title {{tarefa.subject}}
 							span.secondary-info Entrega:&nbsp
-								span.secondary-info--leading {{tarefa.deadline.substring(0,23) | date:"dd/MM/yyyy"}}
+								span.secondary-info--leading {{tarefa.deadline | date:"dd/MM/yyyy"}}
 						p {{tarefa.description}}
 					.card-action.custom-card__action
 							.row
