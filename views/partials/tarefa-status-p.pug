@@ -28,7 +28,7 @@ main(data-ng-init="buscaSubmissoes()")
 						.circle-clipper.left
 								.circle
 		.container
-			.card.custom-card(data-ng-repeat="submissao in submissoes | orderBy: 'person.name'" data-ng-init="buscaSubmissaoMaterial(submissao)")
+			.card.custom-card(data-ng-repeat="submissao in submissoes | orderBy: 'person.name'")
 				.card-content
 					.custom-card__header
 						span.title {{submissao.person.name}}

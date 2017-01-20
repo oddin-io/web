@@ -23,6 +23,17 @@ function createMaterial(req, res) {
   }).pipe(res)
 }
 
+function show(req, res) {
+  const session = req.cookies.session
+  request({
+    uri: `${constants.uri}/submissions/${req.params.id}`,
+    method: 'GET',
+    headers: {
+      'x-session-token': session.token,
+    }
+  }).pipe(res)
+}
+
 function destroy(req, res) {
   const session = req.cookies.session
   request({
@@ -51,6 +62,7 @@ function update(req, res) {
 module.exports = {
   showMaterials,
   createMaterial,
+	show,
   destroy,
   update
 }

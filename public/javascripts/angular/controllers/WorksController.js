@@ -99,14 +99,17 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $filt
 							})
 						})
 					} else {
-						for(var i = 0; i < $scope.tarefas.length; i++) {
-							if($scope.tarefas[i].id == response.data.id) {
-								$scope.tarefas[i] = response.data;
-								break;
+						WorkAPI.show(_tarefa.id)
+						.then(function (response) {
+							for(var i = 0; i < $scope.tarefas.length; i++) {
+								if($scope.tarefas[i].id == response.data.id) {
+									$scope.tarefas[i] = response.data;
+									break;
+								}
 							}
-						}
-						$scope.data_loaded = true;
-						Materialize.toast('A tarefa foi atualizada', 3000);
+							$scope.data_loaded = true;
+							Materialize.toast('A tarefa foi atualizada', 3000);
+						})
 					}
 				})
 			} else {

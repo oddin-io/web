@@ -38,7 +38,7 @@ main(data-ng-init="buscaSubmissoesAluno()")
 			#submeter-trabalho.modal.bottom-sheet
 					.modal-content.modal-criar-item
 							.row
-									form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="createSubmission()" name="uploadArchive")
+									form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="createSubmission(submission)" name="uploadArchive")
 										h1.modal-criar-item__titulo Submeter trabalho
 										.row
 											.input-field.col.s12
@@ -54,7 +54,7 @@ main(data-ng-init="buscaSubmissoesAluno()")
 			#editar-trabalho.modal.bottom-sheet
 					.modal-content.modal-criar-item
 							.row
-									form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="updateSubmission()" name="updateArchive")
+									form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="updateSubmission(modalContent)" name="updateArchive")
 										h1.modal-criar-item__titulo Editar trabalho
 										.row
 											.input-field.col.s12
@@ -78,7 +78,7 @@ main(data-ng-init="buscaSubmissoesAluno()")
 							.offset-m6.col.m6
 								.card-right-button
 									a.btn-flat(href="#submeter-trabalho", modal) Postar tarefa
-			.card.custom-card(data-ng-repeat="submissao in submissoes" data-ng-init="buscaSubmissaoMaterial(submissao)")
+			.card.custom-card(data-ng-repeat="submissao in submissoes")
 				.card-content
 					.custom-card__header
 						a(href='' data-ng-click="downloadSubmission(submissao)")

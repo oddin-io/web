@@ -1,7 +1,5 @@
 oddin.controller('PresentationMaterialController', function ($scope, $stateParams, $http, CurrentUser, PresentationAPI) {
 	$scope.usuario = CurrentUser;
-	$scope.filter = false;
-	$scope.last_doubt = {};
 	$scope.data_loaded = true;
 
 	function buscaInfo() {
@@ -12,15 +10,6 @@ oddin.controller('PresentationMaterialController', function ($scope, $stateParam
 		.catch(function (error) {
 			console.log(error.data);
 		})
-	}
-
-	function feedbackReloadMaterial(msg) {
-		$http.get('/api/presentation/' + $stateParams.aulaID + '/materials')
-						.success(function (data) {
-							$scope.materiais = data
-							$scope.data_loaded = true
-							Materialize.toast(msg, 4000)
-						})
 	}
 
 	$scope.buscaMateriais = function () {
@@ -51,11 +40,6 @@ oddin.controller('PresentationMaterialController', function ($scope, $stateParam
 						})
 	}
 
-	$scope.openModalDeleteMaterial = function (material) {
-		$scope.modalContent = material
-		$('#modal-deleta-material').openModal()
-	}
-
 	$scope.downloadMaterial = function (material) {
 			$scope.data_loaded = false;
 			$http.get('api/materials/' + material.id)
@@ -80,6 +64,20 @@ oddin.controller('PresentationMaterialController', function ($scope, $stateParam
 		$http.delete('api/materials/' + material.id)
 						.success(function (data) {
 							feedbackReloadMaterial('Arquivo deletado')
+						})
+	}
+
+	$scope.openModalDeleteMaterial = function (material) {
+		$scope.modalContent = material
+		$('#modal-deleta-material').openModal()
+	}
+
+	function feedbackReloadMaterial(msg) {
+		$http.get('/api/presentation/' + $stateParams.aulaID + '/materials')
+						.success(function (data) {
+							$scope.materiais = data
+							$scope.data_loaded = true
+							Materialize.toast(msg, 4000)
 						})
 	}
 	buscaInfo();
