@@ -1,4 +1,4 @@
-oddin.controller('SurveysController', function ($http, $scope, $stateParams, $state, $cookies, InstructionAPI) {
+oddin.controller('SurveysController', function ($scope, $cookies, $stateParams, InstructionAPI, SurveyAPI, AlternativeAPI, CurrentUser) {
 
 	(function () {
 		InstructionAPI.show($stateParams.disciplinaID)
@@ -10,22 +10,115 @@ oddin.controller('SurveysController', function ($http, $scope, $stateParams, $st
 		})
 	})();
 
-	$scope.usuario = {
-			'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-			'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-	}
-
+	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
 	$scope.survey = {
 		alternatives : [{}]
 	}
 
 	$scope.buscaEnquetes = function () {
-		$http.get('/api/instructions/' + $stateParams.disciplinaID + '/surveys')
-		.success(function (data) {
-			$scope.surveys = data
+		InstructionAPI.getSurveys($stateParams.disciplinaID)
+		.then(function (response) {
+			$scope.surveys = response.data;
+		})
+		.catch(function (error) {
+			console.log(error.data);
 		})
 	};
+
+	$scope.createSurvey = function (survey) {
+		$scope.data_loaded = false;
+		InstructionAPI.createSurvey($stateParams.disciplinaID, survey)
+		.then(function (response) {
+			$scope.surveys.push(response.data);
+			$scope.survey = {
+				alternatives : [{}]
+			};
+			$scope.data_loaded = true;
+			Materialize.toast('Enquete criada com sucesso', 3000);
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+	}
+
+	$scope.updateSurvey = function (survey) {
+		$scope.data_loaded = false;
+		var _survey = angular.copy(survey);
+		delete $scope.modalContent;
+		SurveyAPI.update(_survey.id, _survey)
+		.then(function (response) {
+			for(var i = 0; i < $scope.surveys.length; i++) {
+				if($scope.surveys[i].id == _survey.id) {
+					$scope.surveys[i] = response.data;
+					break;
+				}
+			}
+			$scope.data_loaded = true;
+			Materialize.toast('Enquete atualizada com sucesso', 3000);
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+	}
+
+	$scope.deleteSurvey = function (survey) {
+		$scope.data_loaded = false;
+		SurveyAPI.destroy(survey.id)
+		.then(function () {
+			for(var i = 0; i < $scope.surveys.length; i++) {
+				if($scope.surveys[i].id == survey.id) {
+					$scope.surveys.splice(i, 1);
+					break;
+				}
+			}
+			$scope.data_loaded = true;
+			Materialize.toast('Enquete excluída com sucesso', 3000);
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+	}
+
+	$scope.closeSurvey = function (survey) {
+		$scope.data_loaded = false;
+		SurveyAPI.close(survey.id)
+		.then(function (response) {
+			for(var i = 0; i < $scope.surveys.length; i++) {
+				if($scope.surveys[i].id == survey.id) {
+					$scope.surveys[i] = response.data;
+					break;
+				}
+			}
+			$scope.data_loaded = true;
+			Materialize.toast('Enquete encerrada com sucesso', 3000)
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+	}
+
+	$scope.makeChoice = function (survey) {
+		if(!survey.choice) {
+			Materialize.toast('Você deve selecionar uma alternativa antes de votar', 3000)
+			return;
+		}
+		$scope.data_loaded = false;
+		AlternativeAPI.choose(survey.choice)
+		.then(function (response) {
+			for(var i = 0; i < $scope.surveys.length; i++) {
+				if($scope.surveys[i].id == survey.id) {
+					$scope.surveys[i] = response.data;
+					break;
+				}
+			}
+			$scope.data_loaded = true;
+			Materialize.toast('Voto realizado com sucesso', 3000)
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
+	}
 
 	$scope.displayAnswers = function (survey) {
 		if($("#answers-" + survey.id).css("display") == "none")
@@ -50,79 +143,6 @@ oddin.controller('SurveysController', function ($http, $scope, $stateParams, $st
 				return "Ocultar Resultado"
 			}
 		}
-	}
-
-	$scope.createSurvey = function () {
-		$scope.data_loaded = false;
-		$http.post('/api/instructions/' + $stateParams.disciplinaID + "/surveys", $scope.survey)
-		.success(function (data) {
-			$scope.surveys.push(data);
-			$scope.survey = {
-				choices : [{}]
-			};
-			$scope.data_loaded = true;
-			Materialize.toast('Enquete criada com sucesso', 3000)
-		})
-	}
-
-	$scope.updateSurvey = function (modalContent) {
-		$scope.data_loaded = false;
-		$http.put('/api/surveys/' + modalContent.id, modalContent)
-		.success(function (data) {
-			$scope.surveys.forEach( function (elem, i) {
-				if(elem.id == data.id) {
-					$scope.surveys[i] = data;
-				}
-			});
-			$scope.data_loaded = true;
-			Materialize.toast('Enquete atualizada com sucesso', 3000)
-		})
-	}
-
-	$scope.deleteSurvey = function (modalContent) {
-		$scope.data_loaded = false;
-		$http.delete('/api/surveys/' + modalContent.id, modalContent)
-		.success(function (data) {
-			$scope.surveys.forEach( function (elem, i) {
-				if(elem.id == data.id) {
-					$scope.surveys.splice(i, 1);
-				}
-			});
-			$scope.data_loaded = true;
-			Materialize.toast('Enquete excluída com sucesso', 3000)
-		})
-	}
-
-	$scope.closeSurvey = function (modalContent) {
-		$scope.data_loaded = false;
-		$http.post('/api/surveys/' + modalContent.id + '/close', modalContent)
-		.success(function (data) {
-			$scope.surveys.forEach( function (elem, i) {
-				if(elem.id == data.id) {
-					$scope.surveys[i] = data;
-				}
-			});
-			$scope.data_loaded = true;
-			Materialize.toast('Enquete encerrada com sucesso', 3000)
-		})
-	}
-
-	$scope.makeChoice = function (survey) {
-		if(!survey.choice) {
-			Materialize.toast('Você deve selecionar uma alternativa antes de votar', 3000)
-			return;
-		}
-		$scope.data_loaded = false
-		$http.post('/api/alternatives/' + survey.choice + "/choose")
-		.success(function (data) {
-			$scope.surveys.forEach( function (elem, i) {
-				if(elem.id == data.id) {
-					$scope.surveys[i] = data;
-				}
-			});
-			$scope.data_loaded = true;
-			Materialize.toast('Voto realizado com sucesso', 3000)
-		})
 	}
 
 	$scope.addNewAlternative = function () {

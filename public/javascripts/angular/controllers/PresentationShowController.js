@@ -1,4 +1,4 @@
-oddin.controller('PresentationShowController', function ($scope, $stateParams, $http, PresentationAPI, CurrentUser) {
+oddin.controller('PresentationShowController', function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, CurrentUser) {
 	$scope.usuario = CurrentUser;
 	$scope.filter = false
 	$scope.last_doubt = {}
@@ -74,95 +74,124 @@ oddin.controller('PresentationShowController', function ($scope, $stateParams, $
 	}
 
 	$scope.buscaRespostas = function (duvida) {
-		$http.get('/api/questions/' + duvida.id + '/answers').success(function (data) {
-			duvida.answers = data
+		QuestionAPI.getAnswers(duvida.id)
+		.then(function (response) {
+			duvida.answers = response.data;
+		})
+		.catch(function (error) {
+			console.log(error.data);
 		})
 	}
 
-	$scope.postaResposta = function () {
+	$scope.postaResposta = function (answer) {
 		$scope.data_loaded = false
-		$http.post('/api/questions/' + $scope.last_doubt.id + '/answers', $scope.resposta).success(function (data) {
-			$scope.last_doubt.has_answer = true
-			$scope.data_loaded = true
-			Materialize.toast('Resposta postada', 1000)
-			$scope.buscaRespostas($scope.last_doubt)
-			$scope.resposta.text = ''
+		var _answer = angular.copy(answer);
+		delete $scope.resposta;
+		QuestionAPI.createAnswer($scope.last_doubt.id, _answer)
+		.then(function (response) {
+			$scope.last_doubt.has_answer = true;
+			$scope.data_loaded = true;
+			Materialize.toast('Resposta postada', 1000);
+			$scope.buscaRespostas($scope.last_doubt);
+			$scope.resposta.text = '';
+		})
+		.catch(function (error) {
+			console.log(error.data);
 		})
 	}
 
 	$scope.upvoteDuvida = function (duvida) {
-		$http.post('/api/questions/' + duvida.id + '/upvote')
-						.success(function (data) {
-								// $scope.duvidas[duvida.id].upvotes++;
-								// $scope.duvidas[duvida.id].my_vote = 1;
-							duvida.upvotes++
-							duvida.my_vote = 1
-						})
+		QuestionAPI.upvote(duvida.id)
+		.then(function () {
+			duvida.upvotes++;
+			duvida.my_vote = 1;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
 	}
 
 	$scope.cancelVoteDuvida = function (duvida) {
-		$http.delete('/api/questions/' + duvida.id + '/vote')
-						.success(function (data) {
-							duvida.upvotes--
-							duvida.my_vote = 0
-						})
+		QuestionAPI.destroyVote(duvida.id)
+		.then(function () {
+			duvida.upvotes--;
+			duvida.my_vote = 0;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
 	}
 
 	$scope.upvoteResposta = function (resposta) {
-		$http.post('/api/answers/' + resposta.id + '/upvote')
-						.success(function () {
-							if (resposta.my_vote == 0)
-								{ resposta.upvotes++ }
-							else if (resposta.my_vote == -1)
-								{ resposta.upvotes += 2 }
-							resposta.my_vote = 1
-						})
+		AnswerAPI.upvote(resposta.id)
+		.then(function () {
+			if(resposta.my_vote == 0)
+				resposta.upvotes++;
+			else if(resposta.my_vote == -1)
+				resposta.upvotes += 2;
+			resposta.my_vote = 1;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
 	}
 
 	$scope.downvoteResposta = function (resposta) {
-		$http.post('/api/answers/' + resposta.id + '/downvote')
-						.success(function () {
-							if (resposta.my_vote == 0)
-								{ resposta.upvotes-- }
-							else if (resposta.my_vote == 1)
-								{ resposta.upvotes -= 2 }
-							resposta.my_vote = -1
-						})
+		AnswerAPI.downvote(resposta.id)
+		.then(function () {
+			if (resposta.my_vote == 0)
+				{ resposta.upvotes-- }
+			else if (resposta.my_vote == 1)
+				{ resposta.upvotes -= 2 }
+			resposta.my_vote = -1
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
 	}
 
 	$scope.cancelVoteResposta = function (resposta) {
-		$http.delete('/api/answers/' + resposta.id + '/vote')
-						.success(function () {
-							if (resposta.my_vote == 1)
-								{ resposta.upvotes-- }
-							else
-										{ resposta.upvotes++ }
-							resposta.my_vote = 0
-						})
+		AnswerAPI.destroyVote(resposta.id)
+		.then(function () {
+			if (resposta.my_vote == 1)
+				resposta.upvotes--;
+			else
+				resposta.upvotes++;
+			resposta.my_vote = 0;
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
 	}
 
 	$scope.aceitaResposta = function (resposta) {
-		$http.post('/api/answers/' + resposta.id + '/accept')
-						.success(function () {
-							resposta.accepted = true
-							$scope.duvidas.forEach(function (elem) {
-								if (elem.id === resposta.question.id) {
-									elem.answered = true
-								}
-							})
-						})
+		AnswerAPI.accept(resposta.id)
+		.then(function () {
+			resposta.accepted = true;
+			$scope.duvidas.forEach(function (elem) {
+				if (elem.id === resposta.question.id) {
+					elem.answered = true;
+				}
+			})
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
 	}
 
 	$scope.recusaResposta = function (resposta) {
-		$http.delete('/api/answers/' + resposta.id + '/accept')
-						.success(function () {
-							resposta.accepted = false
-							$scope.duvidas.forEach(function (elem) {
-								if (elem.id === resposta.question.id) {
-									elem.answered = false
-								}
-							})
-						})
+		AnswerAPI.reject(resposta.id)
+		.then(function () {
+			resposta.accepted = false;
+			$scope.duvidas.forEach(function (elem) {
+				if (elem.id === resposta.question.id) {
+					elem.answered = false;
+				}
+			})
+		})
+		.catch(function (error) {
+			console.log(error.data);
+		})
 	}
 
 	socket.on('POST /questions', function (data) {

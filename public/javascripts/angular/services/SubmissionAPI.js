@@ -1,10 +1,10 @@
 oddin.factory("SubmissionAPI", function ($http) {
 	var _show = function (id) {
 		return $http.get('/api/submissions/' + id);
-	}
+	};
 	var _update = function (id, submission) {
-		return $http.put('/api/submissions/' + id, submission)
-	}
+		return $http.put('/api/submissions/' + id, submission);
+	};
 	var _destroy = function (id) {
 		return $http.delete('/api/submissions/' + id);
 	};

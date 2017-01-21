@@ -27,5 +27,5 @@ oddin.controller('InstructionsController', function ($scope, $cookies, $state, C
 	$scope.usuario = CurrentUser;
 
 	$scope.titulo = 'Disciplinas'
-	buscaDisciplinas()
+	buscaDisciplinas();	
 });

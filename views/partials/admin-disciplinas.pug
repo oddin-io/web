@@ -11,7 +11,7 @@ header
   ul#slide-out.side-nav.fixed.barra-lateral
     .barra-lateral__header
       i.barra-lateral__user-avatar.material-icons account_circle
-      p.barra-lateral__user-name {{usuario.nome}}
+      p.barra-lateral__user-name {{usuario.name}}
       p.barra-lateral__user-email {{usuario.email}}
     li.no-padding.barra-lateral__item
       a(ui-sref='cursos-admin') Cursos
@@ -40,7 +40,7 @@ main(data-ng-init="buscaDisciplinas()")
     #cadastrar-disciplina.modal.bottom-sheet
       .modal-content.modal-criar-item
         .row
-          form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="cadastraDisciplina()")
+          form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="cadastraDisciplina(disciplina)")
             h1.modal-criar-item__titulo Cadastrar disciplina
             .row
               .input-field.col.s12

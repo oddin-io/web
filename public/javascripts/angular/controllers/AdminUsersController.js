@@ -1,59 +1,58 @@
-oddin.controller('AdminUsersController', function ($http, $scope, $stateParams, $cookies) {
-  $scope.usuario = {
-    'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-    'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-  }
+oddin.controller('AdminUsersController', function ($scope, CurrentUser, PersonAPI) {
+  $scope.usuario = CurrentUser;
   $scope.data_loaded = true;
 
   $scope.buscaUsuarios = function () {
-    $http.get('/api/person')
-    .success(function (data) {
-      $scope.users = data;
-    })
+		PersonAPI.index()
+		.then(function(response) {
+			$scope.users = response.data;
+		})
+		.catch(function(error) {
+			console.log(error.data);
+		})
   }
 
-  $scope.createUser =  function () {
+  $scope.createUser =  function (user) {
 		$scope.data_loaded = false;
-		$http.post('/api/person', $scope.user)
-		.success(function (data) {
-			$scope.users.push(data);
-			$scope.user = null;
+		var _user = angular.copy(user);
+		delete $scope.user;
+		PersonAPI.create(_user)
+		.then(function(response) {
+			$scope.users.push(response.data);
 			$scope.data_loaded = true;
       Materialize.toast('Usuário cadastrado', 3000)
 		})
-	}
-
-  //SERVIDOR RETORNA APENAS TRUE, RETORNAR OBJETO ATUALIZADO
-  $scope.updateUser = function (modalContent) {
-		$scope.data_loaded = false;
-		$http.put('/api/person/' + modalContent.id, $scope.modalContent)
-		.success(function (data) {
-			$scope.users.forEach( function (elem, i) {
-				if(elem.id == modalContent.id) {
-          $scope.users[i] = data;
-				}
-			});
-			$scope.data_loaded = true;
-			Materialize.toast('Usuário atualizado', 3000);
+		.catch(function(error) {
+			console.log(error.data);
 		})
 	}
 
-  $scope.openModalDeleteUser = function (user) {
-		$scope.modalContent = user;
-		$('#modal-deleta-usuario').openModal();
-	}
-
-  $scope.openModalEditUser = function (user) {
-		$scope.modalContent = angular.copy(user);
-		$('#modal-edita-usuario').openModal();
-	}
-
-  $scope.deleteUser = function (modalContent) {
+  $scope.updateUser = function (user) {
 		$scope.data_loaded = false;
-		$http.delete('/api/person/' + modalContent.id)
-		.success(function (data) {
+		var _user = angular.copy(user);
+		delete $scope.modalContent;
+		PersonAPI.update(_user.id, _user)
+		.then(function(response) {
 			for(var i = 0; i < $scope.users.length; i++) {
-				if($scope.users[i].id == data.id) {
+				if($scope.users[i].id == _user.id) {
+					$scope.users[i] = response.data;
+					break;
+				}
+			}
+			$scope.data_loaded = true;
+			Materialize.toast('Usuário atualizado', 3000);
+		})
+		.catch(function(error) {
+			console.log(error.data);
+		})
+	}
+
+  $scope.deleteUser = function (user) {
+		$scope.data_loaded = false;
+		PersonAPI.destroy(user.id)
+		.then(function(response) {
+			for(var i = 0; i < $scope.users.length; i++) {
+				if($scope.users[i].id == user.id) {
 					$scope.users.splice(i, 1);
 					break;
 				}
@@ -61,9 +60,18 @@ oddin.controller('AdminUsersController', function ($http, $scope, $stateParams, 
 			$scope.data_loaded = true;
 			Materialize.toast('Usuário deletado', 3000);
 		})
-		.error(function () {
-			Materialize.toast('Este usuário não pôde ser deletado', 3000)
-			$scope.data_loaded = true;
+		.catch(function(error) {
+			console.log(error.data);
 		})
+	}
+
+	$scope.openModalDeleteUser = function (user) {
+		$scope.modalContent = user;
+		$('#modal-deleta-usuario').openModal();
+	}
+
+  $scope.openModalEditUser = function (user) {
+		$scope.modalContent = angular.copy(user);
+		$('#modal-edita-usuario').openModal();
 	}
 });

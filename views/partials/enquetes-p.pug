@@ -13,7 +13,7 @@ header
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.nome}}
+			p.barra-lateral__user-name {{usuario.name}}
 			p.barra-lateral__user-email {{usuario.email}}
 		li.no-padding
 			ul.collapsible(data-collapsible="expandable")
@@ -84,7 +84,7 @@ main(data-ng-init="buscaEnquetes()")
 		#criar-enquete.modal.bottom-sheet
 			.modal-content.modal-criar-item
 				.row
-					form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="createSurvey()")
+					form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="createSurvey(survey)")
 						h1.modal-criar-item__titulo Criar Enquete
 						.row
 							.input-field.col.s12

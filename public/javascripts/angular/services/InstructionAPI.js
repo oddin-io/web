@@ -32,6 +32,12 @@ oddin.factory("InstructionAPI", function ($http) {
 	var _getParticipants = function (id) {
 		return $http.get('/api/instructions/' + id + '/participants');
 	};
+	var _getFAQs = function (id) {
+		return $http.get('/api/instructions/' + id + '/faqs');
+	};
+	var _getSurveys = function (id) {
+		return $http.get('/api/instructions/' + id + '/surveys');
+	};
 	var _createPresentation = function (id, presentation) {
 		return $http.post('/api/instructions/' + id + '/presentations', presentation);
 	};
@@ -45,7 +51,13 @@ oddin.factory("InstructionAPI", function ($http) {
 		return $http.post('/api/instructions/' + id + "/works", work);
 	};
 	var _createMaterial = function (id) {
-		return $http.post('api/instructions/' + id + '/materials');
+		return $http.post('/api/instructions/' + id + '/materials');
+	};
+	var _createFAQ = function (id, faq) {
+		return $http.post('/api/instructions/' + id + '/faqs', faq);
+	};
+	var _createSurvey = function (id, survey) {
+		return $http.post('/api/instructions/' + id + '/surveys', survey);
 	};
 
 	return {
@@ -60,10 +72,14 @@ oddin.factory("InstructionAPI", function ($http) {
 		getWorks: _getWorks,
 		getMaterials: _getMaterials,
 		getParticipants: _getParticipants,
+		getFAQs: _getFAQs,
+		getSurveys: _getSurveys,
 		createPresentation: _createPresentation,
 		createNotice: _createNotice,
 		createDate: _createDate,
 		createWork: _createWork,
-		createMaterial: _createMaterial
+		createMaterial: _createMaterial,
+		createFAQ: _createFAQ,
+		createSurvey: _createSurvey
 	}
 });
