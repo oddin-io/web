@@ -1,4 +1,4 @@
-oddin.controller('WorksController', function ($http, $scope, $stateParams, $filter, InstructionAPI, WorkAPI, MaterialAPI, CurrentUser, FormatUtil) {
+oddin.controller('WorksController', function ($http, $scope, $stateParams, $filter, InstructionAPI, WorkAPI, MaterialAPI, CurrentUser, $filter) {
 
 	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
@@ -27,7 +27,7 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $filt
 		$scope.data_loaded = false;
 		var _tarefa = angular.copy(tarefa);
 		delete $scope.tarefa;
-		_tarefa.deadline = FormatUtil.convertToDate(_tarefa.deadline);
+		_tarefa.deadline = $filter('toDate')(_tarefa.deadline);
 		InstructionAPI.createWork($stateParams.disciplinaID, _tarefa)
 		.then(function (response) {
 			_tarefa = response.data;
@@ -65,7 +65,7 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $filt
 		$scope.data_loaded = false;
 		var _tarefa = angular.copy(tarefa);
 		delete $scope.modalContent;
-		_tarefa.deadline = FormatUtil.convertToDate(_tarefa.deadline);
+		_tarefa.deadline = $filter('toDate')(_tarefa.deadline);
 		WorkAPI.update(_tarefa.id, _tarefa)
 		.then(function (response) {
 			if(_tarefa.materials.length > 0) {

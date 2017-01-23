@@ -1,4 +1,4 @@
-oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, InstructionAPI, CurrentUser, $filter, FormatUtil) {
+oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, InstructionAPI, CurrentUser, $filter) {
 
 	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
@@ -17,7 +17,7 @@ oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, Ins
 		$scope.data_loaded = false;
 
 		var _date = angular.copy(date);
-		_date.date = FormatUtil.convertToDate(_date.date, _date.time);
+		_date.date = $filter('toDate')(_date.date, _date.time);
 		delete _date.time;
 		delete $scope.date;
 
@@ -46,7 +46,7 @@ oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, Ins
 		$scope.data_loaded = false;
 
 		var _date = angular.copy(date);
-		_date.date = FormatUtil.convertToDate(_date.date, _date.time);
+		_date.date = $filter('toDate')(_date.date, _date.time);
 		delete _date.time;
 		delete $scope.modalContent;
 

@@ -1,9 +1,9 @@
-oddin.controller('AdminEventShowController', function ($scope, $stateParams, CurrentUser, InstructionAPI, EventAPI, LectureAPI, FormatUtil) {
+oddin.controller('AdminEventShowController', function ($scope, $stateParams, CurrentUser, InstructionAPI, EventAPI, LectureAPI, $filter) {
 
-  $scope.usuario = CurrentUser;
-  $scope.data_loaded = true;
+	$scope.usuario = CurrentUser;
+	$scope.data_loaded = true;
 
-  $scope.buscaInfo = function () {
+	$scope.buscaInfo = function () {
 		EventAPI.show($stateParams.cursoID)
 		.then(function(response) {
 			$scope.curso = response.data;
@@ -11,7 +11,7 @@ oddin.controller('AdminEventShowController', function ($scope, $stateParams, Cur
 		.catch(function(error) {
 			console.log(error.data);
 		})
-  }
+	}
 
 	$scope.buscaLectures = function () {
 		LectureAPI.index()
@@ -34,17 +34,17 @@ oddin.controller('AdminEventShowController', function ($scope, $stateParams, Cur
 	}
 
 	$scope.createInstruction = function (instruction) {
-    $scope.data_loaded = false;
+		$scope.data_loaded = false;
 		var _instruction = angular.copy(instruction);
 		delete $scope.modalContent;
 		_instruction.event = $stateParams.cursoID;
-		_instruction.start_date = FormatUtil.convertToDate(_instruction.start_date);
-		_instruction.end_date = FormatUtil.convertToDate(_instruction.end_date);
+		_instruction.start_date = $filter('toDate')(_instruction.start_date);
+		_instruction.end_date = $filter('toDate')(_instruction.end_date);
 		InstructionAPI.create(_instruction)
 		.then(function (response) {
 			$scope.instructions.push(response.data);
-      $scope.data_loaded = true;
-      Materialize.toast('Disciplina Adicionada', 3000)
+			$scope.data_loaded = true;
+			Materialize.toast('Disciplina Adicionada', 3000)
 		})
 		.catch(function (error) {
 			console.log(error.data);
@@ -52,7 +52,7 @@ oddin.controller('AdminEventShowController', function ($scope, $stateParams, Cur
 	}
 
 	$scope.deleteInstruction = function (instruction) {
-    $scope.data_loaded = false;
+		$scope.data_loaded = false;
 		InstructionAPI.destroy(instruction.id)
 		.then(function (response) {
 			for(var i = 0; i < $scope.instructions.length; i++) {
@@ -61,8 +61,8 @@ oddin.controller('AdminEventShowController', function ($scope, $stateParams, Cur
 					break;
 				}
 			}
-      $scope.data_loaded = true;
-      Materialize.toast('Disciplina removida', 3000)
+			$scope.data_loaded = true;
+			Materialize.toast('Disciplina removida', 3000)
 		})
 	}
 

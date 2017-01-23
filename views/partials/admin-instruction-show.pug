@@ -13,7 +13,7 @@ header
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.nome}}
+			p.barra-lateral__user-name {{usuario.name}}
 			p.barra-lateral__user-email {{usuario.email}}
 		li.no-padding
 			ul.collapsible(data-collapsible="expandable")
@@ -82,7 +82,7 @@ main(data-ng-init="buscaInfo()")
 				i.material-icons.circle person
 				span.title {{participant.person.name}}
 				p {{participant.person.email}}
-				a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+				a.secondary-content(href="" data-ng-click="openModalRemoveParticipant(participant)")
 					i.material-icons remove_circle
 		ul.collection.with-header.custom-list
 			li.collection-header.custom-list__header
