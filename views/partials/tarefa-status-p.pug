@@ -1,26 +1,27 @@
 doctype html
 header
-		.navbar-fixed
-				nav.navbar-fixed.barra-navegacao
-						.nav-wrapper.barra-navegacao__container
-								a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
-										i.material-icons menu
-								a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='tarefas({disciplinaID: tarefa.instruction.id})')
-										i.material-icons arrow_back
-								h1.barra-navegacao__title.truncate {{tarefa.subject}} - Submissões
-								a.brand-logo.right.hide-on-small-only(href="/")
-										img.barra-navegacao__logo(src="/images/horizontal_logo.png")
-		ul#slide-out.side-nav.fixed.barra-lateral
-				.barra-lateral__header
-						i.barra-lateral__user-avatar.material-icons account_circle
-						p.barra-lateral__user-name {{usuario.name}}
-						p.barra-lateral__user-email {{usuario.email}}
-				li.hide-on-large-only.no-padding.barra-lateral__item
-						a(ui-sref='tarefas({disciplinaID: tarefa.instruction.id})') Tarefas
-				li.no-padding.barra-lateral__item
-						a(ui-sref='disciplinas') Disciplinas
-				li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-						a(href="" data-ng-click="logout()") Logout
+	.navbar-fixed
+			nav.navbar-fixed.barra-navegacao
+					.nav-wrapper.barra-navegacao__container
+							a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+									i.material-icons menu
+							a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='tarefas({disciplinaID: tarefa.instruction.id})')
+									i.material-icons arrow_back
+							h1.barra-navegacao__title.truncate {{tarefa.subject}} - Submissão
+							a.brand-logo.right.hide-on-small-only(href="/")
+									img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+
+	ul#slide-out.side-nav.fixed.barra-lateral
+			.barra-lateral__header
+					i.barra-lateral__user-avatar.material-icons account_circle
+					p.barra-lateral__user-name {{usuario.name}}
+					p.barra-lateral__user-email {{usuario.email}}
+			li.hide-on-large-only.no-padding.barra-lateral__item
+					a(ui-sref='tarefas({disciplinaID: tarefa.instruction.id})') Tarefas
+			li.no-padding.barra-lateral__item
+					a(ui-sref='disciplinas') Disciplinas
+			li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
+					a(href="" data-ng-click="logout()") Logout
 main(data-ng-init="buscaSubmissoes()")
 		#hidden-link
 		.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")

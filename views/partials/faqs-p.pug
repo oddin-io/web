@@ -1,15 +1,7 @@
 doctype html
 header
-	.navbar-fixed
-		nav.navbar-fixed.barra-navegacao
-			.nav-wrapper.barra-navegacao__container
-				a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
-					i.material-icons menu
-				a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='disciplinas')
-					i.material-icons arrow_back
-				h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - FAQs
-				a.brand-logo.right.hide-on-small-only(href="/")
-					img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+	oddin-header(title="{{disciplina.lecture.name}} - FAQs", btn-type="back", to-state="disciplinas")
+
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -46,43 +38,44 @@ main(data-ng-init="buscaFAQs()")
 		.spinner-layer
 			.circle-clipper.left
 				.circle
+	#delete-faq.modal
+		.modal-content
+			h4.custom-modal__header Excluir FAQ
+			p Tem certeza que deseja excluir FAQ?
+		.modal-footer
+			a(href='' data-ng-click="deleteFAQ(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	#edit-faq.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateFAQ(modalContent)")
+					h1.modal-criar-item__titulo Editar FAQ
+					.row
+						.input-field.col.s12
+							textarea#faq_question.materialize-textarea(name="question", data-ng-model="modalContent.question" required)
+							label(for="faq_question") Pergunta
+						.input-field.col.s12
+							textarea#faq_answer.materialize-textarea(name="answer", data-ng-model="modalContent.answer" required)
+							label(for="faq_answer") Resposta
+					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
+	#postar-faq.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="createFAQ(faq)")
+					h1.modal-criar-item__titulo Adicionar FAQ
+					.row
+						.input-field.col.s12
+							textarea#faq_question.materialize-textarea(name="question", data-ng-model="faq.question" required)
+							label(for="faq_question") Pergunta
+						.input-field.col.s12
+							textarea#faq_answer.materialize-textarea(name="answer", data-ng-model="faq.answer" required)
+							label(for="faq_answer") Resposta
+					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
 	.container
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#postar-faq", modal)
 				i.large.material-icons add
-		#delete-faq.modal
-			.modal-content
-				h4.custom-modal__header Excluir FAQ
-				p Tem certeza que deseja excluir FAQ?
-			.modal-footer
-				a(href='' data-ng-click="deleteFAQ(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-				a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-		#edit-faq.modal.bottom-sheet
-			.modal-content.modal-criar-item
-				.row
-					form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateFAQ(modalContent)")
-						h1.modal-criar-item__titulo Editar FAQ
-						.row
-							.input-field.col.s12
-								textarea#faq_question.materialize-textarea(name="question", data-ng-model="modalContent.question" required)
-								label(for="faq_question") Pergunta
-							.input-field.col.s12
-								textarea#faq_answer.materialize-textarea(name="answer", data-ng-model="modalContent.answer" required)
-								label(for="faq_answer") Resposta
-						button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
-		#postar-faq.modal.bottom-sheet
-			.modal-content.modal-criar-item
-				.row
-					form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="createFAQ(faq)")
-						h1.modal-criar-item__titulo Adicionar FAQ
-						.row
-							.input-field.col.s12
-								textarea#faq_question.materialize-textarea(name="question", data-ng-model="faq.question" required)
-								label(for="faq_question") Pergunta
-							.input-field.col.s12
-								textarea#faq_answer.materialize-textarea(name="answer", data-ng-model="faq.answer" required)
-								label(for="faq_answer") Resposta
-						button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+
 		.card.pergunta(data-ng-repeat="faq in faqs")
 			.card-content
 				.custom-card__header

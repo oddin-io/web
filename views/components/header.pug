@@ -1,0 +1,12 @@
+doctype html
+.navbar-fixed
+	nav
+		.nav-wrapper.barra-navegacao__container
+			a.button-collapse(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
+				i.material-icons menu
+			a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref="{{toState}}", data-ng-if="btnType == 'close' || btnType == 'back'")
+				i.material-icons {{btnType == 'close' ? 'close' : 'arrow_back'}}
+			h1.barra-navegacao__title.truncate(ng-bind="title")
+			a.brand-logo.right.hide-on-small-only(href="/")
+				img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+			p {{stateParams}}

@@ -1,13 +1,6 @@
 doctype html
 header
-	.navbar-fixed
-		nav
-			.nav-wrapper.barra-navegacao__container
-				a.button-collapse(href="" data-activates="slide-out", data-sidenav="left")
-					i.material-icons menu
-				h1.barra-navegacao__title(ng-bind="titulo")
-				a.brand-logo.right.hide-on-small-only(href="/")
-					img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+	oddin-header(title="{{titulo}}")
 
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header

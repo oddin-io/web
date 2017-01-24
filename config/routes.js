@@ -4,6 +4,7 @@ const home = require('../routes/home')
 const lecture = require('../routes/lecture')
 const presentation = require('../routes/presentation')
 const partials = require('../routes/partials')
+const components = require('../routes/components')
 
 const ws = {}
 ws.answer = require('../routes/ws/answer')
@@ -29,6 +30,7 @@ module.exports = function routesConfig(app) {
   app.use('/', lecture)
   app.use('/', presentation)
   app.use('/', partials)
+	app.use('/', components)
 
   app.use('/api', ws.answer)
   app.use('/api', ws.instruction)
