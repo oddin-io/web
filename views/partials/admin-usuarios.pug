@@ -1,13 +1,6 @@
 doctype html
 header
-	.navbar-fixed
-		nav.navbar-fixed.barra-navegacao
-			.nav-wrapper.barra-navegacao__container
-				a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
-					i.material-icons menu
-				h1.barra-navegacao__title.truncate Usuários
-				a.brand-logo.right.hide-on-small-only(href="/")
-					img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+	oddin-header(title="Usuários")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -21,7 +14,41 @@ header
 			p.active Usuários
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
+
 main(data-ng-init="buscaUsuarios()")
+	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+		.spinner-layer
+			.circle-clipper.left
+				.circle
+	#criar-usuario.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="createUser(user)")
+					h1.modal-criar-item__titulo Criar novo usuário
+					.row
+						.input-field.col.s12
+							input#nome-user(type="text", data-ng-model="user.name")
+							label(for="nome-user") Nome
+						.input-field.col.s12
+							input#email-user(type="text", data-ng-model="user.email")
+							label(for="email-user") Email
+						.input-field.col.s12
+							input#password-user(type="password", data-ng-model="user.password")
+							label(for="password-user") Password
+							button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Criar Usuário
+	#modal-edita-usuario.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateUser(modalContent)")
+					h1.modal-criar-item__titulo Editar Usuário
+					.row
+						.input-field.col.s12
+							input#nome-user(type="text", data-ng-model="modalContent.name")
+							label(for="nome-user") Nome
+						.input-field.col.s12
+							input#email-user(type="text", data-ng-model="modalContent.email")
+							label(for="email-user") Email
+							button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar Usuário
 	#modal-deleta-usuario.modal
 		.modal-content
 			h4.custom-modal__header Excluir Usuário
@@ -29,43 +56,10 @@ main(data-ng-init="buscaUsuarios()")
 		.modal-footer
 			a(href='' data-ng-click="deleteUser(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
 			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
 	.container
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#criar-usuario", modal)
 				i.large.material-icons add
-		#criar-usuario.modal.bottom-sheet
-			.modal-content.modal-criar-item
-				.row
-					form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="createUser(user)")
-						h1.modal-criar-item__titulo Criar novo usuário
-						.row
-							.input-field.col.s12
-								input#nome-user(type="text", data-ng-model="user.name")
-								label(for="nome-user") Nome
-							.input-field.col.s12
-								input#email-user(type="text", data-ng-model="user.email")
-								label(for="email-user") Email
-							.input-field.col.s12
-								input#password-user(type="password", data-ng-model="user.password")
-								label(for="password-user") Password
-								button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Criar Usuário
-		#modal-edita-usuario.modal.bottom-sheet
-			.modal-content.modal-criar-item
-				.row
-					form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateUser(modalContent)")
-						h1.modal-criar-item__titulo Editar Usuário
-						.row
-							.input-field.col.s12
-								input#nome-user(type="text", data-ng-model="modalContent.name")
-								label(for="nome-user") Nome
-							.input-field.col.s12
-								input#email-user(type="text", data-ng-model="modalContent.email")
-								label(for="email-user") Email
-								button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar Usuário
 		ul.collection.with-header.custom-list
 			li.collection-header.custom-list__header
 				h2 Usuários cadastrados

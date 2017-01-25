@@ -1,7 +1,6 @@
 doctype html
 header
-	oddin-header(title="{{disciplina.lecture.name}} - Avisos", btn-type="back", to-state="disciplinas")
-
+	oddin-header(title="{{disciplina.lecture.name}} - Avisos", btn-type="back", to-state-url="/disciplinas")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -33,28 +32,29 @@ header
 			a(ui-sref='disciplinas') Disciplinas
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
+
 main(data-ng-init="buscaAvisos()")
 	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
 		.spinner-layer
 			.circle-clipper.left
 				.circle
+	#postar-aviso.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="postaAviso(aviso)")
+					h1.modal-criar-item__titulo Postar aviso
+					.row
+						.input-field.col.s12
+							input#titulo_aviso(type="text", name="titulo", data-ng-model="aviso.subject" required)
+							label(for="titulo_aviso") Título
+						.input-field.col.s12
+							textarea#textarea_aviso.materialize-textarea(name="texto", data-ng-model="aviso.text" required)
+							label(for="textarea_aviso") Descrição
+					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
 	.container
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#postar-aviso", modal)
 				i.large.material-icons add
-		#postar-aviso.modal.bottom-sheet
-			.modal-content.modal-criar-item
-				.row
-					form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="postaAviso(aviso)")
-						h1.modal-criar-item__titulo Postar aviso
-						.row
-							.input-field.col.s12
-								input#titulo_aviso(type="text", name="titulo", data-ng-model="aviso.subject" required)
-								label(for="titulo_aviso") Título
-							.input-field.col.s12
-								textarea#textarea_aviso.materialize-textarea(name="texto", data-ng-model="aviso.text" required)
-								label(for="textarea_aviso") Descrição
-						button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
 		.card.custom-card(data-ng-repeat="aviso in avisos")
 			.card-content
 				.custom-card__header

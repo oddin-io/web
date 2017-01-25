@@ -1,7 +1,6 @@
 doctype html
 header
-	oddin-header(title="{{disciplina.lecture.name}} - Materiais", btn-type="back", to-state="disciplinas")
-
+	oddin-header(title="{{disciplina.lecture.name}} - Materiais", btn-type="back", to-state-url="/disciplinas")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -33,19 +32,13 @@ header
 			a(ui-sref='disciplinas') Disciplinas
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
+
 main(data-ng-init="buscaMateriais()")
+	#hidden-link
 	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
 		.spinner-layer
 			.circle-clipper.left
 				.circle
-	#hidden-link
-	#modal-deleta-material.modal
-		.modal-content
-			h4.custom-modal__header Excluir Material
-			p Tem certeza que deseja excluir '{{modalContent.name}}'?
-		.modal-footer
-			a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
 	#subir-material.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
@@ -58,6 +51,13 @@ main(data-ng-init="buscaMateriais()")
 						.file-path-wrapper
 							input#material-description.file-path.validate(type="text", placeholder="Faça Upload de um ou mais arquivos")
 					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+	#modal-deleta-material.modal
+		.modal-content
+			h4.custom-modal__header Excluir Material
+			p Tem certeza que deseja excluir '{{modalContent.name}}'?
+		.modal-footer
+			a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
 	.container
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#subir-material", modal)

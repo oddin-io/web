@@ -1,15 +1,6 @@
 doctype html
 header
-	.navbar-fixed
-		nav.navbar-fixed.barra-navegacao
-			.nav-wrapper.barra-navegacao__container
-				a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
-					i.material-icons menu
-				a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='disciplinas')
-					i.material-icons arrow_back
-				h1.barra-navegacao__title.truncate {{disciplina.lecture.name}} - FAQs
-				a.brand-logo.right.hide-on-small-only(href="/")
-					img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+	oddin-header(title="{{disciplina.lecture.name}} - FAQs", btn-type="back", to-state-url="/disciplinas")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -41,6 +32,7 @@ header
 			a(ui-sref='disciplinas') Disciplinas
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
+
 main(data-ng-init="buscaFAQs()")
 	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
 		.spinner-layer

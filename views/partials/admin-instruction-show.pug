@@ -1,15 +1,6 @@
 doctype html
 header
-	.navbar-fixed
-		nav.navbar-fixed.barra-navegacao
-			.nav-wrapper.barra-navegacao__container
-				a.button-collapse.hide-on-large-only(href="" data-activates="slide-out", data-sidenav="left", data-closeonclick="true")
-					i.material-icons menu
-				a.barra-navegacao__voltar.hide-on-med-and-down(ui-sref='curso-status({cursoID: disciplina.event.id})')
-						i.material-icons arrow_back
-				h1.barra-navegacao__title.truncate {{disciplina.lecture.name}}
-				a.brand-logo.right.hide-on-small-only(href="/")
-					img.barra-navegacao__logo(src="/images/horizontal_logo.png")
+	oddin-header(title="{{disciplina.lecture.name}}", btn-type="back", to-state-url="/curso/{{disciplina.event.id}}")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -31,14 +22,8 @@ header
 			a.truncate(ui-sref='curso-status({cursoID: disciplina.event.id})') {{disciplina.event.name}}
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
+
 main(data-ng-init="buscaInfo()")
-	#modal-remove-participant.modal
-		.modal-content
-			h4.custom-modal__header Remover Usuário
-			p Tem certeza que deseja remover '{{modalContent.person.name}}'?
-		.modal-footer
-			a(href='' data-ng-click="removeEnroll(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
 	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
 		.spinner-layer
 			.circle-clipper.left
@@ -55,6 +40,13 @@ main(data-ng-init="buscaInfo()")
 						i.material-icons remove_circle
 		.modal-footer
 			a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	#modal-remove-participant.modal
+		.modal-content
+			h4.custom-modal__header Remover Usuário
+			p Tem certeza que deseja remover '{{modalContent.person.name}}'?
+		.modal-footer
+			a(href='' data-ng-click="removeEnroll(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
 			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
 	.container(data-ng-init="buscaParticipants()")
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")

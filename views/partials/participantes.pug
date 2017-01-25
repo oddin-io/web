@@ -1,7 +1,6 @@
 doctype html
 header
-	.navbar-fixed
-		oddin-header(title="{{disciplina.lecture.name}} - Participantes", btn-type="back", to-state="disciplinas")
+	oddin-header(title="{{disciplina.lecture.name}} - Participantes", btn-type="back", to-state-url="/disciplinas")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -33,6 +32,7 @@ header
 			a(ui-sref='disciplinas') Disciplinas
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
+
 main(data-ng-init="buscaParticipantes()")
 	.container
 		ul.collection.lista-participantes
