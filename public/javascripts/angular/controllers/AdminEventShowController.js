@@ -23,10 +23,20 @@ oddin.controller('AdminEventShowController', function ($scope, $stateParams, Cur
 		})
 	}
 
+	function setSeason(instructions) {
+		instructions.forEach(function(instruction) {
+			var _year = $filter('date')(instruction.start_date, 'yyyy');
+			var _semester = $filter('date')(instruction.start_date, 'MM') < 7 ? 1 : 2;
+			var _season = _year + "/" + _semester;
+			instruction.season = _season;
+		})
+	}
+
 	$scope.buscaInstructions = function () {
 		EventAPI.getInstructions($stateParams.cursoID)
 		.then(function(response) {
 			$scope.instructions = response.data;
+			setSeason($scope.instructions);
 		})
 		.catch(function(error) {
 			console.log(error.data);

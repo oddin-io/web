@@ -54,9 +54,11 @@ main.add-main(data-ng-init="buscaInfo()")
 				ul.collection.with-header.custom-list(data-ng-init="buscaInstructions()")
 					li.collection-header.custom-list__header
 						h2 Disciplinas do Curso
-					li.collection-item.avatar.custom-list__item(data-ng-repeat="instruction in instructions")
+					li.collection-item.avatar.custom-list__item(data-ng-repeat="instruction in instructions | orderBy : 'season' : true")
 						i.material-icons.circle book
 						span.title {{instruction.lecture.name}}
 						p Turma: {{instruction.class_number}}
+							br
+							| {{instruction.season}}
 						a.secondary-content(href="" data-ng-click="openModalDeleteInstruction(instruction)")
 							i.material-icons remove_circle

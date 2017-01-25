@@ -63,10 +63,12 @@ main(data-ng-init="buscaInfo()")
 		ul.collection.with-header.custom-list(data-ng-init="buscaInstructions()")
 			li.collection-header.custom-list__header
 				h2 Disciplinas do curso
-			li.collection-item.avatar.custom-list__item(data-ng-repeat="disciplina in instructions")
+			li.collection-item.avatar.custom-list__item(data-ng-repeat="disciplina in instructions | orderBy : 'season' : true")
 				i.material-icons.circle book
 				a(ui-sref="instruction-show({disciplinaID: disciplina.id})")
 					span.title {{disciplina.lecture.name}} - Turma: {{disciplina.class_number}}
 					p {{disciplina.lecture.code}}
+						br
+						| {{disciplina.season}}
 				a.secondary-content(href="" data-ng-click="openModalDeleteInstruction(disciplina)")
 					i.material-icons remove_circle
