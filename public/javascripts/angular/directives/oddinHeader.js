@@ -8,5 +8,5 @@ oddin.directive("oddinHeader", function () {
 			btnType: "@",
 			toStateUrl: "@"
 		}
-	};
+	}
 });

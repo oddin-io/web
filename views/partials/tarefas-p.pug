@@ -1,7 +1,6 @@
 doctype html
 header
 	oddin-header(title="{{disciplina.lecture.name}} - Tarefas", btn-type="back", to-state-url="/disciplinas")
-
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -33,19 +32,13 @@ header
 			a(ui-sref='disciplinas') Disciplinas
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
+
 main(data-ng-init="buscaTarefas()")
 	#hidden-link
 	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
 			.spinner-layer
 					.circle-clipper.left
 							.circle
-	#modal-deleta-tarefa.modal
-		.modal-content
-			h4.custom-modal__header Excluir Tarefa
-			p Tem certeza que deseja excluir '{{modalContent.subject}}'?
-		.modal-footer
-			a(href='' data-ng-click="deletaTarefa(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
 	#criar-tarefa.modal.bottom-sheet
 			.modal-content.modal-criar-item
 					.row
@@ -90,11 +83,17 @@ main(data-ng-init="buscaTarefas()")
 							.file-path-wrapper
 								input.file-path.validate(type="text", ng-model="modalContent.materialName" placeholder="Acresente um arquivo com a descrição do trabalho")
 					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
+	#modal-deleta-tarefa.modal
+		.modal-content
+			h4.custom-modal__header Excluir Tarefa
+			p Tem certeza que deseja excluir '{{modalContent.subject}}'?
+		.modal-footer
+			a(href='' data-ng-click="deletaTarefa(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
 	.container
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#criar-tarefa", modal)
 				i.large.material-icons add
-
 		.card.custom-card(data-ng-repeat="tarefa in tarefas")
 			.card-content
 				.custom-card__header
@@ -114,5 +113,4 @@ main(data-ng-init="buscaTarefas()")
 						.card-attachment(data-ng-if="tarefa.materials[0]")
 							p Especificação:&nbsp
 							a(href='' data-ng-click="downloadEspecificacao(tarefa)")
-								//- i.material-icons attachment
 								span.card-filename(data-ng-if="tarefa.materials") {{tarefa.materials[0].name}}
