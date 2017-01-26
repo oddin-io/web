@@ -23,27 +23,37 @@ oddin.controller('PresentationMaterialController', function ($scope, $stateParam
 	}
 
 	$scope.uploadMaterial = function () {
-		$scope.data_loaded = false
-		var file = document.forms.uploadArchive.file.files[0]
-		var fd = new FormData()
+		$scope.data_loaded = false;
 		PresentationAPI.createMaterial($stateParams.aulaID)
-		.then(function(response) {
-			for(var key in response.data.fields) {
-				fd.append(key, response.data.fields[key]);
-			}
-			fd.append('file', file);
-			$http.post(response.data.url, fd, {headers: { 'Content-Type': undefined }})
-			.then(function () {
-				MaterialAPI.update(response.data.id, {'name': file.name, 'mime': file.type })
-				.then(function (response) {
-					$scope.materiais.push(response.data.material);
-					$scope.data_loaded = true;
-					document.getElementById("material-file").value = "";
-					document.getElementById("material-description").value = "";
-					Materialize.toast("O arquivo " + file.name + " foi postado", 3000);
-				})
-			})
+		.then(uploadFile)
+		.then(updateMaterial)
+		.then(updateMaterialView)
+		.catch(function(error) {
+			console.log(error.data);
 		})
+	}
+
+	function uploadFile(response) {
+		newMaterial = response.data;
+		file = document.forms.uploadArchive.file.files[0];
+		fd = new FormData();
+		for(var key in newMaterial.fields) {
+			fd.append(key, newMaterial.fields[key]);
+		}
+		fd.append('file', file);
+		return $http.post(newMaterial.url, fd, { headers: {"Content-Type": undefined}});
+	}
+
+	function updateMaterial() {
+		return MaterialAPI.update(newMaterial.id, {'name': file.name, 'mime': file.type});
+	}
+
+	function updateMaterialView(response) {
+		$scope.materiais.push(response.data.material);
+		$scope.data_loaded = true;
+		document.getElementById("material-file").value = "";
+		document.getElementById("material-description").value = "";
+		Materialize.toast("O arquivo " + file.name + " foi postado", 3000);
 	}
 
 	$scope.downloadMaterial = function (material) {
