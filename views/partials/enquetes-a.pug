@@ -39,7 +39,7 @@ main(data-ng-init="buscaEnquetes()")
 			.circle-clipper.left
 				.circle
 	.container
-		.card.pergunta(data-ng-repeat="survey in surveys")
+		.card.pergunta(data-ng-repeat="survey in surveys | orderBy: 'created_at' : true")
 			.card-content
 				.custom-card__header
 					span.title {{survey.title}}

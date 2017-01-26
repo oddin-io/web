@@ -39,7 +39,7 @@ main(data-ng-init="buscaAvisos()")
 			.circle-clipper.left
 				.circle
 	.container
-		.card.custom-card(data-ng-repeat="aviso in avisos")
+		.card.custom-card(data-ng-repeat="aviso in avisos | orderBy : 'created_at' : true")
 			.card-content
 				.custom-card__header
 					span.title {{aviso.subject}}

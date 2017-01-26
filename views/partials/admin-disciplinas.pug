@@ -66,7 +66,7 @@ main(data-ng-init="buscaDisciplinas()")
 		ul.collection.with-header.custom-list
 			li.collection-header.custom-list__header
 				h2 Disciplinas cadastradas
-			li.collection-item.avatar.custom-list__item(data-ng-repeat="disciplina in disciplinas")
+			li.collection-item.avatar.custom-list__item(data-ng-repeat="disciplina in disciplinas | orderBy : 'name'")
 				i.material-icons.circle book
 				a(ui-sref='disciplina-status({disciplinaID: disciplina.id})')
 					span.title {{disciplina.name}}

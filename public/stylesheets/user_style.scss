@@ -36,6 +36,12 @@
   }
 }
 
+.custom-preloader.no-sidebar {
+	@media (min-width: $min-desktop-size) {
+    left: 0;
+  }
+}
+
 .custom-modal {
   &__header {
     font-size: 20px;

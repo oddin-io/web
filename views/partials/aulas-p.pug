@@ -68,7 +68,7 @@ main(data-ng-init="buscaAulas()")
 						a(href="#aulas-encerradas") Encerradas
 			#aulas-abertas.col.s12
 				ul.collection.lista-aulas
-					li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 0}: true")
+					li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 0}: true | orderBy : 'created_at' : true")
 						a(href="" data-ng-click="openModalCloseLecture(aula)")
 							i.material-icons.circle lock_open
 						a(ui-sref="duvidas({aulaID: aula.id})")
@@ -79,7 +79,7 @@ main(data-ng-init="buscaAulas()")
 								|  {{aula.created_at | date:&apos;HH:mm:ss&apos;}}
 			#aulas-encerradas.col.s12
 				ul.collection.lista-aulas
-					li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 1}: true")
+					li.collection-item.avatar.lista-aulas__item(data-ng-repeat="aula in aulas | filter: {status: 1}: true | orderBy : 'created_at' : true")
 						i.material-icons.circle.red.lighten-2 lock_outline
 						a(ui-sref="duvidas({aulaID: aula.id})")
 							span.title {{aula.subject}}

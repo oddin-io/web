@@ -55,7 +55,7 @@ main(data-ng-init="buscaAvisos()")
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#postar-aviso", modal)
 				i.large.material-icons add
-		.card.custom-card(data-ng-repeat="aviso in avisos")
+		.card.custom-card(data-ng-repeat="aviso in avisos | orderBy : 'created_at' : true")
 			.card-content
 				.custom-card__header
 					span.title {{aviso.subject}}

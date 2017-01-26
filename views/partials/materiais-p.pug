@@ -65,7 +65,7 @@ main(data-ng-init="buscaMateriais()")
 		ul.collection.with-header.lista-material
 			li.collection-header.lista-material__header
 				h2 Material da Disciplina
-			li.collection-item.avatar.lista-material__item(data-ng-repeat="material in materiais")
+			li.collection-item.avatar.lista-material__item(data-ng-repeat="material in materiais | orderBy: 'name'")
 				i.material-icons.circle insert_drive_file
 				span.title
 					a(href="" data-ng-click="downloadMaterial(material)") {{material.name}}

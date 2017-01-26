@@ -63,7 +63,7 @@ main(data-ng-init="buscaUsuarios()")
 		ul.collection.with-header.custom-list
 			li.collection-header.custom-list__header
 				h2 Usuários cadastrados
-			li.collection-item.avatar.custom-list__item(data-ng-repeat="user in users")
+			li.collection-item.avatar.custom-list__item(data-ng-repeat="user in users | orderBy: 'name'")
 				i.material-icons.circle person
 				span.title {{user.name}}
 				p {{user.email}}

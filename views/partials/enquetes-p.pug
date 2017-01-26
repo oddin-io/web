@@ -96,7 +96,7 @@ main(data-ng-init="buscaEnquetes()")
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#criar-enquete", modal)
 				i.large.material-icons add
-		.card.pergunta(data-ng-repeat="survey in surveys")
+		.card.pergunta(data-ng-repeat="survey in surveys | orderBy: 'created_at' : true")
 			.card-content
 				.custom-card__header
 					span.title {{survey.title}}

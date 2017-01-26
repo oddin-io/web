@@ -70,7 +70,7 @@ main(data-ng-init="buscaSubmissoesAluno()")
 					.offset-m6.col.m6
 						.card-right-button
 							a.btn-flat(href="#submeter-trabalho", modal) Postar tarefa
-		.card.custom-card(data-ng-repeat="submissao in submissoes")
+		.card.custom-card(data-ng-repeat="submissao in submissoes | orderBy: 'created_at'")
 			.card-content
 				.custom-card__header
 					a(href='' data-ng-click="downloadSubmission(submissao)")

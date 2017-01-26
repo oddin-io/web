@@ -88,7 +88,7 @@ main(data-ng-init="buscaDatas()")
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#postar-informativo", modal)
 				i.large.material-icons add
-		.card.custom-card(data-ng-repeat="date in datas")
+		.card.custom-card(data-ng-repeat="date in datas | orderBy : 'date'")
 			.card-content
 				.custom-card__header
 					span.title {{date.subject}}

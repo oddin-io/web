@@ -3,7 +3,7 @@ header.add-header
 	oddin-header(title="Adicionar Disciplinas", btn-type="close", to-state-url="/curso/{{curso.id}}")
 
 main.add-main(data-ng-init="buscaInfo()")
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+	.preloader-wrapper.big.active.custom-preloader.no-sidebar(ng-hide="data_loaded")
 		.spinner-layer
 			.circle-clipper.left
 				.circle
@@ -40,7 +40,7 @@ main.add-main(data-ng-init="buscaInfo()")
 				ul.collection.with-header.custom-list(data-ng-init="buscaLectures()")
 					li.collection-header.custom-list__header
 						h2 Disciplinas Disponíveis
-					li.collection-item.avatar.custom-list__item(data-ng-repeat="lecture in lectures")
+					li.collection-item.avatar.custom-list__item(data-ng-repeat="lecture in lectures | orderBy: 'name'")
 						i.material-icons.circle book
 						span.title {{lecture.name}}
 						p {{lecture.code}}

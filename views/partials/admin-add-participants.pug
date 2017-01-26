@@ -3,7 +3,7 @@ header.add-header
 	oddin-header(title="Adicionar Participantes", btn-type="close", to-state-url="/curso-disciplinas/{{disciplina.id}}")
 
 main.add-main(data-ng-init="buscaInfo()")
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
+	.preloader-wrapper.big.active.custom-preloader.no-sidebar(ng-hide="data_loaded")
 		.spinner-layer
 			.circle-clipper.left
 				.circle
@@ -24,7 +24,7 @@ main.add-main(data-ng-init="buscaInfo()")
 				ul.collection.with-header.custom-list
 					li.collection-header.custom-list__header
 						h2 Usuários Disponíveis
-					li.collection-item.avatar.custom-list__item(data-ng-repeat="user in availableUsers")
+					li.collection-item.avatar.custom-list__item(data-ng-repeat="user in availableUsers | orderBy : 'name'")
 						i.material-icons.circle person
 						span.title {{user.name}}
 						p {{user.email}}
@@ -37,7 +37,7 @@ main.add-main(data-ng-init="buscaInfo()")
 				ul.collection.with-header.custom-list
 					li.collection-header.custom-list__header
 						h2 Professores Cadastrados
-					li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 1")
+					li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants | orderBy: 'person.name'", data-ng-if="participant.profile == 1")
 						i.material-icons.circle person
 						span.title {{participant.person.name}}
 						p {{participant.person.email}}
@@ -46,7 +46,7 @@ main.add-main(data-ng-init="buscaInfo()")
 				ul.collection.with-header.custom-list
 					li.collection-header.custom-list__header
 						h2 Alunos Matriculados
-					li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 0")
+					li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants | orderBy: 'person.name'", data-ng-if="participant.profile == 0")
 						i.material-icons.circle person
 						span.title {{participant.person.name}}
 						p {{participant.person.email}}

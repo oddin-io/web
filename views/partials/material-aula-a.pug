@@ -4,7 +4,7 @@ header
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.nome}}
+			p.barra-lateral__user-name {{usuario.name}}
 			p.barra-lateral__user-email {{usuario.email}}
 		li.no-padding
 			ul.collapsible(data-collapsible="expandable")
@@ -33,7 +33,7 @@ main(data-ng-init="buscaMateriais()")
 		ul.collection.with-header.lista-material
 			li.collection-header.lista-material__header
 				h2 Material da Aula
-			li.collection-item.avatar.lista-material__item(data-ng-repeat="material in materiais")
+			li.collection-item.avatar.lista-material__item(data-ng-repeat="material in materiais | orderBy: 'name'")
 				i.material-icons.circle insert_drive_file
 				span.title
 					a(href="" data-ng-click="downloadMaterial(material)") {{material.name}}

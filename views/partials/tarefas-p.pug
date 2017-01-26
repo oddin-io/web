@@ -36,31 +36,31 @@ header
 main(data-ng-init="buscaTarefas()")
 	#hidden-link
 	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-			.spinner-layer
-					.circle-clipper.left
-							.circle
+		.spinner-layer
+			.circle-clipper.left
+				.circle
 	#criar-tarefa.modal.bottom-sheet
-			.modal-content.modal-criar-item
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="criaTarefa(tarefa)" name="uploadArchive")
+					h1.modal-criar-item__titulo Criar tarefa
 					.row
-							form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="criaTarefa(tarefa)" name="uploadArchive")
-									h1.modal-criar-item__titulo Criar tarefa
-									.row
-										.input-field.col.s12.m8
-											input#create_tarefa_assunto(type="text", name="assunto", data-ng-model="tarefa.subject" required)
-											label(for="create_tarefa_assunto") Assunto
-										.input-field.col.s12.m4
-											input#create_tarefa_data(type="text" name="data" data-ng-model="tarefa.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
-											label(for="create_tarefa_data") Data de Entrega
-										.input-field.col.s12
-											textarea#create_tarefa_descricao.materialize-textarea(name="descricao", data-ng-model="tarefa.description" required)
-											label(for="create_tarefa_descricao") Descrição
-										.file-field.input-field.col.s12
-											.btn.modal-criar-item__file-button
-												span Anexo
-												input#create_tarefa_file(name="file", type="file")
-											.file-path-wrapper
-												input.file-path.validate(type="text", ng-model="tarefa.materials[0]" placeholder="Acresente um arquivo com a descrição do trabalho")
-									button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Criar
+						.input-field.col.s12.m8
+							input#create_tarefa_assunto(type="text", name="assunto", data-ng-model="tarefa.subject" required)
+							label(for="create_tarefa_assunto") Assunto
+						.input-field.col.s12.m4
+							input#create_tarefa_data(type="text" name="data" data-ng-model="tarefa.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+							label(for="create_tarefa_data") Data de Entrega
+						.input-field.col.s12
+							textarea#create_tarefa_descricao.materialize-textarea(name="descricao", data-ng-model="tarefa.description" required)
+							label(for="create_tarefa_descricao") Descrição
+						.file-field.input-field.col.s12
+							.btn.modal-criar-item__file-button
+								span Anexo
+								input#create_tarefa_file(name="file", type="file")
+							.file-path-wrapper
+								input.file-path.validate(type="text", ng-model="tarefa.materials[0]" placeholder="Acresente um arquivo com a descrição do trabalho")
+					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Criar
 	#editar-tarefa.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
@@ -94,7 +94,7 @@ main(data-ng-init="buscaTarefas()")
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
 			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#criar-tarefa", modal)
 				i.large.material-icons add
-		.card.custom-card(data-ng-repeat="tarefa in tarefas")
+		.card.custom-card(data-ng-repeat="tarefa in tarefas | orderBy: 'deadline'")
 			.card-content
 				.custom-card__header
 					a(ui-sref="tarefa-status({tarefaID: tarefa.id})")

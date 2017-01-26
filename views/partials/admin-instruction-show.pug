@@ -70,7 +70,7 @@ main(data-ng-init="buscaInfo()")
 		ul.collection.with-header.custom-list
 			li.collection-header.custom-list__header
 				h2 Professor da disciplina
-			li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 1")
+			li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants | orderBy: 'person.name'", data-ng-if="participant.profile == 1")
 				i.material-icons.circle person
 				span.title {{participant.person.name}}
 				p {{participant.person.email}}
@@ -79,7 +79,7 @@ main(data-ng-init="buscaInfo()")
 		ul.collection.with-header.custom-list
 			li.collection-header.custom-list__header
 				h2 Alunos da disciplina
-			li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants", data-ng-if="participant.profile == 0")
+			li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants | orderBy: 'person.name'", data-ng-if="participant.profile == 0")
 				i.material-icons.circle person
 				span.title {{participant.person.name}}
 				p {{participant.person.email}}

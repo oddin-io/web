@@ -20,7 +20,7 @@ main(data-ng-init="buscaSubmissoes()")
 			.circle-clipper.left
 				.circle
 	.container
-		.card.custom-card(data-ng-repeat="submissao in submissoes | orderBy: 'person.name'")
+		.card.custom-card(data-ng-repeat="submissao in submissoes | orderBy: 'created_at'")
 			.card-content
 				.custom-card__header
 					span.title {{submissao.person.name}}
@@ -31,5 +31,5 @@ main(data-ng-init="buscaSubmissoes()")
 					.col.m6
 						.card-attachment.attachment-unique(data-ng-if="submissao.materials[0]")
 							p Baixar trabalho:&nbsp
-							a(href='' data-ng-click="downloadSubmission(submissao)")								
+							a(href='' data-ng-click="downloadSubmission(submissao)")
 								span.card-filename {{submissao.materials[0].name}}
