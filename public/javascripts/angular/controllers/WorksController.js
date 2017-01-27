@@ -1,5 +1,4 @@
-oddin.controller('WorksController', function ($http, $scope, $stateParams, $filter, InstructionAPI, WorkAPI, MaterialAPI, CurrentUser, $filter) {
-
+oddin.controller('WorksController', function ($http, $scope, $stateParams, $filter, InstructionAPI, WorkAPI, MaterialAPI, CurrentUser, $filter, $q) {
 	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
 
@@ -23,14 +22,27 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $filt
 		})
 	}
 
-	function createWorkMaterial(response) {
-		newWork = response.data;
-		return WorkAPI.createMaterial(newWork.id);
+	function setCurrentWork(response) {
+		currentWork = response.data;
+		var deferred = $q.defer();
+		if (true)
+			deferred.resolve();
+		else
+			deferred.reject();
+		return deferred.promise;
+	}
+
+	function destroyWorkMaterial() {
+		return MaterialAPI.destroy(currentWork.materials[0].id)
+	}
+
+	function createWorkMaterial() {
+		return WorkAPI.createMaterial(currentWork.id);
 	}
 
 	function uploadFile(response) {
 		newMaterial = response.data;
-		file = document.forms.uploadArchive.file.files[0]; // <===== é outro form!
+		file = document.forms.uploadArchive.file.files[0];
 		fd = new FormData();
 		for(var key in newMaterial.fields) {
 			fd.append(key, newMaterial.fields[key]);
@@ -39,56 +51,8 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $filt
 		return $http.post(newMaterial.url, fd, {headers: {'Content-Type': undefined}})
 	}
 
-	function updateMaterial() {
-		return MaterialAPI.update(newMaterial.id, {'name': file.name, 'mime': file.type}); // <===== erro aqui!
-	}
-
-	function showNewWork() {
-		return WorkAPI.show(newWork.id)
-	}
-
-	function addWorkToView(response) {
-		$scope.tarefas.push(response.data);
-		$scope.data_loaded = true;
-		Materialize.toast('A tarefa foi criada', 3000);
-	}
-
-	$scope.criaTarefa = function (tarefa) {
-		$scope.data_loaded = false;
-		var _tarefa = angular.copy(tarefa);
-		delete $scope.tarefa;
-		_tarefa.deadline = $filter('toDate')(_tarefa.deadline);
-		if(document.forms.uploadArchive.file.files[0]) {
-			InstructionAPI.createWork($stateParams.disciplinaID, _tarefa)
-			.then(createWorkMaterial)
-			.then(uploadFile)
-			.then(updateMaterial)
-			.then(showNewWork)
-			.then(addWorkToView)
-			.catch(function(error) {
-				console.log(error.data);
-			})
-			return;
-		}
-		InstructionAPI.createWork($stateParams.disciplinaID, _tarefa)
-		.then(updateWorkView)
-		.catch(function(error) {
-			console.log(error.data);
-		})
-	}
-
-	function destroyWorkMaterial(response) {
-		updatedWork = response.data;
-		return MaterialAPI.destroy(updatedWork.materials[0].id)
-	}
-
-	function updateWorkMaterial() {
-		return WorkAPI.createMaterial(updatedWork.id);
-	}
-
-	function reUploadFile(response) {
+	function updateFile(response) {
 		newMaterial = response.data;
-		console.log(newMaterial);
 		file = document.forms.updateArchive.file.files[0];
 		fd = new FormData();
 		for(var key in newMaterial.fields) {
@@ -98,8 +62,18 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $filt
 		return $http.post(newMaterial.url, fd, {headers: {'Content-Type': undefined}})
 	}
 
-	function showUpdatedWork() {
-		return WorkAPI.show(updatedWork.id)
+	function updateMaterial() {
+		return MaterialAPI.update(newMaterial.id, {'name': file.name, 'mime': file.type});
+	}
+
+	function showCurrentWork() {
+		return WorkAPI.show(currentWork.id)
+	}
+
+	function addWorkToView(response) {
+		$scope.tarefas.push(response.data);
+		$scope.data_loaded = true;
+		Materialize.toast('A tarefa foi criada', 3000);
 	}
 
 	function updateWorkView(response) {
@@ -113,6 +87,31 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $filt
 		Materialize.toast('A tarefa foi atualizada', 3000);
 	}
 
+	$scope.criaTarefa = function (tarefa) {
+		$scope.data_loaded = false;
+		var _tarefa = angular.copy(tarefa);
+		delete $scope.tarefa;
+		_tarefa.deadline = $filter('toDate')(_tarefa.deadline);
+		if(document.forms.uploadArchive.file.files[0]) {
+			InstructionAPI.createWork($stateParams.disciplinaID, _tarefa)
+			.then(setCurrentWork)
+			.then(createWorkMaterial)
+			.then(uploadFile)
+			.then(updateMaterial)
+			.then(showCurrentWork)
+			.then(addWorkToView)
+			.catch(function(error) {
+				console.log(error.data);
+			})
+			return;
+		}
+		InstructionAPI.createWork($stateParams.disciplinaID, _tarefa)
+		.then(addWorkToView)
+		.catch(function(error) {
+			console.log(error.data);
+		})
+	}
+
 	$scope.atualizaTarefa = function (tarefa) {
 		$scope.data_loaded = false;
 		var _tarefa = angular.copy(tarefa);
@@ -121,113 +120,46 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $filt
 
 		if(_tarefa.materials.length > 0 && document.forms.updateArchive.file.files[0]) {
 			WorkAPI.update(_tarefa.id, _tarefa)
+			.then(setCurrentWork)
 			.then(destroyWorkMaterial)
-			.then(updateWorkMaterial)
-			.then(reUploadFile)
+			.then(createWorkMaterial)
+			.then(updateFile)
 			.then(updateMaterial)
-			.then(showUpdatedWork)
+			.then(showCurrentWork)
 			.then(updateWorkView)
 			.catch(function(error) {
 				console.log(error.data);
 			})
 			return;
 		}
-
 		if(_tarefa.materials.length > 0 && !document.forms.updateArchive.file.files[0]) {
-
+			WorkAPI.update(_tarefa.id, _tarefa)
+			.then(setCurrentWork)
+			.then(destroyWorkMaterial)
+			.then(showCurrentWork)
+			.then(updateWorkView)
+			.catch(function(error) {
+				console.log(error.data);
+			})
+			return;
 		}
-	}
-
-	$scope.atualizaTarefa = function (tarefa) {
-		$scope.data_loaded = false;
-		var _tarefa = angular.copy(tarefa);
-		delete $scope.modalContent;
-		_tarefa.deadline = $filter('toDate')(_tarefa.deadline);
+		if(_tarefa.materials.length == 0 && document.forms.updateArchive.file.files[0]) {
+			WorkAPI.update(_tarefa.id, _tarefa)
+			.then(setCurrentWork)
+			.then(createWorkMaterial)
+			.then(updateFile)
+			.then(updateMaterial)
+			.then(showCurrentWork)
+			.then(updateWorkView)
+			.catch(function(error) {
+				console.log(error.data);
+			})
+			return;
+		}
 		WorkAPI.update(_tarefa.id, _tarefa)
-		.then(function (response) {
-			if(_tarefa.materials.length > 0) {
-				MaterialAPI.destroy(_tarefa.materials[0].id)
-				.then(function () {
-					if(document.forms.updateArchive.file.files[0]) {
-						var file = document.forms.updateArchive.file.files[0];
-						var fd = new FormData();
-						WorkAPI.createMaterial(_tarefa.id)
-						.then(function (response) {
-							for(var key in response.data.fields) {
-								fd.append(key, response.data.fields[key]);
-							}
-							fd.append('file', file);
-							$http.post(response.data.url, fd, {headers: {'Content-Type':undefined}})
-							.then(function () {
-								MaterialAPI.update(response.data.id, {'name':file.name, 'mime': file.type})
-								.then(function () {
-									WorkAPI.show(_tarefa.id)
-									.then(function (response) {
-										for(var i = 0; i < $scope.tarefas.length; i++) {
-											if($scope.tarefas[i].id == response.data.id) {
-												$scope.tarefas[i] = response.data;
-												break;
-											}
-										}
-										$scope.data_loaded = true;
-										Materialize.toast('A tarefa foi atualizada', 3000);
-									})
-								})
-							})
-						})
-					} else {
-						WorkAPI.show(_tarefa.id)
-						.then(function (response) {
-							for(var i = 0; i < $scope.tarefas.length; i++) {
-								if($scope.tarefas[i].id == response.data.id) {
-									$scope.tarefas[i] = response.data;
-									break;
-								}
-							}
-							$scope.data_loaded = true;
-							Materialize.toast('A tarefa foi atualizada', 3000);
-						})
-					}
-				})
-			} else {
-				if(document.forms.updateArchive.file.files[0]) {
-					var file = document.forms.updateArchive.file.files[0]
-					var fd = new FormData();
-					WorkAPI.createMaterial(_tarefa.id)
-					.then(function (response) {
-						for(var key in response.data.fields) {
-							fd.append(key, response.data.fields[key]);
-						}
-						fd.append('file', file);
-						$http.post(response.data.url, fd, {headers: {'Content-Type': undefined}})
-						.then(function () {
-							MaterialAPI.update(response.data.id, {'name': file.name, 'mime': file.type})
-							.then(function () {
-								WorkAPI.show(_tarefa.id)
-								.then(function (response) {
-									for(var i = 0; i < $scope.tarefas.length; i++) {
-										if($scope.tarefas[i].id == response.data.id) {
-											$scope.tarefas[i] = response.data;
-											break;
-										}
-									}
-									$scope.data_loaded = true;
-									Materialize.toast('A tarefa foi atualizada', 3000);
-								})
-							})
-						})
-					})
-				} else {
-					for(var i = 0; i < $scope.tarefas.length; i++) {
-						if($scope.tarefas[i].id == response.data.id) {
-							$scope.tarefas[i] = response.data;
-							break;
-						}
-					}
-					$scope.data_loaded = true;
-					Materialize.toast('A tarefa foi atualizada', 3000);
-				}
-			}
+		.then(updateWorkView)
+		.catch(function(error) {
+			console.log(error.data);
 		})
 	}
 
