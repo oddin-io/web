@@ -14,7 +14,6 @@ html(ng-app="oddin")
 body(ng-controller="LoginController")
 	header(class="login-header")
 		img(class="login-header__logo" src="/images/main_logo.png")/
-
 	main
 		.container
 			.row
@@ -33,5 +32,6 @@ body(ng-controller="LoginController")
 	script(src="/vendor/angular-cookies/angular-cookies.min.js")
 	script(src="/javascripts/angular/app.js")
 	script(src="/javascripts/angular/config.js")
+	script(src="/javascripts/angular/directives/oddinPreloader.js")
 	script(src="/javascripts/angular/services/LoginAPI.js")
 	script(src="/javascripts/angular/controllers/LoginController.js")

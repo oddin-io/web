@@ -32,14 +32,13 @@
   margin: auto;
   top: 50%;
   @media (min-width: $min-desktop-size) {
-    left: 240px;
-  }
-}
-
-.custom-preloader.no-sidebar {
-	@media (min-width: $min-desktop-size) {
     left: 0;
   }
+	&.with-sidebar {
+		@media (min-width: $min-desktop-size) {
+	    left: 240px;
+	  }
+	}
 }
 
 .custom-modal {

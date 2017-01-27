@@ -81,3 +81,20 @@ body {
   @include type-subheading;
   color: $grey-color;
 }
+
+.custom-preloader {
+  position: fixed;
+  z-index: 399;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 50%;
+  @media (min-width: $min-desktop-size) {
+    left: 0;
+  }
+	&.with-sidebar {
+		@media (min-width: $min-desktop-size) {
+	    left: 240px;
+	  }
+	}
+}
