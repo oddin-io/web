@@ -9,11 +9,11 @@ header
 		li.no-padding.barra-lateral__item
 			p.active Cursos
 		li.no-padding.barra-lateral__item
-			a(ui-sref='disciplinas-admin') Disciplinas
+			a(ui-sref="admin-lectures") Disciplinas
 		li.no-padding.barra-lateral__item
-			a(ui-sref='usuarios-admin') Usuários
-		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-			a(href="" data-ng-click="logout()") Logout
+			a(ui-sref="admin-users") Usuários
+		li.no-padding.barra-lateral__item(ng-controller="LoginController")
+			a(href="" ng-click="logout()") Logout
 
 main
 	oddin-preloader(load-var="load", side-bar="true")
@@ -21,33 +21,33 @@ main
 	#modal-create.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="createEvent(newEvent)")
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="createEvent(newEvent)")
 					h1.modal-criar-item__titulo Cadastrar curso
 					.row
 						.input-field.col.s12
-							input#new-event-name(type="text", data-ng-model="newEvent.name")
+							input#new-event-name(type="text", ng-model="newEvent.name")
 							label(for="new-event-name") Nome
 						.input-field.col.s12
-							input#new-event-code(type="text", data-ng-model="newEvent.code")
+							input#new-event-code(type="text", ng-model="newEvent.code")
 							label(for="new-event-code") Código
 						.input-field.col.s12
-							input#new-event-workload(type="text", data-ng-model="newEvent.workload")
+							input#new-event-workload(type="text", ng-model="newEvent.workload")
 							label(for="new-event-workload") Carga Horária
 					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Cadastrar
 	#modal-edit.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateEvent(modalEvent)")
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="updateEvent(modalEvent)")
 					h1.modal-criar-item__titulo Editar curso
 					.row
 						.input-field.col.s12
-							input#modal-event-name(type="text", data-ng-model="modalEvent.name")
+							input#modal-event-name(type="text", ng-model="modalEvent.name")
 							label(for="modal-event-name") Nome
 						.input-field.col.s12
-							input#modal-event-code(type="text", data-ng-model="modalEvent.code")
+							input#modal-event-code(type="text", ng-model="modalEvent.code")
 							label(for="modal-event-code") Código
 						.input-field.col.s12
-							input#modal-event-workload(type="text", data-ng-model="modalEvent.workload")
+							input#modal-event-workload(type="text", ng-model="modalEvent.workload")
 							label(for="modal-event-workload") Carga Horária
 					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
 	#modal-delete.modal
@@ -55,24 +55,22 @@ main
 			h4.custom-modal__header Excluir Curso
 			p Tem certeza que deseja excluir '{{modalEvent.name}}'?
 		.modal-footer
-			a(href='' data-ng-click="deleteEvent(modalEvent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='' ng-click="deleteEvent(modalEvent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
 			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
 	//- Main content
 	.container
-		.fixed-action-btn(style="bottom: 24px; right: 24px;")
-			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#modal-create", modal)
-				i.large.material-icons add
+		oddin-fab(trigger="modal-create")
 		p.empty-message.center-align(ng-if="events.length == 0") Não há cursos cadastrados
 		ul.collection.with-header.custom-list(ng-if="events.length > 0")
 			li.collection-header.custom-list__header
 				h2 Cursos cadastrados
-			li.collection-item.avatar.custom-list__item(data-ng-repeat="event in events | orderBy : 'name'")
+			li.collection-item.avatar.custom-list__item.two-options(ng-repeat="event in events | orderBy : 'name'")
 				i.material-icons.circle collections_bookmark
-				a(ui-sref='curso-status({cursoID: event.id})')
+				a(ui-sref="admin-event-show({eventID: event.id})")
 					span.title {{event.name}}
 					p {{event.code}}
 				.secondary-content
-					a.list-double-secondary(href="" data-ng-click="modalEdit(event)")
+					a.list-double-secondary(href="" ng-click="modalEdit(event)")
 						i.material-icons edit
-					a(href="" data-ng-click="modalDelete(event)")
+					a(href="" ng-click="modalDelete(event)")
 						i.material-icons delete

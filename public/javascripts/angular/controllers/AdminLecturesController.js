@@ -1,78 +1,74 @@
-oddin.controller('AdminLecturesController', function ($scope, CurrentUser, LectureAPI) {
+oddin.controller("AdminLecturesController", function ($scope, CurrentUser, LectureAPI, ManageList) {
+	$scope.load = true;
+	$scope.user = CurrentUser;
 
-	$scope.usuario = CurrentUser;
-	$scope.data_loaded = true;
-
-	$scope.buscaDisciplinas = function () {
+	(function findLectures() {
+		$scope.load = false;
 		LectureAPI.index()
 		.then(function (response) {
-			$scope.disciplinas = response.data;
+			$scope.lectures = response.data;
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao carregar disciplinas", 3000);
 		})
-	}
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-	$scope.cadastraDisciplina =  function (disciplina) {
-		$scope.data_loaded = false;
-		var _disciplina = angular.copy(disciplina);
-		delete $scope.disciplina;
-		LectureAPI.create(_disciplina)
+	$scope.createLecture =  function (newLecture) {
+		$scope.load = false;
+		LectureAPI.create(newLecture)
 		.then(function (response) {
-			$scope.disciplinas.push(response.data);
-			$scope.data_loaded = true;
-			Materialize.toast('Disciplina cadastrada', 3000)
+			$scope.lectures.push(response.data);
+			Materialize.toast("Disciplina cadastrada", 3000)
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao cadastrar disciplina", 3000);
+		})
+		.finally(function () {
+			delete $scope.newLecture;
+			$scope.load = true;
 		})
 	}
 
-	$scope.updateDisciplina = function (disciplina) {
-		$scope.data_loaded = false;
-		var _disciplina = angular.copy(disciplina);
-		delete $scope.modalContent;
-		LectureAPI.update(_disciplina.id, _disciplina)
+	$scope.updateLecture = function (modalLecture) {
+		$scope.load = false;
+		LectureAPI.update(modalLecture.id, modalLecture)
 		.then(function (response) {
-			for(var i = 0; i < $scope.disciplinas.length; i++) {
-				if($scope.disciplinas[i].id == _disciplina.id) {
-					$scope.disciplinas[i] = response.data;
-					break;
-				}
-			}
-			$scope.data_loaded = true;
-			Materialize.toast('Disciplina atualizada', 3000);
+			ManageList.updateItem($scope.lectures, response.data);
+			Materialize.toast("Disciplina atualizada", 3000);
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao atualizar disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.deleteDisciplina = function (disciplina) {
-		$scope.data_loaded = false;
-		LectureAPI.destroy(disciplina.id)
-		.then(function(response) {
-			for(var i = 0; i < $scope.disciplinas.length; i++) {
-				if($scope.disciplinas[i].id == disciplina.id) {
-					$scope.disciplinas.splice(i, 1);
-					break;
-				}
-			}
-			$scope.data_loaded = true;
-			Materialize.toast('Disciplina deletada', 3000);
+	$scope.deleteLecture = function (modalLecture) {
+		$scope.load = false;
+		LectureAPI.destroy(modalLecture.id)
+		.then(function (response) {
+			ManageList.deleteItem($scope.lectures, modalLecture);
+			Materialize.toast("Disciplina deletada", 3000);
 		})
-		.catch(function(error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao excluir disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.openModalDeleteDisciplina = function (disciplina) {
-		$scope.modalContent = disciplina;
-		$('#modal-deleta-disciplina').openModal();
+	$scope.modalEdit = function (lecture) {
+		$scope.modalLecture = angular.copy(lecture);
+		$("#modal-edit").openModal();
 	}
 
-	$scope.openModalEditDisciplina = function (disciplina) {
-		$scope.modalContent = angular.copy(disciplina);
-		$('#modal-edita-disciplina').openModal();
+	$scope.modalDelete = function (lecture) {
+		$scope.modalLecture = angular.copy(lecture);
+		$("#modal-delete").openModal();
 	}
 });

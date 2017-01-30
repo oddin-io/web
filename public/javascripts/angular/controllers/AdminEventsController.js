@@ -52,7 +52,7 @@ oddin.controller("AdminEventsController", function ($scope, EventAPI, CurrentUse
 		EventAPI.destroy(modalEvent.id)
 		.then(function (response) {
 			ManageList.deleteItem($scope.events, modalEvent);
-			Materialize.toast('Curso deletado', 3000);
+			Materialize.toast("Curso deletado", 3000);
 		})
 		.catch(function () {
 			Materialize.toast("Erro ao excluir curso", 3000);
@@ -64,11 +64,11 @@ oddin.controller("AdminEventsController", function ($scope, EventAPI, CurrentUse
 
 	$scope.modalEdit = function (event) {
 		$scope.modalEvent = angular.copy(event);
-		$('#modal-edit').openModal();
+		$("#modal-edit").openModal();
 	}
 
 	$scope.modalDelete = function (event) {
 		$scope.modalEvent = angular.copy(event);
-		$('#modal-delete').openModal();
+		$("#modal-delete").openModal();
 	}
 });

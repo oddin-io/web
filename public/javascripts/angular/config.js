@@ -125,30 +125,30 @@ oddin.config(function ($stateProvider) {
 		},
 		controller: 'WorkShowController'
 	})
-	.state('cursos-admin', {
-		url: '/cursos-admin',
-		templateUrl: '/partials/admin-cursos',
+	.state('admin-events', {
+		url: '/admin-cursos',
+		templateUrl: '/partials/admin-events',
 		controller: 'AdminEventsController'
 	})
-	.state('curso-status', {
-		url: '/curso/:cursoID',
-		templateUrl: '/partials/curso-status',
+	.state('admin-lectures', {
+		url: '/admin-disciplinas',
+		templateUrl: '/partials/admin-lectures',
+		controller: 'AdminLecturesController'
+	})
+	.state('admin-users', {
+		url: '/admin-usuarios',
+		templateUrl: '/partials/admin-users',
+		controller: 'AdminUsersController'
+	})
+	.state('admin-event-show', {
+		url: '/admin-cursos/:eventID',
+		templateUrl: '/partials/admin-event-show',
 		controller: 'AdminEventShowController'
 	})
 	.state('instruction-show', {
 		url: '/curso-disciplinas/:disciplinaID',
 		templateUrl: '/partials/admin-instruction-show',
 		controller: 'AdminInstructionShowController'
-	})
-	.state('disciplinas-admin', {
-		url: '/disciplinas-admin',
-		templateUrl: '/partials/admin-disciplinas',
-		controller: 'AdminLecturesController'
-	})
-	.state('usuarios-admin', {
-		url: '/usuarios-admin',
-		templateUrl: '/partials/admin-usuarios',
-		controller: 'AdminUsersController'
 	})
 	.state('add-participants', {
 		url: '/add-participants/:disciplinaID',
@@ -163,7 +163,7 @@ oddin.config(function ($stateProvider) {
 }).run(function ($window, $location, $state, $cookies) {
 	if ($window.location.pathname == '/home') {
 		if($cookies.get('admin')) {
-			$state.go('cursos-admin');
+			$state.go('admin-events');
 		} else {
 			$state.go('disciplinas')
 		}

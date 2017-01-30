@@ -1,11 +1,11 @@
 doctype html
 header
-	oddin-header(title="{{curso.name}}", btn-type="back", to-state-url="/cursos-admin")
+	oddin-header(title="{{event.name}}", btn-type="back", to-state-url="/admin-cursos")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.name}}
-			p.barra-lateral__user-email {{usuario.email}}
+			p.barra-lateral__user-name {{user.name}}
+			p.barra-lateral__user-email {{user.email}}
 		li.no-padding
 			ul.collapsible(data-collapsible="expandable")
 				li.barra-lateral__item
@@ -13,19 +13,17 @@ header
 					.collapsible-body
 						ul
 							li.barra-lateral__subitem
-								a(ui-sref="cursos-admin") Cursos
+								a(ui-sref="admin-events") Cursos
 							li.barra-lateral__subitem
-								a(ui-sref="disciplinas-admin") Disciplinas
+								a(ui-sref="admin-lectures") Disciplinas
 							li.barra-lateral__subitem
-								a(ui-sref="usuarios-admin") Usuarios
+								a(ui-sref="admin-users") Usuarios
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
 
-main(data-ng-init="buscaInfo()")
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
+main
+	oddin-preloader(load-var="load", side-bar="true")
+	//- Modals
 	#modal-delete-instruction.modal
 		.modal-content
 			h4.custom-modal__header Remover Disciplina
@@ -33,10 +31,12 @@ main(data-ng-init="buscaInfo()")
 		.modal-footer
 			a(href='' data-ng-click="deleteInstruction(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
 			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	//- Main Content
 	.container
-		.fixed-action-btn(style="bottom: 24px; right: 24px;")
-			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref="add-instructions({cursoID: curso.id})")
-				i.large.material-icons add
+		oddin-fab(trigger="/add-instructions/{{event.id}}")
+		//- .fixed-action-btn(style="bottom: 24px; right: 24px;")
+		//- 	a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref="add-instructions({cursoID: curso.id})")
+		//- 		i.large.material-icons add
 		.card.custom-card
 			.card-content
 				.custom-card__header
@@ -45,14 +45,14 @@ main(data-ng-init="buscaInfo()")
 					ul.info
 						li
 							span Nome:
-							p {{curso.name}}
+							p {{event.name}}
 						li
 							span Código:
-							p {{curso.code}}
+							p {{event.code}}
 						li
 							span Carga Horária:
-							p {{curso.workload}}
-		ul.collection.with-header.custom-list(data-ng-init="buscaInstructions()")
+							p {{event.workload}}
+		ul.collection.with-header.custom-list
 			li.collection-header.custom-list__header
 				h2 Disciplinas do curso
 			li.collection-item.avatar.custom-list__item(data-ng-repeat="disciplina in instructions | orderBy : 'season' : true")

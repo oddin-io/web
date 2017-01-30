@@ -1,0 +1,71 @@
+doctype html
+header
+	oddin-header(title="Usuários")
+	ul#slide-out.side-nav.fixed.barra-lateral
+		.barra-lateral__header
+			i.barra-lateral__user-avatar.material-icons account_circle
+			p.barra-lateral__user-name {{user.name}}
+			p.barra-lateral__user-email {{user.email}}
+		li.no-padding.barra-lateral__item
+			a(ui-sref='admin-events') Cursos
+		li.no-padding.barra-lateral__item
+			a(ui-sref='admin-lectures') Disciplinas
+		li.no-padding.barra-lateral__item
+			p.active Usuários
+		li.no-padding.barra-lateral__item(ng-controller="LoginController")
+			a(href="" ng-click="logout()") Logout
+
+main
+	oddin-preloader(load-var="load", side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="createUser(newUser)")
+					h1.modal-criar-item__titulo Criar novo usuário
+					.row
+						.input-field.col.s12
+							input#new-user-name(type="text", ng-model="newUser.name")
+							label(for="new-user-name") Nome
+						.input-field.col.s12
+							input#new-user-email(type="text", ng-model="newUser.email")
+							label(for="new-user-email") Email
+						.input-field.col.s12
+							input#new-user-password(type="password", ng-model="newUser.password")
+							label(for="new-user-password") Password
+							button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Criar Usuário
+	#modal-edit.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="updateUser(modalUser)")
+					h1.modal-criar-item__titulo Editar Usuário
+					.row
+						.input-field.col.s12
+							input#modal-user-name(type="text", ng-model="modalUser.name")
+							label(for="modal-user-name") Nome
+						.input-field.col.s12
+							input#modal-user-email(type="text", ng-model="modalUser.email")
+							label(for="modal-user-email") Email
+							button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar Usuário
+	#modal-delete.modal
+		.modal-content
+			h4.custom-modal__header Excluir Usuário
+			p Tem certeza que deseja excluir '{{modalUser.name}}'?
+		.modal-footer
+			a(href='' ng-click="deleteUser(modalUser)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	//- Main Content
+	.container
+		oddin-fab(trigger="modal-create")
+		ul.collection.with-header.custom-list
+			li.collection-header.custom-list__header
+				h2 Usuários cadastrados
+			li.collection-item.avatar.custom-list__item.two-options(ng-repeat="user in users | orderBy: 'name'")
+				i.material-icons.circle person
+				span.title {{user.name}}
+				p.truncate {{user.email}}
+				.secondary-content
+					a.list-double-secondary(href="" ng-click="modalEdit(user)")
+						i.material-icons edit
+					a(href="" ng-click="modalDelete(user)")
+						i.material-icons delete

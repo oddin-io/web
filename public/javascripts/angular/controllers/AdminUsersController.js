@@ -1,77 +1,74 @@
-oddin.controller('AdminUsersController', function ($scope, CurrentUser, PersonAPI) {
-  $scope.usuario = CurrentUser;
-  $scope.data_loaded = true;
+oddin.controller("AdminUsersController", function ($scope, CurrentUser, PersonAPI, ManageList) {
+  $scope.load = true;
+	$scope.user = CurrentUser;
 
-  $scope.buscaUsuarios = function () {
+	(function findUsers() {
+		$scope.load = false;
 		PersonAPI.index()
-		.then(function(response) {
+		.then(function (response) {
 			$scope.users = response.data;
 		})
-		.catch(function(error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao carregar usuários", 3000);
 		})
-  }
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-  $scope.createUser =  function (user) {
-		$scope.data_loaded = false;
-		var _user = angular.copy(user);
-		delete $scope.user;
-		PersonAPI.create(_user)
-		.then(function(response) {
+	$scope.createUser =  function (newUser) {
+		$scope.load = false;
+		PersonAPI.create(newUser)
+		.then(function (response) {
 			$scope.users.push(response.data);
-			$scope.data_loaded = true;
-      Materialize.toast('Usuário cadastrado', 3000)
+			Materialize.toast("Usuário cadastrado", 3000)
 		})
-		.catch(function(error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao cadastrar usuário", 3000);
 		})
-	}
-
-  $scope.updateUser = function (user) {
-		$scope.data_loaded = false;
-		var _user = angular.copy(user);
-		delete $scope.modalContent;
-		PersonAPI.update(_user.id, _user)
-		.then(function(response) {
-			for(var i = 0; i < $scope.users.length; i++) {
-				if($scope.users[i].id == _user.id) {
-					$scope.users[i] = response.data;
-					break;
-				}
-			}
-			$scope.data_loaded = true;
-			Materialize.toast('Usuário atualizado', 3000);
-		})
-		.catch(function(error) {
-			console.log(error.data);
+		.finally(function () {
+			delete $scope.newUser;
+			$scope.load = true;
 		})
 	}
 
-  $scope.deleteUser = function (user) {
-		$scope.data_loaded = false;
-		PersonAPI.destroy(user.id)
-		.then(function(response) {
-			for(var i = 0; i < $scope.users.length; i++) {
-				if($scope.users[i].id == user.id) {
-					$scope.users.splice(i, 1);
-					break;
-				}
-			}
-			$scope.data_loaded = true;
-			Materialize.toast('Usuário deletado', 3000);
+	$scope.updateUser = function (modalUser) {
+		$scope.load = false;
+		PersonAPI.update(modalUser.id, modalUser)
+		.then(function (response) {
+			ManageList.updateItem($scope.users, response.data);
+			Materialize.toast("Usuário atualizado", 3000);
 		})
-		.catch(function(error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao atualizar usuário", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.openModalDeleteUser = function (user) {
-		$scope.modalContent = user;
-		$('#modal-deleta-usuario').openModal();
+	$scope.deleteUser = function (modalUser) {
+		$scope.load = false;
+		PersonAPI.destroy(modalUser.id)
+		.then(function (response) {
+			ManageList.deleteItem($scope.users, modalUser);
+			Materialize.toast("Usuário excluído", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao excluir usuário", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
 	}
 
-  $scope.openModalEditUser = function (user) {
-		$scope.modalContent = angular.copy(user);
-		$('#modal-edita-usuario').openModal();
+	$scope.modalEdit = function (user) {
+		$scope.modalUser = angular.copy(user);
+		$('#modal-edit').openModal();
+	}
+
+	$scope.modalDelete = function (user) {
+		$scope.modalUser = angular.copy(user);
+		$('#modal-delete').openModal();
 	}
 });

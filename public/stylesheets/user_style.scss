@@ -165,6 +165,9 @@
     }
   }
   &__item {
+		&.two-options {
+			padding-right: 100px !important;
+		}
     span {
       @include type-list-primary(!important);
       color: $type-primary-color;
@@ -599,12 +602,6 @@
 
 .main-title {
 	color: $primary-color;
-}
-
-.collection-item {
-	.title {
-		margin-right: 25px;
-	}
 }
 
 .faq-button-answer, .survey-button-answer {
