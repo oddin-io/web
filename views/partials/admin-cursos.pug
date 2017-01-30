@@ -4,8 +4,8 @@ header
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.name}}
-			p.barra-lateral__user-email {{usuario.email}}
+			p.barra-lateral__user-name {{user.name}}
+			p.barra-lateral__user-email {{user.email}}
 		li.no-padding.barra-lateral__item
 			p.active Cursos
 		li.no-padding.barra-lateral__item
@@ -15,64 +15,64 @@ header
 		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
 			a(href="" data-ng-click="logout()") Logout
 
-main(data-ng-init="buscaCursos()")
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
-	#cadastrar-curso.modal.bottom-sheet
+main
+	oddin-preloader(load-var="load", side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="cadastraCurso(curso)")
+				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="createEvent(newEvent)")
 					h1.modal-criar-item__titulo Cadastrar curso
 					.row
 						.input-field.col.s12
-							input#nome-curso(type="text", data-ng-model="curso.name")
-							label(for="nome-curso") Nome
+							input#new-event-name(type="text", data-ng-model="newEvent.name")
+							label(for="new-event-name") Nome
 						.input-field.col.s12
-							input#codigo-curso(type="text", data-ng-model="curso.code")
-							label(for="codigo-curso") Código
+							input#new-event-code(type="text", data-ng-model="newEvent.code")
+							label(for="new-event-code") Código
 						.input-field.col.s12
-							input#carga-curso(type="text", data-ng-model="curso.workload")
-							label(for="carga-curso") Carga Horária
+							input#new-event-workload(type="text", data-ng-model="newEvent.workload")
+							label(for="new-event-workload") Carga Horária
 					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Cadastrar
-	#modal-edita-curso.modal.bottom-sheet
+	#modal-edit.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateCurso(modalContent)")
+				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateEvent(modalEvent)")
 					h1.modal-criar-item__titulo Editar curso
 					.row
 						.input-field.col.s12
-							input#nome-curso(type="text", data-ng-model="modalContent.name")
-							label(for="nome-curso") Nome
+							input#modal-event-name(type="text", data-ng-model="modalEvent.name")
+							label(for="modal-event-name") Nome
 						.input-field.col.s12
-							input#codigo-curso(type="text", data-ng-model="modalContent.code")
-							label(for="codigo-curso") Código
+							input#modal-event-code(type="text", data-ng-model="modalEvent.code")
+							label(for="modal-event-code") Código
 						.input-field.col.s12
-							input#carga-curso(type="text", data-ng-model="modalContent.workload")
-							label(for="carga-curso") Carga Horária
+							input#modal-event-workload(type="text", data-ng-model="modalEvent.workload")
+							label(for="modal-event-workload") Carga Horária
 					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
-	#modal-deleta-curso.modal
+	#modal-delete.modal
 		.modal-content
 			h4.custom-modal__header Excluir Curso
-			p Tem certeza que deseja excluir '{{modalContent.name}}'?
+			p Tem certeza que deseja excluir '{{modalEvent.name}}'?
 		.modal-footer
-			a(href='' data-ng-click="deleteCurso(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='' data-ng-click="deleteEvent(modalEvent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
 			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+	//- Main content
 	.container
 		.fixed-action-btn(style="bottom: 24px; right: 24px;")
-			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#cadastrar-curso", modal)
+			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#modal-create", modal)
 				i.large.material-icons add
-		ul.collection.with-header.custom-list
+		p.empty-message.center-align(ng-if="events.length == 0") Não há cursos cadastrados
+		ul.collection.with-header.custom-list(ng-if="events.length > 0")
 			li.collection-header.custom-list__header
 				h2 Cursos cadastrados
-			li.collection-item.avatar.custom-list__item(data-ng-repeat="curso in cursos | orderBy : 'name'")
+			li.collection-item.avatar.custom-list__item(data-ng-repeat="event in events | orderBy : 'name'")
 				i.material-icons.circle collections_bookmark
-				a(ui-sref='curso-status({cursoID: curso.id})')
-					span.title {{curso.name}}
-					p {{curso.code}}
+				a(ui-sref='curso-status({cursoID: event.id})')
+					span.title {{event.name}}
+					p {{event.code}}
 				.secondary-content
-					a.list-double-secondary(href="" data-ng-click="openModalEditCurso(curso)")
+					a.list-double-secondary(href="" data-ng-click="modalEdit(event)")
 						i.material-icons edit
-					a(href="" data-ng-click="openModalDeleteCurso(curso)")
+					a(href="" data-ng-click="modalDelete(event)")
 						i.material-icons delete

@@ -1,78 +1,74 @@
-oddin.controller('AdminEventsController', function ($scope, CurrentUser, EventAPI) {
+oddin.controller("AdminEventsController", function ($scope, EventAPI, CurrentUser, ManageList) {
+	$scope.load = true;
+	$scope.user = CurrentUser;
 
-	$scope.usuario = CurrentUser;
-	$scope.data_loaded = true;
-
-	$scope.buscaCursos = function () {
+	(function findEvents() {
+		$scope.load = false;
 		EventAPI.index()
-		.then(function(response) {
-			$scope.cursos = response.data;
-		})
-		.catch(function(error) {
-			console.log(error.data);
-		})
-	}
-
-	$scope.cadastraCurso =  function (curso) {
-		$scope.data_loaded = false;
-		var _curso = angular.copy(curso);
-		delete $scope.curso;
-		EventAPI.create(_curso)
-		.then(function(response) {
-			$scope.cursos.push(response.data);
-			$scope.data_loaded = true;
-			Materialize.toast('Curso cadastrado', 3000)
-		})
-		.catch(function(error) {
-			console.log(error.data);
-		})
-	}
-
-	$scope.updateCurso = function (curso) {
-		$scope.data_loaded = false;
-		var _curso = angular.copy(curso);
-		delete $scope.modalContent;
-		EventAPI.update(_curso.id, _curso)
-		.then(function(response) {
-			for(var i = 0; i < $scope.cursos.length; i++) {
-				if($scope.cursos[i].id == _curso.id) {
-					$scope.cursos[i] = response.data;
-					break;
-				}
-			}
-			$scope.data_loaded = true;
-			Materialize.toast('Curso atualizado', 3000);
-		})
-		.catch(function(error) {
-			console.log(error.data);
-		})
-	}
-
-	$scope.deleteCurso = function (curso) {
-		$scope.data_loaded = false;
-		EventAPI.destroy(curso.id)
 		.then(function (response) {
-			for(var i = 0; i < $scope.cursos.length; i++) {
-				if($scope.cursos[i].id == curso.id) {
-					$scope.cursos.splice(i, 1);
-					break;
-				}
-			}
-			$scope.data_loaded = true;
+			$scope.events = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar cursos", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
+
+	$scope.createEvent =  function (newEvent) {
+		$scope.load = false;
+		EventAPI.create(newEvent)
+		.then(function (response) {
+			$scope.events.push(response.data);
+			Materialize.toast("Curso cadastrado", 3000)
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao cadastrar curso", 3000);
+		})
+		.finally(function () {
+			delete $scope.newEvent;
+			$scope.load = true;
+		})
+	}
+
+	$scope.updateEvent = function (modalEvent) {
+		$scope.load = false;
+		EventAPI.update(modalEvent.id, modalEvent)
+		.then(function (response) {
+			ManageList.updateItem($scope.events, response.data);
+			Materialize.toast("Curso atualizado", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao atualizar curso", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
+
+	$scope.deleteEvent = function (modalEvent) {
+		$scope.load = false;
+		EventAPI.destroy(modalEvent.id)
+		.then(function (response) {
+			ManageList.deleteItem($scope.events, modalEvent);
 			Materialize.toast('Curso deletado', 3000);
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao excluir curso", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.openModalDeleteCurso = function (curso) {
-		$scope.modalContent = angular.copy(curso);
-		$('#modal-deleta-curso').openModal();
+	$scope.modalEdit = function (event) {
+		$scope.modalEvent = angular.copy(event);
+		$('#modal-edit').openModal();
 	}
 
-	$scope.openModalEditCurso = function (curso) {
-		$scope.modalContent = angular.copy(curso);
-		$('#modal-edita-curso').openModal();
+	$scope.modalDelete = function (event) {
+		$scope.modalEvent = angular.copy(event);
+		$('#modal-delete').openModal();
 	}
 });
