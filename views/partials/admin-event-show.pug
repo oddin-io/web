@@ -24,13 +24,13 @@ header
 main
 	oddin-preloader(load-var="load" side-bar="true")
 	//- Modals
-	#modal-delete.modal
+	#modal-remove.modal
 		.modal-content
 			h4.custom-modal__header Remover Disciplina
-			p Tem certeza que deseja remover '{{modalInstruction.lecture.name}}'?
+			p Tem certeza que deseja remover "{{modalInstruction.lecture.name}}"?
 		.modal-footer
-			a(href='' ng-click="deleteInstruction(modalInstruction)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteInstruction(modalInstruction)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
 	//- Main Content
 	.container
 		oddin-fab(trigger="/add-instructions/{{event.id}}" icon="add")
@@ -53,12 +53,12 @@ main
 		ul.collection.with-header.custom-list(ng-if="instructions.length > 0")
 			li.collection-header.custom-list__header
 				h2 Disciplinas do curso
-			li.collection-item.avatar.custom-list__item(ng-repeat="instruction in instructions | orderBy : 'season' : true")
+			li.collection-item.avatar.custom-list__item.one-option(ng-repeat="instruction in instructions | orderBy : 'season' : true")
 				i.material-icons.circle book
-				a(ui-sref="instruction-show({disciplinaID: instruction.id})")
+				a(ui-sref="admin-instruction-show({instructionID: instruction.id})")
 					span.title {{instruction.lecture.name}} - Turma: {{instruction.class_number}}
 					p {{instruction.lecture.code}}
 						br
 						| {{instruction.season}}
-				a.secondary-content(href="" ng-click="modalDelete(instruction)")
+				a.secondary-content(href="" ng-click="modalRemove(instruction)")
 					i.material-icons remove_circle

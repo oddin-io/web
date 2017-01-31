@@ -7,7 +7,7 @@ main.add-main
 	//- Modals
 	#modal-add.modal.modal-fixed-footer
 		.modal-content
-			h4.custom-modal__header Adicionar '{{modalInstruction.lecture.name}}'
+			h4.custom-modal__header Adicionar "{{modalInstruction.lecture.name}}"
 			.row
 				.input-field.col.s12
 					input#modal-instruction-class-number(type="number" ng-model="modalInstruction.class_number")
@@ -19,15 +19,15 @@ main.add-main
 					input#modal-instruction-end-date(type="text" ng-model="modalInstruction.end_date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}")
 					label(for="modal-instruction-end-date") Data de Encerramento
 		.modal-footer
-			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='' ng-click="createInstruction(modalInstruction)") Confirmar
-			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='') Cancelar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="createInstruction(modalInstruction)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
 	#modal-remove.modal
 		.modal-content
 			h4.custom-modal__header Remover Disciplina
-			p Tem certeza que deseja remover '{{modalInstruction.lecture.name}}'?
+			p Tem certeza que deseja remover "{{modalInstruction.lecture.name}}"?
 		.modal-footer
-			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='' ng-click="deleteInstruction(modalInstruction)") Confirmar
-			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='') Cancelar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteInstruction(modalInstruction)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
 	//- Main Content
 	.container
 		oddin-fab(trigger="/admin-cursos/{{event.id}}" icon="check")

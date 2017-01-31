@@ -1,5 +1,4 @@
 oddin.controller("AdminLecturesController", function ($scope, CurrentUser, LectureAPI, ManageList) {
-	$scope.load = true;
 	$scope.user = CurrentUser;
 
 	(function findLectures() {

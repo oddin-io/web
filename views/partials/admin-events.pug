@@ -53,10 +53,10 @@ main
 	#modal-delete.modal
 		.modal-content
 			h4.custom-modal__header Excluir Curso
-			p Tem certeza que deseja excluir '{{modalEvent.name}}'?
+			p Tem certeza que deseja excluir "{{modalEvent.name}}"?
 		.modal-footer
-			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='' ng-click="deleteEvent(modalEvent)") Confirmar
-			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='') Cancelar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteEvent(modalEvent)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
 	//- Main content
 	.container
 		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")

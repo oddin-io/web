@@ -1,106 +1,96 @@
-oddin.controller('AdminInstructionShowController', function ($scope, $stateParams, CurrentUser, InstructionAPI, PersonAPI, EnrollAPI) {
+oddin.controller("AdminInstructionShowController", function ($scope, $stateParams, CurrentUser, InstructionAPI, PersonAPI, EnrollAPI, ManageList) {
+  $scope.user = CurrentUser;
 
-  $scope.usuario = CurrentUser;
-  $scope.data_loaded = true;
-
-	(function buscaInfo() {
-		InstructionAPI.show($stateParams.disciplinaID)
-		.then(function(response) {
-			$scope.disciplina = response.data;
+	(function getInfo() {
+		InstructionAPI.show($stateParams.instructionID)
+		.then(function (response) {
+			$scope.instruction = response.data;
 		})
-		.catch(function(error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da disciplina", 3000);
 		})
   })();
 
-	$scope.buscaParticipants = function () {
-		InstructionAPI.getParticipants($stateParams.disciplinaID)
-		.then(function(response) {
+	$scope.findParticipants = function () {
+		$scope.load = false;
+		InstructionAPI.getParticipants($stateParams.instructionID)
+		.then(function (response) {
 			$scope.participants = response.data;
 		})
-		.catch(function(error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao carregar participantes da disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-  $scope.setRegistrableUsers = function () {
+	$scope.findAvailableParticipants = function () {
+		$scope.load = false;
 		PersonAPI.index()
-		.then(function(response) {
-			$scope.users = response.data;
-			InstructionAPI.getParticipants($stateParams.disciplinaID)
-			.then(function(response) {
-				$scope.participants = response.data;
-				$scope.availableUsers = $scope.users.filter(function (user, i) {
-					var result = true;
-					for(var i = 0; i < $scope.participants.length; i++) {
-						if(user.id == $scope.participants[i].person.id) {
-							result = false;
-							break;
-						}
-					}
-					return result;
-				})
-			})
-			.catch(function(error) {
-				console.log(error.data);
+		.then(function (response) {
+			$scope.registeredUsers = response.data;
+			return InstructionAPI.getParticipants($stateParams.instructionID);
+		})
+		.then(function (response) {
+			$scope.participants = response.data;
+			$scope.availableUsers = $scope.registeredUsers.filter(function (registeredUser, i) {
+				var _index = $scope.participants.findIndex(function (participant) {
+					return participant.person.id == registeredUser.id;
+				});
+				if(_index < 0)
+					return true;
 			})
 		})
-		.catch(function(error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao carregar usuários cadastrados", 3000);
 		})
-  }
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
 
-	$scope.createEnroll = function (user) {
-    $scope.data_loaded = false;
-		var enroll = {};
-		enroll.person_id = user.id;
-		enroll.instruction_id = $stateParams.disciplinaID;
-		enroll.profile = user.enrollProfile ? 1 : 0;
-
-		EnrollAPI.create(enroll)
-		.then(function(response) {
+	$scope.createEnroll = function (availableUser) {
+    $scope.load = false;
+		var _enroll = {
+			person_id: availableUser.id,
+			instruction_id: $stateParams.instructionID,
+			profile: availableUser.enrollProfile ? 1 : 0
+		};
+		EnrollAPI.create(_enroll)
+		.then(function (response) {
 			$scope.participants.push(response.data);
-			$scope.availableUsers = $scope.users.filter(function (user, i) {
-				var result = true;
-				for(var i = 0; i < $scope.participants.length; i++) {
-					if(user.id == $scope.participants[i].person.id) {
-						result = false;
-						break;
-					}
-				}
-				return result;
-			});
-			$scope.data_loaded = true;
+			ManageList.deleteItem($scope.availableUsers, response.data.person);
 			Materialize.toast('Usuário cadastrado', 3000);
 		})
-		.catch(function(error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao adicionar usuário", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.removeEnroll = function (participant) {
-    $scope.data_loaded = false;
-		EnrollAPI.destroy(participant.id)
-		.then(function() {
-			for(var i = 0; i < $scope.participants.length; i++) {
-				if(participant.id == $scope.participants[i].id) {
-					$scope.participants.splice(i, 1);
-					break;
-				}
-			}
+	$scope.deleteEnroll = function (modalParticipant) {
+		$scope.load = false;
+		EnrollAPI.destroy(modalParticipant.id)
+		.then(function (response) {
+			ManageList.deleteItem($scope.participants, modalParticipant);
 			if($scope.availableUsers) {
-				$scope.availableUsers.push(participant.person);
+				$scope.availableUsers.push(modalParticipant.person);
 			}
-      $scope.data_loaded = true;
-      Materialize.toast('Usuário removido', 3000)
+			Materialize.toast("Usuário removido", 3000);
 		})
-		.catch(function(error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao remover usuário", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.openModalRemoveParticipant = function (participant) {
-		$scope.modalContent = angular.copy(participant);
-		$('#modal-remove-participant').openModal();
+	$scope.modalRemove = function (participant) {
+		$scope.modalParticipant = angular.copy(participant);
+		$("#modal-remove").openModal();
 	}
 });

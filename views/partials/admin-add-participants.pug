@@ -1,54 +1,54 @@
 doctype html
 header.add-header
-	oddin-header(title="Adicionar Participantes", btn-type="close", to-state-url="/curso-disciplinas/{{disciplina.id}}")
+	oddin-header(title="Adicionar Participantes" btn-type="close" to-state-url="/admin-disciplinas-cadastradas/{{instruction.id}}")
 
-main.add-main(data-ng-init="buscaInfo()")
-	.preloader-wrapper.big.active.custom-preloader.no-sidebar(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
-	#modal-remove-participant.modal
+main.add-main(ng-init="findAvailableParticipants()")
+	oddin-preloader(load-var="load")
+	//- Modals
+	#modal-remove.modal
 		.modal-content
 			h4.custom-modal__header Remover Usuário
-			p Tem certeza que deseja remover '{{modalContent.person.name}}'?
+			p Tem certeza que deseja remover "{{modalParticipant.person.name}}"?
 		.modal-footer
-			a(href='' data-ng-click="removeEnroll(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-	.container(data-ng-init="setRegistrableUsers()")
-		.fixed-action-btn(style="bottom: 24px; right: 24px;")
-			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref='instruction-show({disciplinaID: disciplina.id})')
-				i.large.material-icons check
-		h5.main-title {{disciplina.lecture.name}} - Turma {{disciplina.class_number}}
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteEnroll(modalParticipant)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	//- Main Content
+	.container
+		oddin-fab(trigger="/admin-disciplinas-cadastradas/{{instruction.id}}" icon="check")
+		h5.main-title {{instruction.lecture.name}} - Turma {{instruction.class_number}}
 		.row
 			.col.l6.s12
 				ul.collection.with-header.custom-list
 					li.collection-header.custom-list__header
 						h2 Usuários Disponíveis
-					li.collection-item.avatar.custom-list__item(data-ng-repeat="user in availableUsers | orderBy : 'name'")
+					p.empty-message.add-menu.center-align(ng-if="availableUsers.length == 0") Não há usuários cadastrados no sistema
+					li.collection-item.avatar.custom-list__item.one-option(ng-repeat="availableUser in availableUsers | orderBy : 'name'")
 						i.material-icons.circle person
-						span.title {{user.name}}
-						p {{user.email}}
+						span.title {{availableUser.name}}
+						p {{availableUser.email}}
 						p.list-checkbox
-							input(id="user-{{user.id}}" type="checkbox" class="filled-in" data-ng-model="user.enrollProfile")/
-							label(for="user-{{user.id}}") Professor
-						a.secondary-content(href="" data-ng-click="createEnroll(user)")
+							input.filled-in(id="user-{{availableUser.id}}" type="checkbox" ng-model="availableUser.enrollProfile")/
+							label(for="user-{{availableUser.id}}") Professor
+						a.secondary-content(href="" ng-click="createEnroll(availableUser)")
 							i.material-icons add_circle
 			.col.l6.s12
 				ul.collection.with-header.custom-list
 					li.collection-header.custom-list__header
 						h2 Professores Cadastrados
-					li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants | orderBy: 'person.name'", data-ng-if="participant.profile == 1")
+					p.empty-message.add-menu.center-align(ng-if="participants.length == 0") Não há usuários cadastrados nessa disciplina
+					li.collection-item.avatar.custom-list__item.one-option(ng-repeat="participant in participants | orderBy: 'person.name'", ng-if="participant.profile == 1")
 						i.material-icons.circle person
 						span.title {{participant.person.name}}
 						p {{participant.person.email}}
-						a.secondary-content(href="" data-ng-click="openModalRemoveParticipant(participant)")
+						a.secondary-content(href="" ng-click="modalRemove(participant)")
 							i.material-icons remove_circle
 				ul.collection.with-header.custom-list
 					li.collection-header.custom-list__header
 						h2 Alunos Matriculados
-					li.collection-item.avatar.custom-list__item(data-ng-repeat="participant in participants | orderBy: 'person.name'", data-ng-if="participant.profile == 0")
+					p.empty-message.add-menu.center-align(ng-if="participants.length == 0") Não há usuários cadastrados nessa disciplina
+					li.collection-item.avatar.custom-list__item.one-option(ng-repeat="participant in participants | orderBy: 'person.name'", ng-if="participant.profile == 0")
 						i.material-icons.circle person
 						span.title {{participant.person.name}}
 						p {{participant.person.email}}
-						a.secondary-content(href="" data-ng-click="openModalRemoveParticipant(participant)")
+						a.secondary-content(href="" ng-click="modalRemove(participant)")
 							i.material-icons remove_circle

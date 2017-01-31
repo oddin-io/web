@@ -1,5 +1,4 @@
 oddin.controller("AdminEventsController", function ($scope, EventAPI, CurrentUser, ManageList) {
-	$scope.load = true;
 	$scope.user = CurrentUser;
 
 	(function findEvents() {

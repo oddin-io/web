@@ -1,5 +1,4 @@
 oddin.controller("AdminUsersController", function ($scope, CurrentUser, PersonAPI, ManageList) {
-  $scope.load = true;
 	$scope.user = CurrentUser;
 
 	(function findUsers() {
