@@ -16,7 +16,7 @@ header
 			a(href="" ng-click="logout()") Logout
 
 main
-	oddin-preloader(load-var="load", side-bar="true")
+	oddin-preloader(load-var="load" side-bar="true")
 	//- Modals
 	#modal-create.modal.bottom-sheet
 		.modal-content.modal-criar-item
@@ -25,15 +25,15 @@ main
 					h1.modal-criar-item__titulo Cadastrar disciplina
 					.row
 						.input-field.col.s12
-							input#new-lecture-name(type="text", ng-model="newLecture.name")
+							input#new-lecture-name(type="text" ng-model="newLecture.name")
 							label(for="new-lecture-name") Nome
 						.input-field.col.s12
-							input#new-lecture-code(type="text", ng-model="newLecture.code")
+							input#new-lecture-code(type="text" ng-model="newLecture.code")
 							label(for="new-lecture-code") Código
 						.input-field.col.s12
-							input#new-lecture-workload(type="text", ng-model="newLecture.workload")
+							input#new-lecture-workload(type="text" ng-model="newLecture.workload")
 							label(for="new-lecture-workload") Carga Horária
-							button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Cadastrar
+							button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Cadastrar
 	#modal-edit.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
@@ -41,13 +41,13 @@ main
 					h1.modal-criar-item__titulo Editar disciplina
 					.row
 						.input-field.col.s12
-							input#modal-lecture-name(type="text", ng-model="modalLecture.name")
+							input#modal-lecture-name(type="text" ng-model="modalLecture.name")
 							label(for="modal-lecture-name") Nome
 						.input-field.col.s12
-							input#modal-lecture-code(type="text", ng-model="modalLecture.code")
+							input#modal-lecture-code(type="text" ng-model="modalLecture.code")
 							label(for="modal-lecture-code") Código
 						.input-field.col.s12
-							input#modal-lecture-workload(type="text", ng-model="modalLecture.workload")
+							input#modal-lecture-workload(type="text" ng-model="modalLecture.workload")
 							label(for="modal-lecture-workload") Carga Horária
 							button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
 	#modal-delete.modal
@@ -55,11 +55,11 @@ main
 			h4.custom-modal__header Excluir Disciplina
 			p Tem certeza que deseja excluir '{{modalLecture.name}}'?
 		.modal-footer
-			a(href='' ng-click="deleteLecture(modalLecture)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='' ng-click="deleteLecture(modalLecture)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='') Cancelar
 	//- Main Content
 	.container
-		oddin-fab(trigger="modal-create")
+		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
 		p.empty-message.center-align(ng-if="lectures.length == 0") Não há disciplinas cadastradas
 		ul.collection.with-header.custom-list(ng-if="lectures.length > 0")
 			li.collection-header.custom-list__header

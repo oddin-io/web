@@ -155,8 +155,8 @@ oddin.config(function ($stateProvider) {
 		templateUrl: '/partials/admin-add-participants',
 		controller: 'AdminInstructionShowController'
 	})
-	.state('add-instructions', {
-		url: '/add-instructions/:cursoID',
+	.state('admin-add-instructions', {
+		url: '/add-instructions/:eventID',
 		templateUrl: '/partials/admin-add-instructions',
 		controller: 'AdminEventShowController'
 	})

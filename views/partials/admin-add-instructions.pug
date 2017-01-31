@@ -1,60 +1,59 @@
 doctype html
 header.add-header
-	oddin-header(title="Adicionar Disciplinas", btn-type="close", to-state-url="/curso/{{curso.id}}")
+	oddin-header(title="Adicionar Disciplinas" btn-type="close" to-state-url="/admin-cursos/{{event.id}}")
 
-main.add-main(data-ng-init="buscaInfo()")
-	.preloader-wrapper.big.active.custom-preloader.no-sidebar(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
-	#modal-add-disciplina.modal.modal-fixed-footer
+main.add-main
+	oddin-preloader(load-var="load")
+	//- Modals
+	#modal-add.modal.modal-fixed-footer
 		.modal-content
-			h4.custom-modal__header Adicionar '{{modalContent.name}}'
+			h4.custom-modal__header Adicionar '{{modalInstruction.lecture.name}}'
 			.row
 				.input-field.col.s12
-					input#instruction_class_number(type="number", data-ng-model="modalContent.class_number")
-					label(for="instruction_class_number") Número da Turma
+					input#modal-instruction-class-number(type="number" ng-model="modalInstruction.class_number")
+					label(for="modal-instruction-class-number") Número da Turma
 				.input-field.col.s12
-					input#instruction_start_date(type="text", data-ng-model="modalContent.start_date" ui-mask="99/99/9999", ui-options="{addDefaultPlaceholder:false}")
-					label(for="instruction_start_date") Data de Início
+					input#modal-instruction-start-date(type="text" ng-model="modalInstruction.start_date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}")
+					label(for="modal-instruction-start-date") Data de Início
 				.input-field.col.s12
-					input#instruction_end_date(type="text", data-ng-model="modalContent.end_date" ui-mask="99/99/9999", ui-options="{addDefaultPlaceholder:false}")
-					label(for="instruction_end_date") Data de Encerramento
+					input#modal-instruction-end-date(type="text" ng-model="modalInstruction.end_date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}")
+					label(for="modal-instruction-end-date") Data de Encerramento
 		.modal-footer
-			a(href='' data-ng-click="createInstruction(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-	#modal-delete-instruction.modal
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='' ng-click="createInstruction(modalInstruction)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='') Cancelar
+	#modal-remove.modal
 		.modal-content
 			h4.custom-modal__header Remover Disciplina
-			p Tem certeza que deseja remover '{{modalContent.lecture.name}}'?
+			p Tem certeza que deseja remover '{{modalInstruction.lecture.name}}'?
 		.modal-footer
-			a(href='' data-ng-click="deleteInstruction(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-	.container(data-ng-init="setRegistrableUsers()")
-		.fixed-action-btn(style="bottom: 24px; right: 24px;")
-			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref='curso-status({cursoID: curso.id})')
-				i.large.material-icons check
-		h5.main-title {{curso.name}}
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='' ng-click="deleteInstruction(modalInstruction)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href='') Cancelar
+	//- Main Content
+	.container
+		oddin-fab(trigger="/admin-cursos/{{event.id}}" icon="check")
+		h5.main-title {{event.name}}
 		.row
 			.col.l6.s12
-				ul.collection.with-header.custom-list(data-ng-init="buscaLectures()")
+				ul.collection.with-header.custom-list(ng-init="findLectures()")
 					li.collection-header.custom-list__header
 						h2 Disciplinas Disponíveis
-					li.collection-item.avatar.custom-list__item(data-ng-repeat="lecture in lectures | orderBy: 'name'")
+					p.empty-message.add-menu.center-align(ng-if="lectures.length == 0") Não há disciplinas cadastradas
+					li.collection-item.avatar.custom-list__item.one-option(ng-repeat="lecture in lectures | orderBy: 'name'")
 						i.material-icons.circle book
 						span.title {{lecture.name}}
 						p {{lecture.code}}
-						a.secondary-content(href="" data-ng-click="openModalAddLecture(lecture)")
+						a.secondary-content(href="" ng-click="modalAdd(lecture)")
 							i.material-icons add_circle
 			.col.l6.s12
-				ul.collection.with-header.custom-list(data-ng-init="buscaInstructions()")
+				ul.collection.with-header.custom-list
 					li.collection-header.custom-list__header
 						h2 Disciplinas do Curso
-					li.collection-item.avatar.custom-list__item(data-ng-repeat="instruction in instructions | orderBy : 'season' : true")
+					p.empty-message.add-menu.center-align(ng-if="instructions.length == 0") Nenhuma disciplina foi adicionada a este curso
+					li.collection-item.avatar.custom-list__item.one-option(ng-repeat="instruction in instructions | orderBy : 'season' : true")
 						i.material-icons.circle book
 						span.title {{instruction.lecture.name}}
 						p Turma: {{instruction.class_number}}
 							br
 							| {{instruction.season}}
-						a.secondary-content(href="" data-ng-click="openModalDeleteInstruction(instruction)")
+						a.secondary-content(href="" ng-click="modalRemove(instruction)")
 							i.material-icons remove_circle

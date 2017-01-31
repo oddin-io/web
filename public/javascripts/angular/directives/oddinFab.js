@@ -3,7 +3,9 @@ oddin.directive("oddinFab", function () {
 		replace: true,
 		restrict: "AE",
 		scope: {
-			trigger: "@"
+			trigger: "@",
+			modalTrigger: "@",
+			icon: "@"
 		},
 		templateUrl: '/components/fab'
 	}

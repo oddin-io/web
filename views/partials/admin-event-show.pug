@@ -1,6 +1,6 @@
 doctype html
 header
-	oddin-header(title="{{event.name}}", btn-type="back", to-state-url="/admin-cursos")
+	oddin-header(title="{{event.name}}" btn-type="back" to-state-url="/admin-cursos")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -18,25 +18,22 @@ header
 								a(ui-sref="admin-lectures") Disciplinas
 							li.barra-lateral__subitem
 								a(ui-sref="admin-users") Usuarios
-		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-			a(href="" data-ng-click="logout()") Logout
+		li.no-padding.barra-lateral__item(ng-controller="LoginController")
+			a(href="" ng-click="logout()") Logout
 
 main
-	oddin-preloader(load-var="load", side-bar="true")
+	oddin-preloader(load-var="load" side-bar="true")
 	//- Modals
-	#modal-delete-instruction.modal
+	#modal-delete.modal
 		.modal-content
 			h4.custom-modal__header Remover Disciplina
-			p Tem certeza que deseja remover '{{modalContent.lecture.name}}'?
+			p Tem certeza que deseja remover '{{modalInstruction.lecture.name}}'?
 		.modal-footer
-			a(href='' data-ng-click="deleteInstruction(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
+			a(href='' ng-click="deleteInstruction(modalInstruction)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
 			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
 	//- Main Content
 	.container
-		oddin-fab(trigger="/add-instructions/{{event.id}}")
-		//- .fixed-action-btn(style="bottom: 24px; right: 24px;")
-		//- 	a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(ui-sref="add-instructions({cursoID: curso.id})")
-		//- 		i.large.material-icons add
+		oddin-fab(trigger="/add-instructions/{{event.id}}" icon="add")
 		.card.custom-card
 			.card-content
 				.custom-card__header
@@ -52,15 +49,16 @@ main
 						li
 							span Carga Horária:
 							p {{event.workload}}
-		ul.collection.with-header.custom-list
+		p.empty-message.center-align(ng-if="instructions.length == 0") Nenhuma disciplina foi adicionada a este curso
+		ul.collection.with-header.custom-list(ng-if="instructions.length > 0")
 			li.collection-header.custom-list__header
 				h2 Disciplinas do curso
-			li.collection-item.avatar.custom-list__item(data-ng-repeat="disciplina in instructions | orderBy : 'season' : true")
+			li.collection-item.avatar.custom-list__item(ng-repeat="instruction in instructions | orderBy : 'season' : true")
 				i.material-icons.circle book
-				a(ui-sref="instruction-show({disciplinaID: disciplina.id})")
-					span.title {{disciplina.lecture.name}} - Turma: {{disciplina.class_number}}
-					p {{disciplina.lecture.code}}
+				a(ui-sref="instruction-show({disciplinaID: instruction.id})")
+					span.title {{instruction.lecture.name}} - Turma: {{instruction.class_number}}
+					p {{instruction.lecture.code}}
 						br
-						| {{disciplina.season}}
-				a.secondary-content(href="" data-ng-click="openModalDeleteInstruction(disciplina)")
+						| {{instruction.season}}
+				a.secondary-content(href="" ng-click="modalDelete(instruction)")
 					i.material-icons remove_circle
