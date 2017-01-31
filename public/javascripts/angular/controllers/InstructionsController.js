@@ -1,60 +1,58 @@
-oddin.controller('InstructionsController', function ($scope, $cookies, $state, CurrentUser, InstructionAPI, $filter) {
-	function buscaDisciplinas() {
+oddin.controller("InstructionsController", function ($scope, $cookies, $state, CurrentUser, InstructionAPI, $filter) {
+	$scope.user = CurrentUser;
+
+	function setSeasons(instructions) {
+		var seasonAux = {};
+		$scope.seasons = instructions.map(function(instruction) {
+			var _semester = $filter("date")(instruction.start_date, "MM") < 7 ? 1 : 2;
+			var _year = $filter("date")(instruction.start_date, "yyyy");
+			var _season = _year + "/" + _semester;
+			if(seasonAux.hasOwnProperty(_season))
+				return undefined;
+			seasonAux[_season] = true;
+			return {
+				label: _season,
+				instructions: []
+			};
+		}).filter(function(season) {
+			return typeof season !== "undefined";
+		});
+		$scope.seasons.forEach(function(season) {
+			instructions.forEach(function(instruction) {
+				var _instructionSeason = $filter("date")(instruction.start_date, "yyyy");
+				_instructionSeason += "/" + ($filter("date")(instruction.start_date, "MM") < 7 ? 1 : 2);
+				if(season.label == _instructionSeason)
+					season.instructions.push(instruction);
+			});
+		});
+	}
+
+	(function findInstructions() {
+		$scope.load = false;
 		InstructionAPI.index()
 		.then(function (response) {
-			$scope.disciplinas = response.data;
-			setSeasons($scope.disciplinas);
+			setSeasons(response.data);
 		})
 		.catch(function (error) {
-			console.log(error.data)
+			Materialize.toast("Erro ao carregar disciplinas", 3000);
 		})
-	}
-
-	function setSeasons(disciplinas) {
-		var seasonAux = {};
-		var seasons = disciplinas.map(function(elem, index, array) {
-			var semester = $filter('date')(elem.start_date, 'MM') < 7 ? 1 : 2;
-			var year = $filter('date')(elem.start_date, 'yyyy');
-			var season = year + "/" + semester;
-			if(seasonAux.hasOwnProperty(season))
-				return undefined;
-			seasonAux[season] = true;
-			return season;
-		}).filter(function(season) {
-			return typeof season !== 'undefined';
-		});
-		$scope.seasons = seasons.map(function(season, index, array) {
-			var seasonObj = {};
-			seasonObj.label = season;
-			seasonObj.instructions = [];
-			disciplinas.forEach(function(instruction) {
-				var instructionSeason = $filter('date')(instruction.start_date, 'yyyy');
-				instructionSeason += "/" + ($filter('date')(instruction.start_date, 'MM') < 7 ? 1 : 2);
-				if(season == instructionSeason) {
-					seasonObj.instructions.push(instruction);
-				}
-			})
-			return seasonObj;
+		.finally(function () {
+			$scope.load = true;
 		})
-	}
+	})();
 
-	$scope.buscarPerfil = function (disciplina) {
-		if (!$cookies.get('profile')) {
-			InstructionAPI.getProfile(disciplina.id)
+	$scope.enterInstruction = function (instruction) {
+		if (!$cookies.get("profile")) {
+			InstructionAPI.getProfile(instruction.id)
 			.then (function (response) {
-				$cookies.put('profile', response.data.profile);
-				$state.go('aulas', {'disciplinaID': disciplina.id})
+				$cookies.put("profile", response.data.profile);
+				$state.go("presentations", {"instructionID": instruction.id})
 			})
-			.catch (function (error) {
-				console.log(error.data);
+			.catch (function () {
+				Materialize.toast("Erro ao tentar entrar em " + instruction.lecture.name, 3000);
 			});
 		} else {
-			$state.go('aulas', {'disciplinaID': disciplina.id})
+			$state.go("presentations", {"instructionID": instruction.id})
 		}
 	}
-
-	$scope.usuario = CurrentUser;
-
-	$scope.titulo = 'Disciplinas'
-	buscaDisciplinas();
 });

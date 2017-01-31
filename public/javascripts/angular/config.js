@@ -15,18 +15,18 @@ oddin.config(function ($stateProvider) {
 		templateUrl: '/partials/redefine-password',
 		controller: 'LoginController'
 	})
-	.state('disciplinas', {
+	.state('instructions', {
 		url: '/disciplinas',
-		templateUrl: '/partials/instructions-index',
+		templateUrl: '/partials/instructions',
 		controller: 'InstructionsController'
 	})
-	.state('aulas', {
-		url: '/disciplinas/:disciplinaID/aulas',
+	.state('presentations', {
+		url: '/disciplinas/:instructionID/aulas',
 		templateProvider: function ($cookies, $templateFactory) {
 			if($cookies.get('profile') == 0)
-			return $templateFactory.fromUrl("/partials/aulas-a");
+			return $templateFactory.fromUrl("/partials/presentations-a");
 			if($cookies.get('profile') == 1)
-			return $templateFactory.fromUrl("/partials/aulas-p");
+			return $templateFactory.fromUrl("/partials/presentations-p");
 		},
 		controller: 'PresentationsController'
 	})
@@ -127,37 +127,37 @@ oddin.config(function ($stateProvider) {
 	})
 	.state('admin-events', {
 		url: '/admin-cursos',
-		templateUrl: '/partials/admin-events',
+		templateUrl: '/partials/admin/events',
 		controller: 'AdminEventsController'
 	})
 	.state('admin-lectures', {
 		url: '/admin-disciplinas',
-		templateUrl: '/partials/admin-lectures',
+		templateUrl: '/partials/admin/lectures',
 		controller: 'AdminLecturesController'
 	})
 	.state('admin-users', {
 		url: '/admin-usuarios',
-		templateUrl: '/partials/admin-users',
+		templateUrl: '/partials/admin/users',
 		controller: 'AdminUsersController'
 	})
 	.state('admin-event-show', {
 		url: '/admin-cursos/:eventID',
-		templateUrl: '/partials/admin-event-show',
+		templateUrl: '/partials/admin/event-show',
 		controller: 'AdminEventShowController'
 	})
 	.state('admin-instruction-show', {
 		url: '/admin-disciplinas-cadastradas/:instructionID',
-		templateUrl: '/partials/admin-instruction-show',
+		templateUrl: '/partials/admin/instruction-show',
 		controller: 'AdminInstructionShowController'
 	})
 	.state('admin-add-participants', {
 		url: '/add-participants/:instructionID',
-		templateUrl: '/partials/admin-add-participants',
+		templateUrl: '/partials/admin/add-participants',
 		controller: 'AdminInstructionShowController'
 	})
 	.state('admin-add-instructions', {
 		url: '/add-instructions/:eventID',
-		templateUrl: '/partials/admin-add-instructions',
+		templateUrl: '/partials/admin/add-instructions',
 		controller: 'AdminEventShowController'
 	})
 }).run(function ($window, $location, $state, $cookies) {
@@ -165,7 +165,7 @@ oddin.config(function ($stateProvider) {
 		if($cookies.get('admin')) {
 			$state.go('admin-events');
 		} else {
-			$state.go('disciplinas')
+			$state.go('instructions')
 		}
 	}
 	if ($window.location.pathname == '/') {
