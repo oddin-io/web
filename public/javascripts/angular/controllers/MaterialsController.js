@@ -1,4 +1,5 @@
-oddin.controller('MaterialsController', function ($http, $scope, $stateParams, InstructionAPI, MaterialAPI, CurrentUser) {
+oddin.controller('MaterialsController', ["$http", "$scope", "$stateParams", "InstructionAPI", "MaterialAPI", "CurrentUser",
+function ($http, $scope, $stateParams, InstructionAPI, MaterialAPI, CurrentUser) {
 	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
 
@@ -98,4 +99,4 @@ oddin.controller('MaterialsController', function ($http, $scope, $stateParams, I
 		$('#modal-deleta-material').openModal();
 	}
 	buscaInfo();
-});
+}]);

@@ -1,4 +1,5 @@
-oddin.controller("AdminEventsController", function ($scope, EventAPI, CurrentUser, ManageList) {
+oddin.controller("AdminEventsController", ["$scope", "EventAPI", "CurrentUser", "ManageList",
+function ($scope, EventAPI, CurrentUser, ManageList) {
 	$scope.user = CurrentUser;
 
 	(function findEvents() {
@@ -70,4 +71,4 @@ oddin.controller("AdminEventsController", function ($scope, EventAPI, CurrentUse
 		$scope.modalEvent = angular.copy(event);
 		$("#modal-delete").openModal();
 	}
-});
+}]);

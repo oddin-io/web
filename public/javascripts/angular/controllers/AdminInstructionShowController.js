@@ -1,4 +1,5 @@
-oddin.controller("AdminInstructionShowController", function ($scope, $stateParams, CurrentUser, InstructionAPI, PersonAPI, EnrollAPI, ManageList) {
+oddin.controller("AdminInstructionShowController", ["$scope", "$stateParams", "CurrentUser", "InstructionAPI", "PersonAPI", "EnrollAPI", "ManageList",
+function ($scope, $stateParams, CurrentUser, InstructionAPI, PersonAPI, EnrollAPI, ManageList) {
   $scope.user = CurrentUser;
 
 	(function getInfo() {
@@ -93,4 +94,4 @@ oddin.controller("AdminInstructionShowController", function ($scope, $stateParam
 		$scope.modalParticipant = angular.copy(participant);
 		$("#modal-remove").openModal();
 	}
-});
+}]);

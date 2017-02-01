@@ -1,4 +1,4 @@
-oddin.factory("WorkAPI", function ($http) {
+oddin.factory("WorkAPI", ["$http", function ($http) {
 	var _show = function (id) {
 		return $http.get('/api/works/' + id);
 	};
@@ -26,4 +26,4 @@ oddin.factory("WorkAPI", function ($http) {
 		createSubmission: _createSubmission,
 		getSubmissions: _getSubmissions
 	}
-});
+}]);

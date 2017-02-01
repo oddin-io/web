@@ -1,4 +1,4 @@
-oddin.config(function ($stateProvider) {
+oddin.config(["$stateProvider", function ($stateProvider) {
 	$stateProvider
 	.state('login', {
 		url: '/login',
@@ -160,7 +160,7 @@ oddin.config(function ($stateProvider) {
 		templateUrl: '/partials/admin/add-instructions',
 		controller: 'AdminEventShowController'
 	})
-}).run(function ($window, $location, $state, $cookies) {
+}]).run(["$window", "$location", "$state", "$cookies", function ($window, $location, $state, $cookies) {
 	if ($window.location.pathname == '/home') {
 		if($cookies.get('admin')) {
 			$state.go('admin-events');
@@ -174,4 +174,4 @@ oddin.config(function ($stateProvider) {
 		else
 		$window.location.href = '/home';
 	}
-})
+}]);

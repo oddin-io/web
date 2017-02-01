@@ -1,4 +1,5 @@
-oddin.controller("AdminEventShowController", function ($scope, $stateParams, CurrentUser, InstructionAPI, EventAPI, LectureAPI, $filter, ManageList) {
+oddin.controller("AdminEventShowController", ["$scope", "$stateParams", "CurrentUser", "InstructionAPI", "EventAPI", "LectureAPI", "$filter", "ManageList",
+function ($scope, $stateParams, CurrentUser, InstructionAPI, EventAPI, LectureAPI, $filter, ManageList) {
 	$scope.user = CurrentUser;
 
 	function setSeason(instruction) {
@@ -98,4 +99,4 @@ oddin.controller("AdminEventShowController", function ($scope, $stateParams, Cur
 		$scope.modalInstruction = angular.copy(instruction);
 		$("#modal-remove").openModal();
 	}
-});
+}]);

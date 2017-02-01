@@ -1,4 +1,5 @@
-oddin.controller("InstructionsController", function ($scope, $cookies, $state, CurrentUser, InstructionAPI, $filter) {
+oddin.controller("InstructionsController", ["$scope", "$cookies", "$state", "CurrentUser", "InstructionAPI", "$filter",
+function ($scope, $cookies, $state, CurrentUser, InstructionAPI, $filter) {
 	$scope.user = CurrentUser;
 
 	function setSeasons(instructions) {
@@ -55,4 +56,4 @@ oddin.controller("InstructionsController", function ($scope, $cookies, $state, C
 			$state.go("presentations", {"instructionID": instruction.id})
 		}
 	}
-});
+}]);

@@ -1,4 +1,4 @@
-oddin.factory("PresentationAPI", function ($http) {
+oddin.factory("PresentationAPI", ["$http", function ($http) {
 	var _show = function (id) {
 		return $http.get('/api/presentations/' + id);
 	};
@@ -26,4 +26,4 @@ oddin.factory("PresentationAPI", function ($http) {
 		createMaterial: _createMaterial,
 		createQuestion: _createQuestion
 	}
-});
+}]);

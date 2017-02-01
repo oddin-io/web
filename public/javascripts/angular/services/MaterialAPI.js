@@ -1,4 +1,4 @@
-oddin.factory("MaterialAPI", function ($http) {
+oddin.factory("MaterialAPI", ["$http", function ($http) {
 	var _show = function (id) {
 		return $http.get('/api/materials/' + id);
 	}
@@ -14,4 +14,4 @@ oddin.factory("MaterialAPI", function ($http) {
 		update: _update,
 		destroy: _destroy
 	}
-});
+}]);

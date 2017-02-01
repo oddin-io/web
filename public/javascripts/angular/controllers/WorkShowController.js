@@ -1,4 +1,5 @@
-oddin.controller('WorkShowController', function ($scope, $stateParams, $http, CurrentUser, WorkAPI, MaterialAPI, SubmissionAPI, $q) {
+oddin.controller('WorkShowController', ["$scope", "$stateParams", "$http", "CurrentUser", "WorkAPI", "MaterialAPI", "SubmissionAPI", "$q",
+function ($scope, $stateParams, $http, CurrentUser, WorkAPI, MaterialAPI, SubmissionAPI, $q) {
 	$scope.data_loaded = true;
 	$scope.usuario = CurrentUser;
 
@@ -239,4 +240,4 @@ oddin.controller('WorkShowController', function ($scope, $stateParams, $http, Cu
 		$('#editar-trabalho').openModal();
 	}
 	buscaInfo();
-});
+}]);

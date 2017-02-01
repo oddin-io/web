@@ -29,6 +29,7 @@
     "express": "~4.13.4",
     "method-override": "^2.3.6",
     "morgan": "~1.7.0",
+    "node-minify": "^2.0.2",
     "node-sass-middleware": "0.8.0",
     "pug": "^2.0.0-beta5",
     "request": "^2.74.0",

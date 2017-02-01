@@ -6,6 +6,7 @@
 const app = require('../app')
 const debug = require('debug')('oddin:server')
 const http = require('http')
+const compressor = require('node-minify')
 
 /**
  * Get port from environment and store in Express.
@@ -26,6 +27,17 @@ server.listen(port, function listening() {
 })
 server.on('error', onError)
 server.on('listening', onListening)
+
+compressor.minify({
+  compressor: 'uglifyjs',
+  input: 'public/javascripts/**/*.js',
+  output: 'public/build/oddin-build.min.js',
+  callback: function(err, min) {
+    console.log('wildcards Uglifyjs');
+    console.log(err);
+    //console.log(min);
+  }
+});
 
 /**
  * Normalize a port into a number, string, or false.

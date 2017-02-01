@@ -1,4 +1,5 @@
-oddin.controller("AdminUsersController", function ($scope, CurrentUser, PersonAPI, ManageList) {
+oddin.controller("AdminUsersController", ["$scope", "CurrentUser", "PersonAPI", "ManageList",
+function ($scope, CurrentUser, PersonAPI, ManageList) {
 	$scope.user = CurrentUser;
 
 	(function findUsers() {
@@ -70,4 +71,4 @@ oddin.controller("AdminUsersController", function ($scope, CurrentUser, PersonAP
 		$scope.modalUser = angular.copy(user);
 		$('#modal-delete').openModal();
 	}
-});
+}]);

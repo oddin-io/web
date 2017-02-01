@@ -1,4 +1,4 @@
-oddin.factory("AlternativeAPI", function ($http) {
+oddin.factory("AlternativeAPI", ["$http", function ($http) {
 	var _choose = function (id) {
 		return $http.post('/api/alternatives/' + id + '/choose');
 	};
@@ -6,4 +6,4 @@ oddin.factory("AlternativeAPI", function ($http) {
 	return {
 		choose: _choose
 	}
-});
+}]);

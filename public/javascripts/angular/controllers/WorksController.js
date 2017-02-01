@@ -1,4 +1,5 @@
-oddin.controller('WorksController', function ($http, $scope, $stateParams, $filter, InstructionAPI, WorkAPI, MaterialAPI, CurrentUser, $filter, $q) {
+oddin.controller('WorksController', ["$http", "$scope", "$stateParams", "$filter", "InstructionAPI", "WorkAPI", "MaterialAPI", "CurrentUser", "$filter", "$q",
+function ($http, $scope, $stateParams, $filter, InstructionAPI, WorkAPI, MaterialAPI, CurrentUser, $filter, $q) {
 	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
 
@@ -225,4 +226,4 @@ oddin.controller('WorksController', function ($http, $scope, $stateParams, $filt
 		$('#modal-deleta-tarefa').openModal();
 	}
 	buscaInfo();
-});
+}]);

@@ -1,4 +1,4 @@
-oddin.factory("DateAPI", function ($http) {
+oddin.factory("DateAPI", ["$http", function ($http) {
 	var _update = function (id, date) {
 		return $http.put('/api/dates/' + id, date);
 	};
@@ -10,4 +10,4 @@ oddin.factory("DateAPI", function ($http) {
 		update: _update,
 		destroy: _destroy
 	}
-})
+}])

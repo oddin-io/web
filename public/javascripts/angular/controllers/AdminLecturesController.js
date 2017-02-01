@@ -1,4 +1,5 @@
-oddin.controller("AdminLecturesController", function ($scope, CurrentUser, LectureAPI, ManageList) {
+oddin.controller("AdminLecturesController", ["$scope", "CurrentUser", "LectureAPI", "ManageList",
+function ($scope, CurrentUser, LectureAPI, ManageList) {
 	$scope.user = CurrentUser;
 
 	(function findLectures() {
@@ -70,4 +71,4 @@ oddin.controller("AdminLecturesController", function ($scope, CurrentUser, Lectu
 		$scope.modalLecture = angular.copy(lecture);
 		$("#modal-delete").openModal();
 	}
-});
+}]);

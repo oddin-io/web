@@ -1,4 +1,4 @@
-oddin.factory("AnswerAPI", function ($http) {
+oddin.factory("AnswerAPI", ["$http", function ($http) {
 	var _upvote = function (id) {
 		return $http.post('/api/answers/' + id + '/upvote');
 	};
@@ -22,4 +22,4 @@ oddin.factory("AnswerAPI", function ($http) {
 		accept : _accept,
 		reject : _reject
 	}
-});
+}]);

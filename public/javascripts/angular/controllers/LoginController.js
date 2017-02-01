@@ -1,4 +1,5 @@
-oddin.controller("LoginController", function ($scope, $window, LoginAPI, $cookies, $location, $state) {
+oddin.controller("LoginController", ["$scope", "$window", "LoginAPI", "$cookies", "$location", "$state",
+function ($scope, $window, LoginAPI, $cookies, $location, $state) {
 	$scope.load = true;
 
 	$scope.login = function (user) {
@@ -78,4 +79,4 @@ oddin.controller("LoginController", function ($scope, $window, LoginAPI, $cookie
 			delete $scope.user;
 		})
 	};
-});
+}]);

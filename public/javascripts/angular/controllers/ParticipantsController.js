@@ -1,4 +1,5 @@
-oddin.controller('ParticipantsController', function ($scope, $stateParams, InstructionAPI, CurrentUser) {
+oddin.controller('ParticipantsController', ["$scope", "$stateParams", "InstructionAPI", "CurrentUser",
+function ($scope, $stateParams, InstructionAPI, CurrentUser) {
 
 	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
@@ -23,4 +24,4 @@ oddin.controller('ParticipantsController', function ($scope, $stateParams, Instr
 		})
 	}
 	buscaInfo();
-});
+}]);

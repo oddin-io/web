@@ -1,5 +1,5 @@
-oddin.controller('SurveysController', function ($scope, $cookies, $stateParams, InstructionAPI, SurveyAPI, AlternativeAPI, CurrentUser) {
-
+oddin.controller('SurveysController', ["$scope", "$cookies", "$stateParams", "InstructionAPI", "SurveyAPI", "AlternativeAPI", "CurrentUser",
+function ($scope, $cookies, $stateParams, InstructionAPI, SurveyAPI, AlternativeAPI, CurrentUser) {
 	(function () {
 		InstructionAPI.show($stateParams.disciplinaID)
 		.then(function (response) {
@@ -168,4 +168,4 @@ oddin.controller('SurveysController', function ($scope, $cookies, $stateParams, 
 		$scope.modalContent = angular.copy(survey);
 		$('#edit-enquete').openModal();
 	}
-});
+}]);

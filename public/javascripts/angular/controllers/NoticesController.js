@@ -1,4 +1,5 @@
-oddin.controller('NoticesController', function ($scope, $stateParams, InstructionAPI, CurrentUser) {
+oddin.controller('NoticesController', ["$scope", "$stateParams", "InstructionAPI", "CurrentUser",
+function ($scope, $stateParams, InstructionAPI, CurrentUser) {
 
   $scope.usuario = CurrentUser;
   $scope.data_loaded = true;
@@ -39,4 +40,4 @@ oddin.controller('NoticesController', function ($scope, $stateParams, Instructio
 		})
   }
   buscaInfo();
-});
+}]);

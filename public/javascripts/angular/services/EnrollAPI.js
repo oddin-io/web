@@ -1,4 +1,4 @@
-oddin.factory("EnrollAPI", function ($http) {
+oddin.factory("EnrollAPI", ["$http", function ($http) {
 	var _create = function (enroll) {
 		return $http.post('/api/enrolls/', enroll);
 	};
@@ -10,4 +10,4 @@ oddin.factory("EnrollAPI", function ($http) {
 		create: _create,
 		destroy: _destroy
 	}
-});
+}]);

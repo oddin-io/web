@@ -1,4 +1,4 @@
-oddin.factory("LoginAPI", function ($http) {
+oddin.factory("LoginAPI", ["$http", function ($http) {
 	var _login = function (user) {
 		return $http.post('/login', user);
 	};
@@ -21,4 +21,4 @@ oddin.factory("LoginAPI", function ($http) {
 		recoverPassword: _recoverPassword,
 		redefinePassword: _redefinePassword
 	}
-})
+}])

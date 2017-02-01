@@ -1,4 +1,4 @@
-oddin.factory("QuestionAPI", function ($http) {
+oddin.factory("QuestionAPI", ["$http", function ($http) {
 	var _getAnswers = function (id) {
 		return $http.get('/api/questions/' + id + '/answers');
 	};
@@ -18,4 +18,4 @@ oddin.factory("QuestionAPI", function ($http) {
 		upvote : _upvote,
 		destroyVote : _destroyVote
 	}
-});
+}]);

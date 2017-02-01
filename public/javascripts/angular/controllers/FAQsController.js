@@ -1,4 +1,5 @@
-oddin.controller('FAQsController', function ($scope, $stateParams, InstructionAPI, FaqAPI, CurrentUser) {
+oddin.controller('FAQsController', ["$scope", "$stateParams", "InstructionAPI", "FaqAPI", "CurrentUser",
+function ($scope, $stateParams, InstructionAPI, FaqAPI, CurrentUser) {
 
 	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
@@ -101,4 +102,4 @@ oddin.controller('FAQsController', function ($scope, $stateParams, InstructionAP
 		$scope.modalContent = angular.copy(faq);
 		$('#delete-faq').openModal();
 	}
-});
+}]);

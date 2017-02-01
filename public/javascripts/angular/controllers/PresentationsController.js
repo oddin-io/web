@@ -1,4 +1,5 @@
-oddin.controller('PresentationsController', function ($scope, $stateParams, InstructionAPI, PresentationAPI, CurrentUser) {
+oddin.controller('PresentationsController', ["$scope", "$stateParams", "InstructionAPI", "PresentationAPI", "CurrentUser",
+function ($scope, $stateParams, InstructionAPI, PresentationAPI, CurrentUser) {
 	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
 
@@ -57,4 +58,4 @@ oddin.controller('PresentationsController', function ($scope, $stateParams, Inst
 			$('#modal-fecha-aula').openModal();
 	}
 	buscaInfo();
-});
+}]);

@@ -1,4 +1,4 @@
-oddin.factory("InstructionAPI", function ($http) {
+oddin.factory("InstructionAPI", ["$http", function ($http) {
 	var _index = function () {
 		return $http.get('/api/instructions/');
 	};
@@ -82,4 +82,4 @@ oddin.factory("InstructionAPI", function ($http) {
 		createFAQ: _createFAQ,
 		createSurvey: _createSurvey
 	}
-});
+}]);

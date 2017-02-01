@@ -1,4 +1,5 @@
-oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, InstructionAPI, CurrentUser, $filter) {
+oddin.controller('DatesController', ["$scope", "$stateParams", "DateAPI", "InstructionAPI", "CurrentUser", "$filter",
+function ($scope, $stateParams, DateAPI, InstructionAPI, CurrentUser, $filter) {
 
 	$scope.usuario = CurrentUser;
 	$scope.data_loaded = true;
@@ -101,4 +102,4 @@ oddin.controller('DatesController', function ($scope, $stateParams, DateAPI, Ins
 	}
 
 	buscaInfo();
-});
+}]);

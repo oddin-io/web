@@ -1,4 +1,4 @@
-oddin.factory("SubmissionAPI", function ($http) {
+oddin.factory("SubmissionAPI", ["$http", function ($http) {
 	var _show = function (id) {
 		return $http.get('/api/submissions/' + id);
 	};
@@ -18,4 +18,4 @@ oddin.factory("SubmissionAPI", function ($http) {
 		destroy: _destroy,
 		createMaterial: _createMaterial
 	}
-});
+}]);

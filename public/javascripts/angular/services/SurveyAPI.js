@@ -1,4 +1,4 @@
-oddin.factory("SurveyAPI", function ($http) {
+oddin.factory("SurveyAPI", ["$http", function ($http) {
 	var _update = function (id, survey) {
 		return $http.put('/api/surveys/' + id, survey);
 	};
@@ -14,4 +14,4 @@ oddin.factory("SurveyAPI", function ($http) {
 		destroy: _destroy,
 		close: _close
 	}
-});
+}]);

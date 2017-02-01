@@ -1,4 +1,4 @@
-oddin.factory("PersonAPI", function ($http) {
+oddin.factory("PersonAPI", ["$http", function ($http) {
 	var _index = function () {
 		return $http.get('/api/person/');
 	};
@@ -22,4 +22,4 @@ oddin.factory("PersonAPI", function ($http) {
 		update: _update,
 		destroy: _destroy
 	}
-});
+}]);

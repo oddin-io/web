@@ -1,4 +1,4 @@
-oddin.factory("EventAPI", function ($http) {
+oddin.factory("EventAPI", ["$http", function ($http) {
 	var _index = function () {
 		return $http.get('/api/events/');
 	};
@@ -26,4 +26,4 @@ oddin.factory("EventAPI", function ($http) {
 		destroy: _destroy,
 		getInstructions: _getInstructions
 	}
-});
+}]);

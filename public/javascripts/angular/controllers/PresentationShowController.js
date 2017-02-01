@@ -1,8 +1,9 @@
-oddin.controller('PresentationShowController', function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, CurrentUser) {
+oddin.controller('PresentationShowController', ["$scope", "$stateParams", "PresentationAPI", "QuestionAPI", "AnswerAPI", "CurrentUser",
+function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, CurrentUser) {
 	$scope.usuario = CurrentUser;
-	$scope.filter = false
-	$scope.last_doubt = {}
-	$scope.data_loaded = true
+	$scope.filter = false;
+	$scope.last_doubt = {};
+	$scope.data_loaded = true;
 	const duvidas = {};
 	const socket = io.connect('http://socket-oddin.rhcloud.com:8000/presentation');
 
@@ -44,33 +45,33 @@ oddin.controller('PresentationShowController', function ($scope, $stateParams, P
 	}
 
 	function addDuvida(duvida) {
-		duvidas[duvida.id] = duvida
-		$scope.duvidas.unshift(duvida)
-		$scope.duvida = new Duvida()
+		duvidas[duvida.id] = duvida;
+		$scope.duvidas.unshift(duvida);
+		$scope.duvida = new Duvida();
 	}
 
 	function removeDuvida(duvida) {
-		$scope.duvidas[duvida.id] = duvida
+		$scope.duvidas[duvida.id] = duvida;
 	}
 
 	$scope.enableFilter = function () {
-		$scope.filter = true
-		$('#post-order').removeClass('filter-item-active')
-		$('#ranking-order').addClass('filter-item-active')
+		$scope.filter = true;
+		$('#post-order').removeClass('filter-item-active');
+		$('#ranking-order').addClass('filter-item-active');
 	}
 
 	$scope.disableFilter = function () {
-		$scope.filter = false
-		$('#ranking-order').removeClass('filter-item-active')
-		$('#post-order').addClass('filter-item-active')
+		$scope.filter = false;
+		$('#ranking-order').removeClass('filter-item-active');
+		$('#post-order').addClass('filter-item-active');
 	}
 
 	$scope.setLastDoubt = function (duvida) {
-		$scope.last_doubt = duvida
+		$scope.last_doubt = duvida;
 	}
 
 	$scope.fecharRespostas = function (duvida) {
-		duvida.answers = undefined
+		duvida.answers = undefined;
 	}
 
 	$scope.buscaRespostas = function (duvida) {
@@ -84,7 +85,7 @@ oddin.controller('PresentationShowController', function ($scope, $stateParams, P
 	}
 
 	$scope.postaResposta = function (answer) {
-		$scope.data_loaded = false
+		$scope.data_loaded = false;
 		var _answer = angular.copy(answer);
 		delete $scope.resposta;
 		QuestionAPI.createAnswer($scope.last_doubt.id, _answer)
@@ -140,10 +141,10 @@ oddin.controller('PresentationShowController', function ($scope, $stateParams, P
 		AnswerAPI.downvote(resposta.id)
 		.then(function () {
 			if (resposta.my_vote == 0)
-				{ resposta.upvotes-- }
+				{ resposta.upvotes--; }
 			else if (resposta.my_vote == 1)
-				{ resposta.upvotes -= 2 }
-			resposta.my_vote = -1
+				{ resposta.upvotes -= 2; }
+			resposta.my_vote = -1;
 		})
 		.catch(function (error) {
 			console.log(error.data);
@@ -196,10 +197,10 @@ oddin.controller('PresentationShowController', function ($scope, $stateParams, P
 
 	socket.on('POST /questions', function (data) {
 		$scope.$apply(function () {
-			data.forEach(el => {
+			data.forEach(function(el) {
 				addDuvida(el);
 			});
 		});
 	});
 	buscaInfo();
-});
+}]);

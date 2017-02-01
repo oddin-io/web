@@ -1,4 +1,4 @@
-oddin.factory("LectureAPI", function ($http) {
+oddin.factory("LectureAPI", ["$http", function ($http) {
 	var _index = function () {
 		return $http.get('/api/lectures/');
 	};
@@ -22,4 +22,4 @@ oddin.factory("LectureAPI", function ($http) {
 		update: _update,
 		destroy: _destroy
 	}
-});
+}]);
