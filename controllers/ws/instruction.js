@@ -37,7 +37,7 @@ function create(req, res) {
 		json: {
 			'event_id': req.body.event,
 			'lecture_id': req.body.lecture,
-			'class_number': req.body.class_number,
+			'class_code': req.body.class_code,
 			'start_date': req.body.start_date,
 			'end_date': req.body.end_date
 		}

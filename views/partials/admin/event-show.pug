@@ -56,8 +56,8 @@ main
 			li.collection-item.avatar.custom-list__item.one-option(ng-repeat="instruction in instructions | orderBy : 'season' : true")
 				i.material-icons.circle book
 				a(ui-sref="admin-instruction-show({instructionID: instruction.id})")
-					span.title {{instruction.lecture.name}} - Turma: {{instruction.class_number}}
-					p {{instruction.lecture.code}}
+					span.title {{instruction.lecture.name}}
+					p {{instruction.class_code}}
 						br
 						| {{instruction.season}}
 				a.secondary-content(href="" ng-click="modalRemove(instruction)")

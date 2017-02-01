@@ -10,8 +10,8 @@ main.add-main
 			h4.custom-modal__header Adicionar "{{modalInstruction.lecture.name}}"
 			.row
 				.input-field.col.s12
-					input#modal-instruction-class-number(type="number" ng-model="modalInstruction.class_number")
-					label(for="modal-instruction-class-number") Número da Turma
+					input#modal-instruction-class-code(type="text" ng-model="modalInstruction.class_code")
+					label(for="modal-instruction-class-code") Código da Turma
 				.input-field.col.s12
 					input#modal-instruction-start-date(type="text" ng-model="modalInstruction.start_date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}")
 					label(for="modal-instruction-start-date") Data de Início
@@ -52,7 +52,7 @@ main.add-main
 					li.collection-item.avatar.custom-list__item.one-option(ng-repeat="instruction in instructions | orderBy : 'season' : true")
 						i.material-icons.circle book
 						span.title {{instruction.lecture.name}}
-						p Turma: {{instruction.class_number}}
+						p Turma: {{instruction.class_code}}
 							br
 							| {{instruction.season}}
 						a.secondary-content(href="" ng-click="modalRemove(instruction)")
