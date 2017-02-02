@@ -51,7 +51,7 @@ function ($scope, $stateParams, InstructionAPI, PresentationAPI, CurrentUser, Ma
 		PresentationAPI.close(modalPresentation.id)
 		.then(function (response) {
 			ManageList.updateItem($scope.presentations, response.data);
-			Materialize.toast("A aula " + modalPresentation.subject + " foi finalizada", 3000);
+			Materialize.toast("A aula '" + modalPresentation.subject + "' foi finalizada", 3000);
 		})
 		.catch(function (error) {
 			Materialize.toast("Erro ao finalizar aula", 3000);

@@ -1,4 +1,6 @@
 doctype html
+div(ng-include="'partials/presentations/show-menu'")
+
 header
 	oddin-header(title="{{aula.subject}}", btn-type="back", to-state-url="/disciplinas/{{aula.instruction.id}}/aulas")
 	ul#slide-out.side-nav.fixed.barra-lateral
@@ -59,7 +61,7 @@ main(data-ng-init="buscaDuvidas()")
 						a#post-order.filter-item-active(href='' data-ng-click="disableFilter()") Por Postagem
 					li
 						a#ranking-order(href='' data-ng-click="enableFilter()") Por Ranking
-		.card.pergunta(data-ng-repeat="duvida in duvidas | orderBy: ((filter || '') && '(upvotes - downvotes)') : (filter ? true : false)")
+		.card.pergunta(data-ng-repeat="duvida in duvidas | orderBy: ((filter || '') && '(upvotes - downvotes)') : true")
 			.card-content
 				.pergunta__header
 					span.autor {{duvida.anonymous ? 'Anônimo' : duvida.person.name}}

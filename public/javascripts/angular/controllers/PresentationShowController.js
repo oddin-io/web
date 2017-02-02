@@ -1,69 +1,63 @@
 oddin.controller('PresentationShowController', ["$scope", "$stateParams", "PresentationAPI", "QuestionAPI", "AnswerAPI", "CurrentUser",
 function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, CurrentUser) {
-	$scope.usuario = CurrentUser;
+	$scope.user = CurrentUser;
 	$scope.filter = false;
 	$scope.last_doubt = {};
-	$scope.data_loaded = true;
 	const duvidas = {};
 	const socket = io.connect('http://socket-oddin.rhcloud.com:8000/presentation');
 
-	function buscaInfo() {
-		PresentationAPI.show($stateParams.aulaID)
+	(function getInfo() {
+		$scope.load = false;
+		PresentationAPI.show($stateParams.presentationID)
 		.then(function (response) {
-			$scope.aula = response.data;
+			$scope.presentation = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da aula", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
+
+	(function findQuestions() {
+		$scope.load = false;
+		PresentationAPI.getQuestions($stateParams.presentationID)
+		.then(function (response) {
+			$scope.questions = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar perguntas", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
+
+	$scope.createQuestion = function (newQuestion) {
+		$scope.load = false;
+		if(newQuestion.anonymous == undefined) newQuestion.anonymous = false;
+		PresentationAPI.createQuestion($stateParams.presentationID, newQuestion)
+		.then(function (response) {
+			socket.emit("POST /questions", [response.data]);
+			Materialize.toast("Dúvida postada", 3000);
 		})
 		.catch(function (error) {
-			console.log(error.data);
+			Materialize.toast("Não foi possível postar a dúvida", 3000);
 		})
-	}
-
-	$scope.buscaDuvidas = function () {
-		PresentationAPI.getQuestions($stateParams.aulaID)
-		.then(function (response) {
-			$scope.duvidas = response.data;
-		})
-		.catch(function (error) {
-			console.log(error.data);
-		})
-	}
-
-	$scope.postaDuvida = function (duvida) {
-		$scope.data_loaded = false;
-		var _duvida = angular.copy(duvida);
-		delete $scope.duvida;
-
-		if (_duvida.anonymous === undefined) _duvida.anonymous = false;
-		PresentationAPI.createQuestion($stateParams.aulaID, _duvida)
-		.then(function (response) {
-			socket.emit('POST /questions', [response.data]);
-			$scope.data_loaded = true;
-			Materialize.toast('Dúvida postada', 3000);
-		})
-		.catch(function (error) {
-			console.log(error.data);
+		.finally(function () {
+			delete $scope.newQuestion;
+			$scope.load = true;
 		})
 	}
 
 	function addDuvida(duvida) {
 		duvidas[duvida.id] = duvida;
-		$scope.duvidas.unshift(duvida);
-		$scope.duvida = new Duvida();
+		$scope.questions.push(duvida);
 	}
 
 	function removeDuvida(duvida) {
 		$scope.duvidas[duvida.id] = duvida;
-	}
-
-	$scope.enableFilter = function () {
-		$scope.filter = true;
-		$('#post-order').removeClass('filter-item-active');
-		$('#ranking-order').addClass('filter-item-active');
-	}
-
-	$scope.disableFilter = function () {
-		$scope.filter = false;
-		$('#ranking-order').removeClass('filter-item-active');
-		$('#post-order').addClass('filter-item-active');
 	}
 
 	$scope.setLastDoubt = function (duvida) {
@@ -195,12 +189,23 @@ function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, Current
 		})
 	}
 
+	$scope.enableFilter = function () {
+		$scope.filter = true;
+		$('#post-order').removeClass('filter-item-active');
+		$('#ranking-order').addClass('filter-item-active');
+	}
+
+	$scope.disableFilter = function () {
+		$scope.filter = false;
+		$('#ranking-order').removeClass('filter-item-active');
+		$('#post-order').addClass('filter-item-active');
+	}
+
 	socket.on('POST /questions', function (data) {
 		$scope.$apply(function () {
-			data.forEach(function(el) {
+			data.forEach(function (el) {
 				addDuvida(el);
 			});
 		});
 	});
-	buscaInfo();
 }]);

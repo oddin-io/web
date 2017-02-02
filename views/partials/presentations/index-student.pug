@@ -13,6 +13,7 @@ main
 						a(href="#closed-presentations") Encerradas
 			#opened-presentations.col.s12
 				ul.collection.lista-aulas
+					p.empty-message.center-align(ng-if="presentations.length == 0") Nenhuma aula foi iniciada
 					li.collection-item.avatar.lista-aulas__item(ng-repeat="presentation in presentations | filter: {status: 0}: true | orderBy : 'created_at' : true")
 						i.material-icons.circle.circle-opened lock_open
 						a(ui-sref="presentation-show({presentationID: presentation.id})")
@@ -23,6 +24,7 @@ main
 								| {{presentation.created_at | date:"HH:mm"}}
 			#closed-presentations.col.s12
 				ul.collection.lista-aulas
+					p.empty-message.center-align(ng-if="presentations.length == 0") Nenhuma aula foi iniciada
 					li.collection-item.avatar.lista-aulas__item(ng-repeat="presentation in presentations | filter: {status: 1}: true | orderBy : 'created_at' : true")
 						i.material-icons.circle.red.lighten-2 lock_outline
 						a(ui-sref="presentation-show({presentationID: presentation.id})")
