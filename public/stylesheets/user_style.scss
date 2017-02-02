@@ -248,6 +248,9 @@
 
 .lista-aulas {
   &__item {
+		.circle-opened {
+			background-color: $green-light-color !important;
+		}
     a {
       color: $type-primary-color;
       span {

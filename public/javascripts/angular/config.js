@@ -24,11 +24,21 @@ oddin.config(["$stateProvider", function ($stateProvider) {
 		url: '/disciplinas/:instructionID/aulas',
 		templateProvider: function ($cookies, $templateFactory) {
 			if($cookies.get('profile') == 0)
-			return $templateFactory.fromUrl("/partials/presentations-a");
+			return $templateFactory.fromUrl("/partials/presentations/index-student");
 			if($cookies.get('profile') == 1)
-			return $templateFactory.fromUrl("/partials/presentations-p");
+			return $templateFactory.fromUrl("/partials/presentations/index-instructor");
 		},
 		controller: 'PresentationsController'
+	})
+	.state('presentation-show', {
+		url: '/aulas/:presentationID',
+		templateProvider: function ($cookies, $templateFactory) {
+			if($cookies.get('profile') == 0)
+			return $templateFactory.fromUrl("/partials/duvidas-a");
+			if($cookies.get('profile') == 1)
+			return $templateFactory.fromUrl("/partials/duvidas-p");
+		},
+		controller: 'PresentationShowController'
 	})
 	.state('avisos', {
 		url: '/disciplinas/:disciplinaID/avisos',
@@ -94,16 +104,6 @@ oddin.config(["$stateProvider", function ($stateProvider) {
 			return $templateFactory.fromUrl("/partials/enquetes-p");
 		},
 		controller: 'SurveysController'
-	})
-	.state('duvidas', {
-		url: '/aulas/:aulaID',
-		templateProvider: function ($cookies, $templateFactory) {
-			if($cookies.get('profile') == 0)
-			return $templateFactory.fromUrl("/partials/duvidas-a");
-			if($cookies.get('profile') == 1)
-			return $templateFactory.fromUrl("/partials/duvidas-p");
-		},
-		controller: 'PresentationShowController'
 	})
 	.state('material-aula', {
 		url: '/aulas/:aulaID/material',

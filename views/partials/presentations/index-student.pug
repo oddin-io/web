@@ -1,0 +1,33 @@
+doctype html
+div(ng-include="'partials/presentations/index-menu'")
+
+main
+	oddin-preloader(load-var="load" side-bar="true")
+	.container
+		.row
+			.col.s12
+				ul.tabs.lista-tab(tabs, reload="allTabContentLoaded")
+					li.tab.col.s6.lista-tab__item
+						a(href="#opened-presentations") Abertas
+					li.tab.col.s6.lista-tab__item
+						a(href="#closed-presentations") Encerradas
+			#opened-presentations.col.s12
+				ul.collection.lista-aulas
+					li.collection-item.avatar.lista-aulas__item(ng-repeat="presentation in presentations | filter: {status: 0}: true | orderBy : 'created_at' : true")
+						i.material-icons.circle.circle-opened lock_open
+						a(ui-sref="presentation-show({presentationID: presentation.id})")
+							span.title {{presentation.subject}}
+							p
+								| {{presentation.created_at | date:"dd/MM/yyyy"}}
+								br
+								| {{presentation.created_at | date:"HH:mm"}}
+			#closed-presentations.col.s12
+				ul.collection.lista-aulas
+					li.collection-item.avatar.lista-aulas__item(ng-repeat="presentation in presentations | filter: {status: 1}: true | orderBy : 'created_at' : true")
+						i.material-icons.circle.red.lighten-2 lock_outline
+						a(ui-sref="presentation-show({presentationID: presentation.id})")
+							span.title {{presentation.subject}}
+							p
+								| {{presentation.created_at | date:"dd/MM/yyyy"}}
+								br
+								| {{presentation.created_at | date:"HH:mm"}}
