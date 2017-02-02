@@ -7,9 +7,7 @@ html(ng-app="oddin")
 
 		title Oddin
 
-		link(rel="stylesheet" href="/stylesheets/material-icons.css")/
-		link(rel="stylesheet" href="/stylesheets/materialize_custom.css")/
-		link(rel="stylesheet" href="/stylesheets/login_style.css")/
+		link(rel="stylesheet" href="/build/oddin-index-build.css")/
 
 body
 	header.login-header
@@ -30,9 +28,4 @@ body
 	script(src="/vendor/angular-ui-mask/dist/mask.min.js")
 	script(src="/vendor/angular-materialize/src/angular-materialize.js")
 	script(src="/vendor/angular-cookies/angular-cookies.min.js")
-
-	script(src="/javascripts/angular/app.js")
-	script(src="/javascripts/angular/config.js")
-	script(src="/javascripts/angular/directives/oddinPreloader.js")
-	script(src="/javascripts/angular/services/LoginAPI.js")
-	script(src="/javascripts/angular/controllers/LoginController.js")
+	script(src="/build/oddin-index-build.min.js")
