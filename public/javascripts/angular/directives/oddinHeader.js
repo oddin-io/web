@@ -6,6 +6,7 @@ oddin.directive("oddinHeader", function () {
 		scope: {
 			title: "@",
 			btnType: "@",
+			sideBar: "@",
 			toStateUrl: "@",
 			logo: "@"
 		}

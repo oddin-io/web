@@ -1,6 +1,6 @@
 doctype html
 header.add-header
-	oddin-header(title="Adicionar Participantes" btn-type="close" to-state-url="/admin-disciplinas-cadastradas/{{instruction.id}}" logo="false")
+	oddin-header(title="Adicionar Participantes" btn-type="close" to-state-url="/admin-disciplinas-cadastradas/{{instruction.id}}" logo="false" side-bar="none")
 
 main.add-main(ng-init="findAvailableParticipants()")
 	oddin-preloader(load-var="load")
