@@ -42,29 +42,29 @@ main
 				.row
 					.col.s6.m4
 						.upvote(ng-class="{'upvote-disabled': question.person.id == user.id, 'upvote-voted': question.my_vote == 1}")
-							a(href="" ng-click="question.my_vote == 0 ? upvoteDuvida(question) : cancelVoteDuvida(question)")
+							a(href="" ng-click="question.my_vote == 0 ? upvoteQuestion(question) : unvoteQuestion(question)")
 								i.material-icons keyboard_arrow_up
-							span(ng-class="{'custom-badge': question.my_vote == 0, 'custom-badge-voted': question.my_vote != 0, 'custom-badge-disabled': usuario.id == question.person.id}") {{question.upvotes - question.downvotes}}
+							span(ng-class="{'custom-badge': question.my_vote == 0, 'custom-badge-voted': question.my_vote != 0, 'custom-badge-disabled': user.id == question.person.id}") {{question.upvotes - question.downvotes}}
 					.col.s6.m4
 							div(ng-class="{'check-entendi': question.answered, 'check-nao-entendi': !question.answered}")
 								i.material-icons check
 					.col.s6.m4
 							.ver-resposta(ng-if="question.has_answer")
-								a.waves-effect.btn-flat(id="button_{{question.id}}" ng-click="question.answers ? fecharRespostas(question) : buscaRespostas(question)") Ver Respostas
+								a.waves-effect.btn-flat(id="button_{{question.id}}" ng-click="question.answers ? closeAnswers(question) : findAnswers(question)") Ver Respostas
 			.resposta(ng-attr-id="{{answer.id}}", ng-repeat="answer in question.answers")
 				.resposta__header
 						span.autor {{answer.person.name}}
-						span.datahora {{answer.created_at | date:&quot;dd/MM/yyyy &agrave;&apos;s&apos; HH:mm&quot;}}
+						span.datahora {{answer.created_at | date:"dd/MM/yyyy à's' HH:mm"}}
 				.resposta__content
 						p  {{answer.text}}
 				.resposta__action
 						div(ng-class="{'upvote-voted': answer.my_vote == 1, 'upvote': answer.my_vote != 1}")
-								a(href="" ng-click="answer.my_vote != 1 ? upvoteResposta(answer) : cancelVoteResposta(answer)")
+								a(href="" ng-click="answer.my_vote != 1 ? upvoteAnswer(answer) : unvoteAnswer(answer)")
 										i.material-icons keyboard_arrow_up
 						div(ng-class="{'upvote-voted': answer.my_vote == -1, 'upvote': answer.my_vote != -1}")
-								a(href="" ng-click="answer.my_vote != -1 ? downvoteResposta(answer) : cancelVoteResposta(answer)")
+								a(href="" ng-click="answer.my_vote != -1 ? downvoteAnswer(answer) : unvoteAnswer(answer)")
 										i.material-icons.downvote-margin keyboard_arrow_down
 								span(ng-class="{'custom-badge': answer.my_vote == 0, 'custom-badge-voted': answer.my_vote != 0}") {{answer.upvotes - answer.downvotes}}
-						div(ng-class="{'check-disabled': question.person.id != usuario.id || question.answered && !answer.accepted, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}")
-								a.material-icons(href="" ng-if="!answer.accepted" ng-click="aceitaResposta(answer)" tooltipped  data-position="right" data-tooltip="Selecionar resposta") check
-								a.material-icons(href="" ng-if="answer.accepted" ng-click="recusaResposta(answer)" tooltipped  data-position="right" data-tooltip="Recusar resposta") check
+						div(ng-class="{'check-disabled': question.person.id != user.id || question.answered && !answer.accepted, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}")
+								a.material-icons(href="" ng-if="!answer.accepted" ng-click="acceptAnswer(answer)" tooltipped  data-position="right" data-tooltip="Selecionar resposta") check
+								a.material-icons(href="" ng-if="answer.accepted" ng-click="rejectAnswer(answer)" tooltipped  data-position="right" data-tooltip="Recusar resposta") check

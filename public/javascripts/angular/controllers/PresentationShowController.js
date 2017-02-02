@@ -2,8 +2,6 @@ oddin.controller('PresentationShowController', ["$scope", "$stateParams", "Prese
 function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, CurrentUser) {
 	$scope.user = CurrentUser;
 	$scope.filter = false;
-	$scope.last_doubt = {};
-	const duvidas = {};
 	const socket = io.connect('http://socket-oddin.rhcloud.com:8000/presentation');
 
 	(function getInfo() {
@@ -51,142 +49,168 @@ function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, Current
 		})
 	}
 
-	function addDuvida(duvida) {
-		duvidas[duvida.id] = duvida;
-		$scope.questions.push(duvida);
+	$scope.upvoteQuestion = function (question) {
+		$scope.load = false;
+		QuestionAPI.upvote(question.id)
+		.then(function () {
+			question.upvotes++;
+			question.my_vote = 1;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao votar na dúvida", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
 	}
 
-	function removeDuvida(duvida) {
-		$scope.duvidas[duvida.id] = duvida;
+	$scope.unvoteQuestion = function (question) {
+		$scope.load = false;
+		QuestionAPI.destroyVote(question.id)
+		.then(function () {
+			question.upvotes--;
+			question.my_vote = 0;
+		})
+		.catch(function (error) {
+			Materialize.toast("Não foi possível cancelar o voto", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
 	}
 
-	$scope.setLastDoubt = function (duvida) {
-		$scope.last_doubt = duvida;
-	}
-
-	$scope.fecharRespostas = function (duvida) {
-		duvida.answers = undefined;
-	}
-
-	$scope.buscaRespostas = function (duvida) {
-		QuestionAPI.getAnswers(duvida.id)
+	$scope.findAnswers = function (question) {
+		$scope.load = false;
+		QuestionAPI.getAnswers(question.id)
 		.then(function (response) {
-			duvida.answers = response.data;
+			question.answers = response.data;
 		})
 		.catch(function (error) {
-			console.log(error.data);
+			Materialize.toast("Erro ao carregar resposta", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.postaResposta = function (answer) {
-		$scope.data_loaded = false;
-		var _answer = angular.copy(answer);
-		delete $scope.resposta;
-		QuestionAPI.createAnswer($scope.last_doubt.id, _answer)
-		.then(function (response) {
-			$scope.last_doubt.has_answer = true;
-			$scope.data_loaded = true;
-			Materialize.toast('Resposta postada', 1000);
-			$scope.buscaRespostas($scope.last_doubt);
-			$scope.resposta.text = '';
-		})
-		.catch(function (error) {
-			console.log(error.data);
-		})
+	$scope.closeAnswers = function (question) {
+		question.answers = undefined;
 	}
 
-	$scope.upvoteDuvida = function (duvida) {
-		QuestionAPI.upvote(duvida.id)
+	$scope.createAnswer = function (newAnswer) {
+		$scope.load = false;
+		QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
 		.then(function () {
-			duvida.upvotes++;
-			duvida.my_vote = 1;
+			$scope.selectedQuestion.has_answer = true;
+			$scope.findAnswers($scope.selectedQuestion);
+			Materialize.toast("Resposta postada", 3000);
 		})
 		.catch(function (error) {
-			console.log(error.data);
+			Materialize.toast("Não foi possível postar a resposta", 3000);
+		})
+		.finally(function () {
+			delete $scope.newAnswer;
+			$scope.load = true;
 		})
 	}
 
-	$scope.cancelVoteDuvida = function (duvida) {
-		QuestionAPI.destroyVote(duvida.id)
+	$scope.upvoteAnswer = function (answer) {
+		$scope.load = false;
+		AnswerAPI.upvote(answer.id)
 		.then(function () {
-			duvida.upvotes--;
-			duvida.my_vote = 0;
+			if(answer.my_vote == 0)
+				answer.upvotes++;
+			else if(answer.my_vote == -1)
+				answer.upvotes += 2;
+			answer.my_vote = 1;
 		})
 		.catch(function (error) {
-			console.log(error.data);
+			Materialize.toast("Erro ao votar na resposta", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.upvoteResposta = function (resposta) {
-		AnswerAPI.upvote(resposta.id)
+	$scope.unvoteAnswer = function (answer) {
+		$scope.load = false;
+		AnswerAPI.destroyVote(answer.id)
 		.then(function () {
-			if(resposta.my_vote == 0)
-				resposta.upvotes++;
-			else if(resposta.my_vote == -1)
-				resposta.upvotes += 2;
-			resposta.my_vote = 1;
-		})
-		.catch(function (error) {
-			console.log(error.data);
-		})
-	}
-
-	$scope.downvoteResposta = function (resposta) {
-		AnswerAPI.downvote(resposta.id)
-		.then(function () {
-			if (resposta.my_vote == 0)
-				{ resposta.upvotes--; }
-			else if (resposta.my_vote == 1)
-				{ resposta.upvotes -= 2; }
-			resposta.my_vote = -1;
-		})
-		.catch(function (error) {
-			console.log(error.data);
-		})
-	}
-
-	$scope.cancelVoteResposta = function (resposta) {
-		AnswerAPI.destroyVote(resposta.id)
-		.then(function () {
-			if (resposta.my_vote == 1)
-				resposta.upvotes--;
+			if (answer.my_vote == 1)
+				answer.upvotes--;
 			else
-				resposta.upvotes++;
-			resposta.my_vote = 0;
+				answer.upvotes++;
+			answer.my_vote = 0;
 		})
 		.catch(function (error) {
-			console.log(error.data);
+			Materialize.toast("Não foi possível cancelar o voto", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.aceitaResposta = function (resposta) {
-		AnswerAPI.accept(resposta.id)
+	$scope.downvoteAnswer = function (answer) {
+		$scope.load = false;
+		AnswerAPI.downvote(answer.id)
 		.then(function () {
-			resposta.accepted = true;
-			$scope.duvidas.forEach(function (elem) {
-				if (elem.id === resposta.question.id) {
-					elem.answered = true;
-				}
-			})
+			if(answer.my_vote == 0)
+				answer.upvotes--;
+			else if(answer.my_vote == 1)
+				answer.upvotes -= 2;
+			answer.my_vote = -1;
 		})
 		.catch(function (error) {
-			console.log(error.data);
+			Materialize.toast("Erro ao votar na resposta", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.recusaResposta = function (resposta) {
-		AnswerAPI.reject(resposta.id)
+	$scope.acceptAnswer = function (answer) {
+		$scope.load = false;
+		AnswerAPI.accept(answer.id)
 		.then(function () {
-			resposta.accepted = false;
-			$scope.duvidas.forEach(function (elem) {
-				if (elem.id === resposta.question.id) {
-					elem.answered = false;
+			answer.accepted = true;
+			for(var i = 0; i < $scope.questions.length; i++) {
+				if($scope.questions[i].id == answer.question.id) {
+					$scope.questions[i].answered = true;
+					break;
 				}
-			})
+			}
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao aceitar resposta", 3000);
 		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
+
+	$scope.rejectAnswer = function (answer) {
+		$scope.load = false;
+		AnswerAPI.reject(answer.id)
+		.then(function () {
+			answer.accepted = false;
+			for(var i = 0; i < $scope.questions.length; i++) {
+				if($scope.questions[i].id == answer.question.id) {
+					$scope.questions[i].answered = false;
+					break;
+				}
+			}
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao recusar resposta", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
+
+	$scope.modalCreateAnswer = function (question) {
+		$scope.selectedQuestion = question;
+		$("#modal-create-answer").openModal();
 	}
 
 	$scope.enableFilter = function () {
@@ -204,7 +228,7 @@ function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, Current
 	socket.on('POST /questions', function (data) {
 		$scope.$apply(function () {
 			data.forEach(function (el) {
-				addDuvida(el);
+				$scope.questions.push(el);
 			});
 		});
 	});
