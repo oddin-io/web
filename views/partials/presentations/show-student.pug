@@ -19,7 +19,7 @@ main
 								input#new-question-anonymous.filled-in(type="checkbox" ng-model="newQuestion.anonymous")
 								label(for="new-question-anonymous") Enviar como anônimo
 						.col.s12.m3
-							button.btn.waves-effect.waves-light.modal-post-duvida__submit.modal-close(type="submit", name="action") Enviar
+							button.btn.waves-effect.waves-light.modal-post-duvida__submit.modal-close(type="submit" name="action") Enviar
 	//- Main Content
 	.container
 		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
@@ -51,7 +51,7 @@ main
 					.col.s6.m4
 							.ver-resposta(ng-if="question.has_answer")
 								a.waves-effect.btn-flat(id="button_{{question.id}}" ng-click="question.answers ? closeAnswers(question) : findAnswers(question)") Ver Respostas
-			.resposta(ng-attr-id="{{answer.id}}", ng-repeat="answer in question.answers")
+			.resposta(ng-attr-id="{{answer.id}}" ng-repeat="answer in question.answers")
 				.resposta__header
 						span.autor {{answer.person.name}}
 						span.datahora {{answer.created_at | date:"dd/MM/yyyy à's' HH:mm"}}

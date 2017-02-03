@@ -41,7 +41,7 @@ oddin.config(["$stateProvider", function ($stateProvider) {
 		controller: 'PresentationShowController'
 	})
 	.state('presentation-materials', {
-		url: '/aulas/:aulaID/material',
+		url: '/aulas/:presentationID/material',
 		templateProvider: function ($cookies, $templateFactory) {
 			if($cookies.get('profile') == 0)
 			return $templateFactory.fromUrl("/partials/presentations/material-student");
@@ -50,80 +50,80 @@ oddin.config(["$stateProvider", function ($stateProvider) {
 		},
 		controller: 'PresentationMaterialController'
 	})
-	.state('avisos', {
-		url: '/disciplinas/:disciplinaID/avisos',
+	.state('notices', {
+		url: '/disciplinas/:instructionID/avisos',
 		templateProvider: function ($cookies, $templateFactory) {
 			if($cookies.get('profile') == 0)
-			return $templateFactory.fromUrl("/partials/avisos-a");
+			return $templateFactory.fromUrl("/partials/notices/index-student");
 			if($cookies.get('profile') == 1)
-			return $templateFactory.fromUrl("/partials/avisos-p");
+			return $templateFactory.fromUrl("/partials/notices/index-instructor");
 		},
 		controller: 'NoticesController'
 	})
-	.state('datas', {
-		url: '/disciplinas/:disciplinaID/datas',
+	.state('dates', {
+		url: '/disciplinas/:instructionID/datas',
 		templateProvider: function ($cookies, $templateFactory) {
 			if($cookies.get('profile') == 0)
-			return $templateFactory.fromUrl("/partials/datas-a");
+			return $templateFactory.fromUrl("/partials/dates/index-student");
 			if($cookies.get('profile') == 1)
-			return $templateFactory.fromUrl("/partials/datas-p");
+			return $templateFactory.fromUrl("/partials/dates/index-instructor");
 		},
 		controller: 'DatesController'
 	})
-	.state('tarefas', {
-		url: '/disciplinas/:disciplinaID/tarefas',
+	.state('works', {
+		url: '/disciplinas/:instructionID/tarefas',
 		templateProvider: function ($cookies, $templateFactory) {
 			if($cookies.get('profile') == 0)
-			return $templateFactory.fromUrl("/partials/tarefas-a");
+			return $templateFactory.fromUrl("/partials/works/index-student");
 			if($cookies.get('profile') == 1)
-			return $templateFactory.fromUrl("/partials/tarefas-p");
+			return $templateFactory.fromUrl("/partials/works/index-instructor");
 		},
 		controller: 'WorksController'
 	})
-	.state('materiais', {
-		url: '/disciplinas/:disciplinaID/materiais',
+	.state('work-show',  {
+		url: '/tarefas/:workID',
 		templateProvider: function ($cookies, $templateFactory) {
 			if($cookies.get('profile') == 0)
-			return $templateFactory.fromUrl("/partials/materiais-a");
+			return $templateFactory.fromUrl("/partials/works/show-student");
 			if($cookies.get('profile') == 1)
-			return $templateFactory.fromUrl("/partials/materiais-p");
+			return $templateFactory.fromUrl("/partials/works/show-instructor");
+		},
+		controller: 'WorkShowController'
+	})
+	.state('materials', {
+		url: '/disciplinas/:instructionID/materiais',
+		templateProvider: function ($cookies, $templateFactory) {
+			if($cookies.get('profile') == 0)
+			return $templateFactory.fromUrl("/partials/materials/index-student");
+			if($cookies.get('profile') == 1)
+			return $templateFactory.fromUrl("/partials/materials/index-instructor");
 		},
 		controller: 'MaterialsController'
 	})
-	.state('participantes', {
-		url: '/disciplinas/:disciplinaID/participantes',
-		templateUrl: '/partials/participantes',
+	.state('participants', {
+		url: '/disciplinas/:instructionID/participantes',
+		templateUrl: '/partials/participants',
 		controller: 'ParticipantsController'
 	})
 	.state('faqs', {
-		url: '/disciplinas/:disciplinaID/faqs',
+		url: '/disciplinas/:instructionID/faqs',
 		templateProvider: function ($cookies, $templateFactory) {
 			if($cookies.get('profile') == 0)
-			return $templateFactory.fromUrl("/partials/faqs-a");
+			return $templateFactory.fromUrl("/partials/faqs/index-student");
 			if($cookies.get('profile') == 1)
-			return $templateFactory.fromUrl("/partials/faqs-p");
+			return $templateFactory.fromUrl("/partials/faqs/index-instructor");
 		},
 		controller: 'FAQsController'
 	})
-	.state('enquetes', {
-		url: '/disciplinas/:disciplinaID/enquetes',
+	.state('surveys', {
+		url: '/disciplinas/:instructionID/enquetes',
 		templateProvider: function ($cookies, $templateFactory) {
 			if($cookies.get('profile') == 0)
-			return $templateFactory.fromUrl("/partials/enquetes-a");
+			return $templateFactory.fromUrl("/partials/surveys/index-student");
 			if($cookies.get('profile') == 1)
-			return $templateFactory.fromUrl("/partials/enquetes-p");
+			return $templateFactory.fromUrl("/partials/surveys/index-instructor");
 		},
 		controller: 'SurveysController'
-	})
-	.state('tarefa-status',  {
-		url: '/tarefas/:tarefaID',
-		templateProvider: function ($cookies, $templateFactory) {
-			if($cookies.get('profile') == 0)
-			return $templateFactory.fromUrl("/partials/tarefa-status-a");
-			if($cookies.get('profile') == 1)
-			return $templateFactory.fromUrl("/partials/tarefa-status-p");
-		},
-		controller: 'WorkShowController'
 	})
 	.state('admin-events', {
 		url: '/admin-cursos',

@@ -1,43 +1,48 @@
-oddin.controller('NoticesController', ["$scope", "$stateParams", "InstructionAPI", "CurrentUser",
+oddin.controller("NoticesController", ["$scope", "$stateParams", "InstructionAPI", "CurrentUser",
 function ($scope, $stateParams, InstructionAPI, CurrentUser) {
+  $scope.user = CurrentUser;
 
-  $scope.usuario = CurrentUser;
-  $scope.data_loaded = true;
-
-	function buscaInfo() {
-		InstructionAPI.show($stateParams.disciplinaID)
+	(function getInfo() {
+		$scope.load = false;
+		InstructionAPI.show($stateParams.instructionID)
 		.then(function (response) {
-			$scope.disciplina = response.data;
+			$scope.instruction = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
+
+	(function findNotices() {
+		$scope.load = false;
+		InstructionAPI.getNotices($stateParams.instructionID)
+		.then(function (response) {
+			$scope.notices = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar avisos", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
+
+	$scope.createNotice = function (newNotice) {
+		$scope.load = false;
+		InstructionAPI.createNotice($stateParams.instructionID, newNotice)
+		.then(function (response) {
+			$scope.notices.push(response.data);
+			Materialize.toast("Aviso postado", 3000);
 		})
 		.catch(function (error) {
-			console.log(error.data);
+			Materialize.toast("Não foi possível postar o aviso", 3000);
+		})
+		.finally(function () {
+			delete $scope.newNotice;
+			$scope.load = true;
 		})
 	}
-
-  $scope.buscaAvisos = function () {
-		InstructionAPI.getNotices($stateParams.disciplinaID)
-		.then(function (response) {
-			$scope.avisos = response.data;
-		})
-		.catch(function (error) {
-			console.log(error.data);
-		})
-  }
-
-  $scope.postaAviso = function (notice) {
-		var _notice = angular.copy(notice);
-		delete $scope.aviso;
-
-    $scope.data_loaded = false;
-		InstructionAPI.createNotice($stateParams.disciplinaID, _notice)
-		.then(function (response) {
-			$scope.avisos.push(response.data);
-			$scope.data_loaded = true;
-			Materialize.toast('Aviso postado', 4000);
-		})
-		.catch(function (error) {
-			console.log(error.data);
-		})
-  }
-  buscaInfo();
 }]);

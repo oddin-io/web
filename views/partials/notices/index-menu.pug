@@ -1,5 +1,5 @@
 header
-	oddin-header(title="{{instruction.lecture.name}} - Aulas", btn-type="back", to-state-url="/disciplinas")
+	oddin-header(title="{{instruction.lecture.name}} - Avisos" btn-type="back" to-state-url="/disciplinas")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -11,10 +11,10 @@ header
 					a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{instruction.lecture.name}}
 					.collapsible-body
 						ul
-							li.barra-lateral__subitem.active
-								p Aulas
 							li.barra-lateral__subitem
-								a(ui-sref="notices({instructionID: instruction.id})") Avisos
+								a(ui-sref="presentations({instructionID: instruction.id})") Aulas
+							li.barra-lateral__subitem.active
+								p Avisos
 							li.barra-lateral__subitem
 								a(ui-sref="dates({instructionID: instruction.id})") Datas Importantes
 							li.barra-lateral__subitem

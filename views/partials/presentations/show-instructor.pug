@@ -25,7 +25,7 @@ main
 								a.btn-floating.disabled(disabled)
 									i.material-icons attach_file
 						.col.s12.m3
-							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(type="submit", name="action") Enviar
+							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(type="submit" name="action") Enviar
 	//- Main Content
 	.container
 		.row.dropdown-row
@@ -54,12 +54,12 @@ main
 								i.material-icons check
 					.col.m4
 						.responder
-							a.waves-effect.btn-flat.modal-trigger(ng-click="modalCreateAnswer(question)", href="") Responder
+							a.waves-effect.btn-flat.modal-trigger(ng-click="modalCreateAnswer(question)" href="") Responder
 					.col.m4
 						.ver-resposta--prof(ng-if="question.has_answer")
-							a.waves-effect.btn-flat(id="button_{{question.id}}", ng-click="question.answers ? closeAnswers(question) : findAnswers(question)")
+							a.waves-effect.btn-flat(id="button_{{question.id}}" ng-click="question.answers ? closeAnswers(question) : findAnswers(question)")
 								span Ver Respostas
-			.resposta(ng-attr-id="{{answer.id}}", ng-repeat="answer in question.answers | orderBy: '(upvotes - downvotes)' : true")
+			.resposta(ng-attr-id="{{answer.id}}" ng-repeat="answer in question.answers | orderBy: '(upvotes - downvotes)' : true")
 				.resposta__header
 					span.autor {{answer.person.name}}
 					span.datahora {{answer.created_at | date:"dd/MM/yyyy à's' HH:mm"}}

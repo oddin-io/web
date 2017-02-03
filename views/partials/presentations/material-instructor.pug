@@ -1,64 +1,39 @@
 doctype html
-header
-	oddin-header(title="{{aula.subject}} - Material", btn-type="back", to-state-url="/disciplinas/{{aula.instruction.id}}/aulas")
-	ul#slide-out.side-nav.fixed.barra-lateral
-		.barra-lateral__header
-			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.nome}}
-			p.barra-lateral__user-email {{usuario.email}}
-		li.no-padding
-			ul.collapsible(data-collapsible="expandable")
-				li.barra-lateral__item
-					a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{aula.subject}}
-					.collapsible-body
-						ul
-							li.barra-lateral__subitem
-								a(ui-sref="duvidas({aulaID: aula.id})") D&uacute;vidas
-							li.barra-lateral__subitem.active
-								p Material
-		li.hide-on-large-only.no-padding.barra-lateral__item
-			a(ui-sref="aulas({disciplinaID: aula.instruction.id})") Aulas
-		li.no-padding.barra-lateral__item
-			a(ui-sref='disciplinas') Disciplinas
-		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-			a(href="" data-ng-click="logout()") Logout
+div(ng-include="'partials/presentations/material-menu'")
 
-main(data-ng-init="buscaMateriais()")
+main
 	#hidden-link
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
-	#subir-material.modal.bottom-sheet
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data", data-ng-submit="uploadMaterial(name)", name="uploadArchive")
+				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="createMaterial()" name="uploadArchive")
 					h1.modal-criar-item__titulo Upload de material da aula
 					.file-field.input-field
 						.btn.modal-criar-item__file-button
 							span Arquivo
-							input#material-file(name="file", type="file")
+							input#new-material-file(name="file" type="file")
 						.file-path-wrapper
-							input#material-description.file-path.validate(type="text", placeholder="Faça Upload de um ou mais arquivos")
-					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
-	#modal-deleta-material.modal
+							input#new-material-description.file-path.validate(type="text" placeholder="Faça Upload de um ou mais arquivos")
+					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Enviar
+	#modal-delete.modal
 		.modal-content
 			h4.custom-modal__header Excluir Material
-			p Tem certeza que deseja excluir '{{modalContent.name}}'?
+			p Tem certeza que deseja excluir "{{modalMaterial.name}}"?
 		.modal-footer
-			a(href='' data-ng-click="deleteMaterial(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteMaterial(modalMaterial)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	//- Main Content
 	.container
-		.fixed-action-btn(style="bottom: 24px; right: 24px;")
-			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#subir-material", modal)
-				i.large.material-icons add
+		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
 		ul.collection.with-header.lista-material
 			li.collection-header.lista-material__header
 				h2 Material da Aula
-			li.collection-item.avatar.lista-material__item(data-ng-repeat="material in materiais | orderBy: 'name'")
+			li.collection-item.avatar.lista-material__item(ng-repeat="material in materials | orderBy: 'name'")
 				i.material-icons.circle insert_drive_file
 				span.title
-					a(href="" data-ng-click="downloadMaterial(material)") {{material.name}}
+					a(href="" ng-click="downloadMaterial(material)") {{material.name}}
 				p {{material.mime}}
-				a.secondary-content(href="" data-ng-click="openModalDeleteMaterial(material)")
+				a.secondary-content(href="" ng-click="modalDelete(material)")
 					i.material-icons delete
