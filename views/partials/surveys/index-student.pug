@@ -1,69 +1,34 @@
 doctype html
-header
-	oddin-header(title="{{disciplina.lecture.name}} - Enquetes", btn-type="back", to-state-url="/disciplinas")
-	ul#slide-out.side-nav.fixed.barra-lateral
-		.barra-lateral__header
-			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.name}}
-			p.barra-lateral__user-email {{usuario.email}}
-		li.no-padding
-			ul.collapsible(data-collapsible="expandable")
-				li.barra-lateral__item
-					a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{disciplina.lecture.name}}
-					.collapsible-body
-						ul
-							li.barra-lateral__subitem
-								a(ui-sref="aulas({disciplinaID: disciplina.id})") Aulas
-							li.barra-lateral__subitem
-								a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
-							li.barra-lateral__subitem
-								a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
-							li.barra-lateral__subitem
-								a(ui-sref="tarefas({disciplinaID: disciplina.id})") Tarefas
-							li.barra-lateral__subitem
-								a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
-							li.barra-lateral__subitem
-								a(ui-sref="participantes({disciplinaID: disciplina.id})") Participantes
-							li.barra-lateral__subitem
-								a(ui-sref="faqs({disciplinaID: disciplina.id})") FAQs
-							li.barra-lateral__subitem.active
-								p Enquetes
-		li.hide-on-large-only.no-padding.barra-lateral__item
-			a(ui-sref='disciplinas') Disciplinas
-		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-			a(href="" data-ng-click="logout()") Logout
+div(ng-include="'partials/surveys/index-menu'")
 
-main(data-ng-init="buscaEnquetes()")
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
+main
+	oddin-preloader(load-var="load" side-bar="true")
 	.container
-		.card.pergunta(data-ng-repeat="survey in surveys | orderBy: 'created_at' : true")
+		p.empty-message.center-align(ng-if="surveys.length == 0") Nenhuma enquete foi criada
+		.card.pergunta(ng-repeat="survey in surveys | orderBy: 'created_at' : true")
 			.card-content
 				.custom-card__header
 					span.title {{survey.title}}
 					span.secondary-info
 						span.secondary-info--leading() {{survey.created_at | date:"dd/MM/yyyy"}}
-						span.chosen-tag(data-ng-if="!survey.closed && survey.my_vote") Votada
-						span.closed-tag(data-ng-if="survey.closed") Encerrada
+						span.chosen-tag(ng-if="!survey.closed && survey.my_vote") Votada
+						span.closed-tag(ng-if="survey.closed") Encerrada
 					p.survey-question {{survey.question}}
 			.card-action.custom-card__action
 				.row
 					.col.s12
 						.ver-resposta--prof.survey-button-answer
-							a.waves-effect.btn-flat(data-ng-click="displayAnswers(survey)")
-								span {{displayButton(survey)}}
-			.resposta.survey-answer-container(data-ng-attr-id="answers-{{survey.id}}")
+							a.waves-effect.btn-flat(ng-click="displayAnswers(survey)")
+								span {{displayAlternativesButton(survey)}}
+			.resposta.survey-answer-container(ng-attr-id="answers-{{survey.id}}")
 				.resposta__content.choices-content.clearfix
-					form(data-ng-submit="makeChoice(survey)" data-ng-if="!survey.closed && !survey.my_vote")
-						p(data-ng-repeat="alternative in survey.alternatives")
-							input.with-gap(name="group-{{survey.id}}", data-ng-model="survey.choice" value="{{alternative.id}}", type="radio" data-ng-attr-id="alternative-{{alternative.id}}")
+					form(ng-submit="makeChoice(survey)" ng-if="!survey.closed && !survey.my_vote")
+						p(ng-repeat="alternative in survey.alternatives")
+							input.with-gap(name="group-{{survey.id}}" ng-model="survey.choice" value="{{alternative.id}}" type="radio" ng-attr-id="alternative-{{alternative.id}}")
 							label(for="alternative-{{alternative.id}}") {{alternative.description}}
 							span.badge(data-badge-caption="votos") {{alternative.choice_count}}
-						button.btn.waves-effect.waves-light.right(type="submit", name="action") Votar
-					p(data-ng-repeat="alternative in survey.alternatives" data-ng-if="survey.closed || survey.my_vote")
+						button.btn.waves-effect.waves-light.right(type="submit" name="action") Votar
+					p(ng-repeat="alternative in survey.alternatives" ng-if="survey.closed || survey.my_vote")
 						label.closed-alternatives(for="alternative-{{alternative.id}}") {{alternative.description}}
-						span.chosen-alternative(data-ng-if="survey.my_vote == alternative.id") Meu Voto
-
+						span.chosen-alternative(ng-if="survey.my_vote == alternative.id") Meu Voto
 						span.badge(data-badge-caption="votos") {{alternative.choice_count}}

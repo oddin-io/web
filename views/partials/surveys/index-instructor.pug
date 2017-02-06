@@ -1,124 +1,90 @@
 doctype html
-header
-	oddin-header(title="{{disciplina.lecture.name}} - Enquetes", btn-type="back", to-state-url="/disciplinas")
-	ul#slide-out.side-nav.fixed.barra-lateral
-		.barra-lateral__header
-			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.name}}
-			p.barra-lateral__user-email {{usuario.email}}
-		li.no-padding
-			ul.collapsible(data-collapsible="expandable")
-				li.barra-lateral__item
-					a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{disciplina.lecture.name}}
-					.collapsible-body
-						ul
-							li.barra-lateral__subitem
-								a(ui-sref="aulas({disciplinaID: disciplina.id})") Aulas
-							li.barra-lateral__subitem
-								a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
-							li.barra-lateral__subitem
-								a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
-							li.barra-lateral__subitem
-								a(ui-sref="tarefas({disciplinaID: disciplina.id})") Tarefas
-							li.barra-lateral__subitem
-								a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
-							li.barra-lateral__subitem
-								a(ui-sref="participantes({disciplinaID: disciplina.id})") Participantes
-							li.barra-lateral__subitem
-								a(ui-sref="faqs({disciplinaID: disciplina.id})") FAQs
-							li.barra-lateral__subitem.active
-								p Enquetes
-		li.hide-on-large-only.no-padding.barra-lateral__item
-			a(ui-sref='disciplinas') Disciplinas
-		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-			a(href="" data-ng-click="logout()") Logout
+div(ng-include="'partials/surveys/index-menu'")
 
-main(data-ng-init="buscaEnquetes()")
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
-	#criar-enquete.modal.bottom-sheet
+main
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="createSurvey(survey)")
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="createSurvey(newSurvey)")
 					h1.modal-criar-item__titulo Criar Enquete
 					.row
 						.input-field.col.s12
-							input#survey_title(type="text", name="title", data-ng-model="survey.title" required)
-							label(for="survey_title") Título
+							input#new-survey-title(type="text" ng-model="newSurvey.title" required)
+							label(for="new-survey-title") Título
 						.input-field.col.s12
-							textarea#survey_question.materialize-textarea(name="question", data-ng-model="survey.question" required)
-							label(for="faq_question") Pergunta
-						.choices(data-ng-repeat="alternative in survey.alternatives")
+							textarea#new-survey-question.materialize-textarea(ng-model="newSurvey.question" required)
+							label(for="new-survey-question") Pergunta
+						.choices(ng-repeat="alternative in newSurvey.alternatives")
 							.input-field.col.s11.remove-choice-field
-								input(id="alternative-{{survey.alternatives.indexOf(alternative)}}", type="text", name="alternative-{{survey.alternatives.indexOf(alternative)}}", data-ng-model="survey.alternatives[survey.alternatives.indexOf(alternative)].description" required)
-								label(for="alternative-{{survey.alternatives.indexOf(alternative)}}") Alternativa {{survey.alternatives.indexOf(alternative) + 1}}
-							.input-field.col.s1.remove-choice-button(data-ng-show="$last")
-								a.right(href='' data-ng-click="removeAlternative()")
+								input(id="alternative-{{newSurvey.alternatives.indexOf(alternative)}}" type="text" ng-model="newSurvey.alternatives[newSurvey.alternatives.indexOf(alternative)].description" required)
+								label(for="alternative-{{newSurvey.alternatives.indexOf(alternative)}}") Alternativa {{newSurvey.alternatives.indexOf(alternative) + 1}}
+							.input-field.col.s1.remove-choice-button(ng-show="$last")
+								a.right(href="" ng-click="removeAlternative(newSurvey)")
 									i.material-icons close
 						.input-field.col.s12
-							a.btn-floating.waves-effect.waves-light.right(data-ng-click="addNewAlternative()")
+							a.btn-floating.waves-effect.waves-light.right(ng-click="addNewAlternative(newSurvey)")
 								i.material-icons add
 					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
-	#edit-enquete.modal.bottom-sheet
+	#modal-edit.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(data-ng-submit="updateSurvey(modalContent)")
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="updateSurvey(modalSurvey)")
 					h1.modal-criar-item__titulo Editar Enquete
 					.row
 						.input-field.col.s12
-							input#survey_title(type="text", name="title", data-ng-model="modalContent.title" required)
-							label(for="survey_title") Título
+							input#modal-survey-title(type="text" ng-model="modalSurvey.title" required)
+							label(for="modal-survey-title") Título
 						.input-field.col.s12
-							textarea#survey_question.materialize-textarea(name="question", data-ng-model="modalContent.question" required)
-							label(for="faq_question") Pergunta
-						.choices(data-ng-repeat="alternative in modalContent.alternatives")
+							textarea#modal-survey-question.materialize-textarea(ng-model="modalSurvey.question" required)
+							label(for="modal-survey-question") Pergunta
+						.choices(ng-repeat="alternative in modalSurvey.alternatives")
 							.input-field.col.s12.remove-choice-field
-								input(data-ng-attr-id="alternative-{{modalContent.alternatives.indexOf(alternative)}}", type="text", name="alternative-{{modalContent.alternatives.indexOf(alternative)}}", data-ng-model="modalContent.alternatives[modalContent.alternatives.indexOf(alternative)].description" required)
-								label(for="alternative-{{modalContent.alternatives.indexOf(alternative)}}") Alternativa {{modalContent.alternatives.indexOf(alternative) + 1}}
-					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
-	#delete-enquete.modal
+								input(ng-attr-id="alternative-{{modalSurvey.alternatives.indexOf(alternative)}}" type="text" ng-model="modalSurvey.alternatives[modalSurvey.alternatives.indexOf(alternative)].description" required)
+								label(for="alternative-{{modalSurvey.alternatives.indexOf(alternative)}}") Alternativa {{modalSurvey.alternatives.indexOf(alternative) + 1}}
+					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Atualizar
+	#modal-delete.modal
 		.modal-content
 			h4.custom-modal__header Excluir Enquete
-			p Tem certeza que deseja excluir '{{modalContent.title}}'?
+			p Tem certeza que deseja excluir "{{modalSurvey.title}}"?
 		.modal-footer
-			a(href='' data-ng-click="deleteSurvey(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
-	#close-enquete.modal
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteSurvey(modalSurvey)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	#modal-close.modal
 		.modal-content
 			h4.custom-modal__header Encerrar Enquete
-			p Tem certeza que deseja encerrar '{{modalContent.title}}'?
+			p Tem certeza que deseja encerrar "{{modalSurvey.title}}"?
 		.modal-footer
-			a(href='' data-ng-click="closeSurvey(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="closeSurvey(modalSurvey)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	//- Main Content
 	.container
-		.fixed-action-btn(style="bottom: 24px; right: 24px;")
-			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#criar-enquete", modal)
-				i.large.material-icons add
-		.card.pergunta(data-ng-repeat="survey in surveys | orderBy: 'created_at' : true")
+		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
+		p.empty-message.center-align(ng-if="surveys.length == 0") Nenhuma enquete foi criada
+		.card.pergunta(ng-repeat="survey in surveys | orderBy: 'created_at' : true")
 			.card-content
 				.custom-card__header
 					span.title {{survey.title}}
 					span.secondary-info
-						span.secondary-info--leading(data-ng-if="!survey.closed") {{survey.created_at | date:"dd/MM/yyyy"}}
-						span.closed-tag(data-ng-if="survey.closed") Encerrada
+						span.secondary-info--leading(ng-if="!survey.closed") {{survey.created_at | date:"dd/MM/yyyy"}}
+						span.closed-tag(ng-if="survey.closed") Encerrada
 					p.survey-question {{survey.question}}
 			.card-action.custom-card__action
 				.row
 					.col.s12
-						a(href='' data-ng-click="openModalDeleteSurvey(survey)")
+						a(href="" ng-click="modalDelete(survey)")
 							i.material-icons delete
-						a(href='' data-ng-click="openModalEditSurvey(survey)")
+						a(href="" ng-click="modalEdit(survey)")
 							i.material-icons edit
-						a(href='' data-ng-click="openModalCloseSurvey(survey)" data-ng-if="!survey.closed")
+						a(href="" ng-click="modalClose(survey)" ng-if="!survey.closed")
 							i.material-icons close
 						.ver-resposta--prof.survey-button-answer
-							a.waves-effect.btn-flat(data-ng-click="displayAnswers(survey)")
-								span {{displayButton(survey)}}
-			.resposta.survey-answer-container(data-ng-attr-id="answers-{{survey.id}}")
+							a.waves-effect.btn-flat(ng-click="displayAnswers(survey)")
+								span {{displayAlternativesButton(survey)}}
+			.resposta.survey-answer-container(ng-attr-id="answers-{{survey.id}}")
 				.resposta__content.survey-answer-content
 					ul.collection.survey-answer-list
-						li.collection-item(data-ng-repeat="alternative in survey.alternatives")
+						li.collection-item(ng-repeat="alternative in survey.alternatives")
 							| {{alternative.description}}
 							span.new.badge(data-badge-caption="Votos") {{alternative.choice_count}}
