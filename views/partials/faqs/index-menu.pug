@@ -1,6 +1,5 @@
-doctype html
 header
-	oddin-header(title="{{instruction.lecture.name}} - Participantes" btn-type="back" to-state-url="/disciplinas")
+	oddin-header(title="{{instruction.lecture.name}} - FAQs" btn-type="back" to-state-url="/disciplinas")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -22,22 +21,13 @@ header
 								a(ui-sref="works({instructionID: instruction.id})") Tarefas
 							li.barra-lateral__subitem
 								a(ui-sref="materials({instructionID: instruction.id})") Material
-							li.barra-lateral__subitem.active
-								p Participantes
 							li.barra-lateral__subitem
-								a(ui-sref="faqs({instructionID: instruction.id})") FAQs
+								a(ui-sref="participants({instructionID: instruction.id})") Participantes
+							li.barra-lateral__subitem.active
+								p FAQs
 							li.barra-lateral__subitem
 								a(ui-sref="surveys({instructionID: instruction.id})") Enquetes
 		li.hide-on-large-only.no-padding.barra-lateral__item
 			a(ui-sref="instructions") Disciplinas
 		li.no-padding.barra-lateral__item(ng-controller="LoginController")
 			a(href="" ng-click="logout()") Logout
-
-main
-	oddin-preloader(load-var="load" side-bar="true")
-	.container
-		ul.collection.lista-participantes
-			p.empty-message.center-align(ng-if="participants.length == 0") Nenhum participante nesta disciplina
-			li.collection-item.avatar.lista-participantes__item(ng-repeat="participant in participants | orderBy: 'person.name'")
-				i.material-icons.circle(ng-class="{'user--online' : participant.person.online}") person
-				span.title {{participant.person.name}}

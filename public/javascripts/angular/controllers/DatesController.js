@@ -1,105 +1,92 @@
-oddin.controller('DatesController', ["$scope", "$stateParams", "DateAPI", "InstructionAPI", "CurrentUser", "$filter",
-function ($scope, $stateParams, DateAPI, InstructionAPI, CurrentUser, $filter) {
+oddin.controller("DatesController", ["$scope", "$stateParams", "DateAPI", "InstructionAPI", "CurrentUser", "$filter", "ManageList",
+function ($scope, $stateParams, DateAPI, InstructionAPI, CurrentUser, $filter, ManageList) {
+	$scope.user = CurrentUser;
 
-	$scope.usuario = CurrentUser;
-	$scope.data_loaded = true;
-
-	function buscaInfo() {
-		InstructionAPI.show($stateParams.disciplinaID)
+	(function getInfo() {
+		$scope.load = false;
+		InstructionAPI.show($stateParams.instructionID)
 		.then(function (response) {
-			$scope.disciplina = response.data;
+			$scope.instruction = response.data;
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da disciplina", 3000);
 		})
-	}
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-	$scope.postaData = function (date) {
-		$scope.data_loaded = false;
-
-		var _date = angular.copy(date);
-		_date.date = $filter('toDate')(_date.date, _date.time);
-		delete _date.time;
-		delete $scope.date;
-
-		InstructionAPI.createDate($stateParams.disciplinaID, _date)
+	(function findDates() {
+		$scope.load = false;
+		InstructionAPI.getDates($stateParams.instructionID)
 		.then(function (response) {
-			$scope.datas.push(response.data);
-			$scope.data_loaded = true;
-			Materialize.toast("A Data foi postada", 4000);
+			$scope.dates = response.data;
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao carregar datas importantes", 3000);
 		})
-	}
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-	$scope.buscaDatas = function () {
-		InstructionAPI.getDates($stateParams.disciplinaID)
+	$scope.createDate =  function (newDate) {
+		$scope.load = false;
+		newDate.date = $filter("toDate")(newDate.date, newDate.time);
+		InstructionAPI.createDate($stateParams.instructionID, newDate)
 		.then(function (response) {
-			$scope.datas = response.data;
+			$scope.dates.push(response.data);
+			Materialize.toast("Data cadastrada", 3000)
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao cadastrar data", 3000);
+		})
+		.finally(function () {
+			delete $scope.newDate;
+			$scope.load = true;
 		})
 	}
 
-	$scope.updateDate = function (date) {
-		$scope.data_loaded = false;
-
-		var _date = angular.copy(date);
-		_date.date = $filter('toDate')(_date.date, _date.time);
-		delete _date.time;
-		delete $scope.modalContent;
-
-		DateAPI.update(_date.id, _date)
+	$scope.updateDate = function (modalDate) {
+		$scope.load = false;
+		modalDate.date = $filter("toDate")(modalDate.date, modalDate.time);
+		DateAPI.update(modalDate.id, modalDate)
 		.then(function (response) {
-			for(var i = 0; i < $scope.datas.length; i++) {
-				if($scope.datas[i].id == response.data.id) {
-					$scope.datas[i] = response.data;
-					break;
-				}
-			}
-			$scope.data_loaded = true;
-			Materialize.toast('Data atualizada', 3000);
+			ManageList.updateItem($scope.dates, response.data);
+			Materialize.toast("Data atualizada", 3000);
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao atualizar data", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.deleteDate = function (date) {
-		$scope.data_loaded = false;
-
-		var _date = angular.copy(date);
-		delete $scope.modalContent;
-
-		DateAPI.destroy(_date.id)
+	$scope.deleteDate = function (modalDate) {
+		$scope.load = false;
+		DateAPI.destroy(modalDate.id)
 		.then(function (response) {
-			for(var i = 0; i < $scope.datas.length; i++) {
-				if($scope.datas[i].id == _date.id) {
-					$scope.datas.splice(i, 1);
-					break;
-				}
-			}
-			$scope.data_loaded = true;
+			ManageList.deleteItem($scope.dates, modalDate);
+			Materialize.toast("Data deletada", 3000);
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao excluir data", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.openModalDeleteDate = function (date) {
-		$scope.modalContent = date;
-		$('#modal-delete-date').openModal();
+	$scope.modalEdit = function (date) {
+		$scope.modalDate = angular.copy(date);
+		$scope.modalDate.time = $filter("date")($scope.modalDate.date, "HHmm");
+		$scope.modalDate.date = $filter("date")($scope.modalDate.date, "ddMMyyyy");
+		$("#modal-edit").openModal();
 	}
 
-	$scope.openModalEditDate = function (date) {
-		var _date = date.date;
-		$scope.modalContent = angular.copy(date);
-		$scope.modalContent.date = $filter('date')(_date, 'ddMMyyyy');
-		$scope.modalContent.time = $filter('date')(_date, 'HHmm')
-		$('#modal-editar-data').openModal();
+	$scope.modalDelete = function (date) {
+		$scope.modalDate = angular.copy(date);
+		$("#modal-delete").openModal();
 	}
-
-	buscaInfo();
 }]);

@@ -20,6 +20,7 @@ main
 	//- Main Content
 	.container
 		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
+		p.empty-message.center-align(ng-if="notices.length == 0") Nenhum aviso foi postado
 		.card.custom-card(ng-repeat="notice in notices | orderBy : 'created_at' : true")
 			.card-content
 				.custom-card__header

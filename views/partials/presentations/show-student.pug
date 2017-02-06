@@ -31,6 +31,7 @@ main
 						a#post-order.filter-item-active(href="" ng-click="disableFilter()") Por Postagem
 					li
 						a#ranking-order(href="" ng-click="enableFilter()") Por Ranking
+		p.empty-message.center-align(ng-if="questions.length == 0") Nenhuma dúvida foi postada
 		.card.pergunta(ng-repeat="question in questions | orderBy: ((filter || '') && '(upvotes - downvotes)') : true")
 			.card-content
 				.pergunta__header

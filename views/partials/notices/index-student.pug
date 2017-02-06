@@ -3,8 +3,8 @@ div(ng-include="'partials/notices/index-menu'")
 
 main
 	oddin-preloader(load-var="load" side-bar="true")
-	//- Main Content
 	.container
+		p.empty-message.center-align(ng-if="notices.length == 0") Nenhum aviso foi postado
 		.card.custom-card(data-ng-repeat="notice in notices | orderBy : 'created_at' : true")
 			.card-content
 				.custom-card__header

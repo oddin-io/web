@@ -1,27 +1,32 @@
-oddin.controller('ParticipantsController', ["$scope", "$stateParams", "InstructionAPI", "CurrentUser",
+oddin.controller("ParticipantsController", ["$scope", "$stateParams", "InstructionAPI", "CurrentUser",
 function ($scope, $stateParams, InstructionAPI, CurrentUser) {
+	$scope.user = CurrentUser;
 
-	$scope.usuario = CurrentUser;
-	$scope.data_loaded = true;
-
-	function buscaInfo() {
-		InstructionAPI.show($stateParams.disciplinaID)
+	(function getInfo() {
+		$scope.load = false;
+		InstructionAPI.show($stateParams.instructionID)
 		.then(function (response) {
-			$scope.disciplina = response.data;
+			$scope.instruction = response.data;
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da disciplina", 3000);
 		})
-	}
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-	$scope.buscaParticipantes = function () {
-		InstructionAPI.getParticipants($stateParams.disciplinaID)
+	(function findParticipants() {
+		$scope.load = false;
+		InstructionAPI.getParticipants($stateParams.instructionID)
 		.then(function (response) {
-			$scope.participantes = response.data;
+			$scope.participants = response.data;
 		})
-		.catch(function (error) {
-			console.log(error.data);
+		.catch(function () {
+			Materialize.toast("Erro ao carregar participantes", 3000);
 		})
-	}
-	buscaInfo();
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 }]);

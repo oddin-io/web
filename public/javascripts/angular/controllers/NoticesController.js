@@ -20,7 +20,7 @@ function ($scope, $stateParams, InstructionAPI, CurrentUser) {
 		$scope.load = false;
 		InstructionAPI.getNotices($stateParams.instructionID)
 		.then(function (response) {
-			$scope.notices = response.data;
+			$scope.notices = response.data;			
 		})
 		.catch(function () {
 			Materialize.toast("Erro ao carregar avisos", 3000);
