@@ -1,0 +1,75 @@
+doctype html
+header
+	oddin-header(title="Disciplinas")
+	ul#slide-out.side-nav.fixed.barra-lateral
+		.barra-lateral__header
+			i.barra-lateral__user-avatar.material-icons account_circle
+			p.barra-lateral__user-name {{user.name}}
+			p.barra-lateral__user-email {{user.email}}
+		li.no-padding.barra-lateral__item
+			a(ui-sref="admin-events") Cursos
+		li.no-padding.barra-lateral__item
+			p.active Disciplinas
+		li.no-padding.barra-lateral__item
+			a(ui-sref="admin-users") Usuários
+		li.no-padding.barra-lateral__item(ng-controller="LoginController")
+			a(href="" ng-click="logout()") Logout
+
+main
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="createLecture(newLecture)")
+					h1.modal-criar-item__titulo Cadastrar disciplina
+					.row
+						.input-field.col.s12
+							input#new-lecture-name(type="text" ng-model="newLecture.name")
+							label(for="new-lecture-name") Nome
+						.input-field.col.s12
+							input#new-lecture-code(type="text" ng-model="newLecture.code")
+							label(for="new-lecture-code") Código
+						.input-field.col.s12
+							input#new-lecture-workload(type="text" ng-model="newLecture.workload")
+							label(for="new-lecture-workload") Carga Horária
+							button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Cadastrar
+	#modal-edit.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="updateLecture(modalLecture)")
+					h1.modal-criar-item__titulo Editar disciplina
+					.row
+						.input-field.col.s12
+							input#modal-lecture-name(type="text" ng-model="modalLecture.name")
+							label(for="modal-lecture-name") Nome
+						.input-field.col.s12
+							input#modal-lecture-code(type="text" ng-model="modalLecture.code")
+							label(for="modal-lecture-code") Código
+						.input-field.col.s12
+							input#modal-lecture-workload(type="text" ng-model="modalLecture.workload")
+							label(for="modal-lecture-workload") Carga Horária
+							button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
+	#modal-delete.modal
+		.modal-content
+			h4.custom-modal__header Excluir Disciplina
+			p Tem certeza que deseja excluir "{{modalLecture.name}}"?
+		.modal-footer
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteLecture(modalLecture)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	//- Main Content
+	.container
+		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
+		p.empty-message.center-align(ng-if="lectures.length == 0") Não há disciplinas cadastradas
+		ul.collection.with-header.custom-list(ng-if="lectures.length > 0")
+			li.collection-header.custom-list__header
+				h2 Disciplinas cadastradas
+			li.collection-item.avatar.custom-list__item.two-options(ng-repeat="lecture in lectures | orderBy : 'name'")
+				i.material-icons.circle book
+				span.title {{lecture.name}}
+				p {{lecture.code}}
+				.secondary-content
+					a.list-double-secondary(href="" ng-click="modalEdit(lecture)")
+						i.material-icons edit
+					a(href="" ng-click="modalDelete(lecture)")
+						i.material-icons delete

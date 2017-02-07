@@ -1,0 +1,34 @@
+doctype html
+div(ng-include="'partials/surveys/index-menu'")
+
+main
+	oddin-preloader(load-var="load" side-bar="true")
+	.container
+		p.empty-message.center-align(ng-if="surveys.length == 0") Nenhuma enquete foi criada
+		.card.pergunta(ng-repeat="survey in surveys | orderBy: 'created_at' : true")
+			.card-content
+				.custom-card__header
+					span.title {{survey.title}}
+					span.secondary-info
+						span.secondary-info--leading() {{survey.created_at | date:"dd/MM/yyyy"}}
+						span.chosen-tag(ng-if="!survey.closed && survey.my_vote") Votada
+						span.closed-tag(ng-if="survey.closed") Encerrada
+					p.survey-question {{survey.question}}
+			.card-action.custom-card__action
+				.row
+					.col.s12
+						.ver-resposta--prof.survey-button-answer
+							a.waves-effect.btn-flat(ng-click="displayAnswers(survey)")
+								span {{displayAlternativesButton(survey)}}
+			.resposta.survey-answer-container(ng-attr-id="answers-{{survey.id}}")
+				.resposta__content.choices-content.clearfix
+					form(ng-submit="makeChoice(survey)" ng-if="!survey.closed && !survey.my_vote")
+						p(ng-repeat="alternative in survey.alternatives")
+							input.with-gap(name="group-{{survey.id}}" ng-model="survey.choice" value="{{alternative.id}}" type="radio" ng-attr-id="alternative-{{alternative.id}}")
+							label(for="alternative-{{alternative.id}}") {{alternative.description}}
+							span.badge(data-badge-caption="votos") {{alternative.choice_count}}
+						button.btn.waves-effect.waves-light.right(type="submit" name="action") Votar
+					p(ng-repeat="alternative in survey.alternatives" ng-if="survey.closed || survey.my_vote")
+						label.closed-alternatives(for="alternative-{{alternative.id}}") {{alternative.description}}
+						span.chosen-alternative(ng-if="survey.my_vote == alternative.id") Meu Voto
+						span.badge(data-badge-caption="votos") {{alternative.choice_count}}

@@ -1,0 +1,59 @@
+doctype html
+header.add-header
+	oddin-header(title="Adicionar Disciplinas" btn-type="close" to-state-url="/admin-cursos/{{event.id}}" logo="false" side-bar="none")
+
+main.add-main
+	oddin-preloader(load-var="load")
+	//- Modals
+	#modal-add.modal.modal-fixed-footer
+		.modal-content
+			h4.custom-modal__header Adicionar "{{modalInstruction.lecture.name}}"
+			.row
+				.input-field.col.s12
+					input#modal-instruction-class-code(type="text" ng-model="modalInstruction.class_code")
+					label(for="modal-instruction-class-code") Código da Turma
+				.input-field.col.s12
+					input#modal-instruction-start-date(type="text" ng-model="modalInstruction.start_date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}")
+					label(for="modal-instruction-start-date") Data de Início
+				.input-field.col.s12
+					input#modal-instruction-end-date(type="text" ng-model="modalInstruction.end_date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}")
+					label(for="modal-instruction-end-date") Data de Encerramento
+		.modal-footer
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="createInstruction(modalInstruction)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	#modal-remove.modal
+		.modal-content
+			h4.custom-modal__header Remover Disciplina
+			p Tem certeza que deseja remover "{{modalInstruction.lecture.name}}"?
+		.modal-footer
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteInstruction(modalInstruction)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	//- Main Content
+	.container
+		oddin-fab(trigger="/admin-cursos/{{event.id}}" icon="check")
+		h5.main-title {{event.name}}
+		.row
+			.col.l6.s12
+				ul.collection.with-header.custom-list(ng-init="findLectures()")
+					li.collection-header.custom-list__header
+						h2 Disciplinas Disponíveis
+					p.empty-message.add-menu.center-align(ng-if="lectures.length == 0") Não há disciplinas cadastradas
+					li.collection-item.avatar.custom-list__item.one-option(ng-repeat="lecture in lectures | orderBy: 'name'")
+						i.material-icons.circle book
+						span.title {{lecture.name}}
+						p {{lecture.code}}
+						a.secondary-content(href="" ng-click="modalAdd(lecture)")
+							i.material-icons add_circle
+			.col.l6.s12
+				ul.collection.with-header.custom-list
+					li.collection-header.custom-list__header
+						h2 Disciplinas do Curso
+					p.empty-message.add-menu.center-align(ng-if="instructions.length == 0") Nenhuma disciplina foi adicionada a este curso
+					li.collection-item.avatar.custom-list__item.one-option(ng-repeat="instruction in instructions | orderBy : 'season' : true")
+						i.material-icons.circle book
+						span.title {{instruction.lecture.name}}
+						p Turma: {{instruction.class_code}}
+							br
+							| {{instruction.season}}
+						a.secondary-content(href="" ng-click="modalRemove(instruction)")
+							i.material-icons remove_circle

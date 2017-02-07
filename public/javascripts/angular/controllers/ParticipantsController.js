@@ -1,36 +1,32 @@
-oddin.controller('ParticipantsController',
-    function ($http, $scope, $stateParams, $state, $cookies, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
+oddin.controller("ParticipantsController", ["$scope", "$stateParams", "InstructionAPI", "CurrentUser",
+function ($scope, $stateParams, InstructionAPI, CurrentUser) {
+	$scope.user = CurrentUser;
 
-        $scope.usuario = {
-            'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-            'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-        }
+	(function getInfo() {
+		$scope.load = false;
+		InstructionAPI.show($stateParams.instructionID)
+		.then(function (response) {
+			$scope.instruction = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-        $scope.data_loaded = true;
-
-        function buscaInfo() {
-            Disciplina.get({ id: $stateParams.disciplinaID },
-                function (disciplina) {
-                    $scope.disciplina = disciplina
-                },
-                function (erro) {
-                    $scope.mensagem = { texto: 'Não foi possível obter o resultado.' }
-                }
-            )
-        }
-
-        $scope.buscaParticipantes = function () {
-            DisciplinaParticipante.query({ id: $stateParams.disciplinaID },
-                function (participantes) {
-                    $scope.participantes = participantes
-                },
-                function (erro) {
-                    $scope.mensagem = {
-                        texto: 'Não foi possível obter o resultado.',
-                    }
-                }
-            )
-        }
-        buscaInfo()
-    }
-)
+	(function findParticipants() {
+		$scope.load = false;
+		InstructionAPI.getParticipants($stateParams.instructionID)
+		.then(function (response) {
+			$scope.participants = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar participantes", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
+}]);

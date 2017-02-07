@@ -1,0 +1,15 @@
+doctype html
+div(ng-include="'partials/faqs/index-menu'")
+
+main
+	oddin-preloader(load-var="load" side-bar="true")
+	.container
+		p.empty-message.center-align(ng-if="faqs.length == 0") Nenhuma FAQ foi postada
+		ul.collapsible(data-collapsible="acordion" ng-if="faqs.length > 0")
+			li(ng-repeat="faq in faqs")
+				.collapsible-header
+					p.faq-question
+						span.faq-index {{faqs.indexOf(faq) + 1}}) &nbsp;
+						| {{faq.question}}
+				.collapsible-body
+					p {{faq.answer}}

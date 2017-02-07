@@ -1,0 +1,40 @@
+doctype html
+div(ng-include="'partials/materials/index-menu'")
+
+main
+	#hidden-link
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="createMaterial()" name="uploadArchive")
+					h1.modal-criar-item__titulo Upload de material da disciplina
+					.file-field.input-field
+						.btn.modal-criar-item__file-button
+							span Arquivo
+							input#new-material-file(name="file" type="file")
+						.file-path-wrapper
+							input#new-material-description.file-path.validate(type="text" placeholder="Faça Upload de um ou mais arquivos")
+					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Enviar
+	#modal-delete.modal
+		.modal-content
+			h4.custom-modal__header Excluir Material
+			p Tem certeza que deseja excluir "{{modalMaterial.name}}"?
+		.modal-footer
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteMaterial(modalMaterial)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	//- Main Content
+	.container
+		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
+		ul.collection.with-header.lista-material
+			li.collection-header.lista-material__header
+				h2 Material da Disciplina
+			p.empty-message.center-align(ng-if="materials.length == 0") Nenhum material foi postado
+			li.collection-item.avatar.lista-material__item(ng-repeat="material in materials | orderBy: 'name'")
+				i.material-icons.circle insert_drive_file
+				span.title
+					a(href="" ng-click="downloadMaterial(material)") {{material.name}}
+				p {{material.mime}}
+				a.secondary-content(href="" ng-click="modalDelete(material)")
+					i.material-icons delete

@@ -1,77 +1,82 @@
-oddin.controller('LoginController',
-function ($scope, $window, $http, $cookies, $location, Login, $state) {
-  $scope.recover = {}
-  $scope.user = {}
-  $scope.login = function () {
-    $http.post('/login', $scope.user)
-    .then(function (data) {
-      data = data.data
-      if($scope.user.persist) {
-        var expireDate = new Date();
-        expireDate.setMonth(expireDate.getMonth() + 1);
-        $cookies.put('session', $cookies.get('session'), {'expires': expireDate})
-      }
-      //Trocar por teste de perfil (admin)
-      console.log(data)
-      if(data.person.admin) {
-        $cookies.put('admin', true);
-      }
-      $window.location.href = '/home'
-    })
-    .catch(function (erro) {
-      if (erro.status == 401)
-      Materialize.toast('Usuário ou senha inválida', 5000)
-      if (erro.status >= 500)
-      Materialize.toast('Erro no servidor', 5000)
-      $scope.user.email = ''
-      $scope.user.password = ''
-    })
-  }
-  $scope.logout = function () {
-    $http.post('/logout')
-    .success(function (data) {
-      $cookies.remove('session')
-      $cookies.remove('profile')
-      $cookies.remove('admin')
-      $window.location.href = '/'
-    })
-  }
-  $scope.recoverPassword = function () {
-    $http.post('/recover-password', $scope.recover)
-    .success(function (data) {
-      Materialize.toast('Um Email com o link para recuperação de senha será enviado para ' + $scope.recover.email, 5000)
-      $state.go('login');
-    })
-    .error(function (data) {
-      console.log('erro')
-      Materialize.toast('Não foi possível enviar o email de recuperação de senha', 5000)
-      $state.go('login');
-      $scope.recover.email = ''
-    })
-  }
+oddin.controller("LoginController", ["$scope", "$window", "LoginAPI", "$cookies", "$location", "$state",
+function ($scope, $window, LoginAPI, $cookies, $location, $state) {
+	$scope.load = true;
 
-  $scope.redefinePassword = function (password, passwordConfirmation) {
-    if (password !== passwordConfirmation) {
-      Materialize.toast('As senhas estão diferentes', 5000)
-      return
-    }
+	$scope.login = function (user) {
+		$scope.load = false;
+		LoginAPI.login(user)
+		.then(function (response) {
+			if(user.persist) {
+				var expireDate = new Date();
+				expireDate.setMonth(expireDate.getMonth() + 1);
+				$cookies.put("session", $cookies.get("session"), {"expires": expireDate});
+			}
+			if(response.data.person.admin) {
+				$cookies.put("admin", true);
+			}
+			$window.location.href = "/home";
+		})
+		.catch(function (error) {
+			if (error.status == 401)
+				Materialize.toast("Usuário ou senha inválida", 3000);
+			if (error.status >= 500)
+				Materialize.toast("Erro no servidor", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+			delete $scope.user;
+		})
+	};
 
-    var body = {
-      password: password,
-      token: $location.search().token,
-    }
+	$scope.logout = function () {
+		LoginAPI.logout()
+		.then(function () {
+			$cookies.remove("session");
+			$cookies.remove("profile");
+			$cookies.remove("admin");
+			$window.location.href = "/";
+		})
+		.catch(function () {
+			Materialize.toast("Não foi possível sair da aplicação");
+		})
+	};
 
-    $http.post('/redefine-password', body)
-    .success(function (data) {
-      Materialize.toast('Senha redefinida com sucesso', 3000)
-      $state.go('login');
-    })
-    .error(function (data) {
-      console.log('erro')
-      Materialize.toast('Senha inválida', 3000)
-      password = "";
-      passwordConfirmation = "";
-    })
-  }
-}
-)
+	$scope.recoverPassword = function (user) {
+		$scope.load = false;
+		LoginAPI.recoverPassword(user)
+		.then(function () {
+			Materialize.toast("Um Email com o link para recuperação de senha será enviado para " + user.email, 3000)
+			$state.go("login");
+		})
+		.catch(function () {
+			Materialize.toast("Não foi possível enviar o email de recuperação de senha", 3000)
+		})
+		.finally(function () {
+			$scope.load = true;
+			delete $scope.user;
+		})
+	}
+
+	$scope.redefinePassword = function (user) {
+		$scope.load = false;
+		if (user.password !== user.passwordConfirmation) {
+			$scope.load = true;
+			delete $scope.user;
+			Materialize.toast("As senhas estão diferentes", 3000);
+			return;
+		}
+		user.token = $location.search().token;
+		LoginAPI.redefinePassword(user)
+		.then(function () {
+			Materialize.toast("Senha redefinida com sucesso", 3000);
+			$state.go("login");
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao redefinir senha", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+			delete $scope.user;
+		})
+	};
+}]);

@@ -1,0 +1,69 @@
+doctype html
+div(ng-include="'partials/dates/index-menu'")
+
+main
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="createDate(newDate)")
+					h1.modal-criar-item__titulo Postar Data
+					.row
+						.input-field.col.s12
+							input#new-date-subject(type="text" ng-model="newDate.subject" required)
+							label(for="new-date-subject") Assunto
+						.input-field.col.s12
+							textarea#new-date-text.materialize-textarea(ng-model="newDate.text" required)
+							label(for="textarea_data") Descrição
+						.input-field.col.m6
+							input#new-date-date(type="text" ng-model="newDate.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+							label(for="new-date-date") Data
+						.input-field.col.m6
+							input#new-date-time(type="text" ng-model="newDate.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
+							label(for="new-date-time") Hora
+					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Enviar
+	#modal-edit.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="updateDate(modalDate)")
+					h1.modal-criar-item__titulo Editar Data
+					.row
+						.input-field.col.s12
+							input#modal-date-subject(type="text" ng-model="modalDate.subject" required)
+							label(for="modal-date-subject") Assunto
+						.input-field.col.s12
+							textarea#modal-date-text.materialize-textarea(ng-model="modalDate.text" required)
+							label(for="modal-date-text") Descrição
+						.input-field.col.m6
+							input#modal-date-date(type="text" ng-model="modalDate.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+							label(for="modal-date-date") Data
+						.input-field.col.m6
+							input#modal-date-time(type="text" ng-model="modalDate.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required)
+							label(for="modal-date-time") Hora
+					button.btn.waves-effect.waves-light.modal-close.modal-criar-item__multiple-button(type="button" name="action") Cancelar
+					button.btn.waves-effect.waves-light.modal-close.modal-criar-item__multiple-button(type="submit" name="action") Atualizar
+	#modal-delete.modal
+		.modal-content
+			h4.custom-modal__header Excluir Data
+			p Tem certeza que deseja excluir "{{modalDate.subject}}"?
+		.modal-footer
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteDate(modalDate)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	//- Main Content
+	.container
+		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
+		p.empty-message.center-align(ng-if="dates.length == 0") Nenhuma data foi postada
+		.card.custom-card(ng-repeat="date in dates | orderBy : 'date'")
+			.card-content
+				.custom-card__header
+					span.title {{date.subject}}
+					span.secondary-info--leading {{date.date | date:"dd/MM/yyyy à's' HH:mm"}}
+				p {{date.text}}
+			.card-action.custom-card__action
+				.row
+					.col.m4
+						a(href="" ng-click="modalDelete(date)")
+							i.material-icons delete
+						a(href="" ng-click="modalEdit(date)")
+							i.material-icons edit

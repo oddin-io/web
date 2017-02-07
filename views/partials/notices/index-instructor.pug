@@ -1,0 +1,29 @@
+doctype html
+div(ng-include="'partials/notices/index-menu'")
+
+main
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="createNotice(newNotice)")
+					h1.modal-criar-item__titulo Postar aviso
+					.row
+						.input-field.col.s12
+							input#new-notice-subject(type="text" ng-model="newNotice.subject" required)
+							label(for="new-notice-subject") Título
+						.input-field.col.s12
+							textarea#new-notice-text.materialize-textarea(ng-model="newNotice.text" required)
+							label(for="new-notice-text") Descrição
+					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Enviar
+	//- Main Content
+	.container
+		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
+		p.empty-message.center-align(ng-if="notices.length == 0") Nenhum aviso foi postado
+		.card.custom-card(ng-repeat="notice in notices | orderBy : 'created_at' : true")
+			.card-content
+				.custom-card__header
+					span.title {{notice.subject}}
+					span.secondary-info {{notice.created_at | date:"dd/MM/yyyy à's' HH:mm"}}
+				p {{notice.text}}

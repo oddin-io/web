@@ -1,71 +1,74 @@
-oddin.controller('AdminLecturesController', function ($http, $scope, $stateParams, $cookies) {
-	$scope.usuario = {
-		'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-		'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-	}
+oddin.controller("AdminLecturesController", ["$scope", "CurrentUser", "LectureAPI", "ManageList",
+function ($scope, CurrentUser, LectureAPI, ManageList) {
+	$scope.user = CurrentUser;
 
-	$scope.data_loaded = true;
+	(function findLectures() {
+		$scope.load = false;
+		LectureAPI.index()
+		.then(function (response) {
+			$scope.lectures = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar disciplinas", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-	$scope.openModalDeleteDisciplina = function (disciplina) {
-		$scope.modalContent = disciplina;
-		$('#modal-deleta-disciplina').openModal();
-	}
-
-	$scope.openModalEditDisciplina = function (disciplina) {
-		$scope.modalContent = angular.copy(disciplina);
-		$('#modal-edita-disciplina').openModal();
-	}
-
-	$scope.buscaDisciplinas = function () {
-		$http.get('/api/lectures')
-		.success(function (data) {
-			$scope.disciplinas = data;
+	$scope.createLecture =  function (newLecture) {
+		$scope.load = false;
+		LectureAPI.create(newLecture)
+		.then(function (response) {
+			$scope.lectures.push(response.data);
+			Materialize.toast("Disciplina cadastrada", 3000)
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao cadastrar disciplina", 3000);
+		})
+		.finally(function () {
+			delete $scope.newLecture;
+			$scope.load = true;
 		})
 	}
 
-	$scope.cadastraDisciplina =  function () {
-		$scope.data_loaded = false;
-		$http.post('/api/lectures', $scope.disciplina)
-		.success(function (data) {
-			$scope.disciplinas.push(data);
-			$scope.disciplina = null;
-			$scope.data_loaded = true;
-			Materialize.toast('Disciplina cadastrada', 3000)
+	$scope.updateLecture = function (modalLecture) {
+		$scope.load = false;
+		LectureAPI.update(modalLecture.id, modalLecture)
+		.then(function (response) {
+			ManageList.updateItem($scope.lectures, response.data);
+			Materialize.toast("Disciplina atualizada", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao atualizar disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	//Implementar Atualização no Backend
-	$scope.updateDisciplina = function (modalContent) {
-		$scope.data_loaded = false;
-		$http.put('/api/lectures/' + modalContent.id, $scope.modalContent)
-		.success(function (data) {
-			$scope.disciplinas.forEach( function (elem, i) {
-				if(elem.id == modalContent.id) {
-					$scope.disciplinas[i] = data;
-				}
-			});
-			$scope.data_loaded = true;
-			Materialize.toast('Disciplina atualizada', 3000);
+	$scope.deleteLecture = function (modalLecture) {
+		$scope.load = false;
+		LectureAPI.destroy(modalLecture.id)
+		.then(function (response) {
+			ManageList.deleteItem($scope.lectures, modalLecture);
+			Materialize.toast("Disciplina deletada", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao excluir disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	//Corrigir exclusão de disciplina no Backend
-	$scope.deleteDisciplina = function (modalContent) {
-		$scope.data_loaded = false;
-		$http.delete('/api/lectures/' + modalContent.id)
-		.success(function (data) {
-			for(var i = 0; i < $scope.disciplinas.length; i++) {
-				if($scope.disciplinas[i].id == data.id) {
-					$scope.disciplinas.splice(i, 1);
-					break;
-				}
-			}
-			$scope.data_loaded = true;
-			Materialize.toast('Disciplina deletada', 3000);
-		})
-		.error(function () {
-			Materialize.toast('Essa disciplina nao pode ser deletada', 3000)
-			$scope.data_loaded = true;
-		})
+	$scope.modalEdit = function (lecture) {
+		$scope.modalLecture = angular.copy(lecture);
+		$("#modal-edit").openModal();
 	}
-});
+
+	$scope.modalDelete = function (lecture) {
+		$scope.modalLecture = angular.copy(lecture);
+		$("#modal-delete").openModal();
+	}
+}]);
