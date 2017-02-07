@@ -1,38 +1,59 @@
-oddin.controller('InstructionsController',
-  function ($scope, Disciplina, $cookies, Profile, $stateParams, $state) {
-    function buscaDisciplinas() {
-      Disciplina.query(
-        function (disciplinas) {
-          $scope.disciplinas = disciplinas
-        },
-        function (erro) {
-          console.log('Não foi possível obter a lista de disciplinas')
-          console.log(erro)
-        }
-      )
-    }
-    $scope.buscarPerfil = function (disciplina) {
-      if (!$cookies.get('profile')) {
-        Profile.get({ id: disciplina.id },
-                function (data) {
-                  $cookies.put('profile', data.profile)
-                  $state.go('aulas', {'disciplinaID': disciplina.id})
-                },
-                function (erro) {
-                  console.log('Erro ao encontrar perfil')
-                }
-            )
-      } else {
-        $state.go('aulas', {'disciplinaID': disciplina.id})
-      }
-    }
+oddin.controller("InstructionsController", ["$scope", "$cookies", "$state", "CurrentUser", "InstructionAPI", "$filter",
+function ($scope, $cookies, $state, CurrentUser, InstructionAPI, $filter) {
+	$scope.user = CurrentUser;
 
-    $scope.usuario = {
-      'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-      'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-    }
+	function setSeasons(instructions) {
+		var seasonAux = {};
+		$scope.seasons = instructions.map(function(instruction) {
+			var _semester = $filter("date")(instruction.start_date, "MM") < 7 ? 1 : 2;
+			var _year = $filter("date")(instruction.start_date, "yyyy");
+			var _season = _year + "/" + _semester;
+			if(seasonAux.hasOwnProperty(_season))
+				return undefined;
+			seasonAux[_season] = true;
+			return {
+				label: _season,
+				instructions: []
+			};
+		}).filter(function(season) {
+			return typeof season !== "undefined";
+		});
+		$scope.seasons.forEach(function(season) {
+			instructions.forEach(function(instruction) {
+				var _instructionSeason = $filter("date")(instruction.start_date, "yyyy");
+				_instructionSeason += "/" + ($filter("date")(instruction.start_date, "MM") < 7 ? 1 : 2);
+				if(season.label == _instructionSeason)
+					season.instructions.push(instruction);
+			});
+		});
+	}
 
-    $scope.titulo = 'Disciplinas'
-    buscaDisciplinas()
-  }
-)
+	(function findInstructions() {
+		$scope.load = false;
+		InstructionAPI.index()
+		.then(function (response) {
+			setSeasons(response.data);
+		})
+		.catch(function (error) {
+			Materialize.toast("Erro ao carregar disciplinas", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
+
+	$scope.enterInstruction = function (instruction) {
+		if (!$cookies.get("profile")) {
+			InstructionAPI.getProfile(instruction.id)
+			.then (function (response) {
+				$cookies.put("profile", response.data.profile);
+				$state.go("presentations", {"instructionID": instruction.id})
+			})
+			.catch (function () {
+				Materialize.toast("Erro ao tentar entrar em " + instruction.lecture.name, 3000);
+			});
+		} else {
+			$state.go("presentations", {"instructionID": instruction.id})
+		}
+	}
+}]);

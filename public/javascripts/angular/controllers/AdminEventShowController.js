@@ -1,86 +1,102 @@
-oddin.controller('AdminEventShowController', function ($http, $scope, $stateParams, $cookies) {
+oddin.controller("AdminEventShowController", ["$scope", "$stateParams", "CurrentUser", "InstructionAPI", "EventAPI", "LectureAPI", "$filter", "ManageList",
+function ($scope, $stateParams, CurrentUser, InstructionAPI, EventAPI, LectureAPI, $filter, ManageList) {
+	$scope.user = CurrentUser;
 
-  $scope.usuario = {
-    'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-    'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-  }
+	function setSeason(instruction) {
+		var _year = $filter("date")(instruction.start_date, "yyyy");
+		var _semester = $filter("date")(instruction.start_date, "MM") < 7 ? 1 : 2;
+		var _season = _year + "/" + _semester;
+		instruction.season = _season;
+	}
 
-  $scope.data_loaded = true;
+	(function getInfo() {
+		$scope.load = false;
+		EventAPI.show($stateParams.eventID)
+		.then(function (response) {
+			$scope.event = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações do curso", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-  $scope.buscaInfo = function () {
-    $http.get('api/events/' + $stateParams.cursoID)
-    .success(function (data) {
-      $scope.curso = data;
-    });
-  }
+	(function findInstructions() {
+		$scope.load = false;
+		EventAPI.getInstructions($stateParams.eventID)
+		.then(function (response) {
+			$scope.instructions = response.data;
+			$scope.instructions.forEach(function (elem) {
+				setSeason(elem);
+			})
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar disciplinas cadastradas", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-	$scope.buscaLectures = function () {
-		$http.get('/api/lectures')
-		.success(function (data) {
-			$scope.lectures = data;
+	$scope.findLectures = function () {
+		$scope.load = false;
+		LectureAPI.index()
+		.then(function (response) {
+			$scope.lectures = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar disciplinas disponíveis", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.buscaInstructions = function () {
-		$http.get('api/events/' + $stateParams.cursoID + '/instructions')
-		.success(function (data) {
-			$scope.instructions = data;
+	$scope.createInstruction = function (modalInstruction) {
+		$scope.load = false;
+		modalInstruction.lecture = modalInstruction.lecture.id;
+		modalInstruction.event = $stateParams.eventID;
+		modalInstruction.start_date = $filter("toDate")(modalInstruction.start_date);
+		modalInstruction.end_date = $filter("toDate")(modalInstruction.end_date);
+		InstructionAPI.create(modalInstruction)
+		.then(function (response) {
+			setSeason(response.data);
+			$scope.instructions.push(response.data);
+			Materialize.toast("Disciplina Adicionada", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao adicionar disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.openModalAddLecture = function (lecture) {
-		$scope.modalContent = angular.copy(lecture);
-		$('#modal-add-disciplina').openModal();
-	}
-
-	$scope.openModalDeleteInstruction = function (instruction) {
-		$scope.modalContent = angular.copy(instruction);
-		$('#modal-delete-instruction').openModal();
-	}
-
-	$scope.createInstruction = function () {
-    $scope.data_loaded = false;
-		var startDate = {
-			year: parseInt($scope.modalContent.start_date.substring(4, 8)),
-			month: parseInt($scope.modalContent.start_date.substring(2, 4)) - 1,
-			day: parseInt($scope.modalContent.start_date.substring(0, 2))
-		};
-
-		var endDate = {
-			year: parseInt($scope.modalContent.end_date.substring(4, 8)),
-			month: parseInt($scope.modalContent.end_date.substring(2, 4)) - 1,
-			day: parseInt($scope.modalContent.end_date.substring(0, 2))
-		}
-
-		var instruction = {};
-		instruction.lecture = $scope.modalContent.id;
-		instruction.event = $scope.curso.id;
-		instruction.class_number = $scope.modalContent.class_number;
-		instruction.start_date = new Date(startDate.year, startDate.month, startDate.day);
-		instruction.end_date = new Date(endDate.year, endDate.month, endDate.day);
-
-		$http.post('api/instructions', instruction)
-		.success(function (data) {
-			$scope.instructions.push(data);
-			$scope.modalContent = null;
-      $scope.data_loaded = true;
-      Materialize.toast('Disciplina Adicionada', 3000)
+	$scope.deleteInstruction = function (modalInstruction) {
+		$scope.load = false;
+		InstructionAPI.destroy(modalInstruction.id)
+		.then(function (response) {
+			ManageList.deleteItem($scope.instructions, modalInstruction);
+			Materialize.toast("Disciplina removida", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao remover disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
-	$scope.deleteInstruction = function () {
-    $scope.data_loaded = false;
-		$http.delete('api/instructions/' + $scope.modalContent.id)
-		.success(function (data) {
-			for(var i = 0; i < $scope.instructions.length; i++) {
-				if(data.id == $scope.instructions[i].id) {
-					$scope.instructions.splice(i, 1);
-					break;
-				}
-			}
-			$scope.modalContent = null;
-      $scope.data_loaded = true;
-      Materialize.toast('Disciplina removida', 3000)
-		})
+	$scope.modalAdd = function (lecture) {
+		$scope.modalInstruction = {};
+		$scope.modalInstruction.lecture = angular.copy(lecture);
+		$("#modal-add").openModal();
 	}
-});
+
+	$scope.modalRemove = function (instruction) {
+		$scope.modalInstruction = angular.copy(instruction);
+		$("#modal-remove").openModal();
+	}
+}]);

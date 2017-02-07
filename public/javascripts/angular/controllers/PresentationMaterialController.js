@@ -1,95 +1,103 @@
-oddin.controller('PresentationMaterialController',
-    function ($scope, $stateParams, Aula, Duvida, Resposta, $http, $state, $cookies) {
-      $scope.filter = false
-      $scope.duvida = new Duvida()
-      $scope.last_doubt = {}
-      $scope.data_loaded = true
+oddin.controller("PresentationMaterialController", ["$scope", "$stateParams", "$http", "CurrentUser", "PresentationAPI", "MaterialAPI", "ManageList",
+function ($scope, $stateParams, $http, CurrentUser, PresentationAPI, MaterialAPI, ManageList) {
+	$scope.user = CurrentUser;
 
-      function buscaInfo() {
-        Aula.get({ id: $stateParams.aulaID },
-                function (aula) {
-                  $scope.aula = aula
-                },
-                function (erro) {
-                  $scope.mensagem = { texto: 'Não foi possível obter o resultado.' }
-                }
-            )
-      }
+	(function getInfo() {
+		$scope.load = false;
+		PresentationAPI.show($stateParams.presentationID)
+		.then(function (response) {
+			$scope.presentation = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da aula", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-      function feedbackReloadMaterial(msg) {
-        $http.get('/api/presentation/' + $stateParams.aulaID + '/materials')
-                .success(function (data) {
-                  $scope.materiais = data
-                  $scope.data_loaded = true
-                  Materialize.toast(msg, 4000)
-                })
-      }
+	(function findMaterials() {
+		$scope.load = false;
+		PresentationAPI.getMaterials($stateParams.presentationID)
+		.then(function (response) {
+			$scope.materials = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar materiais", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-      $scope.buscaMateriais = function () {
-        $http.get('/api/presentation/' + $stateParams.aulaID + '/materials')
-                .success(function (data) {
-                  $scope.materiais = data
-                })
-      }
-
-      $scope.uploadMaterial = function () {
-        $scope.data_loaded = false
-        var file = document.forms.uploadArchive.file.files[0]
-        var fd = new FormData()
-        $http.post('api/presentation/' + $stateParams.aulaID + '/materials')
-                .success(function (data) {
-                  for (var key in data.fields) {
-                    fd.append(key, data.fields[key])
-                  }
-                  fd.append('file', file)
-                  $http.post(data.url, fd, { headers: { 'Content-Type': undefined } })
-                        .success(function () {
-                          $http.put('api/materials/' + data.id, { name: file.name, mime: file.type })
-                                .success(function () {
-                                  console.log('Upload Realizado')
-                                  feedbackReloadMaterial('O arquivo ' + file.name + ' foi postado')
-                                })
-                        })
-                })
-      }
-
-      $scope.openModalDeleteMaterial = function (material) {
-        $scope.modalContent = material
-        $('#modal-deleta-material').openModal()
-      }
-
-			$scope.downloadMaterial = function (material) {
-					$scope.data_loaded = false;
-					$http.get('api/materials/' + material.id)
-							.success(function (data) {
-								var link = document.createElement('a')
-								link.setAttribute('href', data.url)
-								link.setAttribute('download', true)
-
-								hiddenLink = document.getElementById("hidden-link")
-								hiddenLink.appendChild(link)
-
-								link.click()
-								$scope.data_loaded = true;
-								Materialize.toast('Fazendo download de ' + material.name, 4000)
-
-								hiddenLink.removeChild(link)
-							})
+	$scope.createMaterial = function () {
+		$scope.load = false;
+		PresentationAPI.createMaterial($stateParams.presentationID)
+		.then(function (response) {
+			newMaterial = response.data;
+			file = document.forms.uploadArchive.file.files[0];
+			fd = new FormData();
+			for(var key in newMaterial.fields) {
+				fd.append(key, newMaterial.fields[key]);
 			}
+			fd.append("file", file);
+			return $http.post(newMaterial.url, fd, { headers: {"Content-Type": undefined}});
+		})
+		.then(function () {
+			return MaterialAPI.update(newMaterial.id, {"name": file.name, "mime": file.type});
+		})
+		.then(function (response) {
+			$scope.materials.push(response.data.material);
+			Materialize.toast("O arquivo " + file.name + " foi postado", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao fazer upload de material", 3000);
+		})
+		.finally(function () {
+			document.getElementById("new-material-file").value = "";
+			document.getElementById("new-material-description").value = "";
+			$scope.load = true;
+		})
+	}
 
-      $scope.deleteMaterial = function (material) {
-        $scope.data_loaded = false
-        $http.delete('api/materials/' + material.id)
-                .success(function (data) {
-                  feedbackReloadMaterial('Arquivo deletado')
-                })
-      }
+	$scope.downloadMaterial = function (material) {
+		$scope.load = false;
+		MaterialAPI.show(material.id)
+		.then(function (response) {
+			var link = document.createElement("a");
+			link.setAttribute("href", response.data.url);
+			link.setAttribute("download", true);
+			hiddenLink = document.getElementById("hidden-link");
+			hiddenLink.appendChild(link);
+			link.click();
+			Materialize.toast("Fazendo download de " + material.name, 3000);
+			hiddenLink.removeChild(link);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao fazer download de material", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
 
-      $scope.usuario = {
-        id: JSON.parse($cookies.get('session').substring(2)).person.id,
-        nome: JSON.parse($cookies.get('session').substring(2)).person.name,
-        email: JSON.parse($cookies.get('session').substring(2)).person.email,
-      }
-      buscaInfo()
-    }
-)
+	$scope.deleteMaterial = function (modalMaterial) {
+		$scope.load = false;
+		MaterialAPI.destroy(modalMaterial.id)
+		.then(function (response) {
+			ManageList.deleteItem($scope.materials, modalMaterial);
+			Materialize.toast("Material excluído", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao excluir material", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
+
+	$scope.modalDelete = function (material) {
+		$scope.modalMaterial = angular.copy(material);
+		$("#modal-delete").openModal()
+	}
+}]);

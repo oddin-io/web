@@ -1,0 +1,56 @@
+doctype html
+div(ng-include="'partials/presentations/index-menu'")
+
+main
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="createPresentation(newPresentation)")
+					h1.modal-criar-item__titulo Criar Nova Aula
+					.row
+						.input-field.col.s12
+							input#new-presentation-subject(type="text" ng-model="newPresentation.subject")
+							label(for="new-presentation-subject") Tema
+					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Criar
+	#modal-close.modal
+		.modal-content
+			h4.custom-modal__header Finalizar Aula
+			p Tem certeza que deseja finalizar "{{modalPresentation.subject}}"?
+		.modal-footer
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="closePresentation(modalPresentation)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	//- Main Content
+	.container
+		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
+		.row
+			.col.s12
+				ul.tabs.lista-tab(tabs, reload="allTabContentLoaded")
+					li.tab.col.s6.lista-tab__item
+						a(href="#opened-presentations") Abertas
+					li.tab.col.s6.lista-tab__item
+						a(href="#closed-presentations") Encerradas
+			#opened-presentations.col.s12
+				ul.collection.lista-aulas
+					p.empty-message.center-align(ng-if="presentations.length == 0") Nenhuma aula foi iniciada
+					li.collection-item.avatar.lista-aulas__item(ng-repeat="presentation in presentations | filter: {status: 0}: true | orderBy : 'created_at' : true")
+						a(href="" ng-click="modalClose(presentation)")
+							i.material-icons.circle lock_open
+						a(ui-sref="presentation-show({presentationID: presentation.id})")
+							span.title {{presentation.subject}}
+							p
+								| {{presentation.created_at | date:"dd/MM/yyyy"}}
+								br
+								| {{presentation.created_at | date:"HH:mm"}}
+			#closed-presentations.col.s12
+				ul.collection.lista-aulas
+					p.empty-message.center-align(ng-if="presentations.length == 0") Nenhuma aula foi iniciada
+					li.collection-item.avatar.lista-aulas__item(ng-repeat="presentation in presentations | filter: {status: 1}: true | orderBy : 'created_at' : true")
+						i.material-icons.circle.red.lighten-2 lock_outline
+						a(ui-sref="presentation-show({presentationID: presentation.id})")
+							span.title {{presentation.subject}}
+							p
+								| {{presentation.created_at | date:"dd/MM/yyyy"}}
+								br
+								| {{presentation.created_at | date:"HH:mm"}}

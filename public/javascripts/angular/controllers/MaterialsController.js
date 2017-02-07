@@ -1,104 +1,103 @@
-oddin.controller('MaterialsController',
-    function ($http, $scope, $stateParams, $state, $cookies, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
+oddin.controller("MaterialsController", ["$http", "$scope", "$stateParams", "InstructionAPI", "MaterialAPI", "CurrentUser", "ManageList",
+function ($http, $scope, $stateParams, InstructionAPI, MaterialAPI, CurrentUser, ManageList) {
+	$scope.user = CurrentUser;
 
-        $scope.usuario = {
-            'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-            'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-        }
+	(function getInfo() {
+		$scope.load = false;
+		InstructionAPI.show($stateParams.instructionID)
+		.then(function (response) {
+			$scope.instruction = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-        $scope.data_loaded = true;
+	(function findMaterials() {
+		$scope.load = false;
+		InstructionAPI.getMaterials($stateParams.instructionID)
+		.then(function (response) {
+			$scope.materials = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar material", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-        function buscaInfo() {
-            Disciplina.get({ id: $stateParams.disciplinaID },
-                function (disciplina) {
-                    $scope.disciplina = disciplina
-                },
-                function (erro) {
-                    $scope.mensagem = { texto: 'Não foi possível obter o resultado.' }
-                }
-            )
-        }
+	$scope.downloadMaterial = function (material) {
+		$scope.load = false;
+		MaterialAPI.show(material.id)
+		.then(function (response) {
+			var link = document.createElement("a");
+			link.setAttribute("href", response.data.url);
+			link.setAttribute("download", true);
+			hiddenLink = document.getElementById("hidden-link");
+			hiddenLink.appendChild(link);
+			link.click();
+			hiddenLink.removeChild(link);
+			Materialize.toast("Fazendo download de " + material.name, 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao baixar '" + material.name, 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
 
-        function feedbackReloadMaterial(msg) {
-            DisciplinaMaterial.query({ id: $stateParams.disciplinaID },
-                function (materiais) {
-                    $scope.materiais = materiais
-                    $scope.data_loaded = true;
-                    Materialize.toast(msg, 4000);
-                },
-                function (erro) {
-                    $scope.mensagem = {
-                        texto: 'Não foi possível obter o resultado.',
-                    }
-                }
-            )
-        }
+	$scope.createMaterial = function () {
+		$scope.load = false;
+		InstructionAPI.createMaterial($stateParams.instructionID)
+		.then(function (response) {
+			newMaterial = response.data;
+			file = document.forms.uploadArchive.file.files[0];
+			fd = new FormData();
+			for(var key in newMaterial.fields) {
+				fd.append(key, newMaterial.fields[key]);
+			}
+			fd.append("file", file);
+			return $http.post(newMaterial.url, fd, { headers: {"Content-Type": undefined}});
+		})
+		.then(function () {
+			return MaterialAPI.update(newMaterial.id, {"name": file.name, "mime": file.type});
+		})
+		.then(function (response) {
+			$scope.materials.push(response.data.material);
+			Materialize.toast("O arquivo " + file.name + " foi postado", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao fazer upload de arquivo", 3000);
+		})
+		.finally(function () {
+			document.getElementById("new-material-file").value = "";
+			document.getElementById("new-material-description").value = "";
+			$scope.load = true;
+		})
+	}
 
-        $scope.uploadMaterial = function () {
-            $scope.data_loaded = false;
-            var file = document.forms.uploadArchive.file.files[0]
-            var fd = new FormData()
-            $http.post('api/instructions/' + $scope.disciplina.id + '/materials')
-                .success(function (data) {
-                    for (var key in data.fields) {
-                        fd.append(key, data.fields[key])
-                    }
-                    fd.append('file', file)
-                    $http.post(data.url, fd, { headers: { 'Content-Type': undefined } })
-                        .success(function () {
-                            $http.put('api/materials/' + data.id, { 'name': file.name, 'mime': file.type })
-                                .success(function () {
-                                    console.log('Upload Realizado')
-                                    feedbackReloadMaterial('O arquivo ' + file.name + ' foi postado');
-                                })
-                        })
-                })
-        }
+	$scope.deleteMaterial = function (modalMaterial) {
+		$scope.load = false;
+		MaterialAPI.destroy(modalMaterial.id)
+		.then(function (response) {
+			ManageList.deleteItem($scope.materials, modalMaterial);
+			Materialize.toast("Material deletado", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao excluir Material", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
 
-        $scope.buscaMateriais = function () {
-            DisciplinaMaterial.query({ id: $stateParams.disciplinaID },
-                function (materiais) {
-                    $scope.materiais = materiais
-                },
-                function (erro) {
-                    $scope.mensagem = {
-                        texto: 'Não foi possível obter o resultado.',
-                    }
-                }
-            )
-        }
-
-        $scope.openModalDeleteMaterial = function (material) {
-            $scope.modalContent = material;
-              $('#modal-deleta-material').openModal();
-        }
-
-        $scope.downloadMaterial = function (material) {
-            $scope.data_loaded = false;
-            $http.get('api/materials/' + material.id)
-                .success(function (data) {
-                  var link = document.createElement('a')
-                  link.setAttribute('href', data.url)
-                  link.setAttribute('download', true)
-
-                  hiddenLink = document.getElementById("hidden-link")
-                  hiddenLink.appendChild(link)
-
-                  link.click()
-                  $scope.data_loaded = true;
-                  Materialize.toast('Fazendo download de ' + material.name, 4000)
-
-                  hiddenLink.removeChild(link)
-                })
-        }
-
-        $scope.deleteMaterial = function (material) {
-            $scope.data_loaded = false;
-            $http.delete('api/materials/' + material.id)
-                .success(function (data) {
-                    feedbackReloadMaterial('Arquivo deletado');
-                })
-        }
-        buscaInfo()
-    }
-)
+	$scope.modalDelete = function (material) {
+		$scope.modalMaterial = angular.copy(material);
+		$("#modal-delete").openModal();
+	}
+}]);

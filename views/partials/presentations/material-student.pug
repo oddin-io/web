@@ -1,0 +1,16 @@
+doctype html
+div(ng-include="'partials/presentations/material-menu'")
+
+main
+	#hidden-link
+	oddin-preloader(load-var="load" side-bar="true")
+	.container
+		ul.collection.with-header.lista-material
+			li.collection-header.lista-material__header
+				h2 Material da Aula
+			p.empty-message.center-align(ng-if="notices.length == 0") Nenhum material foi postado
+			li.collection-item.avatar.lista-material__item(ng-repeat="material in materials | orderBy: 'name'")
+				i.material-icons.circle insert_drive_file
+				span.title
+					a(href="" ng-click="downloadMaterial(material)") {{material.name}}
+				p {{material.mime}}

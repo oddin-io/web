@@ -1,232 +1,248 @@
-oddin.controller('WorkShowController',
-  function ($scope, $stateParams, $http, $cookies) {
-    function buscaInfo() {
-      $http.get('/api/works/' + $stateParams.tarefaID)
-        .success(function (data) {
-          $scope.tarefa = data
-        })
-    }
-    $scope.data_loaded = true;
-    $scope.usuario = {
-        'id': JSON.parse($cookies.get('session').substring(2)).person.id,
-        'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-        'email': JSON.parse($cookies.get('session').substring(2)).person.email
-    }
+oddin.controller("WorkShowController", ["$scope", "$stateParams", "$http", "CurrentUser", "WorkAPI", "MaterialAPI", "SubmissionAPI", "$q", "ManageList",
+function ($scope, $stateParams, $http, CurrentUser, WorkAPI, MaterialAPI, SubmissionAPI, $q, ManageList) {
+	$scope.user = CurrentUser;
 
-    function feedbackReloadSubmissions(msg) {
-      $http.get('/api/works/' + $stateParams.tarefaID + '/submissions')
-          .success(function (data) {
-              $scope.submissoes = [];
-              var submissions  = data;
-              submissions.forEach(function (elem) {
-                if(elem.person.id == $scope.usuario.id)
-                  $scope.submissoes.push(elem);
-              })
-              $scope.data_loaded = true;
-              Materialize.toast(msg, 4000);
-          })
-    }
+	(function getInfo() {
+		$scope.load = false;
+		WorkAPI.show($stateParams.workID)
+		.then(function (response) {
+			$scope.work = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da tarefa", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-    $scope.buscaSubmissoesAluno = function () {
-        $http.get('/api/works/' + $stateParams.tarefaID + '/submissions')
-            .success(function (data) {
-                $scope.submissoes = [];
-                var submissions = data;
-                submissions.forEach(function (elem) {
-                  if(elem.person.id == $scope.usuario.id)
-                    $scope.submissoes.push(elem);
-                })
-            })
-    }
+	(function findSubmissions() {
+		$scope.load = false;
+		WorkAPI.getSubmissions($stateParams.workID)
+		.then(function (response) {
+			$scope.submissions = response.data;
+			for(var i = 0; i < $scope.submissions.length; i++) {
+				if($scope.submissions[i].person.id == $scope.user.id) {
+					$scope.mySubmission = $scope.submissions[i];
+					break;
+				}
+			}
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar trabalhos", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-    $scope.openModalDeleteSubmission = function (submission) {
-      $scope.modalContent = submission;
-      $('#modal-deleta-submissao').openModal();
-    }
+	$scope.createSubmission = function (newSubmission) {
+		$scope.load = false;
+		if(document.forms.uploadArchive.file.files[0]) {
+			WorkAPI.createSubmission($stateParams.workID, newSubmission)
+			.then(setCurrentSubmission)
+			.then(createSubmissionMaterial)
+			.then(uploadFile)
+			.then(updateMaterial)
+			.then(showCurrentSubmission)
+			.then(addSubmissionToView)
+			.catch(function () {
+				Materialize.toast("Erro ao postar trabalho", 3000);
+			})
+			.finally(function () {
+				document.getElementById("new-submission-file").value = "";
+				delete $scope.newSubmission;
+				$scope.load = true;
+			})
+			return;
+		}
+		WorkAPI.createSubmission($stateParams.workID, newSubmission)
+		.then(addSubmissionToView)
+		.catch(function () {
+			Materialize.toast("Erro ao postar trabalho", 3000);
+		})
+		.finally(function () {
+			delete $scope.newSubmission;
+			$scope.load = true;
+		})
+	}
 
-    $scope.openModalEditSubmission = function (submission) {
-      $scope.modalContent = angular.copy(submission);
-      if(submission.materials[0]) {
-        $scope.modalContent.materialName = submission.materials[0].name;
-      }
-      $('#editar-trabalho').openModal();
-    }
+	$scope.updateSubmission = function (modalMySubmission) {
+		$scope.load = false;
 
-    $scope.deleteSubmission = function (submission) {
-      $scope.data_loaded = false;
-      $http.delete('api/submissions/' + submission.id)
-        .success(function () {
-          if(submission.materials.length > 0) {
-            $http.delete('api/materials/' + submission.materials[0].id)
-              .success(function () {
-                for(var i = 0; i < $scope.submissoes.length; i++) {
-                  if($scope.submissoes[i].id === submission.id) {
-                    $scope.submissoes.splice(i, 1);
-                    break;
-                  }
-                }
-                $scope.data_loaded = true;
-                Materialize.toast('Trabalho deletado', 3000);
-              })
-          } else {
-            $scope.data_loaded = true;
-            Materialize.toast('Trabalho deletado', 3000);
-          }
-        })
-    }
+		if(modalMySubmission.materials.length > 0 && document.forms.updateArchive.file.files[0]) {
+			SubmissionAPI.update(modalMySubmission.id, modalMySubmission)
+			.then(setCurrentSubmission)
+			.then(destroySubmissionMaterial)
+			.then(createSubmissionMaterial)
+			.then(updateFile)
+			.then(updateMaterial)
+			.then(showCurrentSubmission)
+			.then(updateSubmissionView)
+			.catch(function () {
+				Materialize.toast("Erro ao atualizar trabalho", 3000);
+			})
+			.finally(function () {
+				$scope.load = true;
+			})
+			return;
+		}
+		if(modalMySubmission.materials.length > 0 && !document.forms.updateArchive.file.files[0]) {
+			SubmissionAPI.update(modalMySubmission.id, modalMySubmission)
+			.then(setCurrentSubmission)
+			.then(destroySubmissionMaterial)
+			.then(showCurrentSubmission)
+			.then(updateSubmissionView)
+			.catch(function () {
+				Materialize.toast("Erro ao atualizar trabalho", 3000);
+			})
+			.finally(function () {
+				$scope.load = true;
+			})
+			return;
+		}
+		if(modalMySubmission.materials.length == 0 && document.forms.updateArchive.file.files[0]) {
+			SubmissionAPI.update(modalMySubmission.id, modalMySubmission)
+			.then(setCurrentSubmission)
+			.then(createSubmissionMaterial)
+			.then(updateFile)
+			.then(updateMaterial)
+			.then(showCurrentSubmission)
+			.then(updateSubmissionView)
+			.catch(function () {
+				Materialize.toast("Erro ao atualizar trabalho", 3000);
+			})
+			.finally(function () {
+				$scope.load = true;
+			})
+			return;
+		}
+		SubmissionAPI.update(modalMySubmission.id, modalMySubmission)
+		.then(updateSubmissionView)
+		.catch(function () {
+			Materialize.toast("Erro ao atualizar trabalho", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
 
-    $scope.deletaTarefa = function (tarefa) {
-      $scope.data_loaded = false;
-      $http.delete('api/works/' + tarefa.id)
-        .success(function () {
-          if(tarefa.materials.length > 0) {
-            $http.delete('api/materials/' + tarefa.materials[0].id)
-              .success(function () {
-                feedbackReloadWorks('Tarefa deletada');
-                $scope.data_loaded = true;
-              })
-            return;
-          }
-          feedbackReloadWorks('Tarefa deletada');
-          $scope.data_loaded = true;
-        })
-    }
+	$scope.deleteSubmission = function (modalMySubmission) {
+		$scope.load = false;
+		SubmissionAPI.destroy(modalMySubmission.id)
+		.then(function () {
+			if(modalMySubmission.materials.length > 0) {
+				MaterialAPI.destroy(modalMySubmission.materials[0].id)
+				.then(function () {
+					delete $scope.mySubmission;
+					Materialize.toast("Trabalho deletado", 3000);
+				})
+				.catch(function () {
+					Materialize.toast("Erro ao deletar trabalho", 3000);
+				})
+				return;
+			}
+			delete $scope.mySubmission;
+			Materialize.toast("Trabalho deletado", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao deletar trabalho", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
 
-    $scope.buscaSubmissoesAluno = function () {
-        $http.get('/api/works/' + $stateParams.tarefaID + '/submissions')
-            .success(function (data) {
-                $scope.submissoes = [];
-                var submissions = data;
-                submissions.forEach(function (elem) {
-                  if(elem.person.id == $scope.usuario.id)
-                    $scope.submissoes.push(elem);
-                })
-            })
-    }
+	$scope.downloadSubmission = function (submission) {
+		$scope.load = false;
+		MaterialAPI.show(submission.materials[0].id)
+		.then(function (response) {
+			var link = document.createElement("a");
+			link.setAttribute("href", response.data.url);
+			link.setAttribute("download", true);
+			hiddenLink = document.getElementById("hidden-link");
+			hiddenLink.appendChild(link);
+			link.click();
+			hiddenLink.removeChild(link);
+			Materialize.toast("Baixando trabalho: " + submission.materials[0].name, 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao baixar trabalho", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
 
-    $scope.buscaSubmissoes = function () {
-        $http.get('/api/works/' + $stateParams.tarefaID + '/submissions')
-            .success(function (data) {
-                $scope.submissoes = data;
-            })
-    }
+	$scope.modalDelete = function (mySubmission) {
+		$scope.modalMySubmission = angular.copy(mySubmission);
+		$("#modal-delete").openModal();
+	}
 
-    $scope.createSubmission = function () {
-      $scope.data_loaded = false;
-      $http.post('/api/works/' + $scope.tarefa.id + '/submissions', $scope.submission)
-        .success(function (submissionReturned) {
-          if(document.forms.uploadArchive.file.files[0]) {
-            var file = document.forms.uploadArchive.file.files[0]
-            var fd = new FormData();
-            $http.post('/api/submissions/' + submissionReturned.id + '/materials')
-              .success(function (data) {
-                for(var key in data.fields) {
-                  fd.append(key, data.fields[key])
-                }
-                fd.append('file', file);
-                $http.post(data.url, fd, {headers: {'Content-Type': undefined}})
-                  .success(function () {
-                    $http.put('api/materials/' + data.id, {'name': file.name, 'mime': file.type})
-                      .success(function () {
-                        $scope.submissoes.push(submissionReturned);
-                        $scope.submission = null;
-                        $scope.data_loaded = true;
-                        Materialize.toast('Trabalho postado', 3000);
-                        //recarregar submissions
-                      })
-                  })
-              })
-            } else {
-              $scope.submissoes.push(submissionReturned);
-              $scope.submission = null;
-              $scope.data_loaded = true;
-              Materialize.toast('Trabalho postado', 3000);
-            }
-        })
-    }
+	$scope.modalEdit = function (mySubmission) {
+		$scope.modalMySubmission = angular.copy(mySubmission);
+		if(mySubmission.materials[0]) {
+			$scope.modalMySubmission.materialName = mySubmission.materials[0].name;
+		}
+		$("#modal-edit").openModal();
+	}
 
-    $scope.updateSubmission = function () {
-      $scope.data_loaded = false;
-      $http.put('/api/submissions/' + $scope.modalContent.id, $scope.modalContent)
-          .success(function (data) {
-            if($scope.modalContent.materials.length > 0) {
-              $http.delete('/api/materials/' + $scope.modalContent.materials[0].id)
-                .success(function () {
-                  if(document.forms.updateArchive.file.files[0]) {
-                    var file = document.forms.updateArchive.file.files[0]
-                    var fd = new FormData();
-                    $http.post('/api/submissions/' + data.id + '/materials')
-                      .success(function (data) {
-                        for(var key in data.fields) {
-                          fd.append(key, data.fields[key])
-                        }
-                        fd.append('file', file);
-                        $http.post(data.url, fd, {headers: {'Content-Type': undefined}})
-                          .success(function () {
-                            $http.put('api/materials/' + data.id, {'name': file.name, 'mime': file.type})
-                              .success(function () {
-                                $scope.modalContent = null;
-                                $scope.data_loaded = true;
-                                feedbackReloadSubmissions('O trabalho foi atualizado');
-                              })
-                          })
-                      })
-                  } else {
-                    $scope.modalContent = null;
-                    $scope.data_loaded = true;
-                    feedbackReloadSubmissions('O trabalho foi atualizado');
-                  }
-                })
-            } else {
-              if(document.forms.updateArchive.file.files[0]) {
-                var file = document.forms.updateArchive.file.files[0]
-                var fd = new FormData();
-                $http.post('/api/submissions/' + data.id + '/materials')
-                  .success(function (data) {
-                    for(var key in data.fields) {
-                      fd.append(key, data.fields[key])
-                    }
-                    fd.append('file', file);
-                    $http.post(data.url, fd, {headers: {'Content-Type': undefined}})
-                      .success(function () {
-                        $http.put('api/materials/' + data.id, {'name': file.name, 'mime': file.type})
-                          .success(function () {
-                            $scope.modalContent = null;
-                            $scope.data_loaded = true;
-                            feedbackReloadSubmissions('O trabalho foi atualizado');
-                          })
-                      })
-                  })
-              } else {
-                $scope.modalContent = null;
-                $scope.data_loaded = true;
-                feedbackReloadSubmissions('O trabalho foi atualizado');
-              }
-            }
-          })
-    }
+	//File Upload Auxiliar Functions
+	function setCurrentSubmission(response) {
+		currentSubmission = response.data;
+		var deferred = $q.defer();
+		if (true)
+			deferred.resolve();
+		else
+			deferred.reject();
+		return deferred.promise;
+	}
 
-    $scope.downloadSubmission = function (submissao) {
-      $scope.data_loaded = false;
-      $http.get('api/materials/' + submissao.materials[0].id)
-        .success(function (data) {
-          var link = document.createElement('a');
-          link.setAttribute('href', data.url);
-          link.setAttribute('download', true);
-					hiddenLink = document.getElementById("hidden-link")
-					hiddenLink.appendChild(link)
-          link.click()
-          $scope.data_loaded = true;
-          Materialize.toast('Baixando trabalho: ' + submissao.materials[0].name, 3000)
-					hiddenLink.removeChild(link)
-        })
-    }
+	function destroySubmissionMaterial() {
+		return MaterialAPI.destroy(currentSubmission.materials[0].id)
+	}
 
-    $scope.buscaSubmissaoMaterial = function (submissao) {
-      $http.get('/api/submissions/' + submissao.id + '/materials')
-        .success(function (data) {
-          submissao.materials[0] = data[0];
-        })
-    }
-    buscaInfo();
-})
+	function createSubmissionMaterial() {
+		return SubmissionAPI.createMaterial(currentSubmission.id);
+	}
+
+	function uploadFile(response) {
+		newMaterial = response.data;
+		file = document.forms.uploadArchive.file.files[0];
+		fd = new FormData();
+		for(var key in newMaterial.fields) {
+			fd.append(key, newMaterial.fields[key]);
+		}
+		fd.append("file", file);
+		return $http.post(newMaterial.url, fd, {headers: {"Content-Type": undefined}})
+	}
+
+	function updateFile(response) {
+		newMaterial = response.data;
+		file = document.forms.updateArchive.file.files[0];
+		fd = new FormData();
+		for(var key in newMaterial.fields) {
+			fd.append(key, newMaterial.fields[key]);
+		}
+		fd.append("file", file);
+		return $http.post(newMaterial.url, fd, {headers: {"Content-Type": undefined}})
+	}
+
+	function updateMaterial() {
+		return MaterialAPI.update(newMaterial.id, {"name": file.name, "mime": file.type});
+	}
+
+	function showCurrentSubmission() {
+		return SubmissionAPI.show(currentSubmission.id)
+	}
+
+	function addSubmissionToView(response) {
+		$scope.mySubmission = response.data;
+		Materialize.toast("Trabalho postado", 3000);
+	}
+
+	function updateSubmissionView(response) {
+		$scope.mySubmission = response.data;
+		Materialize.toast("O trabalho foi atualizado", 3000);
+	}
+}]);

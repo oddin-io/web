@@ -1,90 +1,100 @@
-oddin.controller('FAQsController', function ($http, $scope, $stateParams, $state, $cookies, Disciplina, DisciplinaAula, DisciplinaMaterial, DisciplinaParticipante, Profile) {
-	(function () {
-			Disciplina.get({ id: $stateParams.disciplinaID },
-					function (disciplina) {
-							$scope.disciplina = disciplina
-					},
-					function (erro) {
-							$scope.mensagem = { texto: 'Não foi possível obter o resultado.' }
-					}
-			)
+oddin.controller("FAQsController", ["$scope", "$stateParams", "InstructionAPI", "FaqAPI", "CurrentUser", "ManageList",
+function ($scope, $stateParams, InstructionAPI, FaqAPI, CurrentUser, ManageList) {
+	$scope.user = CurrentUser;
+	$scope.answerButtonText = "Ver Resposta";
+
+	(function getInfo() {
+		$scope.load = false;
+		InstructionAPI.show($stateParams.instructionID)
+		.then(function (response) {
+			$scope.instruction = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
 	})();
 
-	$scope.usuario = {
-			'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-			'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-	}
-	$scope.data_loaded = true;
-
-	$scope.buscaFAQs = function () {
-		$http.get('/api/instructions/' + $stateParams.disciplinaID + '/faqs')
-		.success(function (data) {
-			$scope.faqs = data
+	(function findFAQs() {
+		$scope.load = false;
+		InstructionAPI.getFAQs($stateParams.instructionID)
+		.then(function (response) {
+			$scope.faqs = response.data;
 		})
-	};
+		.catch(function () {
+			Materialize.toast("Erro ao carregar FAQs", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-	$scope.createFAQ = function () {
-		$scope.data_loaded = false;
-		$http.post('/api/instructions/' + $stateParams.disciplinaID + "/faqs", $scope.faq)
-		.success(function (data) {
-			$scope.faqs.push(data);
-			$scope.faq = null;
-			$scope.data_loaded = true;
-			Materialize.toast('FAQ postada com sucesso', 3000);
-		});
-	}
-
-	$scope.updateFAQ = function (modalContent) {
-		$scope.data_loaded = false;
-		$http.put('/api/faqs/' + modalContent.id, modalContent)
-		.success(function (data) {
-			$scope.faqs.forEach( function (elem, i) {
-				if(elem.id == data.id) {
-					$scope.faqs[i] = data;
-				}
-			});
-			$scope.data_loaded = true;
-			Materialize.toast('FAQ atualizada com sucesso', 3000)
+	$scope.createFAQ = function (newFAQ) {
+		$scope.load = false;
+		InstructionAPI.createFAQ($stateParams.instructionID, newFAQ)
+		.then(function (response) {
+			$scope.faqs.push(response.data);
+			Materialize.toast("FAQ postada", 3000);
+		})
+		.catch(function (error) {
+			Materialize.toast("Não foi possível postar a FAQ", 3000);
+		})
+		.finally(function () {
+			delete $scope.newFAQ;
+			$scope.load = true;
 		})
 	}
 
-	$scope.deleteFAQ = function (modalContent) {
-		$scope.data_loaded = false;
-		$http.delete('/api/faqs/' + modalContent.id)
-		.success(function (data) {
-			$scope.faqs.forEach( function (elem, i) {
-				if(elem.id == data.id) {
-					$scope.faqs.splice(i, 1);
-				}
-			});
-			$scope.data_loaded = true;
-			Materialize.toast('FAQ excluída com sucesso', 3000)
+	$scope.updateFAQ = function (modalFAQ) {
+		$scope.load = false;
+		FaqAPI.update(modalFAQ.id, modalFAQ)
+		.then(function (response) {
+			ManageList.updateItem($scope.faqs, response.data);
+			Materialize.toast("FAQ atualizada", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao atualizar FAQ", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
+
+	$scope.deleteFAQ = function (modalFAQ) {
+		$scope.load = false;
+		FaqAPI.destroy(modalFAQ.id)
+		.then(function (response) {
+			ManageList.deleteItem($scope.faqs, modalFAQ);
+			Materialize.toast("FAQ deletada", 3000);
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao excluir FAQ", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
 		})
 	}
 
 	$scope.displayAnswer = function (faq) {
-		if($("#answer-" + faq.id).css("display") == "none")
+		if($("#answer-" + faq.id).css("display") == "none") {
 			$("#answer-" + faq.id).css("display", "block");
+			$scope.answerButtonText = "Ocultar Resposta";
+		}
 		else {
 			$("#answer-" + faq.id).css("display", "none");
+			$scope.answerButtonText = "Ver Resposta";
 		}
 	}
 
-	$scope.displayButton = function (faq) {
-		if($("#answer-" + faq.id).css("display") == "none")
-			return "Ver Resposta"
-		else {
-			return "Ocultar Resposta"
-		}
+	$scope.modalEdit = function (faq) {
+		$scope.modalFAQ = angular.copy(faq);
+		$("#modal-edit").openModal();
 	}
 
-	$scope.openModalEditFAQ = function (faq) {
-		$scope.modalContent = angular.copy(faq);
-		$('#edit-faq').openModal();
+	$scope.modalDelete = function (faq) {
+		$scope.modalFAQ = angular.copy(faq);
+		$("#modal-delete").openModal();
 	}
-
-	$scope.openModalDeleteFAQ = function (faq) {
-		$scope.modalContent = angular.copy(faq);
-		$('#delete-faq').openModal();
-	}
-});
+}]);

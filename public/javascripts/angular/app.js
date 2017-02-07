@@ -1,1 +1,1 @@
-var oddin = angular.module('oddin', ['ui.router', 'ngResource', 'ui.materialize', 'ngCookies', 'ui.mask']);
+var oddin = angular.module('oddin', ['ui.router', 'ui.materialize', 'ngCookies', 'ui.mask']);

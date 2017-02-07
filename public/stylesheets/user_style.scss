@@ -32,8 +32,13 @@
   margin: auto;
   top: 50%;
   @media (min-width: $min-desktop-size) {
-    left: 240px;
+    left: 0;
   }
+	&.with-sidebar {
+		@media (min-width: $min-desktop-size) {
+	    left: 240px;
+	  }
+	}
 }
 
 .custom-modal {
@@ -160,6 +165,12 @@
     }
   }
   &__item {
+		&.two-options {
+			padding-right: 100px !important;
+		}
+		&.one-option {
+			padding-right: 55px !important;
+		}
     span {
       @include type-list-primary(!important);
       color: $type-primary-color;
@@ -237,6 +248,9 @@
 
 .lista-aulas {
   &__item {
+		.circle-opened {
+			background-color: $green-light-color !important;
+		}
     a {
       color: $type-primary-color;
       span {
@@ -596,12 +610,6 @@
 	color: $primary-color;
 }
 
-.collection-item {
-	.title {
-		margin-right: 25px;
-	}
-}
-
 .faq-button-answer, .survey-button-answer {
 	float: right;
 	a {
@@ -694,6 +702,14 @@
 
 .closed-alternatives {
 	font-size: 15px;
+}
+
+.empty-message {
+	margin: 30px 0;
+	&.add-menu {
+		margin: 15px 0;
+	}
+	color: $grey-color;
 }
 
 #hidden-link {

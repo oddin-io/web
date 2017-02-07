@@ -3,7 +3,6 @@ const constants = require('../../config/constants')
 
 function create(req, res) {
 	const session = req.cookies.session
-	console.log("Enroll Creation")
 	request({
 		uri: `${constants.uri}/enrolls`,
 		method: 'POST',
@@ -20,8 +19,6 @@ function create(req, res) {
 
 function destroy(req, res) {
 	const session = req.cookies.session
-	console.log('destroying enroll')
-
 	request({
 		uri: `${constants.uri}/enrolls/${req.params.id}`,
 		method: 'DELETE',

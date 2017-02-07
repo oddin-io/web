@@ -1,76 +1,68 @@
-oddin.controller('PresentationsController',
-    function ($http, $scope, $stateParams, $cookies, DisciplinaAula, Disciplina) {
-        $scope.usuario = {
-            'nome': JSON.parse($cookies.get('session').substring(2)).person.name,
-            'email': JSON.parse($cookies.get('session').substring(2)).person.email,
-        }
+oddin.controller("PresentationsController", ["$scope", "$stateParams", "InstructionAPI", "PresentationAPI", "CurrentUser", "ManageList",
+function ($scope, $stateParams, InstructionAPI, PresentationAPI, CurrentUser, ManageList) {
+	$scope.user = CurrentUser;
 
-        $scope.aula = new DisciplinaAula();
-        $scope.data_loaded = true;
+	(function getInfo() {
+		$scope.load = false;
+		InstructionAPI.show($stateParams.instructionID)
+		.then(function (response) {
+			$scope.instruction = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar informações da disciplina", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-        function buscaInfo() {
-            Disciplina.get({ id: $stateParams.disciplinaID },
-                function (disciplina) {
-                    $scope.disciplina = disciplina
-                },
-                function (erro) {
-                    $scope.mensagem = { texto: 'Não foi possível obter o resultado.' }
-                }
-            )
-        }
+	(function findPresentations() {
+		$scope.load = false;
+		InstructionAPI.getPresentations($stateParams.instructionID)
+		.then(function (response) {
+			$scope.presentations = response.data;
+		})
+		.catch(function () {
+			Materialize.toast("Erro ao carregar aulas", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	})();
 
-        function feedbackReloadAulas(msg) {
-            DisciplinaAula.query({ id: $stateParams.disciplinaID },
-                function (aulas) {
-                    $scope.aulas = aulas
-                    $scope.data_loaded = true;
-                    Materialize.toast(msg, 4000);
-                    $scope.aula = new DisciplinaAula()
-                },
-                function (erro) {
-                    $scope.mensagem = {
-                        texto: 'Não foi possível obter o resultado.',
-                    }
-                }
-            )
-        }
+	$scope.createPresentation = function (newPresentation) {
+		$scope.load = false;
+		InstructionAPI.createPresentation($stateParams.instructionID, newPresentation)
+		.then(function (response) {
+			$scope.presentations.push(response.data);
+			Materialize.toast("A aula " + newPresentation.subject + " foi criada", 3000);
+		})
+		.catch(function (error) {
+			Materialize.toast("Não foi possível criar uma nova aula", 3000);
+		})
+		.finally(function () {
+			delete $scope.newPresentation;
+			$scope.load = true;
+		})
+	}
 
-        $scope.buscaAulas = function () {
-            DisciplinaAula.query({ id: $stateParams.disciplinaID },
-                function (aulas) {
-                    $scope.aulas = aulas
-                },
-                function (erro) {
-                    $scope.mensagem = {
-                        texto: 'Não foi possível obter o resultado.',
-                    }
-                }
-            )
-        }
+	$scope.closePresentation = function (modalPresentation) {
+		$scope.load = false;
+		PresentationAPI.close(modalPresentation.id)
+		.then(function (response) {
+			ManageList.updateItem($scope.presentations, response.data);
+			Materialize.toast("A aula '" + modalPresentation.subject + "' foi finalizada", 3000);
+		})
+		.catch(function (error) {
+			Materialize.toast("Erro ao finalizar aula", 3000);
+		})
+		.finally(function () {
+			$scope.load = true;
+		})
+	}
 
-        $scope.criaAula = function () {
-            $scope.data_loaded = false;
-            $scope.aula.$save({ id: $stateParams.disciplinaID })
-                .then(function () {
-                    feedbackReloadAulas('A aula ' + $scope.aula.subject + " foi criada");
-                })
-                .catch(function (erro) {
-                    Materialize.toast('Não foi possível criar uma nova aula', 3000);
-                })
-        }
-
-        $scope.fechaAula = function (aula) {
-            $scope.data_loaded = false;
-            $http.post('api/presentations/' + aula.id + '/close')
-                .success(function (data) {
-                    feedbackReloadAulas('A aula ' + aula.subject + ' foi finalizada');
-                })
-        }
-
-        $scope.openModalCloseLecture = function (aula) {
-            $scope.modalContent = aula;
-              $('#modal-fecha-aula').openModal();
-        }
-        buscaInfo()
-    }
-)
+	$scope.modalClose = function (presentation) {
+		$scope.modalPresentation = angular.copy(presentation);
+		$("#modal-close").openModal();
+	}
+}]);
