@@ -36,7 +36,7 @@ compressor.minify({
 	'public/stylesheets/materialize_custom.css',
 	'public/stylesheets/login_style.css'
 	],
-  output: 'public/build/oddin-index-build.css',
+  output: 'public/build/oddin-index-build.min.css',
   callback: function(err, min) {
 		if(err) {
     	console.log(err);
@@ -52,7 +52,7 @@ compressor.minify({
 	'public/stylesheets/materialize_custom.css',
 	'public/stylesheets/user_style.css'
 	],
-  output: 'public/build/oddin-home-build.css',
+  output: 'public/build/oddin-home-build.min.css',
   callback: function(err, min) {
 		if(err) {
     	console.log(err);
