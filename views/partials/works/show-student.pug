@@ -1,86 +1,73 @@
 doctype html
-header
-	oddin-header(title="{{tarefa.subject}} - Submissão", btn-type="back", to-state-url="disciplinas/{{tarefa.instruction.id}}/tarefas")
-	ul#slide-out.side-nav.fixed.barra-lateral
-		.barra-lateral__header
-			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.name}}
-			p.barra-lateral__user-email {{usuario.email}}
-		li.hide-on-large-only.no-padding.barra-lateral__item
-			a(ui-sref='tarefas({disciplinaID: tarefa.instruction.id})') Tarefas
-		li.no-padding.barra-lateral__item
-			a(ui-sref='disciplinas') Disciplinas
-		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-			a(href="" data-ng-click="logout()") Logout
+div(ng-include="'partials/works/show-menu'")
 
-main(data-ng-init="buscaSubmissoesAluno()")
+main(ng-init="buscaSubmissoesAluno()")
 	#hidden-link
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
-	#submeter-trabalho.modal.bottom-sheet
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="createSubmission(submission)" name="uploadArchive")
+				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="createSubmission(newSubmission)" name="uploadArchive")
 					h1.modal-criar-item__titulo Submeter trabalho
 					.row
 						.input-field.col.s12
-							textarea#textarea_create_submission.materialize-textarea(name="texto", data-ng-model="submission.text" required)
-							label(for="textarea_create_submission") Descrição
+							textarea#new-submission-text.materialize-textarea(ng-model="newSubmission.text" required)
+							label(for="new-submission-text") Descrição
 						.file-field.input-field.col.s12
 							.btn.modal-criar-item__file-button
 								span Arquivo
-								input#create_submission_file(name="file", type="file")
+								input#new-submission-file(name="file" type="file")
 							.file-path-wrapper
-								input.file-path.validate(type="text", data-ng-model="submission.materials[0]" placeholder="Adicione o arquivo com o seu trabalho")
+								input.file-path.validate(type="text" ng-model="newSubmission.materials[0]" placeholder="Adicione o arquivo com o seu trabalho")
 					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
-	#editar-trabalho.modal.bottom-sheet
+	#modal-edit.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="updateSubmission(modalContent)" name="updateArchive")
+				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="updateSubmission(modalMySubmission)" name="updateArchive")
 					h1.modal-criar-item__titulo Editar trabalho
 					.row
 						.input-field.col.s12
-							textarea#textarea_edit_submission.materialize-textarea(name="texto", data-ng-model="modalContent.text" required)
-							label(for="textarea_edit_submission") Descrição
+							textarea#modal-my-submission-text.materialize-textarea(ng-model="modalMySubmission.text" required)
+							label(for="modal-my-submission-text") Descrição
 						.file-field.input-field.col.s12
 							.btn.modal-criar-item__file-button
 								span Arquivo
-								input#edit_submission_file(name="file", type="file")
+								input#modal-my-submission-file(name="file" type="file")
 							.file-path-wrapper
-								input.file-path.validate(type="text", data-ng-model="modalContent.materialName" placeholder="Adicione o arquivo com o seu trabalho")
-					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
-	#modal-deleta-submissao.modal
+								input.file-path.validate(type="text" ng-model="modalMySubmission.materialName" placeholder="Adicione o arquivo com o seu trabalho")
+					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Atualizar
+	#modal-delete.modal
 		.modal-content
 			h4.custom-modal__header Excluir Trabalho
-			p Tem certeza que deseja excluir '{{modalContent.materials[0].name}}'?
+			p Tem certeza que deseja excluir "{{modalMySubmission.materials[0].name}}"?
 		.modal-footer
-			a(href='' data-ng-click="deleteSubmission(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteSubmission(modalMySubmission)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	//- Main Content
 	.container
-		.card.custom-card(data-ng-if="submissoes.length === 0")
+		.card.custom-card(ng-if="!mySubmission")
 			.card-content
 				.custom-card__header
 					span.title Nenhum arquivo foi postado
 					span.secondary-info Entrega:&nbsp
-						span.secondary-info--leading {{tarefa.deadline | date:"dd/MM/yyyy"}}
+						span.secondary-info--leading {{work.deadline | date:"dd/MM/yyyy"}}
 			.card-action.custom-card__action
 				.row
 					.offset-m6.col.m6
 						.card-right-button
-							a.btn-flat(href="#submeter-trabalho", modal) Postar tarefa
-		.card.custom-card(data-ng-repeat="submissao in submissoes | orderBy: 'created_at'")
+							a.btn-flat(href="#modal-create" modal) Postar trabalho
+		.card.custom-card(ng-if="mySubmission")
 			.card-content
 				.custom-card__header
-					a(href='' data-ng-click="downloadSubmission(submissao)")
-						span.title.file-title {{submissao.materials[0].name}}
-						span.datahora {{submissao.created_at | date:"dd/MM/yyyy à's' HH:mm"}}
-				p {{submissao.text}}
+					a(href="" ng-click="downloadSubmission(mySubmission)")
+						span.title.file-title {{mySubmission.materials[0].name}}
+						span.datahora {{mySubmission.created_at | date:"dd/MM/yyyy à's' HH:mm"}}
+				p {{mySubmission.text}}
 			.card-action.custom-card__action
 				.row
 					.col.m4
-						a(href='' data-ng-click="openModalDeleteSubmission(submissao)")
+						a(href="" ng-click="modalDelete(mySubmission)")
 							i.material-icons delete
-						a(href='' data-ng-click="openModalEditSubmission(submissao)")
+						a(href="" ng-click="modalEdit(mySubmission)")
 							i.material-icons edit

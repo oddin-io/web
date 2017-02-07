@@ -1,50 +1,15 @@
 doctype html
-header
-	oddin-header(title="{{disciplina.lecture.name}} - Material", btn-type="back", to-state-url="/disciplinas")
-	ul#slide-out.side-nav.fixed.barra-lateral
-		.barra-lateral__header
-			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.name}}
-			p.barra-lateral__user-email {{usuario.email}}
-		li.no-padding
-			ul.collapsible(data-collapsible="expandable")
-				li.barra-lateral__item
-					a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{disciplina.lecture.name}}
-					.collapsible-body
-						ul
-							li.barra-lateral__subitem
-								a(ui-sref="aulas({disciplinaID: disciplina.id})") Aulas
-							li.barra-lateral__subitem
-								a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
-							li.barra-lateral__subitem
-								a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
-							li.barra-lateral__subitem
-								a(ui-sref="tarefas({disciplinaID: disciplina.id})") Tarefas
-							li.barra-lateral__subitem.active
-								p Material
-							li.barra-lateral__subitem
-								a(ui-sref="participantes({disciplinaID: disciplina.id})") Participantes
-							li.barra-lateral__subitem
-								a(ui-sref="faqs({disciplinaID: disciplina.id})") FAQs
-							li.barra-lateral__subitem
-								a(ui-sref="enquetes({disciplinaID: disciplina.id})") Enquetes
-		li.hide-on-large-only.no-padding.barra-lateral__item
-			a(ui-sref='disciplinas') Disciplinas
-		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-			a(href="" data-ng-click="logout()") Logout
+div(ng-include="'partials/materials/index-menu'")
 
-main(data-ng-init="buscaMateriais()")
+main
 	#hidden-link
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
+	oddin-preloader(load-var="load" side-bar="true")
 	.container
 		ul.collection.with-header.lista-material
 			li.collection-header.lista-material__header
 				h2 Material da Disciplina
-			li.collection-item.avatar.lista-material__item(data-ng-repeat="material in materiais | orderBy: 'name'")
+			li.collection-item.avatar.lista-material__item(ng-repeat="material in materials | orderBy: 'name'")
 				i.material-icons.circle insert_drive_file
 				span.title
-					a(href="" data-ng-click="downloadMaterial(material)") {{material.name}}
+					a(href="" ng-click="downloadMaterial(material)") {{material.name}}
 				p {{material.mime}}

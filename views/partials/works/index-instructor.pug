@@ -1,116 +1,82 @@
 doctype html
-header
-	oddin-header(title="{{disciplina.lecture.name}} - Tarefas", btn-type="back", to-state-url="/disciplinas")
-	ul#slide-out.side-nav.fixed.barra-lateral
-		.barra-lateral__header
-			i.barra-lateral__user-avatar.material-icons account_circle
-			p.barra-lateral__user-name {{usuario.name}}
-			p.barra-lateral__user-email {{usuario.email}}
-		li.no-padding
-			ul.collapsible(data-collapsible="expandable")
-				li.barra-lateral__item
-					a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{disciplina.lecture.name}}
-					.collapsible-body
-						ul
-							li.barra-lateral__subitem
-								a(ui-sref="aulas({disciplinaID: disciplina.id})") Aulas
-							li.barra-lateral__subitem
-								a(ui-sref="avisos({disciplinaID: disciplina.id})") Avisos
-							li.barra-lateral__subitem
-								a(ui-sref="datas({disciplinaID: disciplina.id})") Datas Importantes
-							li.barra-lateral__subitem.active
-								p Tarefas
-							li.barra-lateral__subitem
-								a(ui-sref="materiais({disciplinaID: disciplina.id})") Material
-							li.barra-lateral__subitem
-								a(ui-sref="participantes({disciplinaID: disciplina.id})") Participantes
-							li.barra-lateral__subitem
-								a(ui-sref="faqs({disciplinaID: disciplina.id})") FAQs
-							li.barra-lateral__subitem
-								a(ui-sref="enquetes({disciplinaID: disciplina.id})") Enquetes
-		li.hide-on-large-only.no-padding.barra-lateral__item
-			a(ui-sref='disciplinas') Disciplinas
-		li.no-padding.barra-lateral__item(data-ng-controller="LoginController")
-			a(href="" data-ng-click="logout()") Logout
+div(ng-include="'partials/works/index-menu'")
 
-main(data-ng-init="buscaTarefas()")
+main
 	#hidden-link
-	.preloader-wrapper.big.active.custom-preloader(ng-hide="data_loaded")
-		.spinner-layer
-			.circle-clipper.left
-				.circle
-	#criar-tarefa.modal.bottom-sheet
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="criaTarefa(tarefa)" name="uploadArchive")
+				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="createWork(newWork)" name="uploadArchive")
 					h1.modal-criar-item__titulo Criar tarefa
 					.row
 						.input-field.col.s12.m8
-							input#create_tarefa_assunto(type="text", name="assunto", data-ng-model="tarefa.subject" required)
-							label(for="create_tarefa_assunto") Assunto
+							input#new-work-subject(type="text" ng-model="newWork.subject" required)
+							label(for="new-work-subject") Assunto
 						.input-field.col.s12.m4
-							input#create_tarefa_data(type="text" name="data" data-ng-model="tarefa.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
-							label(for="create_tarefa_data") Data de Entrega
+							input#new-work-deadline(type="text" ng-model="newWork.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+							label(for="new-work-deadline") Data de Entrega
 						.input-field.col.s12
-							textarea#create_tarefa_descricao.materialize-textarea(name="descricao", data-ng-model="tarefa.description" required)
-							label(for="create_tarefa_descricao") Descrição
+							textarea#new-work-description.materialize-textarea(ng-model="newWork.description" required)
+							label(for="new-work-description") Descrição
 						.file-field.input-field.col.s12
 							.btn.modal-criar-item__file-button
 								span Anexo
-								input#create_tarefa_file(name="file", type="file")
+								input#new-work-file(name="file" type="file")
 							.file-path-wrapper
-								input.file-path.validate(type="text", ng-model="tarefa.materials[0]" placeholder="Acresente um arquivo com a descrição do trabalho")
-					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Criar
-	#editar-tarefa.modal.bottom-sheet
+								input.file-path.validate(type="text" ng-model="newWork.materials[0]" placeholder="Acresente um arquivo com a descrição do trabalho")
+					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Criar
+	#modal-edit.modal.bottom-sheet
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" data-ng-submit="atualizaTarefa(modalContent)" name="updateArchive")
+				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="updateWork(modalWork)" name="updateArchive")
 					h1.modal-criar-item__titulo Editar tarefa
 					.row
 						.input-field.col.s12.m8
-							input#edit_tarefa_assunto(type="text", name="assunto", data-ng-model="modalContent.subject" required)
-							label(for="edit_tarefa_assunto") Assunto
+							input#modal-work-subject(type="text" ng-model="modalWork.subject" required)
+							label(for="modal-work-subject") Assunto
 						.input-field.col.s12.m4
-							input#edit_tarefa_data(type="text" name="data" data-ng-model="modalContent.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
-							label(for="edit_tarefa_data") Data de Entrega
+							input#modal-work-deadline(type="text" ng-model="modalWork.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+							label(for="modal-work-deadline") Data de Entrega
 						.input-field.col.s12
-							textarea#edit_tarefa_descricao.materialize-textarea(name="descricao", data-ng-model="modalContent.description" required)
-							label(for="edit_tarefa_descricao") Descrição
+							textarea#modal-work-description.materialize-textarea(ng-model="modalWork.description" required)
+							label(for="modal-work-description") Descrição
 						.file-field.input-field.col.s12
 							.btn.modal-criar-item__file-button
 								span Anexo
-								input#edit_tarefa_file(name="file", type="file")
+								input#modal-work-file(name="file" type="file")
 							.file-path-wrapper
-								input.file-path.validate(type="text", ng-model="modalContent.materialName" placeholder="Acresente um arquivo com a descrição do trabalho")
-					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Atualizar
-	#modal-deleta-tarefa.modal
+								input.file-path.validate(type="text" ng-model="modalWork.materialName" placeholder="Acresente um arquivo com a descrição do trabalho")
+					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Atualizar
+	#modal-delete.modal
 		.modal-content
 			h4.custom-modal__header Excluir Tarefa
-			p Tem certeza que deseja excluir '{{modalContent.subject}}'?
+			p Tem certeza que deseja excluir "{{modalWork.subject}}"?
 		.modal-footer
-			a(href='' data-ng-click="deletaTarefa(modalContent)").modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Confirmar
-			a(href='').modal-action.modal-close.waves-effect.btn-flat.custom-modal__button Cancelar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteWork(modalWork)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+	//- Main Content
 	.container
-		.fixed-action-btn(style="bottom: 24px; right: 24px;")
-			a.btn-floating.btn-large.waves-effect.waves-light.modal-trigger(href="#criar-tarefa", modal)
-				i.large.material-icons add
-		.card.custom-card(data-ng-repeat="tarefa in tarefas | orderBy: 'deadline'")
+		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
+		p.empty-message.center-align(ng-if="works.length == 0") Nenhuma tarefa foi criada
+		.card.custom-card(ng-repeat="work in works | orderBy: 'deadline'")
 			.card-content
 				.custom-card__header
-					a(ui-sref="tarefa-status({tarefaID: tarefa.id})")
-						span.title.link-title {{tarefa.subject}}
+					a(ui-sref="work-show({workID: work.id})")
+						span.title.link-title {{work.subject}}
 					span.secondary-info Entrega:&nbsp
-						span.secondary-info--leading {{tarefa.deadline | date:"dd/MM/yyyy"}}
-				p {{tarefa.description}}
+						span.secondary-info--leading {{work.deadline | date:"dd/MM/yyyy"}}
+				p {{work.description}}
 			.card-action.custom-card__action
 				.row
 					.col.m6
-						a(href='' data-ng-click="openModalDeleteWork(tarefa)")
+						a(href="" ng-click="modalDelete(work)")
 							i.material-icons delete
-						a(href='' data-ng-click="openModalEditWork(tarefa)")
+						a(href="" ng-click="modalEdit(work)")
 							i.material-icons edit
 					.col.m6.s12
-						.card-attachment(data-ng-if="tarefa.materials[0]")
+						.card-attachment(ng-if="work.materials[0]")
 							p Especificação:&nbsp
-							a(href='' data-ng-click="downloadEspecificacao(tarefa)")
-								span.card-filename(data-ng-if="tarefa.materials") {{tarefa.materials[0].name}}
+							a(href="" ng-click="downloadDescription(work)")
+								span.card-filename(ng-if="work.materials") {{work.materials[0].name}}
