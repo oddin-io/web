@@ -22,6 +22,7 @@ ws.enroll = require('../routes/ws/enroll')
 ws.alternative = require('../routes/ws/alternative')
 ws.survey = require('../routes/ws/survey')
 ws.faq = require('../routes/ws/faq')
+ws.test = require('../routes/ws/test')
 
 module.exports = function routesConfig(app) {
   app.use('/', index)
@@ -47,4 +48,5 @@ module.exports = function routesConfig(app) {
 	app.use('/api', ws.alternative)
 	app.use('/api', ws.survey)
 	app.use('/api', ws.faq)
+  app.use('/api', ws.test)
 }

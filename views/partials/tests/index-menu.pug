@@ -25,10 +25,10 @@ header
 								a(ui-sref="participants({instructionID: instruction.id})") Participantes
 							li.barra-lateral__subitem
 								a(ui-sref="faqs({instructionID: instruction.id})") FAQs
-							li.barra-lateral__subitem.active
-								p Enquetes
 							li.barra-lateral__subitem
-								a(ui-sref="tests({instructionID: instruction.id})") Testes	
+								a(ui-sref="surveys({instructionID: instruction.id})") Enquetes
+							li.barra-lateral__subitem.active
+								p Tests
 		li.hide-on-large-only.no-padding.barra-lateral__item
 			a(ui-sref="instructions") Disciplinas
 		li.no-padding.barra-lateral__item(ng-controller="LoginController")
