@@ -45,4 +45,9 @@ router.get('/partials/surveys/:filename', function renderPartial(req, res) {
 	res.render(`partials/surveys/${filename}`)
 })
 
+router.get('/partials/tests/:filename', function renderPartial(req, res) {
+	const filename = req.params.filename
+	res.render(`partials/tests/${filename}`)
+})
+
 module.exports = router
