@@ -213,6 +213,14 @@ function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, Current
 		$("#modal-create-answer").openModal();
 	}
 
+	$scope.modalCreateVideo = function (question) {
+		$scope.selectedQuestion = question;
+		$("#modal-create-video").openModal();
+		$("#modal-create-answer").closeModal();
+
+	}
+
+
 	$scope.enableFilter = function () {
 		$scope.filter = true;
 		$('#post-order').removeClass('filter-item-active');
