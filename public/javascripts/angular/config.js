@@ -125,6 +125,16 @@ oddin.config(["$stateProvider", function ($stateProvider) {
 		},
 		controller: 'SurveysController'
 	})
+	.state('tests', {
+		url: '/disciplinas/:instructionID/tests',
+		templateProvider: function ($cookies, $templateFactory) {
+			if($cookies.get('profile') == 0)
+			return $templateFactory.fromUrl("/partials/tests/index-student");
+			if($cookies.get('profile') == 1)
+			return $templateFactory.fromUrl("/partials/tests/index-instructor");
+		},
+		controller: 'TestsController'
+	})
 	.state('admin-events', {
 		url: '/admin-cursos',
 		templateUrl: '/partials/admin/events',

@@ -1,7 +1,7 @@
 oddin.controller("TestsController", ["$scope", "$cookies", "$stateParams", "InstructionAPI", "TestAPI", "AlternativeAPI", "CurrentUser", "ManageList",
 function ($scope, $cookies, $stateParams, InstructionAPI, TestAPI, AlternativeAPI, CurrentUser, ManageList) {
 	$scope.user = CurrentUser;
-	$scope.newTest = {alternatives:[{}]};
+	/*$scope.newTest = {alternatives:[{}]};
 
 	(function getInfo() {
 		$scope.load = false;
@@ -143,7 +143,7 @@ function ($scope, $cookies, $stateParams, InstructionAPI, TestAPI, AlternativeAP
 				return "Ocultar Resultado"
 			}
 		}
-	}
+	}*/
 
 	$scope.modalEdit = function (test) {
 		$scope.modalTest = angular.copy(test);
