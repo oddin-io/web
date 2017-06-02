@@ -126,7 +126,7 @@ oddin.config(["$stateProvider", function ($stateProvider) {
 		controller: 'SurveysController'
 	})
 	.state('tests', {
-		url: '/disciplinas/:instructionID/tests',
+		url: '/disciplinas/:instructionID/testes',
 		templateProvider: function ($cookies, $templateFactory) {
 			if($cookies.get('profile') == 0)
 			return $templateFactory.fromUrl("/partials/tests/index-student");

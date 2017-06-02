@@ -3,3 +3,35 @@ div(ng-include="'partials/tests/index-menu'")
 
 main
 	oddin-preloader(load-var="load" side-bar="true")
+	//- Modals
+	#modal-create.modal.bottom-sheet
+		.modal-content.modal-criar-item
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6
+					h1.modal-criar-item__titulo Criar Teste
+					.row
+						.input-field.col.s12
+							input#new-test-title(type="text" ng-model="newTest.title" required)
+							label(for="new-test-title") Título
+						.input-field.col.s12
+							textarea#new-test-questions.materialize-textarea(ng-model="newTest.questions" required)
+							label(for="new-test-questions") Pergunta
+						.choices(ng-repeat="alternative in newTest.alternatives")
+							.input-field.col.s11.remove-choice-field
+								input(id="alternative-{{newTest.alternatives.indexOf(alternative)}}" type="text" ng-model="newTest.alternatives[newTest.alternatives.indexOf(alternative)].description" required)
+								label(for="alternative-{{newTest.alternatives.indexOf(alternative)}}") Alternativa {{newTest.alternatives.indexOf(alternative) + 1}}
+							.input-field.col.s1.remove-choice-button(ng-show="$last")
+								a.right(href="" ng-click="removeAlternative(newTest)")
+									i.material-icons close
+						.input-field.col.s12
+							a.btn-floating.waves-effect.waves-light.right(ng-click="addNewAlternative(newTest)")
+								i.material-icons add
+					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+	
+	//- Main Content
+	.container
+		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
+		p.empty-message.center-align Nenhum teste foi criado
+						
+
+

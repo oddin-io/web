@@ -38,6 +38,9 @@ oddin.factory("InstructionAPI", ["$http", function ($http) {
 	var _getSurveys = function (id) {
 		return $http.get('/api/instructions/' + id + '/surveys');
 	};
+	var _getTests = function (id) {
+		return $http.get('/api/instructions/' + id + '/tests');
+	};
 	var _createPresentation = function (id, presentation) {
 		return $http.post('/api/instructions/' + id + '/presentations', presentation);
 	};
@@ -59,6 +62,9 @@ oddin.factory("InstructionAPI", ["$http", function ($http) {
 	var _createSurvey = function (id, survey) {
 		return $http.post('/api/instructions/' + id + '/surveys', survey);
 	};
+	var _createTest = function (id, test) {
+		return $http.post('/api/instructions/' + id + '/tests', test);
+	};
 
 	return {
 		index: _index,
@@ -74,12 +80,14 @@ oddin.factory("InstructionAPI", ["$http", function ($http) {
 		getParticipants: _getParticipants,
 		getFAQs: _getFAQs,
 		getSurveys: _getSurveys,
+		getTests: _getTests,
 		createPresentation: _createPresentation,
 		createNotice: _createNotice,
 		createDate: _createDate,
 		createWork: _createWork,
 		createMaterial: _createMaterial,
 		createFAQ: _createFAQ,
-		createSurvey: _createSurvey
+		createSurvey: _createSurvey,
+		createTest: _createTest
 	}
 }]);
