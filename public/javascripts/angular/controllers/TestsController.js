@@ -1,7 +1,9 @@
 oddin.controller("TestsController", ["$scope", "$stateParams", "InstructionAPI", "CurrentUser", 
 function ($scope,  $stateParams, InstructionAPI,CurrentUser, ) {
 	$scope.user = CurrentUser;
-	$scope.newTest = { questions:[], alternatives:[] };
+	$scope.newTest = {questions:[], alternatives:[]};
+
+	//{questions:[{alternatives:[{}]}]};
 
 	(function getInfo() {
 	$scope.load = false;
