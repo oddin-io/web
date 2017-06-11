@@ -4,39 +4,69 @@ div(ng-include="'partials/tests/index-menu'")
 main
 	oddin-preloader(load-var="load" side-bar="true")
 	//- Modals
-	#modal-create.modal.bottom-sheet
+	#modal-create.modal
 		.modal-content.modal-criar-item
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6
+				form.offset-m2.offset-l20.col.s12.m8.l20
 					h1.modal-criar-item__titulo Criar Teste
 					.row
-						div(name="testando")
-							.input-field.col.s12
-								input#new-test-title(type="text" ng-model="newTest.title" required)
-								label(for="new-test-title") Título
-
-							.input-field.col.s12
-								textarea#new-test-questions.materialize-textarea(ng-model="newTest.questions" required)
-								label(for="new-test-questions") Pergunta
-
-							.choices(ng-repeat="alternative in newTest.alternatives")
-								.input-field.col.s11.remove-choice-field
-									input(id="alternative-{{newTest.alternatives.indexOf(alternative)}}" type="text" ng-model="newTest.alternatives[newTest.alternatives.indexOf(alternative)].description" required)
-									label(for="alternative-{{newTest.alternatives.indexOf(alternative)}}") Alternativa {{newTest.alternatives.indexOf(alternative) + 1}}
-
-								.input-field.col.s1.remove-choice-button(ng-show="$last")
-									a.right(href="" ng-click="removeAlternative(newTest)")
+						.input-field.col.s12
+							input#new-test-title(type="text" ng-model="newTest.title" required)
+							label(for="new-test-title") Título
+						.input-field.col.s6
+							input#new-test-date(type="text" ng-model="newTest.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+							label(for="new-test-date") Disponível em
+						.input-field.col.s2
+							input#new-test-time(type="text" ng-model="newTest.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
+							label(for="new-test-time") A partir das
+			.row
+				form.offset-m2.offset-l20.col.s12.m8.l20
+					.card(ng-repeat="question in newTest.questions")
+						.input-field.col.s2.remove-choice-button
+							a.rigth(href="" ng-click="removeQuestion(newTest.questions.indexOf(question))")
+								i.material-icons close
+						.input-field.col.s12
+							textarea#modal-test-question.materialize-textarea
+							label(for="modal-question-question") Pergunta {{newTest.questions.indexOf(question) + 1}}	
+							form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="" name="uploadArchive")
+								.file-field.input-field.col.s10
+									.btn.modal-criar-item__file-button
+										span Arquivo
+										input#new-test-file(name="file" type="file")
+									.file-path-wrapper
+										input#new-test-description.file-path.validate(type="text" placeholder="Faça Upload de um arquivo")
+								.input-field.col.s2
+									.switch
+										label
+											input(type="checkbox" id="kind-question-{{newTest.questions.indexOf(question)}}" ng-click="dissertativeQuestion(newTest.questions.indexOf(question))")
+											.lever 
+											span Dissertativa
+						.row
+							.input-field.col.s10(ng-if="dissertativeQuestion(newTest.questions.indexOf(question))")
+								textarea#modal-test-alternative.materialize-textarea
+								label(for="modal-question-alternative") Resposta
+							.col.s12(ng-repeat="alternative in question.alternatives" ng-if="!dissertativeQuestion(newTest.questions.indexOf(question))")
+								.input-field.col.s1(action="#")
+									input.with-gap(name="question-{{newTest.questions.indexOf(question)+1}}" type="radio" id="question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}")
+									label(for="question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}") Correta
+								.input-field.col.s8(style="margin-left: 20px;")
+									input#new-test-alternative(type="text")
+									label(for="new-test-alternative") Alternativa {{question.alternatives.indexOf(alternative)+1}}
+								.input-field.col.s0.remove-choice-button(ng-show="$last")
+									a.right(href="" ng-click="removeAlternative(newTest.questions.indexOf(question))")
 										i.material-icons close
-
-							.input-field.col.s12
-								a.btn-floating.waves-effect.waves-light.right(ng-click="addNewAlternative(newTest)")
+							.input-field.col.s0.offset-m9(ng-if="!dissertativeQuestion(newTest.questions.indexOf(question))")
+								a.btn-floating.waves-effect.waves-light.right(ng-click="addNewAlternative(newTest.questions.indexOf(question))")
 									i.material-icons add
-					button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
-	
+			.row
+				.offset-m2.offset-l20.col.s12.m8.l20
+					.col.s1
+						a.btn-floating.waves-effect.waves-light.right(style="left: -35px; bottom: 20px;" type="submit" ng-click="addNewQuestion()")
+							i.material-icons add
+				.col.s12
+					.input-field.col.s1.offset-s2
+						button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
 	//- Main Content
 	.container
 		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
 		p.empty-message.center-align Nenhum teste foi criado
-						
-
-

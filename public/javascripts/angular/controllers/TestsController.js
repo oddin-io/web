@@ -1,9 +1,13 @@
 oddin.controller("TestsController", ["$scope", "$stateParams", "InstructionAPI", "CurrentUser", 
 function ($scope,  $stateParams, InstructionAPI,CurrentUser, ) {
 	$scope.user = CurrentUser;
-	$scope.newTest = {questions:[], alternatives:[]};
-
-	//{questions:[{alternatives:[{}]}]};
+	$scope.newTest ={
+				questions:[
+					{ alternatives:[
+						{},  
+					]}, 
+				]				
+			};
 
 	(function getInfo() {
 	$scope.load = false;
@@ -19,27 +23,45 @@ function ($scope,  $stateParams, InstructionAPI,CurrentUser, ) {
 	})
 	})();
 
-	$scope.addNewAlternative = function (newTest) {
-		newTest.alternatives.push({});
-	}
+	$scope.addNewQuestion = function (){
 
-	$scope.removeAlternative = function(newTest) {
-		var lastItem = newTest.alternatives.length-1;
-		newTest.alternatives.splice(lastItem);
-	}
+		$scope.newTest.questions.push(angular.copy({}));
+	};
+	$scope.removeQuestion = function (questionPosition){
 
-	$scope.modalEdit = function (test) {
-		$scope.modalTest = angular.copy(test);
-		$("#modal-edit").openModal();
-	}
+		$scope.newTest.questions.splice(questionPosition,1);
+	};
+	$scope.addNewAlternative = function (questionPosition){
+		
+		if($scope.newTest.questions[questionPosition].alternatives == undefined){
 
-	$scope.modalDelete = function (test) {
-		$scope.modalTest = angular.copy(test);
-		$("#modal-delete").openModal();
-	}
+			$scope.newTest.questions[questionPosition].alternatives = new Array();
+		}
+		if($scope.newTest.questions[questionPosition].alternatives != undefined){
 
-	$scope.modalClose = function (test) {
-		$scope.modalTest = angular.copy(test);
-		$("#modal-close").openModal();
-	}
+			$scope.newTest.questions[questionPosition].alternatives.push(angular.copy({}));			
+		}
+	};
+	$scope.removeAlternative = function (questionPosition){
+		
+		var lastItem = $scope.newTest.questions[questionPosition].alternatives.length-1;
+
+		$scope.newTest.questions[questionPosition].alternatives.splice(lastItem);
+	};
+	$scope.dissertativeQuestion = function (questionPosition){
+
+		var value = $("#kind-question-"+questionPosition).prop('checked');
+		
+		switch(value){
+
+			case true:{
+				return true;
+				break;
+			}
+			case false:{
+				return false;
+				break;
+			}
+		}
+	};
 }]);
