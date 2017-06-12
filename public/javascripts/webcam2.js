@@ -73,11 +73,11 @@ function handleStop(event) {
 }
 
 function toggleRecording() {
-  if (recordButton.name === 'Start_Recording') {
+  if (recordButton.textContent === 'Gravar') {
     startRecording();
   } else {
     stopRecording();
-    recordButton.material-icons = 'play_arrow';
+    recordButton.textContent = 'Gravar';
     playButton.disabled = false;
     downloadButton.disabled = false;
   }
@@ -107,7 +107,7 @@ function startRecording() {
     return;
   }
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
-  recordButton.material-icons = 'stop';
+  recordButton.textContent = 'Parar';
   playButton.disabled = true;
   downloadButton.disabled = true;
   mediaRecorder.onstop = handleStop;

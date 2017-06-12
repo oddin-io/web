@@ -9,18 +9,16 @@ main
 			.row
 				form.offset-m2.offset-l3.col.s12.m8.l6
 					h1.modal-criar-item__titulo Criar Video
-							.row
-								.input-field.col.s12
-									video(id="gum").autoplay
-									video(id="recorded").autoplay.loop
-								.col.s12.m9
-									.modal-post-options
-										a.btn-floating(id="record" name="Start_Recording" class="__web-inspector-hide-shortcut__")
-											i.material-icons play_arrow
-										script(src="https://webrtc.github.io/adapter/adapter-latest.js")
-										script(src="../../../main.js")
-								.col.s12.m3
-									button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(type="submit" name="action") Enviar
+					.row
+						.input-field.col.s20
+							video(autoplay="true" id="gum")
+							video(autoplay="true" id="recorded")
+						.col.s12.m9
+							.modal-post-respostas__options
+								button.btn.waves-effect.waves-light( id="record" class="__web-inspector-hide-shortcut__") Gravar
+								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="play" disabled) Visualizar	
+						.col.s12.m3
+							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="download" type="submit" name="action" disabled) Enviar
 
 	#modal-create-answer.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta

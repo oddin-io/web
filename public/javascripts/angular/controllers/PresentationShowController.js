@@ -217,6 +217,9 @@ function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, Current
 		$scope.selectedQuestion = question;
 		$("#modal-create-video").openModal();
 		$("#modal-create-answer").closeModal();
+		$.getScript("/javascripts/webcam2.js", function(){});
+		$.getScript("/javascripts/adapter.js", function(){});
+		$.getScript("https://webrtc.github.io/adapter/adapter-latest.js", function(){});
 
 	}
 
