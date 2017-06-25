@@ -1,6 +1,6 @@
 files:
   include:
-    - 'public/stylesheets/**/*.s+(a|c)ss'
+    - 'public/stylesheets/**/*.scss'
 
 # enforce the use of the use of quotes in attribute values
 attribute-quotes:
