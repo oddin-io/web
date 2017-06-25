@@ -15,7 +15,7 @@ router.get('/instructions/:id/materials', controller.showMaterials)
 router.get('/instructions/:id/participants', controller.showParticipants)
 router.get('/instructions/:id/faqs', controller.showFAQs)
 router.get('/instructions/:id/surveys', controller.showSurveys)
-//router.get('/instructions/:id/tests', controller.showTests)
+// router.get('/instructions/:id/tests', controller.showTests)
 router.get('/instructions/:id/profile', controller.showProfile)
 
 router.post('/instructions/:id/presentations', controller.createPresentation)
@@ -25,6 +25,6 @@ router.post('/instructions/:id/works', controller.createWork)
 router.post('/instructions/:id/materials', controller.createMaterial)
 router.post('/instructions/:id/faqs', controller.createFAQ)
 router.post('/instructions/:id/surveys', controller.createSurvey)
-//router.post('/instructions/:id/tests', controller.createTest)
+// router.post('/instructions/:id/tests', controller.createTest)
 
 module.exports = router

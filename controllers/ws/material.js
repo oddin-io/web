@@ -39,8 +39,8 @@ function destroy(req, res) {
     uri: `${constants.uri}/materials/${req.params.id}`,
     method: 'DELETE',
     headers: {
-      'x-session-token': session.token
-    }
+      'x-session-token': session.token,
+    },
   }).pipe(res)
 }
 

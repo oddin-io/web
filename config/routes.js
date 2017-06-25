@@ -31,7 +31,7 @@ module.exports = function routesConfig(app) {
   app.use('/', lecture)
   app.use('/', presentation)
   app.use('/', partials)
-	app.use('/', components)
+  app.use('/', components)
 
   app.use('/api', ws.answer)
   app.use('/api', ws.instruction)
@@ -44,9 +44,9 @@ module.exports = function routesConfig(app) {
   app.use('/api', ws.submissions)
   app.use('/api', ws.lecture)
   app.use('/api', ws.person)
-	app.use('/api', ws.enroll)
-	app.use('/api', ws.alternative)
-	app.use('/api', ws.survey)
-	app.use('/api', ws.faq)
+  app.use('/api', ws.enroll)
+  app.use('/api', ws.alternative)
+  app.use('/api', ws.survey)
+  app.use('/api', ws.faq)
   app.use('/api', ws.test)
 }

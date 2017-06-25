@@ -1,3 +1,3 @@
-window.onpopstate = function() {
-  $('.lean-overlay').remove();
+window.onpopstate = function () {
+  $('.lean-overlay').remove()
 }

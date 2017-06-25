@@ -3,6 +3,13 @@ env:
   node: true
   es6: true
   jasmine: true
+  jquery: true
+
+globals:
+  oddin: true
+  Materialize: true
+  angular: true
+  io: true
 
 parserOptions:
   ecmaVersion: 6
@@ -68,7 +75,7 @@ rules:
 
   # require the use of === and !==
   eqeqeq:
-    - error
+    - warn
     - allow-null
 
   # make sure for-in loops have an if statement
@@ -193,8 +200,9 @@ rules:
 
   # disallow reassignment of function parameters
   # disallow parameter object manipulation
+  # TODO: increase to error after refactoring
   no-param-reassign:
-    - error
+    - warn
     - props: true
 
   # disallow usage of __proto__ property
@@ -736,7 +744,7 @@ rules:
 
   # disallow dangling underscores in identifiers
   no-underscore-dangle:
-    - error
+    - warn
     - allowAfterThis: false
 
   # disallow the use of Boolean literals in conditional expressions

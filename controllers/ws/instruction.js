@@ -26,36 +26,36 @@ function show(req, res) {
 }
 
 function create(req, res) {
-	const session = req.cookies.session
+  const session = req.cookies.session
 
-	request({
-		uri: `${constants.uri}/instructions`,
-		method: 'POST',
-		headers: {
-			'x-session-token': session.token
-		},
-		json: {
-			'event_id': req.body.event,
-			'lecture_id': req.body.lecture,
-			'class_code': req.body.class_code,
-			'start_date': req.body.start_date,
-			'end_date': req.body.end_date
-		}
-	}).pipe(res)
+  request({
+    uri: `${constants.uri}/instructions`,
+    method: 'POST',
+    headers: {
+      'x-session-token': session.token,
+    },
+    json: {
+      event_id: req.body.event,
+      lecture_id: req.body.lecture,
+      class_code: req.body.class_code,
+      start_date: req.body.start_date,
+      end_date: req.body.end_date,
+    },
+  }).pipe(res)
 }
 
 function update() {}
 
 function destroy(req, res) {
-	const session = req.cookies.session
+  const session = req.cookies.session
 
-	request({
-		uri: `${constants.uri}/instructions/${req.params.id}`,
-		method: 'DELETE',
-		headers: {
-			'x-session-token': session.token
-		}
-	}).pipe(res);
+  request({
+    uri: `${constants.uri}/instructions/${req.params.id}`,
+    method: 'DELETE',
+    headers: {
+      'x-session-token': session.token,
+    },
+  }).pipe(res)
 }
 
 function showPresentations(req, res) {
@@ -93,7 +93,7 @@ function createMaterial(req, res) {
     method: 'POST',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -107,9 +107,9 @@ function createNotice(req, res) {
       'x-session-token': session.token,
     },
     json: {
-      'subject': req.body.subject,
-      'text': req.body.text
-    }
+      subject: req.body.subject,
+      text: req.body.text,
+    },
   }).pipe(res)
 }
 
@@ -123,10 +123,10 @@ function createSurvey(req, res) {
       'x-session-token': session.token,
     },
     json: {
-			'title': req.body.title,
-			'question': req.body.question,
-			'alternatives': req.body.alternatives
-    }
+      title: req.body.title,
+      question: req.body.question,
+      alternatives: req.body.alternatives,
+    },
   }).pipe(res)
 }
 
@@ -140,9 +140,9 @@ function createFAQ(req, res) {
       'x-session-token': session.token,
     },
     json: {
-			'question': req.body.question,
-			'answer': req.body.answer
-    }
+      question: req.body.question,
+      answer: req.body.answer,
+    },
   }).pipe(res)
 }
 
@@ -155,16 +155,16 @@ function createDate(req, res) {
       'x-session-token': session.token,
     },
     json: {
-      'subject': req.body.subject,
-      'text': req.body.text,
-      'date': req.body.date
-    }
+      subject: req.body.subject,
+      text: req.body.text,
+      date: req.body.date,
+    },
   }).pipe(res)
 }
 
 function createWork(req, res) {
   const session = req.cookies.session
-  console.log('create work');
+  console.log('create work')
   request({
     uri: `${constants.uri}/instructions/${req.params.id}/works`,
     method: 'POST',
@@ -172,10 +172,10 @@ function createWork(req, res) {
       'x-session-token': session.token,
     },
     json: {
-      'subject': req.body.subject,
-      'description': req.body.description,
-      'deadline': req.body.deadline
-    }
+      subject: req.body.subject,
+      description: req.body.description,
+      deadline: req.body.deadline,
+    },
   }).pipe(res)
 }
 
@@ -280,8 +280,8 @@ function deleteDate(req, res) {
     uri: `${constants.uri}/dates/${req.params.id}`,
     method: 'DELETE',
     headers: {
-      'x-session-token': session.token
-    }
+      'x-session-token': session.token,
+    },
   }).pipe(res)
 }
 
@@ -297,15 +297,15 @@ module.exports = {
   createNotice,
   createDate,
   createWork,
-	createSurvey,
-	createFAQ,
+  createSurvey,
+  createFAQ,
   showMaterials,
   showParticipants,
   showNotices,
-	showSurveys,
-	showFAQs,
+  showSurveys,
+  showFAQs,
   showDates,
   showWorks,
   showProfile,
-  deleteDate
+  deleteDate,
 }

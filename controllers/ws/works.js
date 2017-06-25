@@ -8,7 +8,7 @@ function show(req, res) {
     method: 'GET',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -19,7 +19,7 @@ function destroy(req, res) {
     method: 'DELETE',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -32,10 +32,10 @@ function update(req, res) {
       'x-session-token': session.token,
     },
     json: {
-      'subject': req.body.subject,
-      'description': req.body.description,
-      'deadline': req.body.deadline
-    }
+      subject: req.body.subject,
+      description: req.body.description,
+      deadline: req.body.deadline,
+    },
   }).pipe(res)
 }
 
@@ -46,7 +46,7 @@ function createMaterial(req, res) {
     method: 'POST',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -57,19 +57,19 @@ function showMaterials(req, res) {
     method: 'GET',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
 function updateMaterials(req, res) {
   const session = req.cookies.session
-  console.log('update materials' + req.body);
+  console.log('update materials' + req.body)
   request({
     uri: `${constants.uri}/works/${req.params.id}/materials`,
     method: 'PUT',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -80,7 +80,7 @@ function showSubmissions(req, res) {
     method: 'GET',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -93,8 +93,8 @@ function createSubmission(req, res) {
       'x-session-token': session.token,
     },
     json: {
-      'text': req.body.text
-    }
+      text: req.body.text,
+    },
   }).pipe(res)
 }
 
@@ -106,5 +106,5 @@ module.exports = {
   showMaterials,
   updateMaterials,
   createSubmission,
-  showSubmissions
+  showSubmissions,
 }

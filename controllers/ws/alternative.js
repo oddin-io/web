@@ -7,11 +7,11 @@ function choose(req, res) {
     uri: `${constants.uri}/alternatives/${req.params.id}/choose`,
     method: 'POST',
     headers: {
-      'x-session-token': session.token
-    }
+      'x-session-token': session.token,
+    },
   }).pipe(res)
 }
 
 module.exports = {
-  choose
+  choose,
 }

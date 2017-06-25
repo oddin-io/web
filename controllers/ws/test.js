@@ -7,8 +7,8 @@ function destroy(req, res) {
     uri: `${constants.uri}/tests/${req.params.id}`,
     method: 'DELETE',
     headers: {
-      'x-session-token': session.token
-    }
+      'x-session-token': session.token,
+    },
   }).pipe(res)
 }
 
@@ -18,13 +18,13 @@ function update(req, res) {
     uri: `${constants.uri}/tests/${req.params.id}`,
     method: 'PUT',
     headers: {
-      'x-session-token': session.token
+      'x-session-token': session.token,
     },
-		json: {
-			'title': req.body.title,
-			'question': req.body.question,
-			'alternatives': req.body.alternatives
-    }
+    json: {
+      title: req.body.title,
+      question: req.body.question,
+      alternatives: req.body.alternatives,
+    },
   }).pipe(res)
 }
 
@@ -34,13 +34,13 @@ function close(req, res) {
     uri: `${constants.uri}/tests/${req.params.id}/close`,
     method: 'POST',
     headers: {
-      'x-session-token': session.token
-    }
+      'x-session-token': session.token,
+    },
   }).pipe(res)
 }
 
 module.exports = {
   destroy,
   update,
-	close
+  close,
 }

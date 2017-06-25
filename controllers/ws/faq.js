@@ -7,8 +7,8 @@ function destroy(req, res) {
     uri: `${constants.uri}/faqs/${req.params.id}`,
     method: 'DELETE',
     headers: {
-      'x-session-token': session.token
-    }
+      'x-session-token': session.token,
+    },
   }).pipe(res)
 }
 
@@ -18,16 +18,16 @@ function update(req, res) {
     uri: `${constants.uri}/faqs/${req.params.id}`,
     method: 'PUT',
     headers: {
-      'x-session-token': session.token
+      'x-session-token': session.token,
     },
-		json: {
-			'question': req.body.question,
-			'answer': req.body.answer
-    }
+    json: {
+      question: req.body.question,
+      answer: req.body.answer,
+    },
   }).pipe(res)
 }
 
 module.exports = {
   destroy,
-  update
+  update,
 }

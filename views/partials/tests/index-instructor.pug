@@ -27,7 +27,7 @@ main
 								i.material-icons close
 						.input-field.col.s12
 							textarea#modal-test-question.materialize-textarea
-							label(for="modal-question-question") Pergunta {{newTest.questions.indexOf(question) + 1}}	
+							label(for="modal-question-question") Pergunta {{newTest.questions.indexOf(question) + 1}}
 							form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="" name="uploadArchive")
 								.file-field.input-field.col.s10
 									.btn.modal-criar-item__file-button
@@ -39,7 +39,7 @@ main
 									.switch
 										label
 											input(type="checkbox" id="kind-question-{{newTest.questions.indexOf(question)}}" ng-click="dissertativeQuestion(newTest.questions.indexOf(question))")
-											.lever 
+											.lever
 											span Dissertativa
 						.row
 							.input-field.col.s10(ng-if="dissertativeQuestion(newTest.questions.indexOf(question))")

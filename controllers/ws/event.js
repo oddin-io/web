@@ -18,8 +18,8 @@ function show(req, res) {
     uri: `${constants.uri}/events/${req.params.id}`,
     method: 'GET',
     headers: {
-      'x-session-token': session.token
-    }
+      'x-session-token': session.token,
+    },
   }).pipe(res)
 }
 
@@ -32,16 +32,16 @@ function create(req, res) {
       'x-session-token': session.token,
     },
     json: {
-      'code': req.body.code,
-      'name': req.body.name,
-      'workload': req.body.workload
-    }
+      code: req.body.code,
+      name: req.body.name,
+      workload: req.body.workload,
+    },
   }).pipe(res)
 }
 
 function update(req, res) {
   const session = req.cookies.session
-	console.log(req.params);
+  console.log(req.params)
   request({
     uri: `${constants.uri}/events/${req.params.id}`,
     method: 'PUT',
@@ -49,10 +49,10 @@ function update(req, res) {
       'x-session-token': session.token,
     },
     json: {
-			'code': req.body.code,
-      'name': req.body.name,
-      'workload': req.body.workload
-    }
+      code: req.body.code,
+      name: req.body.name,
+      workload: req.body.workload,
+    },
   }).pipe(res)
 }
 
@@ -63,7 +63,7 @@ function destroy(req, res) {
     method: 'DELETE',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -73,8 +73,8 @@ function instructions(req, res) {
     uri: `${constants.uri}/events/${req.params.id}/instructions`,
     method: 'GET',
     headers: {
-      'x-session-token': session.token
-    }
+      'x-session-token': session.token,
+    },
   }).pipe(res)
 }
 
@@ -82,7 +82,7 @@ module.exports = {
   index,
   create,
   destroy,
-	update,
+  update,
   show,
-	instructions
+  instructions,
 }

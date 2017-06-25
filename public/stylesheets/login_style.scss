@@ -92,9 +92,9 @@ body {
   @media (min-width: $min-desktop-size) {
     left: 0;
   }
-	&.with-sidebar {
-		@media (min-width: $min-desktop-size) {
-	    left: 240px;
-	  }
-	}
+  &.with-sidebar {
+    @media (min-width: $min-desktop-size) {
+      left: 240px;
+    }
+  }
 }

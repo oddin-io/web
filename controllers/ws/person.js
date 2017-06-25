@@ -1,7 +1,7 @@
 const request = require('request')
 const constants = require('../../config/constants')
 
-//Implementar exibição de todos os usuários no backend
+// Implementar exibição de todos os usuários no backend
 function index(req, res) {
   const session = req.cookies.session
   request({
@@ -22,10 +22,10 @@ function create(req, res) {
       'x-session-token': session.token,
     },
     json: {
-      'name': req.body.name,
-      'email': req.body.email,
-      'password': req.body.password
-    }
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    },
   }).pipe(res)
 }
 
@@ -38,9 +38,9 @@ function update(req, res) {
       'x-session-token': session.token,
     },
     json: {
-      'name': req.body.name,
-      'email': req.body.email
-    }
+      name: req.body.name,
+      email: req.body.email,
+    },
   }).pipe(res)
 }
 
@@ -59,5 +59,5 @@ module.exports = {
   index,
   destroy,
   create,
-  update
+  update,
 }

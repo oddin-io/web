@@ -13,7 +13,7 @@ function index(req, res) {
 }
 
 function create(req, res) {
-  const session = req.cookies.session  
+  const session = req.cookies.session
   request({
     uri: `${constants.uri}/lectures`,
     method: 'POST',
@@ -21,16 +21,16 @@ function create(req, res) {
       'x-session-token': session.token,
     },
     json: {
-      'code': req.body.code,
-      'name': req.body.name,
-      'workload': req.body.workload
-    }
+      code: req.body.code,
+      name: req.body.name,
+      workload: req.body.workload,
+    },
   }).pipe(res)
 }
 
 function update(req, res) {
   const session = req.cookies.session
-	console.log(req.params);
+  console.log(req.params)
   request({
     uri: `${constants.uri}/lectures/${req.params.id}`,
     method: 'PUT',
@@ -38,10 +38,10 @@ function update(req, res) {
       'x-session-token': session.token,
     },
     json: {
-			'code': req.body.code,
-      'name': req.body.name,
-      'workload': req.body.workload
-    }
+      code: req.body.code,
+      name: req.body.name,
+      workload: req.body.workload,
+    },
   }).pipe(res)
 }
 
@@ -60,5 +60,5 @@ module.exports = {
   index,
   destroy,
   create,
-  update
+  update,
 }

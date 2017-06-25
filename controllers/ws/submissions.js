@@ -8,7 +8,7 @@ function showMaterials(req, res) {
     method: 'GET',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -19,7 +19,7 @@ function createMaterial(req, res) {
     method: 'POST',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -30,7 +30,7 @@ function show(req, res) {
     method: 'GET',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -41,7 +41,7 @@ function destroy(req, res) {
     method: 'DELETE',
     headers: {
       'x-session-token': session.token,
-    }
+    },
   }).pipe(res)
 }
 
@@ -54,15 +54,15 @@ function update(req, res) {
       'x-session-token': session.token,
     },
     json: {
-      'text': req.body.text
-    }
+      text: req.body.text,
+    },
   }).pipe(res)
 }
 
 module.exports = {
   showMaterials,
   createMaterial,
-	show,
+  show,
   destroy,
-  update
+  update,
 }

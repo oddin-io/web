@@ -34,11 +34,11 @@
   @media (min-width: $min-desktop-size) {
     left: 0;
   }
-	&.with-sidebar {
-		@media (min-width: $min-desktop-size) {
-	    left: 240px;
-	  }
-	}
+  &.with-sidebar {
+    @media (min-width: $min-desktop-size) {
+      left: 240px;
+    }
+  }
 }
 
 .custom-modal {
@@ -165,12 +165,12 @@
     }
   }
   &__item {
-		&.two-options {
-			padding-right: 100px !important;
-		}
-		&.one-option {
-			padding-right: 55px !important;
-		}
+    &.two-options {
+      padding-right: 100px !important;
+    }
+    &.one-option {
+      padding-right: 55px !important;
+    }
     span {
       @include type-list-primary(!important);
       color: $type-primary-color;
@@ -248,9 +248,9 @@
 
 .lista-aulas {
   &__item {
-		.circle-opened {
-			background-color: $green-light-color !important;
-		}
+    .circle-opened {
+      background-color: $green-light-color !important;
+    }
     a {
       color: $type-primary-color;
       span {
@@ -594,7 +594,7 @@
 }
 
 .list-double-secondary:first-child {
-	margin-right: 20px;
+  margin-right: 20px;
 }
 
 .list-checkbox {
@@ -607,14 +607,14 @@
 }
 
 .main-title {
-	color: $primary-color;
+  color: $primary-color;
 }
 
 .faq-button-answer, .survey-button-answer {
-	float: right;
-	a {
-		margin-right: 0 !important;
-	}
+  float: right;
+  a {
+    margin-right: 0 !important;
+  }
 }
 
 .faq-answer-container, .survey-answer-container {
@@ -626,92 +626,92 @@
 }
 
 .faq-question {
-	display: block;
-	margin: 0;
-	padding: 30px 15px 30px 15px;
-	line-height: 1.5rem;
-	.faq-index {
-		font-weight: bold;
-		font-size: 18px;
-	}
+  display: block;
+  margin: 0;
+  padding: 30px 15px 30px 15px;
+  line-height: 1.5rem;
+  .faq-index {
+    font-weight: bold;
+    font-size: 18px;
+  }
 }
 
 .survey-question {
-	padding-top: 15px;
+  padding-top: 15px;
 }
 
 .survey-answer-list {
-	margin: 0;
+  margin: 0;
 }
 
 .survey-answer-content {
-	padding: 0;
+  padding: 0;
 }
 
 .remove-choice-field {
-	padding-right: 0 !important;
+  padding-right: 0 !important;
 }
 
 .remove-choice-button {
-	padding-top: 16px !important;
-	a {
-		color: $grey-color;
-		&:hover {
-			color: $grey-light-color;
-		}
-	}
+  padding-top: 16px !important;
+  a {
+    color: $grey-color;
+    &:hover {
+      color: $grey-light-color;
+    }
+  }
 }
 
 .choices-content {
-	padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .clearfix {
-	overflow: auto;
+  overflow: auto;
 }
 
 .closed-tag {
-	background-color: #E57373;
-	color: white;
-	font-weight: normal;
-	border-radius: 2px;
-	padding: 0 6px 0 6px;
-	font-size: 0.9rem;
-	margin-right: 10px;
+  background-color: #E57373;
+  color: white;
+  font-weight: normal;
+  border-radius: 2px;
+  padding: 0 6px 0 6px;
+  font-size: 0.9rem;
+  margin-right: 10px;
 }
 
 .chosen-tag {
-	background-color: #81C784;
-	color: white;
-	font-weight: normal;
-	border-radius: 2px;
-	padding: 0 6px 0 6px;
-	font-size: 0.9rem;
-	margin-right: 10px;
+  background-color: #81C784;
+  color: white;
+  font-weight: normal;
+  border-radius: 2px;
+  padding: 0 6px 0 6px;
+  font-size: 0.9rem;
+  margin-right: 10px;
 }
 
 .chosen-alternative {
-	background-color: #81C784;
-	color: white;
-	font-weight: normal;
-	border-radius: 2px;
-	padding: 0 4px 0 4px;
-	font-size: 0.8rem;
-	margin-left: 10px;
+  background-color: #81C784;
+  color: white;
+  font-weight: normal;
+  border-radius: 2px;
+  padding: 0 4px 0 4px;
+  font-size: 0.8rem;
+  margin-left: 10px;
 }
 
 .closed-alternatives {
-	font-size: 15px;
+  font-size: 15px;
 }
 
 .empty-message {
-	margin: 30px 0;
-	&.add-menu {
-		margin: 15px 0;
-	}
-	color: $grey-color;
+  margin: 30px 0;
+  &.add-menu {
+    margin: 15px 0;
+  }
+  color: $grey-color;
 }
 
 #hidden-link {
-	display: none;
+  display: none;
 }
