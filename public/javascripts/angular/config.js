@@ -253,3 +253,25 @@ oddin.run([
     })
   },
 ])
+
+oddin.factory('AuthorizationInterceptor', ['$cookies', function ($cookies) {
+  return {
+    request: function (config) {
+      var authToken = $cookies.get('token')
+
+      if (authToken) {
+        return Object.assign(config, {
+          headers: {
+            Authorization: authToken,
+          },
+        })
+      }
+
+      return config
+    },
+  }
+}])
+
+oddin.config(['$httpProvider', function ($httpProvider) {
+  $httpProvider.interceptors.push('AuthorizationInterceptor')
+}])

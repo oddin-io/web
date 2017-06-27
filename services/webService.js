@@ -13,7 +13,7 @@ function authenticatedRequest(conf, sessionToken, handler) {
 
 function normalRequest(conf, handler) {
   const config = Object.assign(conf, {
-    uri: `${constants.uri}${conf.uri}`,
+    uri: `${constants.ws_url}${conf.uri}`,
   })
 
   if (typeof handler === 'function') return request(config, handler)
