@@ -1,18 +1,18 @@
-oddin.factory('PersonAPI', ['$http', function ($http) {
+oddin.factory('PersonAPI', ['$http', 'env', function ($http, env) {
   var _index = function () {
-    return $http.get('/api/person/')
+    return $http.get(`${env.ws_url}/person`)
   }
   var _show = function (id) {
-    return $http.get('/api/person/' + id)
+    return $http.get(`${env.ws_url}/person/${id}`)
   }
   var _create = function (person) {
-    return $http.post('/api/person/', person)
+    return $http.post(`${env.ws_url}/person`, person)
   }
   var _update = function (id, person) {
-    return $http.put('/api/person/' + id, person)
+    return $http.put(`${env.ws_url}/person/${id}`, person)
   }
   var _destroy = function (id) {
-    return $http.delete('/api/person/' + id)
+    return $http.delete(`${env.ws_url}/person/${id}`)
   }
 
   return {

@@ -1,12 +1,12 @@
-oddin.factory('SurveyAPI', ['$http', function ($http) {
+oddin.factory('SurveyAPI', ['$http', 'env', function ($http, env) {
   var _update = function (id, survey) {
-    return $http.put('/api/surveys/' + id, survey)
+    return $http.put(`${env.ws_url}/surveys/${id}`, survey)
   }
   var _destroy = function (id) {
-    return $http.delete('/api/surveys/' + id)
+    return $http.delete(`${env.ws_url}/surveys/${id}`)
   }
   var _close = function (id) {
-    return $http.post('/api/surveys/' + id + '/close')
+    return $http.post(`${env.ws_url}/surveys/${id}/close`)
   }
 
   return {

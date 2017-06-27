@@ -1,15 +1,15 @@
-oddin.factory('QuestionAPI', ['$http', function ($http) {
+oddin.factory('QuestionAPI', ['$http', 'env', function ($http, env) {
   var _getAnswers = function (id) {
-    return $http.get('/api/questions/' + id + '/answers')
+    return $http.get(`${env.ws_url}/questions/${id}/answers`)
   }
   var _createAnswer = function (id, answer) {
-    return $http.post('/api/questions/' + id + '/answers', answer)
+    return $http.post(`${env.ws_url}/questions/${id}/answers`, answer)
   }
   var _upvote = function (id) {
-    return $http.post('/api/questions/' + id + '/upvote')
+    return $http.post(`${env.ws_url}/questions/${id}/upvote`)
   }
   var _destroyVote = function (id) {
-    return $http.delete('/api/questions/' + id + '/vote')
+    return $http.delete(`${env.ws_url}/questions/${id}/vote`)
   }
 
   return {

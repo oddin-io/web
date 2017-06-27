@@ -1,9 +1,9 @@
-oddin.factory('DateAPI', ['$http', function ($http) {
+oddin.factory('DateAPI', ['$http', 'env', function ($http, env) {
   var _update = function (id, date) {
-    return $http.put('/api/dates/' + id, date)
+    return $http.put(`${env.ws_url}/dates/${id}`, date)
   }
   var _destroy = function (id) {
-    return $http.delete('/api/dates/' + id)
+    return $http.delete(`${env.ws_url}/dates/${id}`)
   }
 
   return {

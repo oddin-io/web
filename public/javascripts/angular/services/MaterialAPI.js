@@ -1,12 +1,12 @@
-oddin.factory('MaterialAPI', ['$http', function ($http) {
+oddin.factory('MaterialAPI', ['$http', 'env', function ($http, env) {
   var _show = function (id) {
-    return $http.get('/api/materials/' + id)
+    return $http.get(`${env.ws_url}/materials/${id}`)
   }
   var _update = function (id, material) {
-    return $http.put('/api/materials/' + id, material)
+    return $http.put(`${env.ws_url}/materials/${id}`, material)
   }
   var _destroy = function (id) {
-    return $http.delete('/api/materials/' + id)
+    return $http.delete(`${env.ws_url}/materials/${id}`)
   }
 
   return {

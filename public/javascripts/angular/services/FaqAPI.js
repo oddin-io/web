@@ -1,9 +1,9 @@
-oddin.factory('FaqAPI', ['$http', function ($http) {
+oddin.factory('FaqAPI', ['$http', 'env', function ($http, env) {
   var _update = function (id, faq) {
-    return $http.put('/api/faqs/' + id, faq)
+    return $http.put(`${env.ws_url}/faqs/${id}`, faq)
   }
   var _destroy = function (id) {
-    return $http.delete('/api/faqs/' + id)
+    return $http.delete(`${env.ws_url}/faqs/${id}`)
   }
 
   return {

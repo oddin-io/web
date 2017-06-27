@@ -1,22 +1,22 @@
 /* global oddin */
-oddin.factory('WorkAPI', ['$http', function ($http) {
+oddin.factory('WorkAPI', ['$http', 'env', function ($http, env) {
   var _show = function (id) {
-    return $http.get('/api/works/' + id)
+    return $http.get(`${env.ws_url}/works/${id}`)
   }
   var _update = function (id, work) {
-    return $http.put('/api/works/' + id, work)
+    return $http.put(`${env.ws_url}/works/${id}`, work)
   }
   var _destroy = function (id) {
-    return $http.delete('/api/works/' + id)
+    return $http.delete(`${env.ws_url}/works/${id}`)
   }
   var _createMaterial = function (id) {
-    return $http.post('/api/works/' + id + '/materials')
+    return $http.post(`${env.ws_url}/works/${id}/materials`)
   }
   var _createSubmission = function (id, submission) {
-    return $http.post('/api/works/' + id + '/submissions', submission)
+    return $http.post(`${env.ws_url}/works/${id}/submissions`, submission)
   }
   var _getSubmissions = function (id) {
-    return $http.get('/api/works/' + id + '/submissions')
+    return $http.get(`${env.ws_url}/works/${id}/submissions`)
   }
 
   return {

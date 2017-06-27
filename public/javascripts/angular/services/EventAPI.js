@@ -1,21 +1,21 @@
-oddin.factory('EventAPI', ['$http', function ($http) {
+oddin.factory('EventAPI', ['$http', 'env', function ($http, env) {
   var _index = function () {
-    return $http.get('/api/events/')
+    return $http.get(`${env.ws_url}/events`)
   }
   var _show = function (id) {
-    return $http.get('/api/events/' + id)
+    return $http.get(`${env.ws_url}/events/${id}`)
   }
   var _create = function (event) {
-    return $http.post('/api/events/', event)
+    return $http.post(`${env.ws_url}/events`, event)
   }
   var _update = function (id, event) {
-    return $http.put('/api/events/' + id, event)
+    return $http.put(`${env.ws_url}/events/${id}`, event)
   }
   var _destroy = function (id) {
-    return $http.delete('/api/events/' + id)
+    return $http.delete(`${env.ws_url}/events/${id}`)
   }
   var _getInstructions = function (id) {
-    return $http.get('/api/events/' + id + '/instructions')
+    return $http.get(`${env.ws_url}/events/${id}/instructions`)
   }
 
   return {
