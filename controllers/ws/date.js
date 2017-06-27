@@ -1,15 +1,15 @@
 const ws = require('../../services/webService')
 
 function destroy(req, res) {
-  const session = req.cookies.session
+  const token = req.cookies.token
   ws.authenticated({
     uri: `/dates/${req.params.id}`,
     method: 'DELETE',
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 function update(req, res) {
-  const session = req.cookies.session
+  const token = req.cookies.token
   ws.authenticated({
     uri: `/dates/${req.params.id}`,
     method: 'PUT',
@@ -18,7 +18,7 @@ function update(req, res) {
       text: req.body.text,
       date: req.body.date,
     },
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 module.exports = {

@@ -1,7 +1,9 @@
 oddin.factory('CurrentUser', ['$cookies', function ($cookies) {
+  const currentUser = $cookies.getObject('session')
+
   return {
-    id: JSON.parse($cookies.get('session').substring(2)).person.id,
-    name: JSON.parse($cookies.get('session').substring(2)).person.name,
-    email: JSON.parse($cookies.get('session').substring(2)).person.email,
+    id: currentUser.person.id,
+    name: currentUser.person.name,
+    email: currentUser.person.email,
   }
 }])

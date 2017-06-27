@@ -10,10 +10,17 @@ oddin.controller('LoginController',
                   var expireDate = new Date()
                   if (user.persist) {
                     expireDate.setMonth(expireDate.getMonth() + 1)
-                    $cookies.put('session', $cookies.get('session'), {
+                    $cookies.putObject('session', response.data, {
                       expires: expireDate,
                     })
+                    $cookies.put('token', response.data.token, {
+                      expires: expireDate,
+                    })
+                  } else {
+                    $cookies.putObject('session', response.data)
+                    $cookies.put('token', response.data.token)
                   }
+
                   if (response.data.person.admin) {
                     $cookies.put('admin', true)
                   }

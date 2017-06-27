@@ -1,7 +1,7 @@
 const ws = require('../../services/webService')
 
 function create(req, res) {
-  const session = req.cookies.session
+  const token = req.cookies.token
 
   ws.authenticated({
     uri: '/enrolls',
@@ -11,16 +11,16 @@ function create(req, res) {
       instruction_id: req.body.instruction_id,
       profile: req.body.profile,
     },
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 function destroy(req, res) {
-  const session = req.cookies.session
+  const token = req.cookies.token
 
   ws.authenticated({
     uri: `/enrolls/${req.params.id}`,
     method: 'DELETE',
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 module.exports = {

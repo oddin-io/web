@@ -3,18 +3,18 @@ const ws = require('../../services/webService')
 function index() {}
 
 function show(req, res) {
-  const session = req.cookies.session
+  const token = req.cookies.token
 
   ws.authenticated({
     uri: `/materials/${req.params.id}`,
     method: 'GET',
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 function create() {}
 
 function update(req, res) {
-  const session = req.cookies.session
+  const token = req.cookies.token
 
   ws.authenticated({
     uri: `/materials/${req.params.id}`,
@@ -23,15 +23,15 @@ function update(req, res) {
       name: req.body.name,
       mime: req.body.mime,
     },
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 function destroy(req, res) {
-  const session = req.cookies.session
+  const token = req.cookies.token
   ws.authenticated({
     uri: `/materials/${req.params.id}`,
     method: 'DELETE',
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 module.exports = {

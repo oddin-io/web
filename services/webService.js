@@ -4,7 +4,7 @@ const constants = require('../config/constants')
 function authenticatedRequest(conf, sessionToken, handler) {
   const config = Object.assign(conf, {
     headers: {
-      'x-session-token': sessionToken,
+      Authorization: sessionToken,
     },
   })
 

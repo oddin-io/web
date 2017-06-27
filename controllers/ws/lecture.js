@@ -1,15 +1,15 @@
 const ws = require('../../services/webService')
 
 function index(req, res) {
-  const session = req.cookies.session
+  const token = req.cookies.token
   ws.authenticated({
     uri: '/lectures',
     method: 'GET',
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 function create(req, res) {
-  const session = req.cookies.session
+  const token = req.cookies.token
   ws.authenticated({
     uri: '/lectures',
     method: 'POST',
@@ -18,12 +18,12 @@ function create(req, res) {
       name: req.body.name,
       workload: req.body.workload,
     },
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 function update(req, res) {
-  const session = req.cookies.session
-  console.log(req.params)
+  const token = req.cookies.token
+
   ws.authenticated({
     uri: `/lectures/${req.params.id}`,
     method: 'PUT',
@@ -32,15 +32,15 @@ function update(req, res) {
       name: req.body.name,
       workload: req.body.workload,
     },
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 function destroy(req, res) {
-  const session = req.cookies.session
+  const token = req.cookies.token
   ws.authenticated({
     uri: `/lectures/${req.params.id}`,
     method: 'DELETE',
-  }, session.token).pipe(res)
+  }, token).pipe(res)
 }
 
 module.exports = {
