@@ -1,4 +1,5 @@
 const index = require('../routes/index')
+const config = require('../routes/config')
 const auth = require('../routes/auth')
 const home = require('../routes/home')
 const lecture = require('../routes/lecture')
@@ -26,6 +27,7 @@ ws.test = require('../routes/ws/test')
 
 module.exports = function routesConfig(app) {
   app.use('/', index)
+  app.use('/', config)
   app.use('/', auth)
   app.use('/', home)
   app.use('/', lecture)
