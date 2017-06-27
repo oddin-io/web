@@ -1,8 +1,8 @@
-const request = require('request')
+const ws = require('../services/webService')
 const constants = require('../config/constants')
 
 function login(req, res) {
-  request({
+  ws({
     uri: `${constants.uri}/session`,
     method: 'POST',
     json: {
@@ -20,13 +20,10 @@ function login(req, res) {
 
 function logout(req, res) {
   const session = req.cookies.session
-  request({
-    uri: `${constants.uri}/session`,
+  ws.authenticated({
+    uri: '/session',
     method: 'DELETE',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }, function responseHandler(error, response) {
+  }, session.token, function responseHandler(error, response) {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       res.clearCookie('session')
     }
@@ -37,7 +34,7 @@ function logout(req, res) {
 }
 
 function recoverPassword(req, res) {
-  request({
+  ws({
     uri: `${constants.uri}/recover-password`,
     method: 'POST',
     json: {
@@ -53,7 +50,7 @@ function recoverPassword(req, res) {
 }
 
 function redefinePassword(req, res) {
-  request({
+  ws({
     uri: `${constants.uri}/redefine-password`,
     method: 'POST',
     json: {

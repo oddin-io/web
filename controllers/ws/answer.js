@@ -1,43 +1,33 @@
-const request = require('request')
-const constants = require('../../config/constants')
+const ws = require('../../services/webService')
 
 function index(req, res) {
   const session = req.cookies.session
 
-  request({
-    uri: `${constants.uri}/questions/${req.params.id}/answers`,
+  ws.authenticated({
+    uri: `/questions/${req.params.id}/answers`,
     method: 'GET',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 function show(req, res) {
   const session = req.cookies.session
 
-  request({
-    uri: `${constants.uri}/answers/${req.params.id}`,
+  ws.authenticated({
+    uri: `/answers/${req.params.id}`,
     method: 'GET',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 function create(req, res) {
   const session = req.cookies.session
 
-  request({
-    uri: `${constants.uri}/questions/${req.params.id}/answers`,
+  ws.authenticated({
+    uri: `/questions/${req.params.id}/answers`,
     method: 'POST',
-    headers: {
-      'x-session-token': session.token,
-    },
     json: {
       text: req.body.text,
     },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 function update() {}
@@ -47,61 +37,46 @@ function destroy() {}
 function upvote(req, res) {
   const session = req.cookies.session
 
-  request({
-    uri: `${constants.uri}/answers/${req.params.id}/upvote`,
+  ws.authenticated({
+    uri: `/answers/${req.params.id}/upvote`,
     method: 'POST',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 function downvote(req, res) {
   const session = req.cookies.session
 
-  request({
-    uri: `${constants.uri}/answers/${req.params.id}/downvote`,
+  ws.authenticated({
+    uri: `/answers/${req.params.id}/downvote`,
     method: 'POST',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 function cancelvote(req, res) {
   const session = req.cookies.session
 
-  request({
-    uri: `${constants.uri}/answers/${req.params.id}/vote`,
+  ws.authenticated({
+    uri: `/answers/${req.params.id}/vote`,
     method: 'DELETE',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 function accept(req, res) {
   const session = req.cookies.session
 
-  request({
-    uri: `${constants.uri}/answers/${req.params.id}/accept`,
+  ws.authenticated({
+    uri: `/answers/${req.params.id}/accept`,
     method: 'POST',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 function unaccept(req, res) {
   const session = req.cookies.session
 
-  request({
-    uri: `${constants.uri}/answers/${req.params.id}/accept`,
+  ws.authenticated({
+    uri: `/answers/${req.params.id}/accept`,
     method: 'DELETE',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 module.exports = {

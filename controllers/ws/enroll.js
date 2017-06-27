@@ -1,31 +1,26 @@
-const request = require('request')
-const constants = require('../../config/constants')
+const ws = require('../../services/webService')
 
 function create(req, res) {
   const session = req.cookies.session
-  request({
-    uri: `${constants.uri}/enrolls`,
+
+  ws.authenticated({
+    uri: '/enrolls',
     method: 'POST',
-    headers: {
-      'x-session-token': session.token,
-    },
     json: {
       person_id: req.body.person_id,
       instruction_id: req.body.instruction_id,
       profile: req.body.profile,
     },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 function destroy(req, res) {
   const session = req.cookies.session
-  request({
-    uri: `${constants.uri}/enrolls/${req.params.id}`,
+
+  ws.authenticated({
+    uri: `/enrolls/${req.params.id}`,
     method: 'DELETE',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 module.exports = {

@@ -1,18 +1,14 @@
-const request = require('request')
-const constants = require('../../config/constants')
+const ws = require('../../services/webService')
 
 function index() {}
 
 function show(req, res) {
   const session = req.cookies.session
 
-  request({
-    uri: `${constants.uri}/materials/${req.params.id}`,
+  ws.authenticated({
+    uri: `/materials/${req.params.id}`,
     method: 'GET',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 function create() {}
@@ -20,28 +16,22 @@ function create() {}
 function update(req, res) {
   const session = req.cookies.session
 
-  request({
-    uri: `${constants.uri}/materials/${req.params.id}`,
+  ws.authenticated({
+    uri: `/materials/${req.params.id}`,
     method: 'PUT',
-    headers: {
-      'x-session-token': session.token,
-    },
     json: {
       name: req.body.name,
       mime: req.body.mime,
     },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 function destroy(req, res) {
   const session = req.cookies.session
-  request({
-    uri: `${constants.uri}/materials/${req.params.id}`,
+  ws.authenticated({
+    uri: `/materials/${req.params.id}`,
     method: 'DELETE',
-    headers: {
-      'x-session-token': session.token,
-    },
-  }).pipe(res)
+  }, session.token).pipe(res)
 }
 
 module.exports = {
