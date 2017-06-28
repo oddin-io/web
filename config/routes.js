@@ -1,3 +1,11 @@
+function dist(app) {
+  app.get('/dist/*', function renderPartial(req, res) {
+    const filename = req.path.substring(1)
+
+    res.render(filename)
+  })
+}
+
 function index(app) {
   app.get('/', function index(req, res) {
     res.render('index')
@@ -52,6 +60,7 @@ function components(app) {
 
 
 module.exports = function routesConfig(app) {
+  dist(app)
   index(app)
   config(app)
   home(app)

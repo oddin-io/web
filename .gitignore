@@ -12,6 +12,7 @@ vendor/
 # Compiled files
 *.css
 *.css.*
+dist/
 
 # Log files
 *.log

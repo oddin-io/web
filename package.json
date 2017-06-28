@@ -10,7 +10,8 @@
     "acceptance-tests": "cucumberjs",
     "unit-tests": "jasmine",
     "start": "node ./bin/www",
-    "lint-js": "eslint --quiet **/*.js"
+    "lint-js": "eslint --quiet **/*.js",
+    "postinstall": "webpack"
   },
   "engines": {
     "node": ">= 6.4.0",
@@ -55,6 +56,7 @@
     "jasmine": "^2.4.1",
     "nodemon": "^1.10.0",
     "sass-lint": "^1.10.0",
+    "webpack": "^3.0.0",
     "zombie": "^4.2.1"
   }
 }
