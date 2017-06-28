@@ -8,7 +8,7 @@ const views = 'views/**/*.pug'
 gulp.task('views', () => {
   gulp.src(views)
     .pipe(pug())
-    .pipe(gulp.dest(`${distFolder}/views`))
+    .pipe(gulp.dest(distFolder))
 })
 
 gulp.task('move-public', () => {

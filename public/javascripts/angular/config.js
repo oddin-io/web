@@ -4,25 +4,25 @@ oddin.config(['$stateProvider', function ($stateProvider) {
   $stateProvider
     .state('login', {
       url: '/login',
-      templateUrl: '/partials/login',
+      templateUrl: '/partials/login.html',
       controller: 'LoginController',
       authenticate: false,
     })
     .state('recuperar_senha', {
       url: '/recuperar_senha',
-      templateUrl: '/partials/recover-password',
+      templateUrl: '/partials/recover-password.html',
       controller: 'LoginController',
       authenticate: false,
     })
     .state('redefinir_senha', {
       url: '/redefinir_senha',
-      templateUrl: '/partials/redefine-password',
+      templateUrl: '/partials/redefine-password.html',
       controller: 'LoginController',
       authenticate: false,
     })
     .state('instructions', {
       url: '/disciplinas',
-      templateUrl: '/partials/instructions',
+      templateUrl: '/partials/instructions.html',
       controller: 'InstructionsController',
       authenticate: true,
     })
@@ -30,11 +30,11 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/disciplinas/:instructionID/aulas',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/presentations/index-student')
+          return $templateFactory.fromUrl('/partials/presentations/index-student.html')
         }
 
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/presentations/index-instructor')
+          return $templateFactory.fromUrl('/partials/presentations/index-instructor.html')
         }
       },
       controller: 'PresentationsController',
@@ -44,11 +44,11 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/aulas/:presentationID',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/presentations/show-student')
+          return $templateFactory.fromUrl('/partials/presentations/show-student.html')
         }
 
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/presentations/show-instructor')
+          return $templateFactory.fromUrl('/partials/presentations/show-instructor.html')
         }
       },
       controller: 'PresentationShowController',
@@ -58,10 +58,10 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/aulas/:presentationID/material',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/presentations/material-student')
+          return $templateFactory.fromUrl('/partials/presentations/material-student.html')
         }
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/presentations/material-instructor')
+          return $templateFactory.fromUrl('/partials/presentations/material-instructor.html')
         }
       },
       controller: 'PresentationMaterialController',
@@ -71,10 +71,10 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/disciplinas/:instructionID/avisos',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/notices/index-student')
+          return $templateFactory.fromUrl('/partials/notices/index-student.html')
         }
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/notices/index-instructor')
+          return $templateFactory.fromUrl('/partials/notices/index-instructor.html')
         }
       },
       controller: 'NoticesController',
@@ -84,10 +84,10 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/disciplinas/:instructionID/datas',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/dates/index-student')
+          return $templateFactory.fromUrl('/partials/dates/index-student.html')
         }
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/dates/index-instructor')
+          return $templateFactory.fromUrl('/partials/dates/index-instructor.html')
         }
       },
       controller: 'DatesController',
@@ -97,10 +97,10 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/disciplinas/:instructionID/tarefas',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/works/index-student')
+          return $templateFactory.fromUrl('/partials/works/index-student.html')
         }
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/works/index-instructor')
+          return $templateFactory.fromUrl('/partials/works/index-instructor.html')
         }
       },
       controller: 'WorksController',
@@ -110,10 +110,10 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/tarefas/:workID',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/works/show-student')
+          return $templateFactory.fromUrl('/partials/works/show-student.html')
         }
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/works/show-instructor')
+          return $templateFactory.fromUrl('/partials/works/show-instructor.html')
         }
       },
       controller: 'WorkShowController',
@@ -123,10 +123,10 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/disciplinas/:instructionID/materiais',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/materials/index-student')
+          return $templateFactory.fromUrl('/partials/materials/index-student.html')
         }
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/materials/index-instructor')
+          return $templateFactory.fromUrl('/partials/materials/index-instructor.html')
         }
       },
       controller: 'MaterialsController',
@@ -134,7 +134,7 @@ oddin.config(['$stateProvider', function ($stateProvider) {
     })
     .state('participants', {
       url: '/disciplinas/:instructionID/participantes',
-      templateUrl: '/partials/participants',
+      templateUrl: '/partials/participants.html',
       controller: 'ParticipantsController',
       authenticate: true,
     })
@@ -142,10 +142,10 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/disciplinas/:instructionID/faqs',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/faqs/index-student')
+          return $templateFactory.fromUrl('/partials/faqs/index-student.html')
         }
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/faqs/index-instructor')
+          return $templateFactory.fromUrl('/partials/faqs/index-instructor.html')
         }
       },
       controller: 'FAQsController',
@@ -155,10 +155,10 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/disciplinas/:instructionID/enquetes',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/surveys/index-student')
+          return $templateFactory.fromUrl('/partials/surveys/index-student.html')
         }
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/surveys/index-instructor')
+          return $templateFactory.fromUrl('/partials/surveys/index-instructor.html')
         }
       },
       controller: 'SurveysController',
@@ -168,11 +168,11 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       url: '/disciplinas/:instructionID/testes',
       templateProvider: function ($cookies, $templateFactory) {
         if ($cookies.get('profile') == 0) {
-          return $templateFactory.fromUrl('/partials/tests/index-student')
+          return $templateFactory.fromUrl('/partials/tests/index-student.html')
         }
 
         if ($cookies.get('profile') == 1) {
-          return $templateFactory.fromUrl('/partials/tests/index-instructor')
+          return $templateFactory.fromUrl('/partials/tests/index-instructor.html')
         }
       },
       controller: 'TestsController',
@@ -180,43 +180,43 @@ oddin.config(['$stateProvider', function ($stateProvider) {
     })
     .state('admin-events', {
       url: '/admin-cursos',
-      templateUrl: '/partials/admin/events',
+      templateUrl: '/partials/admin/events.html',
       controller: 'AdminEventsController',
       authenticate: true,
     })
     .state('admin-lectures', {
       url: '/admin-disciplinas',
-      templateUrl: '/partials/admin/lectures',
+      templateUrl: '/partials/admin/lectures.html',
       controller: 'AdminLecturesController',
       authenticate: true,
     })
     .state('admin-users', {
       url: '/admin-usuarios',
-      templateUrl: '/partials/admin/users',
+      templateUrl: '/partials/admin/users.html',
       controller: 'AdminUsersController',
       authenticate: true,
     })
     .state('admin-event-show', {
       url: '/admin-cursos/:eventID',
-      templateUrl: '/partials/admin/event-show',
+      templateUrl: '/partials/admin/event-show.html',
       controller: 'AdminEventShowController',
       authenticate: true,
     })
     .state('admin-instruction-show', {
       url: '/admin-disciplinas-cadastradas/:instructionID',
-      templateUrl: '/partials/admin/instruction-show',
+      templateUrl: '/partials/admin/instruction-show.html',
       controller: 'AdminInstructionShowController',
       authenticate: true,
     })
     .state('admin-add-participants', {
       url: '/add-participants/:instructionID',
-      templateUrl: '/partials/admin/add-participants',
+      templateUrl: '/partials/admin/add-participants.html',
       controller: 'AdminInstructionShowController',
       authenticate: true,
     })
     .state('admin-add-instructions', {
       url: '/add-instructions/:eventID',
-      templateUrl: '/partials/admin/add-instructions',
+      templateUrl: '/partials/admin/add-instructions.html',
       controller: 'AdminEventShowController',
       authenticate: true,
     })

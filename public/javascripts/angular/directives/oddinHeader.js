@@ -2,7 +2,7 @@ import oddin from '../app'
 
 oddin.directive('oddinHeader', function () {
   return {
-    templateUrl: '/components/header',
+    templateUrl: '/components/header.html',
     replace: true,
     restrict: 'AE',
     scope: {

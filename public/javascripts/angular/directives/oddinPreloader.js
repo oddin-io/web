@@ -8,6 +8,6 @@ oddin.directive('oddinPreloader', function () {
       sideBar: '@',
       loadVar: '=',
     },
-    templateUrl: '/components/preloader',
+    templateUrl: '/components/preloader.html',
   }
 })

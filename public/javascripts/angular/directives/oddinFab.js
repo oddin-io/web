@@ -9,6 +9,6 @@ oddin.directive('oddinFab', function () {
       modalTrigger: '@',
       icon: '@',
     },
-    templateUrl: '/components/fab',
+    templateUrl: '/components/fab.html',
   }
 })
