@@ -1,3 +1,5 @@
+const path = require('path')
+
 function dist(app) {
   app.get('/dist/*', function renderPartial(req, res) {
     const filename = req.path.substring(1)
@@ -19,7 +21,7 @@ function index(app) {
 function config(app) {
   app.get('/config', function customConfig(req, res) {
     res.jsonp({
-      ws_url: (process.env.WS_URL) || 'http://ws-edupanel.herokuapp.com'
+      ws_url: (process.env.WS_URL) || 'http://ws-edupanel.herokuapp.com',
     })
   })
 }
@@ -58,6 +60,14 @@ function components(app) {
   })
 }
 
+function files(app) {
+  app.get('/*', function renderPartial(req, res) {
+    const filename = req.path.substring(1)
+
+    res.sendFile(path.resolve(__dirname, `../public/dist/${filename}`))
+  })
+}
+
 
 module.exports = function routesConfig(app) {
   dist(app)
@@ -68,4 +78,6 @@ module.exports = function routesConfig(app) {
   presentation(app)
   partials(app)
   components(app)
+
+  files(app)
 }
