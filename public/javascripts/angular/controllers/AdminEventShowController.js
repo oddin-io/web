@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('AdminEventShowController',
   [
     '$scope', '$stateParams', '$filter',

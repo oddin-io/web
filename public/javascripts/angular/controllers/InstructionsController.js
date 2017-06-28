@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('InstructionsController',
   ['$scope', '$cookies', '$state', 'CurrentUser', 'InstructionAPI', '$filter',
     function ($scope, $cookies, $state, CurrentUser, InstructionAPI, $filter) {

@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('PresentationsController',
   ['$scope', '$stateParams', 'InstructionAPI', 'PresentationAPI', 'CurrentUser', 'ManageList',
     function ($scope, $stateParams, InstructionAPI, PresentationAPI, CurrentUser, ManageList) {

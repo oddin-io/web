@@ -1,4 +1,3 @@
-import '../services/LoginAPI'
 import oddin from '../app'
 
 oddin.controller('LoginController',

@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('AdminLecturesController',
   ['$scope', 'CurrentUser', 'LectureAPI', 'ManageList',
     function ($scope, CurrentUser, LectureAPI, ManageList) {

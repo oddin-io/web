@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('SurveysController', [
   '$scope', '$cookies', '$stateParams',
   'InstructionAPI', 'SurveyAPI', 'AlternativeAPI', 'CurrentUser', 'ManageList',

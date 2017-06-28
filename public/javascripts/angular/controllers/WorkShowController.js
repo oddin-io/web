@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('WorkShowController',
   ['$scope', '$stateParams', '$http', '$q',
     'CurrentUser', 'WorkAPI', 'MaterialAPI', 'SubmissionAPI',

@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('TestAPI', ['$http', 'env', function ($http, env) {
   var _update = function (id, test) {
     return $http.put(`${env.ws_url}/tests/${id}`, test)

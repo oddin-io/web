@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('ManageList', function () {
   var _updateItem = function (list, item) {
     var index = list.findIndex(function (element) {

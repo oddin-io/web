@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('FAQsController',
   [
     '$scope', '$stateParams', 'InstructionAPI', 'FaqAPI', 'CurrentUser', 'ManageList',

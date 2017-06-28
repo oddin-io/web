@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('ParticipantsController',
   ['$scope', '$stateParams', 'InstructionAPI', 'CurrentUser',
     function ($scope, $stateParams, InstructionAPI, CurrentUser) {

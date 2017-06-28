@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('AdminUsersController',
   ['$scope', 'CurrentUser', 'PersonAPI', 'ManageList',
     function ($scope, CurrentUser, PersonAPI, ManageList) {

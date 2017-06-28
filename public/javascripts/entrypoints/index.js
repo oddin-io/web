@@ -1,13 +1,19 @@
+// Stylesheets
 import '../../stylesheets/material-icons.scss'
 import '../../stylesheets/materialize_custom.scss'
 import '../../stylesheets/login_style.scss'
 
-import oddin from '../angular/app'
+// Oddin setup
+import '../angular/app'
 
-window.oddin = oddin
-
+// Configuration
 import '../angular/config'
+
+// Directives
 import '../angular/directives/oddinPreloader'
 
+// Services
 import '../angular/services/LoginAPI'
+
+// Controllers
 import '../angular/controllers/LoginController'

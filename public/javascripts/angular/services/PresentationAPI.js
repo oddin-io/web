@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('PresentationAPI', ['$http', 'env', function ($http, env) {
   var _show = function (id) {
     return $http.get(`${env.ws_url}/presentations/${id}`)

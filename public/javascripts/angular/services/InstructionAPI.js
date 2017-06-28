@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('InstructionAPI', ['$http', 'env', function ($http, env) {
   var _index = function () {
     return $http.get(`${env.ws_url}/instructions`)

@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('AdminInstructionShowController',
   [
     '$scope', '$stateParams',

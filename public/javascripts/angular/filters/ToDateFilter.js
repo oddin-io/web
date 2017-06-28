@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.filter('toDate', function () {
   return function (date, time) {
     var day = parseInt(date.substring(0, 2), 10)

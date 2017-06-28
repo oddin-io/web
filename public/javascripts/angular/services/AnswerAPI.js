@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('AnswerAPI', ['$http', 'env', function ($http, env) {
   var _upvote = function (id) {
     return $http.post(`${env.ws_url}/answers/${id}/upvote`)

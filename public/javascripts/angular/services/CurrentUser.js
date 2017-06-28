@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('CurrentUser', ['$cookies', function ($cookies) {
   const currentUser = $cookies.getObject('session')
 

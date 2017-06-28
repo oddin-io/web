@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('DateAPI', ['$http', 'env', function ($http, env) {
   var _update = function (id, date) {
     return $http.put(`${env.ws_url}/dates/${id}`, date)

@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('QuestionAPI', ['$http', 'env', function ($http, env) {
   var _getAnswers = function (id) {
     return $http.get(`${env.ws_url}/questions/${id}/answers`)

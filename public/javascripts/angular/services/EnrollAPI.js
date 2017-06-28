@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('EnrollAPI', ['$http', 'env', function ($http, env) {
   var _create = function (enroll) {
     return $http.post(`${env.ws_url}/enrolls`, enroll)

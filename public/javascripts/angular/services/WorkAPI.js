@@ -1,4 +1,5 @@
-/* global oddin */
+import oddin from '../app'
+
 oddin.factory('WorkAPI', ['$http', 'env', function ($http, env) {
   var _show = function (id) {
     return $http.get(`${env.ws_url}/works/${id}`)

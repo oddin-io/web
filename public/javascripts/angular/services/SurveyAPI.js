@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('SurveyAPI', ['$http', 'env', function ($http, env) {
   var _update = function (id, survey) {
     return $http.put(`${env.ws_url}/surveys/${id}`, survey)

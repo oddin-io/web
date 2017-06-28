@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.controller('DatesController',
   [
     '$scope', '$stateParams', '$filter',
