@@ -1,16 +1,11 @@
 const path = require('path')
 
-function dist(app) {
-  app.get('/dist/*', function renderPartial(req, res) {
-    const filename = req.path.substring(1)
-
-    res.render(filename)
-  })
-}
+const distFolder = path.resolve(__dirname, '../', 'dist')
+const viewsPath = path.resolve(distFolder, 'views')
 
 function index(app) {
   app.get('/', function index(req, res) {
-    res.render('index')
+    res.sendFile(`${viewsPath}/index.html`)
   })
 
   app.get('/recover-password', function recoverPassword() {
@@ -28,19 +23,19 @@ function config(app) {
 
 function home(app) {
   app.get('/home', function (req, res) {
-    res.render('home')
+    res.sendFile(`${viewsPath}/home.html`)
   })
 }
 
 function lecture(app) {
   app.get('/lectures/:id', function index(req, res) {
-    res.render('home')
+    res.sendFile(`${viewsPath}/home.html`)
   })
 }
 
 function presentation(app) {
   app.get('/presentations/:id', function index(req, res) {
-    res.render('home')
+    res.sendFile(`${viewsPath}/home.html`)
   })
 }
 
@@ -48,7 +43,7 @@ function partials(app) {
   app.get('/partials/*', function renderPartial(req, res) {
     const filename = req.path.substring(1)
 
-    res.render(filename)
+    res.sendFile(`${viewsPath}/${filename}.html`)
   })
 }
 
@@ -56,7 +51,7 @@ function components(app) {
   app.get('/components/:filename', function renderPartial(req, res) {
     const filename = req.params.filename
 
-    res.render(`components/${filename}`)
+    res.sendFile(`${viewsPath}/components/${filename}.html`)
   })
 }
 
@@ -64,13 +59,12 @@ function files(app) {
   app.get('/*', function renderPartial(req, res) {
     const filename = req.path.substring(1)
 
-    res.sendFile(path.resolve(__dirname, `../public/dist/${filename}`))
+    res.sendFile(`${distFolder}/dependencies/${filename}`)
   })
 }
 
 
 module.exports = function routesConfig(app) {
-  dist(app)
   index(app)
   config(app)
   home(app)

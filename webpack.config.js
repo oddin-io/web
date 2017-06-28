@@ -7,7 +7,7 @@ module.exports = {
     home: './public/javascripts/entrypoints/home.js',
   },
   output: {
-    path: path.resolve(__dirname, 'public/dist'),
+    path: path.resolve(__dirname, 'dist', 'dependencies'),
     filename: '[name].js',
   },
   module: {
