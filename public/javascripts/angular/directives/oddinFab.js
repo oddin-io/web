@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.directive('oddinFab', function () {
   return {
     replace: true,

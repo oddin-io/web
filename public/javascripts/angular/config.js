@@ -1,3 +1,5 @@
+import oddin from './app'
+
 oddin.config(['$stateProvider', function ($stateProvider) {
   $stateProvider
     .state('login', {

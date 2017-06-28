@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.directive('oddinHeader', function () {
   return {
     templateUrl: '/components/header',

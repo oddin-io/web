@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.directive('oddinPreloader', function () {
   return {
     replace: true,

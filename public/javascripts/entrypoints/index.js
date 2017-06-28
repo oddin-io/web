@@ -6,3 +6,5 @@ import oddin from '../angular/app'
 
 window.oddin = oddin
 
+import '../angular/config'
+import '../angular/directives/oddinPreloader'
