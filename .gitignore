@@ -13,6 +13,7 @@ vendor/
 *.css
 *.css.*
 dist/
+build/
 
 # Log files
 *.log
