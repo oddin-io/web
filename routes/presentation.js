@@ -1,6 +1,7 @@
 const router = require('express').Router()
-const controller = require('../controllers/presentation')
 
-router.get('/presentations/:id', controller.index)
+router.get('/presentations/:id', function index(req, res) {
+  res.render('home')
+})
 
 module.exports = router

@@ -1,7 +1,11 @@
 const router = require('express').Router()
-const controller = require('../controllers/index')
 
-router.get('/', controller.index)
-router.get('/recover-password', controller.recoverPassword)
+router.get('/', function index(req, res) {
+  res.render('index')
+})
+
+router.get('/recover-password', function recoverPassword() {
+  console.log('recover-password')
+})
 
 module.exports = router
