@@ -8,3 +8,6 @@ window.oddin = oddin
 
 import '../angular/config'
 import '../angular/directives/oddinPreloader'
+
+import '../angular/services/LoginAPI'
+import '../angular/controllers/LoginController'

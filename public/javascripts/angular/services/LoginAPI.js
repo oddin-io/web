@@ -1,3 +1,5 @@
+import oddin from '../app'
+
 oddin.factory('LoginAPI', ['$http', 'env', function ($http, env) {
   var _login = function (user) {
     return $http.post(`${env.ws_url}/session`, user)

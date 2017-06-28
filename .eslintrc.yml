@@ -6,7 +6,6 @@ env:
   jquery: true
 
 globals:
-  oddin: true
   Materialize: true
   angular: true
   io: true

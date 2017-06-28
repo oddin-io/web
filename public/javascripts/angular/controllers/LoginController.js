@@ -1,6 +1,9 @@
+import '../services/LoginAPI'
+import oddin from '../app'
+
 oddin.controller('LoginController',
-  ['$scope', '$window', 'LoginAPI', '$cookies', '$location', '$state',
-    function ($scope, $window, LoginAPI, $cookies, $location, $state) {
+  ['$scope', '$window', '$cookies', '$location', '$state', 'LoginAPI',
+    function ($scope, $window, $cookies, $location, $state, LoginAPI) {
       $scope.load = true
 
       $scope.login = function (user) {
