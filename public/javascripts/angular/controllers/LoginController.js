@@ -45,6 +45,7 @@ oddin.controller('LoginController',
                 .then(function () {
                   $cookies.remove('session')
                   $cookies.remove('profile')
+                  $cookies.remove('token')
                   $cookies.remove('admin')
                   $window.location.href = '/'
                 })

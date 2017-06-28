@@ -1,10 +1,10 @@
 oddin.factory('LoginAPI', ['$http', 'env', function ($http, env) {
   var _login = function (user) {
-    return $http.post(`${env.ws_url}/login`, user)
+    return $http.post(`${env.ws_url}/session`, user)
   }
 
   var _logout = function () {
-    return $http.post(`${env.ws_url}/logout`)
+    return $http.delete(`${env.ws_url}/session`)
   }
 
   var _recoverPassword = function (user) {
