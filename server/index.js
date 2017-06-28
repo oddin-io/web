@@ -1,7 +1,9 @@
 const express = require('express')
 
+const routes = require('./routes')
+
 const app = express()
-require('./config/app')(app)
+app.use('/', routes)
 
 // catch 404 and forward to error handler
 app.use(function errorHandler(req, res, next) {
@@ -33,6 +35,5 @@ app.use(function prodErrorHandler(err, req, res) {
     error: {},
   })
 })
-
 
 module.exports = app
