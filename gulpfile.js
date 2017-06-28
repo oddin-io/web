@@ -11,4 +11,9 @@ gulp.task('views', () => {
     .pipe(gulp.dest(`${distFolder}/views`))
 })
 
-gulp.task('default', ['views'])
+gulp.task('move-public', () => {
+  gulp.src('public/**/*')
+    .pipe(gulp.dest(`${distFolder}`))
+})
+
+gulp.task('default', ['views', 'move-public'])

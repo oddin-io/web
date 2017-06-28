@@ -59,7 +59,7 @@ function files(app) {
   app.get('/*', function renderPartial(req, res) {
     const filename = req.path.substring(1)
 
-    res.sendFile(`${distFolder}/dependencies/${filename}`)
+    res.sendFile(`${distFolder}/${filename}`)
   })
 }
 
