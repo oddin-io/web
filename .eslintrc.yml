@@ -7,8 +7,6 @@ env:
 
 globals:
   Materialize: true
-  angular: true
-  io: true
 
 parserOptions:
   ecmaVersion: 6

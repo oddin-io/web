@@ -1,3 +1,4 @@
+import io from 'socket.io-client'
 import oddin from '../app'
 
 oddin.controller('PresentationShowController',

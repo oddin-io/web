@@ -11,7 +11,7 @@
     "unit-tests": "jasmine",
     "start": "node ./bin/www",
     "lint-js": "eslint --quiet **/*.js",
-    "postinstall": "webpack"
+    "postinstall": "webpack && bower install"
   },
   "engines": {
     "node": ">= 6.4.0",
