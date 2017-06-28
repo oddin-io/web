@@ -2,14 +2,13 @@ const router = require('express').Router()
 const path = require('path')
 
 const distFolder = path.resolve(__dirname, '../', 'dist')
-const viewsPath = path.resolve(distFolder, 'views')
 
 router.get('/', function (req, res) {
-  res.sendFile(`${viewsPath}/index.html`)
+  res.sendFile(`${distFolder}/index.html`)
 })
 
 router.get('/home', function (req, res) {
-  res.sendFile(`${viewsPath}/home.html`)
+  res.sendFile(`${distFolder}/home.html`)
 })
 
 router.get('/config', function (req, res) {

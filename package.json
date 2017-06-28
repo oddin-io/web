@@ -7,63 +7,39 @@
   "main": "./bin/www",
   "scripts": {
     "dev": "nodemon",
-    "acceptance-tests": "cucumberjs",
-    "unit-tests": "jasmine",
     "start": "node ./bin/www",
     "lint-js": "eslint --quiet **/*.js",
-    "postinstall": "webpack && bower install"
+    "postinstall": "bower install && webpack && gulp"
   },
   "engines": {
     "node": ">= 6.4.0",
     "npm": ">= 3.10.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://gitlab.com/hjkuba/oddin"
-  },
   "license": "UNLICENSED",
   "dependencies": {
-    "angular": "^1.5.8",
-    "angular-cookies": "^1.5.8",
+    "angular": "^1.6.4",
+    "angular-cookies": "^1.6.4",
     "angular-materialize": "^0.1.9",
     "angular-ui-mask": "^1.8.7",
-    "angular-ui-router": "^0.3.1",
-    "body-parser": "~1.15.1",
+    "angular-ui-router": "^0.3.2",
     "bower": "^1.7.9",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
     "express": "~4.13.4",
     "jquery": "^3.2.1",
-    "materialize-css": "^0.97.7",
-    "method-override": "^2.3.6",
-    "morgan": "~1.7.0",
-    "node-minify": "^2.0.2",
-    "node-sass-middleware": "0.8.0",
-    "pug": "^2.0.0-beta5",
-    "request": "^2.74.0",
-    "serve-favicon": "~2.3.0",
+    "materialize-css": "^0.97.8",
     "socket.io-client": "^1.7.4"
   },
   "devDependencies": {
     "css-loader": "^0.28.4",
-    "cucumber": "^1.2.2",
     "eslint": "^3.3.1",
     "eslint-plugin-import": "^1.14.0",
     "file-loader": "^0.11.2",
     "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.0",
     "gulp-pug": "^3.3.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-ruby-sass": "^2.0.6",
-    "gulp-uglify": "^1.5.4",
-    "husky": "^0.14.1",
-    "jasmine": "^2.4.1",
     "node-sass": "^4.5.3",
     "nodemon": "^1.10.0",
     "sass-lint": "^1.10.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "webpack": "^3.0.0",
-    "zombie": "^4.2.1"
+    "webpack": "^3.0.0"
   }
 }
