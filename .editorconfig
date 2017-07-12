@@ -6,18 +6,18 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{html, ejs}]
+[*.{html,ejs}]
 indent_style = space
 indent_size = 2
 
-[*.{scss, css}]
+[*.{scss,css}]
 indent_style = space
 indent_size = 2
 
-[*.{js}]
+[*.js]
 indent_style = space
 indent_size = 2
 
-[*.{json, yml}]
+[*.{json,yml}]
 indent_style = space
 indent_size = 2

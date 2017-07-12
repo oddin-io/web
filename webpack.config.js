@@ -1,15 +1,7 @@
-const path = require('path')
+const fileMappings = require('./fileMappings').webpack
 const webpack = require('webpack')
 
-module.exports = {
-  entry: {
-    index: './public/javascripts/entrypoints/index.js',
-    home: './public/javascripts/entrypoints/home.js',
-  },
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
-  },
+module.exports = Object.assign({
   module: {
     rules: [
       {
@@ -34,4 +26,4 @@ module.exports = {
       jQuery: 'jquery',
     }),
   ],
-}
+}, fileMappings)
