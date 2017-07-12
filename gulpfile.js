@@ -1,5 +1,6 @@
 const gulp = require('gulp')
 const pug = require('gulp-pug')
+const exec = require('child_process').exec
 const fileMappings = require('./fileMappings')
 
 gulp.task('compile-views', () => {
@@ -23,6 +24,15 @@ gulp.task('move-vendor', () => {
 gulp.task('move-public', ['move-vendor'], () => {
   gulp.src('public/**/*.*')
     .pipe(gulp.dest(fileMappings.distDir))
+})
+
+gulp.task('compile-modules', () => {
+  return new Promise((resolve, reject) => {
+    exec('webpack', (err) => {
+      if (err) return reject(err)
+      return resolve()
+    })
+  })
 })
 
 gulp.task('default', ['compile-views', 'move-public'])
