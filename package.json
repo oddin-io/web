@@ -9,7 +9,7 @@
     "dev": "nodemon",
     "start": "node ./bin/www",
     "lint-js": "eslint --quiet **/*.js",
-    "postinstall": "bower install && webpack && gulp"
+    "postinstall": "gulp && webpack"
   },
   "engines": {
     "node": ">= 6.4.0",
@@ -22,10 +22,9 @@
     "angular-materialize": "^0.1.9",
     "angular-ui-mask": "^1.8.7",
     "angular-ui-router": "^0.3.2",
-    "bower": "^1.7.9",
     "express": "~4.13.4",
     "jquery": "^3.2.1",
-    "materialize-css": "^0.97.8",
+    "materialize-css": "^0.97.7",
     "socket.io-client": "^1.7.4"
   },
   "devDependencies": {
@@ -40,6 +39,7 @@
     "nodemon": "^1.10.0",
     "sass-lint": "^1.10.0",
     "sass-loader": "^6.0.6",
+    "sleep": "^5.1.1",
     "style-loader": "^0.18.2",
     "webpack": "^3.0.0"
   }

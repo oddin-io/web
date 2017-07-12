@@ -5,6 +5,7 @@ const entrypointsDir = path.resolve(__dirname, 'public', 'javascripts', 'entrypo
 
 module.exports = {
   distDir: distDir,
+  vendorDir: path.resolve(__dirname, 'public', 'vendor'),
   views: 'views/**/*.pug',
   webpack: {
     entry: {
