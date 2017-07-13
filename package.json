@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Default front end for Oddin Web Service",
   "author": "Heitor Kuba <hjkuba@yahoo.com>",
+  "contributors": [
+    "Bruno Felipe Leal Delfino <bruno-delfino1995@gmail.com>",
+    "Everson Zambon <everson.zambon@gmail.com>",
+    "Everton Zambon <everton_47@hotmail.com>"
+  ],
   "private": true,
   "main": "./bin/www",
   "scripts": {
