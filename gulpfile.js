@@ -40,4 +40,10 @@ gulp.task('compile-modules', () => {
   })
 })
 
+gulp.task('watch', () => {
+  gulp.watch(fileMappings.views, ['compile-views'])
+  gulp.watch(['public/fonts/**/*.*', 'public/images/**/*.*'], ['move-public'])
+  gulp.watch(['public/stylesheets/**/*.*', 'public/javascripts/**/*.*'], ['compile-modules'])
+})
+
 gulp.task('default', ['compile-views', 'move-public', 'compile-modules'])
