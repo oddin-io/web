@@ -14,7 +14,7 @@
     "dev": "nodemon",
     "start": "node ./bin/www",
     "lint-js": "eslint --quiet **/*.js",
-    "postinstall": "gulp"
+    "build": "gulp"
   },
   "engines": {
     "node": ">= 6.4.0",
