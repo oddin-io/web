@@ -262,11 +262,11 @@ oddin.factory('AuthorizationInterceptor', ['$cookies', function ($cookies) {
       var authToken = $cookies.get('token')
 
       if (authToken) {
-        return Object.assign(config, {
-          headers: {
-            Authorization: authToken,
-          },
+        Object.assign(config.headers, {
+          Authorization: authToken,
         })
+
+        return config
       }
 
       return config
