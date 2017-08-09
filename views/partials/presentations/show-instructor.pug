@@ -4,6 +4,7 @@ div(ng-include="'partials/presentations/show-menu.html'")
 main
 	oddin-preloader(load-var="load" side-bar="true")
 	//- Modals
+	
 	#modal-create-video.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta
 			.row
@@ -11,14 +12,31 @@ main
 					h1.modal-criar-item__titulo Criar Video
 					.row
 						.input-field.col.s20
-							video(autoplay="true" id="gum")
-							video(autoplay="true" id="recorded")
+							video(autoplay muted id="gum")
+							video(autoplay id="recorded")
 						.col.s12.m9
 							.modal-post-respostas__options
 								button.btn.waves-effect.waves-light( id="record" class="__web-inspector-hide-shortcut__") Gravar
 								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="play" disabled) Visualizar
 						.col.s12.m3
 							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="download" type="submit" name="action" disabled) Enviar
+
+	#modal-create-audio.modal.bottom-sheet
+		.modal-content.modal-criar-item.modal-post-resposta
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6
+					h1.modal-criar-item__titulo Criar Aúdio
+					.row
+						.input-field.col.s20
+							audio(autoplay muted id="gum")
+							audio(autoplay id="recorded")
+						.col.s12.m9
+							.modal-post-respostas__options
+								button.btn.waves-effect.waves-light( id="record" class="__web-inspector-hide-shortcut__") Gravar
+								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="play" disabled) Visualizar
+						.col.s12.m3
+							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="download" type="submit" name="action" disabled) Enviar
+						
 
 	#modal-create-answer.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta
@@ -34,7 +52,7 @@ main
 							.modal-post-resposta__options
 								a.btn-floating
 									i.material-icons text_fields
-								a.btn-floating.disabled(disabled)
+								a.btn-floating(ng-click="modalCreateAudio(question)" href="")
 									i.material-icons mic
 								a.btn-floating(ng-click="modalCreateVideo(question)" href="")
 									i.material-icons videocam

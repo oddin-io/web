@@ -229,6 +229,11 @@ oddin.controller('PresentationShowController',
         $.getScript('https://webrtc.github.io/adapter/adapter-latest.js', function () {})
       }
 
+      $scope.modalCreateAudio = function (question) {
+        $scope.selectedQuestion = question
+        $('#modal-create-audio').openModal()
+        $('#modal-create-answer').closeModal()
+      }
 
       $scope.enableFilter = function () {
         $scope.filter = true
