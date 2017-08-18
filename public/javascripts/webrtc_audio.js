@@ -4,12 +4,12 @@ var mediaRecorder;
 var recordedBlobs;
 var sourceBuffer;
 
-var gumAudio = document.querySelector('audio#gum');
-var recordedAudio = document.querySelector('audio#recorded');
+var gumAudio = document.querySelector('audio#gumAudio');
+var recordedAudio = document.querySelector('audio#recordedAudio');
 
-var recordButton = document.querySelector('button#record');
-var playButton = document.querySelector('button#play');
-var downloadButton = document.querySelector('button#download');
+var recordButton = document.querySelector('button#recordAudio');
+var playButton = document.querySelector('button#playAudio');
+var downloadButton = document.querySelector('button#downloadAudio');
 
 recordButton.onclick = toggleRecording;
 playButton.onclick = play;
