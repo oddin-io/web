@@ -1,5 +1,4 @@
 const fileMappings = require('./fileMappings').webpack
-const webpack = require('webpack')
 
 module.exports = Object.assign({
   module: {
@@ -20,10 +19,4 @@ module.exports = Object.assign({
       },
     ],
   },
-  plugins: [
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-    }),
-  ],
 }, fileMappings)

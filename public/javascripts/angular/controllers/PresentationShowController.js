@@ -224,7 +224,7 @@ oddin.controller('PresentationShowController',
         $scope.selectedQuestion = question
         $('#modal-create-video').openModal()
         $('#modal-create-answer').closeModal()
-        $.getScript('/javascripts/webcam2.js', function () {})
+        $.getScript('/javascripts/webrtc_video.js', function () {})
         $.getScript('/javascripts/adapter.js', function () {})
         $.getScript('https://webrtc.github.io/adapter/adapter-latest.js', function () {})
       }
@@ -233,6 +233,9 @@ oddin.controller('PresentationShowController',
         $scope.selectedQuestion = question
         $('#modal-create-audio').openModal()
         $('#modal-create-answer').closeModal()
+        $.getScript('/javascripts/webrtc_audio.js', function () {})
+        $.getScript('/javascripts/adapter.js', function () {})
+        $.getScript('https://webrtc.github.io/adapter/adapter-latest.js', function () {})
       }
 
       $scope.enableFilter = function () {
