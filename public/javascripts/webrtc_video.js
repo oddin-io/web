@@ -1,11 +1,10 @@
 /* globals MediaRecorder */
-
 // DOM Elements for handling
-var gumVideo = document.querySelector('video#gum')
-var recordedVideo = document.querySelector('video#recorded')
-var recordButton = document.querySelector('button#record')
-var playButton = document.querySelector('button#play')
-var downloadButton = document.querySelector('button#download')
+var gumVideo
+var recordedVideo
+var recordButton
+var playButton
+var downloadButton
 
 // Media handlers
 var mediaSource = new MediaSource()
@@ -17,21 +16,6 @@ var constraints = {
   video: true,
 }
 
-// window.isSecureContext could be used for Chrome
-var isSecureOrigin = location.protocol === 'https:' ||
-  location.hostname === 'localhost'
-
-mediaSource.addEventListener('sourceopen', handleSourceOpen, false)
-recordButton.onclick = toggleRecording
-playButton.onclick = play
-downloadButton.onclick = download
-
-if (!isSecureOrigin) {
-  alert('getUserMedia() must be run from a secure origin: HTTPS or localhost.' +
-    '\n\nChanging protocol to HTTPS')
-  location.protocol = 'HTTPS'
-}
-
 function handleSuccess(stream) {
   recordButton.disabled = false
   console.log('getUserMedia() got stream: ', stream)
@@ -41,26 +25,19 @@ function handleSuccess(stream) {
   } else {
     gumVideo.src = stream
   }
+
+  return stream
 }
 
 function handleError(error) {
   console.log('navigator.getUserMedia error: ', error)
 }
 
-navigator.mediaDevices.getUserMedia(constraints)
-    .then(handleSuccess).catch(handleError)
-
 function handleSourceOpen() {
   console.log('MediaSource opened')
   sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"')
   console.log('Source buffer: ', sourceBuffer)
 }
-
-recordedVideo.addEventListener('error', function (ev) {
-  console.error('MediaRecording.recordedMedia.error()')
-  alert('Your browser can not play\n\n' + recordedVideo.src
-    + '\n\n media clip. event: ' + JSON.stringify(ev))
-}, true)
 
 function handleDataAvailable(event) {
   if (event.data && event.data.size > 0) {
@@ -140,4 +117,40 @@ function download() {
     document.body.removeChild(a)
     window.URL.revokeObjectURL(url)
   }, 100)
+}
+
+export default function () {
+  // window.isSecureContext could be used for Chrome
+  var isSecureOrigin = location.protocol === 'https:' ||
+  location.hostname === 'localhost'
+
+  gumVideo = document.querySelector('video#gum')
+  recordedVideo = document.querySelector('video#recorded')
+  recordButton = document.querySelector('button#record')
+  playButton = document.querySelector('button#play')
+  downloadButton = document.querySelector('button#download')
+
+  mediaSource.addEventListener('sourceopen', handleSourceOpen, false)
+  recordButton.onclick = toggleRecording
+  playButton.onclick = play
+  downloadButton.onclick = download
+
+  if (!isSecureOrigin) {
+    alert('getUserMedia() must be run from a secure origin: HTTPS or localhost.' +
+      '\n\nChanging protocol to HTTPS')
+    location.protocol = 'HTTPS'
+  }
+
+  recordedVideo.addEventListener('error', function (ev) {
+    console.error('MediaRecording.recordedMedia.error()')
+    alert('Your browser can not play\n\n' + recordedVideo.src
+    + '\n\n media clip. event: ' + JSON.stringify(ev))
+  }, true)
+
+  return new Promise((resolve) => {
+    navigator.mediaDevices.getUserMedia(constraints)
+      .then(function (stream) {
+        resolve(handleSuccess(stream))
+      })
+  })
 }
