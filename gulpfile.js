@@ -1,8 +1,8 @@
 const gulp = require('gulp')
 const pug = require('gulp-pug')
-const exec = require('child_process').exec
 const bluebird = require('bluebird')
 const fileMappings = require('./fileMappings')
+const webpackCompiler = require('webpack')(require('./webpack.config.js'))
 
 gulp.task('compile-views', () => {
   gulp.src(fileMappings.views)
@@ -31,11 +31,11 @@ gulp.task('move-public', ['move-vendor'], () => {
     .pipe(gulp.dest(fileMappings.distDir))
 })
 
-gulp.task('compile-modules', () => {
+gulp.task('compile-modules', ['move-vendor'], () => {
   return new Promise((resolve, reject) => {
-    exec('webpack', (err) => {
-      if (err) return reject(err)
-      return resolve()
+    webpackCompiler.run((err, stats) => {
+      if (err) reject(err)
+      else resolve(stats)
     })
   })
 })
