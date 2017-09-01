@@ -1,4 +1,5 @@
 const fileMappings = require('./fileMappings').webpack
+const webpack = require('webpack')
 
 module.exports = Object.assign({
   module: {
@@ -19,4 +20,9 @@ module.exports = Object.assign({
       },
     ],
   },
+  plugins: [
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[name].js.map',
+    }),
+  ],
 }, fileMappings)
