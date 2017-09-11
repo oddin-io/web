@@ -133,7 +133,7 @@ export default function () {
   mediaSource.addEventListener('sourceopen', handleSourceOpen, false)
   recordButton.onclick = toggleRecording
   playButton.onclick = play
-  downloadButton.onclick = download
+  //downloadButton.onclick = download
 
   if (!isSecureOrigin) {
     alert('getUserMedia() must be run from a secure origin: HTTPS or localhost.' +

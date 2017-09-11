@@ -8,15 +8,15 @@ main
 	#modal-create-video.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6
+				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="uploadAnswerVideo()")
 					h1.modal-criar-item__titulo Criar Video
 					.row
 						.input-field.col.s20
-							video(autoplay muted id="gum" style="background: #222; margin: 0 30px 2px 0; width: 45%;")
+							video(autoplay muted id="gum" style="background: #222; margin: 0 0 2px 0; width: 45%;")
 							video(autoplay id="recorded" style="background: #222; margin: 0 0 2px 30px; width: 45%;")
 						.col.s12.m9
 							.modal-post-respostas__options
-								button.btn.waves-effect.waves-light( id="record" class="__web-inspector-hide-shortcut__") Gravar
+								button.btn.waves-effect.waves-light(id="record") Gravar
 								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="play" disabled) Visualizar
 						.col.s12.m3
 							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="download" type="submit" name="action" disabled) Enviar
@@ -29,10 +29,10 @@ main
 					.row
 						.input-field.col.s20
 							audio(autoplay muted id="gumAudio")
-							audio(autoplay controls id="recordedAudio")
+							audio(controls id="recordedAudio")
 						.col.s12.m9
 							.modal-post-respostas__options
-								button.btn.waves-effect.waves-light(id="recordAudio" class="__web-inspector-hide-shortcut__") Gravar
+								button.btn.waves-effect.waves-light(id="recordAudio") Gravar
 								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="playAudio" disabled) Visualizar
 						.col.s12.m3
 							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="downloadAudio" type="submit" name="action" disabled) Enviar

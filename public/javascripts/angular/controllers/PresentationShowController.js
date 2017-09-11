@@ -2,6 +2,7 @@ import io from 'socket.io-client'
 import oddin from '../app'
 import webRtcVideo from '../../webrtc_video'
 
+
 oddin.controller('PresentationShowController',
   ['$scope', '$stateParams', 'PresentationAPI', 'QuestionAPI', 'AnswerAPI', 'CurrentUser',
     function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, CurrentUser) {
@@ -216,6 +217,69 @@ oddin.controller('PresentationShowController',
                 })
       }
 
+      /*function sendToAmazom(amazonConfig, file) {
+        var newMaterial = amazonConfig.data
+        var fd = new FormData()
+
+        for (var key in newMaterial.fields) {
+          fd.append(key, newMaterial.fields[key])
+        }
+
+        fd.append('file', file)
+        return $http.post(newMaterial.url, fd, {
+            headers: {
+              'Content-Type': undefined;
+            },
+        })
+      }
+
+      $scope.finishRecording = function {
+        var blob = new Blob(recordedBlobs, { type: 'video/webm' })
+        AnswerAPI.newMaterial(answer.id)
+          .then(function (responsep) {
+            return sendToAmazom(response, blob)
+          })
+      }
+
+      /*$scope.uploadAnswerMaterial = function (answer){
+        $scope.load = false
+        AnswerAPI.newMaterial(answer.id)
+          .then(function (response) {
+            var newMaterial = response.data
+            var file = document.forms.uploadArchive.file.files[0]
+            var fd = new FormData()
+
+            for (var key in newMaterial.fields) {
+              fd.append(key, newMaterial.fields[key])
+            }
+
+            fd.append('file', file)
+            return $http.post(newMaterial.url, fd, {
+                headers: {
+                  'Content-Type': undefined;
+                },
+            })
+          })
+          .then(function () {
+            return MaterialAPI.update(newMaterial.id, {
+              name: file.name,
+              mime: file.type,
+            })
+          })
+          .then(function (response) {
+            $scope.materials.push(response.data.material)
+            Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
+          })
+          .catch(function () {
+            Materialize.toast('Erro ao fazer upload de arquivo', 3000)
+          })
+          .finally(function () {
+            document.getElementById('new-material-file').value = ''
+            document.getElementById('new-material-description').value = ''
+            $scope.load = true
+          })
+      }*/
+
       $scope.modalCreateAnswer = function (question) {
         $scope.selectedQuestion = question
         $('#modal-create-answer').openModal()
@@ -241,8 +305,6 @@ oddin.controller('PresentationShowController',
         $('#modal-create-audio').openModal()
         $('#modal-create-answer').closeModal()
         $.getScript('/javascripts/webrtc_audio.js', function () {})
-        $.getScript('/javascripts/adapter.js', function () {})
-        $.getScript('https://webrtc.github.io/adapter/adapter-latest.js', function () {})
       }
 
       $scope.enableFilter = function () {
