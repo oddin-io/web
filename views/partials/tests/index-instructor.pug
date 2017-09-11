@@ -4,7 +4,7 @@ div(ng-include="'partials/tests/index-menu.html'")
 main
 	oddin-preloader(load-var="load" side-bar="true")
 	//- Modals
-	#modal-create.modal
+	#modal-create.modal(style="width: 90%;")
 		.modal-content.modal-criar-item
 			.row
 				form.offset-m2.offset-l20.col.s12.m8.l20
@@ -56,7 +56,7 @@ main
 									a.right(href="" ng-click="removeAlternative(newTest.questions.indexOf(question))")
 										i.material-icons close
 							.input-field.col.s0.offset-m9(ng-if="!dissertativeQuestion(newTest.questions.indexOf(question))")
-								a.btn-floating.waves-effect.waves-light.right(ng-click="addNewAlternative(newTest.questions.indexOf(question))")
+								a.btn-floating.waves-effect.waves-light.right(style="margin-bottom: 15px;" ng-click="addNewAlternative(newTest.questions.indexOf(question))")
 									i.material-icons add
 			.row
 				.offset-m2.offset-l20.col.s12.m8.l20
