@@ -121,8 +121,8 @@ function download() {
 
 export default function () {
   // window.isSecureContext could be used for Chrome
-  var isSecureOrigin = location.protocol === 'https:' ||
-  location.hostname === 'localhost'
+  //var isSecureOrigin = location.protocol === 'https:' ||
+  //location.hostname === 'localhost'
 
   gumVideo = document.querySelector('video#gum')
   recordedVideo = document.querySelector('video#recorded')
@@ -133,13 +133,13 @@ export default function () {
   mediaSource.addEventListener('sourceopen', handleSourceOpen, false)
   recordButton.onclick = toggleRecording
   playButton.onclick = play
-  //downloadButton.onclick = download
+  downloadButton.onclick = download
 
-  if (!isSecureOrigin) {
+  /*if (!isSecureOrigin) {
     alert('getUserMedia() must be run from a secure origin: HTTPS or localhost.' +
       '\n\nChanging protocol to HTTPS')
     location.protocol = 'HTTPS'
-  }
+  }*/
 
   recordedVideo.addEventListener('error', function (ev) {
     console.error('MediaRecording.recordedMedia.error()')

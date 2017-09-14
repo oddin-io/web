@@ -2,7 +2,6 @@ import io from 'socket.io-client'
 import oddin from '../app'
 import webRtcVideo from '../../webrtc_video'
 
-
 oddin.controller('PresentationShowController',
   ['$scope', '$stateParams', 'PresentationAPI', 'QuestionAPI', 'AnswerAPI', 'CurrentUser',
     function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, CurrentUser) {
@@ -305,6 +304,8 @@ oddin.controller('PresentationShowController',
         $('#modal-create-audio').openModal()
         $('#modal-create-answer').closeModal()
         $.getScript('/javascripts/webrtc_audio.js', function () {})
+        $.getScript('/javascripts/adapter.js', function () {})
+        $.getScript('https://webrtc.github.io/adapter/adapter-latest.js', function () {})
       }
 
       $scope.enableFilter = function () {

@@ -24,6 +24,12 @@ oddin.controller('TestsController',
                 })
       }())
 
+      $(document).ready(function(){
+        $('.tooltipped').tooltip({delay: 50});
+        $('textarea#textarea-question').characterCounter();
+        $('textarea#textarea-answer').characterCounter();
+      });
+
       $scope.addNewQuestion = function () {
         $scope.newTest.questions.push(angular.copy({}))
       }

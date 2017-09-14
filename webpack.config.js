@@ -1,5 +1,4 @@
 const fileMappings = require('./fileMappings').webpack
-const webpack = require('webpack')
 
 module.exports = Object.assign({
   module: {
