@@ -1,10 +1,15 @@
 import io from 'socket.io-client'
 import oddin from '../app'
 import webRtcVideo from '../../webrtc_video'
+<<<<<<< HEAD
+=======
+import webRtcAudio from '../../webrtc_audio'
+import adapter from '../../webrtc_audio'
+>>>>>>> Add sending files and stopping media capture
 
 oddin.controller('PresentationShowController',
-  ['$scope', '$stateParams', 'PresentationAPI', 'QuestionAPI', 'AnswerAPI', 'CurrentUser',
-    function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, CurrentUser) {
+  ['$scope', '$stateParams', 'PresentationAPI', 'InstructionAPI','MaterialAPI','QuestionAPI', 'AnswerAPI', 'CurrentUser',
+    function ($scope, $stateParams, PresentationAPI, InstructionAPI, MaterialAPI, QuestionAPI, AnswerAPI, CurrentUser) {
       $scope.user = CurrentUser
       $scope.filter = false
       const socket = io.connect('http://socket-oddin.rhcloud.com:8000/presentation');
@@ -240,7 +245,7 @@ oddin.controller('PresentationShowController',
           })
       }
 
-      /*$scope.uploadAnswerMaterial = function (answer){
+      $scope.uploadAnswerMaterial = function (answer){
         $scope.load = false
         AnswerAPI.newMaterial(answer.id)
           .then(function (response) {
@@ -277,11 +282,66 @@ oddin.controller('PresentationShowController',
             document.getElementById('new-material-description').value = ''
             $scope.load = true
           })
+      }
+
+      $scope.downloadMaterial = function (material) {
+        $scope.load = false
+        MaterialAPI.show(material.id)
+                .then(function (response) {
+                  var link = document.createElement('a')
+                  link.setAttribute('href', response.data.url)
+                  link.setAttribute('download', true)
+                  hiddenLink = document.getElementById('hidden-link')
+                  hiddenLink.appendChild(link)
+                  link.click()
+                  Materialize.toast('Fazendo download de ' + material.name, 3000)
+                  hiddenLink.removeChild(link)
+                })
+                .catch(function () {
+                  Materialize.toast('Erro ao fazer download de material', 3000)
+                })
+                .finally(function () {
+                  $scope.load = true
+                })
       }*/
 
-      $scope.modalCreateAnswer = function (question) {
-        $scope.selectedQuestion = question
-        $('#modal-create-answer').openModal()
+      $scope.createMaterial = function () {
+        $scope.load = false
+        PresentationAPI.createMaterial($stateParams.presentationID)
+                .then(function (response) {
+                  var newMaterial = response.data
+                  var file = document.forms.uploadArchive.file.files[0]
+                  var fd = new FormData()
+
+                  for (var key in newMaterial.fields) {
+                    fd.append(key, newMaterial.fields[key])
+                  }
+
+                  fd.append('file', file)
+                  return $http.post(newMaterial.url, fd, {
+                    headers: {
+                      'Content-Type': undefined,
+                    },
+                  })
+                })
+                .then(function () {
+                  return MaterialAPI.update(newMaterial.id, {
+                    name: file.name,
+                    mime: file.type,
+                  })
+                })
+                .then(function (response) {
+                  $scope.materials.push(response.data.material)
+                  Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
+                })
+                .catch(function () {
+                  Materialize.toast('Erro ao fazer upload de material', 3000)
+                })
+                .finally(function () {
+                  document.getElementById('new-material-file').value = ''
+                  document.getElementById('new-material-description').value = ''
+                  $scope.load = true
+                })
       }
 
       $scope.stopStream = function () {
@@ -289,13 +349,22 @@ oddin.controller('PresentationShowController',
         delete $scope.stream
       }
 
+      $scope.modalCreateAnswer = function (question) {
+        $scope.selectedQuestion = question
+        $('#modal-create-answer').openModal()
+      }
+
       $scope.modalCreateVideo = function (question) {
         $scope.selectedQuestion = question
         $('#modal-create-video').openModal()
         $('#modal-create-answer').closeModal()
+        adapter()
         webRtcVideo()
           .then((stream) => {
             $scope.stream = stream
+          })
+          .catch((err) => {
+            alert('Desculpe-me mas não é possível detectar sua câmera!')
           })
       }
 
@@ -306,6 +375,21 @@ oddin.controller('PresentationShowController',
         $.getScript('/javascripts/webrtc_audio.js', function () {})
         $.getScript('/javascripts/adapter.js', function () {})
         $.getScript('https://webrtc.github.io/adapter/adapter-latest.js', function () {})
+
+        adapter()
+        webRtcAudio()
+          .then((stream) => {
+            $scope.stream = stream
+          })
+          .catch((err) => {
+            alert('Desculpe-me mas não é possível detectar seu microfone!')
+          })
+      }
+
+      $scope.modalCreateMaterial = function (question) {
+        $scope.selectedQuestion = question
+        $('#modal-create-material').openModal()
+        $('#modal-create-answer').closeModal()
       }
 
       $scope.enableFilter = function () {

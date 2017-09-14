@@ -1,5 +1,5 @@
 doctype html
-div(ng-include="'partials/presentations/show-menu.html'")
+div(ng-include="'partials/presentations/show-menu.html'" ng-click="stopStream()")
 
 main
 	oddin-preloader(load-var="load" side-bar="true")
@@ -38,6 +38,19 @@ main
 						.col.s12.m3
 							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="downloadAudio" type="submit" name="action" disabled) Enviar
 
+	#modal-create-material.modal.bottom-sheet
+		.modal-content.modal-criar-item.modal-post-resposta
+			.row
+				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="createMaterial()" name="uploadArchive")
+					h1.modal-criar-item__titulo Upload de material de resposta
+					.file-field.input-field
+						.btn.modal-criar-item__file-button
+							span Arquivo
+							input#new-material-file(name="file" type="file")
+						.file-path-wrapper
+							input#new-material-description.file-path.validate(type="text" placeholder="Faça Upload de um ou mais arquivos")
+					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Enviar						
+
 	#modal-create-answer.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta
 			.row
@@ -56,13 +69,13 @@ main
 									i.material-icons mic
 								a.btn-floating(ng-click="modalCreateVideo(question)" href="")
 									i.material-icons videocam
-								a.btn-floating.disabled(disabled)
+								a.btn-floating(ng-click="modalCreateMaterial(question)" href="")
 									i.material-icons attach_file
 						.col.s12.m3
 							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(type="submit" name="action") Enviar
 
 	//- Main Content
-	.container
+	.container(ng-click="stopStream()")
 		.row.dropdown-row
 			.offset-m3.col.m6.s12
 				a.dropdown-button.btn.custom-dropdown(href="" data-activates="dropdownOrderBy" data-beloworigin="true" data-alignment="right" data-hover="true" dropdown) Ordenar Dúvidas
