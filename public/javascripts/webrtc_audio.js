@@ -115,7 +115,7 @@ export default function () {
   }, true);
 
   return new Promise((resolve, reject) => {
-    navigator.mediaDevices.getUserMedia(constraints).
+    navigator.mediaDevices.getUserMedia(constraints)
       .then((stream) => {
         resolve(handleSuccess(stream))
       })
