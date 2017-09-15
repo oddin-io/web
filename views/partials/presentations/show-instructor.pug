@@ -1,5 +1,5 @@
 doctype html
-div(ng-include="'partials/presentations/show-menu.html'" ng-click="stopStream()")
+div(ng-include="'partials/presentations/show-menu.html'")
 
 main
 	oddin-preloader(load-var="load" side-bar="true")
@@ -75,7 +75,7 @@ main
 							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(type="submit" name="action") Enviar
 
 	//- Main Content
-	.container(ng-click="stopStream()")
+	.container
 		.row.dropdown-row
 			.offset-m3.col.m6.s12
 				a.dropdown-button.btn.custom-dropdown(href="" data-activates="dropdownOrderBy" data-beloworigin="true" data-alignment="right" data-hover="true" dropdown) Ordenar Dúvidas

@@ -98,11 +98,11 @@ function play() {
 }
 
 export default function () {
-  var gumAudio = document.querySelector('audio#gumAudio');
-  var recordedAudio = document.querySelector('audio#recordedAudio');
-  var recordButton = document.querySelector('button#recordAudio');
-  var playButton = document.querySelector('button#playAudio');
-  var downloadButton = document.querySelector('button#downloadAudio');
+  gumAudio = document.querySelector('audio#gumAudio');
+  recordedAudio = document.querySelector('audio#recordedAudio');
+  recordButton = document.querySelector('button#recordAudio');
+  playButton = document.querySelector('button#playAudio');
+  downloadButton = document.querySelector('button#downloadAudio');
 
   recordButton.onclick = toggleRecording;
   playButton.onclick = play;
