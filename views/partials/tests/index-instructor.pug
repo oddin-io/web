@@ -22,25 +22,26 @@ main
 			.row
 				form.offset-m2.offset-l2.col.s12.m8.l8
 					.card(ng-repeat="question in newTest.questions")
-						.input-field.col.s2.remove-choice-button
-							a.rigth(href="" ng-click="removeQuestion(newTest.questions.indexOf(question))")
-								i.material-icons close
-						.input-field.col.s12
-							textarea#textarea-question.materialize-textarea(data-length="500")
-							label(for="textarea-question") Pergunta {{newTest.questions.indexOf(question) + 1}}
-							form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="" name="uploadArchive")
-								.file-field.input-field.col.s10
-									.btn.modal-criar-item__file-button
-										span Arquivo
-										input#new-test-file(name="file" type="file")
-									.file-path-wrapper
-										input#new-test-description.file-path.validate(type="text" placeholder="Faça Upload de um arquivo")
-								.input-field.col.s2
-									.switch
-										label
-											input(type="checkbox" id="kind-question-{{newTest.questions.indexOf(question)}}" ng-click="dissertativeQuestion(newTest.questions.indexOf(question))")
-											.lever
-											span Dissertativa
+						.row
+							.input-field.col.s2.remove-choice-button
+								a.rigth(href="" ng-click="removeQuestion(newTest.questions.indexOf(question))")
+									i.material-icons close
+							.input-field.col.s12
+								textarea#textarea-question.materialize-textarea(ng-maxlength="500" data-length="500")
+								label(for="textarea-question") Pergunta {{newTest.questions.indexOf(question) + 1}}							
+						form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="" name="uploadArchive")
+							.file-field.input-field.col.s10
+								.btn.modal-criar-item__file-button
+									span Arquivo
+									input#new-test-file(name="file" type="file")
+								.file-path-wrapper
+									input#new-test-description.file-path.validate(type="text" placeholder="Faça Upload de um arquivo")
+							.input-field.col.s2
+								.switch
+									label
+										input(type="checkbox" id="kind-question-{{newTest.questions.indexOf(question)}}" ng-click="dissertativeQuestion(newTest.questions.indexOf(question))")
+										.lever
+										span Dissertativa
 						.row
 							.input-field.col.s10(ng-if="dissertativeQuestion(newTest.questions.indexOf(question))")
 								textarea#textarea-answer.materialize-textarea(data-length="500")
@@ -58,11 +59,11 @@ main
 										i.material-icons close
 						.row
 							.input-field.col.s11(ng-if="!dissertativeQuestion(newTest.questions.indexOf(question))")
-								a.btn-floating.tooltipped.right(data-position="left" data-delay="50" data-tooltip="Adicionar alternativa" style="margin-bottom: 15px;" ng-click="addNewAlternative(newTest.questions.indexOf(question))")
+								a.btn-floating.tooltipped.right(data-position="left" data-tooltip="Adicionar alternativa" style="margin-bottom: 15px;" ng-click="addNewAlternative(newTest.questions.indexOf(question))")
 									i.material-icons add
 			.row
 				.col.s10
-					a.btn-floating.tooltipped.right(data-position="left" data-delay="50" data-tooltip="Adicionar pergunta" type="submit" ng-click="addNewQuestion()")
+					a.btn-floating.tooltipped.right(id="btn2" data-position="left" data-tooltip="Adicionar pergunta" type="submit" ng-click="addNewQuestion()")
 						i.material-icons add
 			.row
 				.col.s12

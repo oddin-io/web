@@ -24,17 +24,22 @@ oddin.controller('TestsController',
                 })
       }())
 
+      $scope.addNewTooltip = function(){
+        setTimeout(function(){
+            $('.tooltipped').tooltip();
+        },1000);
+      };
+
       $(document).ready(function(){
-        $('.tooltipped').tooltip({delay: 50});
-        $('textarea#textarea-question').characterCounter();
-        $('textarea#textarea-answer').characterCounter();
+        $('.tooltipped').tooltip();
       });
 
       $scope.addNewQuestion = function () {
-        $scope.newTest.questions.push(angular.copy({}))
+        $scope.newTest.questions.push(angular.copy({}));
+        $scope.addNewTooltip();
       }
       $scope.removeQuestion = function (questionPosition) {
-        $scope.newTest.questions.splice(questionPosition, 1)
+        $scope.newTest.questions.splice(questionPosition, 1);
       }
       $scope.addNewAlternative = function (questionPosition) {
         if ($scope.newTest.questions[questionPosition].alternatives == undefined) {
@@ -56,6 +61,7 @@ oddin.controller('TestsController',
           case true:
             return true
           case false:
+            $scope.addNewTooltip();
             return false
         }
       }
