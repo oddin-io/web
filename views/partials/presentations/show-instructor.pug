@@ -8,16 +8,15 @@ main
 	#modal-create-video.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="uploadAnswerVideo()")
+				form.offset-m2.offset-l3.col.s12.m8.l6
 					h1.modal-criar-item__titulo Criar Video
 					.row
 						.input-field.col.s20
-							video(autoplay muted id="gum" style="background: #222; margin: 0 0 2px 0; width: 45%;")
 							video(autoplay muted id="gum" style="background: #222; margin: 0 30px 2px 0; width: 45%;")
 							video(autoplay id="recorded" style="background: #222; margin: 0 0 2px 30px; width: 45%;")
 						.col.s12.m9
 							.modal-post-respostas__options
-								button.btn.waves-effect.waves-light(id="record") Gravar
+								button.btn.waves-effect.waves-light( id="record" class="__web-inspector-hide-shortcut__") Gravar
 								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="play" disabled) Visualizar
 						.col.s12.m3
 							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="download" type="submit" name="action" disabled) Enviar
@@ -30,26 +29,13 @@ main
 					.row
 						.input-field.col.s20
 							audio(autoplay muted id="gumAudio")
-							audio(controls id="recordedAudio")
+							audio(autoplay controls id="recordedAudio")
 						.col.s12.m9
 							.modal-post-respostas__options
-								button.btn.waves-effect.waves-light(id="recordAudio") Gravar
+								button.btn.waves-effect.waves-light(id="recordAudio" class="__web-inspector-hide-shortcut__") Gravar
 								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="playAudio" disabled) Visualizar
 						.col.s12.m3
 							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="downloadAudio" type="submit" name="action" disabled) Enviar
-
-	#modal-create-material.modal.bottom-sheet
-		.modal-content.modal-criar-item.modal-post-resposta
-			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="createMaterial()" name="uploadArchive")
-					h1.modal-criar-item__titulo Upload de material de resposta
-					.file-field.input-field
-						.btn.modal-criar-item__file-button
-							span Arquivo
-							input#new-material-file(name="file" type="file")
-						.file-path-wrapper
-							input#new-material-description.file-path.validate(type="text" placeholder="Faça Upload de um ou mais arquivos")
-					button.btn.waves-effect.waves-light.modal-close(type="submit" name="action") Enviar						
 
 	#modal-create-answer.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta
@@ -69,7 +55,7 @@ main
 									i.material-icons mic
 								a.btn-floating(ng-click="modalCreateVideo(question)" href="")
 									i.material-icons videocam
-								a.btn-floating(ng-click="modalCreateMaterial(question)" href="")
+								a.btn-floating.disabled(disabled)
 									i.material-icons attach_file
 						.col.s12.m3
 							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(type="submit" name="action") Enviar

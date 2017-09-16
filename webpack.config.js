@@ -19,9 +19,4 @@ module.exports = Object.assign({
       },
     ],
   },
-  plugins: [
-    new webpack.SourceMapDevToolPlugin({
-      filename: '[name].js.map',
-    }),
-  ],
 }, fileMappings)

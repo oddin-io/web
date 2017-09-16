@@ -147,13 +147,10 @@ export default function () {
     + '\n\n media clip. event: ' + JSON.stringify(ev))
   }, true)
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     navigator.mediaDevices.getUserMedia(constraints)
-      .then((stream) => {
+      .then(function (stream) {
         resolve(handleSuccess(stream))
-      })
-      .catch((err) => {
-        reject(err)
       })
   })
 }

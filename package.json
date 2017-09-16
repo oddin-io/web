@@ -12,6 +12,7 @@
   "main": "./bin/www",
   "scripts": {
     "dev": "nodemon",
+    "build": "gulp",
     "start": "node ./bin/www",
     "lint-js": "eslint --quiet **/*.js",
     "postinstall": "gulp"

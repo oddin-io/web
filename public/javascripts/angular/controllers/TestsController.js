@@ -27,11 +27,12 @@ oddin.controller('TestsController',
       $scope.addNewTooltip = function(){
         setTimeout(function(){
             $('.tooltipped').tooltip();
-        },1000);
+        },200);
       };
 
       $(document).ready(function(){
         $('.tooltipped').tooltip();
+        $('.materialize-textarea').characterCounter();
       });
 
       $scope.addNewQuestion = function () {
