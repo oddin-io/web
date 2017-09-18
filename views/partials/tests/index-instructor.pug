@@ -4,7 +4,7 @@ div(ng-include="'partials/tests/index-menu.html'")
 main
 	oddin-preloader(load-var="load" side-bar="true")
 	//- Modals
-	#modal-create.modal(style="width: 90%;")
+	#modal-create.modal(style="width: 90%; bottom: 10%; max-height: 90%;")
 		.modal-content.modal-criar-item
 			.row
 				form.offset-m2.offset-l2.col.s12.m8.l8
@@ -17,11 +17,11 @@ main
 							input#new-test-date(type="text" ng-model="newTest.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
 							label(for="new-test-date") Disponível em
 						.input-field.col.s2
-							input#new-test-time(type="text" ng-model="newTest.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
-							label(for="new-test-time") À partir das
+							input#new-test-available-time(type="text" ng-model="newTest.availableTime" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
+							label(for="new-test-available-time") À partir das
 						.input-field.col.s2
-							input#new-test-time(type="text" ng-model="newTest.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
-							label(for="new-test-time") Encerra às
+							input#new-test-time-closed(type="text" ng-model="newTest.timeClosed" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
+							label(for="new-test-time-closed") Encerra às
 			.row
 				form.offset-m2.offset-l2.col.s12.m8.l8
 					.card(ng-repeat="question in newTest.questions")
@@ -31,11 +31,11 @@ main
 									i.material-icons close
 						.row
 							.input-field.col.s10
-								textarea#textarea-question.materialize-textarea(ng-maxlength="500" data-length="500")
-								label(for="textarea-question") Pergunta {{newTest.questions.indexOf(question) + 1}}
+								textarea.materialize-textarea(id="text-question-{{newTest.questions.indexOf(question)+1}}" ng-maxlength="500" data-length="500")
+								label(for="text-question-{{newTest.questions.indexOf(question)+1}}") Pergunta {{newTest.questions.indexOf(question) + 1}}
 							.input-field.col.s1
-								input(id="note-question-{{newTest.questions.indexOf(question)}}" type="number")
-								label(for="note-question-{{newTest.questions.indexOf(question)}}") Nota
+								input(id="note-question-{{newTest.questions.indexOf(question)+1}}" name="note" type="number" min="1" max="10")
+								label(for="note-question-{{newTest.questions.indexOf(question)+1}}") Nota
 						form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="" name="uploadArchive")
 							.file-field.input-field.col.s10
 								.btn.modal-criar-item__file-button
@@ -51,16 +51,16 @@ main
 										span Dissertativa
 						.row
 							.input-field.col.s10(ng-if="dissertativeQuestion(newTest.questions.indexOf(question))")
-								textarea#textarea-answer.materialize-textarea(data-length="500")
-								label(for="modal-answer") Resposta
+								textarea.materialize-textarea(id="text-dissertative-question-{{newTest.questions.indexOf(question)+1}}" data-length="500")
+								label(for="text-dissertative-question-{{newTest.questions.indexOf(question)+1}}") Resposta
 						.row
 							.col.s12(ng-repeat="alternative in question.alternatives" ng-if="!dissertativeQuestion(newTest.questions.indexOf(question))")
 								.input-field.col.s12.m8.l2(action="#")
-									input.with-gap(name="question-{{newTest.questions.indexOf(question)+1}}" type="radio" id="question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}")
-									label(for="question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}") Correta
+									input.with-gap(name="radio-question-{{newTest.questions.indexOf(question)+1}}" type="radio" id="radio-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}")
+									label(for="radio-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}") Correta
 								.input-field.col.s8
-									input#new-test-alternative(type="text")
-									label(for="new-test-alternative") Alternativa {{question.alternatives.indexOf(alternative)+1}}
+									input(id="new-test-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}" type="text")
+									label(for="new-test-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}") Alternativa {{question.alternatives.indexOf(alternative)+1}}
 								.input-field.col.s1.remove-choice-button(ng-show="$last")
 									a.right(href="" ng-click="removeAlternative(newTest.questions.indexOf(question))")
 										i.material-icons close
@@ -70,8 +70,8 @@ main
 									i.material-icons add
 						.row
 							.input-field.col.s10
-								textarea#textarea-comment.materialize-textarea(data-length="500")
-								label(for="modal-comment") Comentário
+								textarea.materialize-textarea(id="comment-question-{{newTest.questions.indexOf(question)+1}}" data-length="500")
+								label(for="comment-question-{{newTest.questions.indexOf(question)+1}}") Comentário
 			.row
 				.col.s10
 					a.btn-floating.tooltipped.right(id="btn2" data-position="left" data-tooltip="Adicionar pergunta" type="submit" ng-click="addNewQuestion()")

@@ -55,8 +55,8 @@ oddin.controller('TestsController',
 
         $scope.newTest.questions[questionPosition].alternatives.splice(lastItem)
       }
-      $scope.dissertativeQuestion = function (questionPosition) {
-        var value = $('#kind-question-' + questionPosition).prop('checked')
+      $scope.dissertativeQuestion = function (questionPositionT) {
+        var value = $('#kind-question-' + questionPositionT).prop('checked')
 
         switch (value) {
           case true:
