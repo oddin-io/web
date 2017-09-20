@@ -1,19 +1,14 @@
 'use strict';
 
-var mediaRecorder;
-var recordedBlobs;
-var sourceBuffer;
+var mediaRecorder
+var recordedBlobs
+var sourceBuffer
 
-var gumAudio = document.querySelector('audio#gumAudio');
-var recordedAudio = document.querySelector('audio#recordedAudio');
-
-var recordButton = document.querySelector('button#recordAudio');
-var playButton = document.querySelector('button#playAudio');
-var downloadButton = document.querySelector('button#downloadAudio');
-
-recordButton.onclick = toggleRecording;
-playButton.onclick = play;
-downloadButton.onclick = download;
+var gumAudio
+var recordedAudio
+var recordButton
+var playButton
+var downloadButton
 
 var constraints = window.constraints = {
   audio: true,
@@ -28,20 +23,12 @@ function handleSuccess(stream) {
   } else {
     gumAudio.src = stream;
   }
+  return stream
 }
 
 function handleError(error) {
   console.log('navigator.getUserMedia error: ', error);
 }
-
-navigator.mediaDevices.getUserMedia(constraints).
-    then(handleSuccess).catch(handleError);
-
-recordedAudio.addEventListener('error', function(ev) {
-  console.error('MediaRecording.recordedMedia.error()');
-  alert('Your browser can not play\n\n' + recordedAudio.src
-    + '\n\n media clip. event: ' + JSON.stringify(ev));
-}, true);
 
 function handleDataAvailable(event) {
   if (event.data && event.data.size > 0) {

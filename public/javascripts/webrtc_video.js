@@ -25,7 +25,6 @@ function handleSuccess(stream) {
   } else {
     gumVideo.src = stream
   }
-
   return stream
 }
 
@@ -147,10 +146,13 @@ export default function () {
     + '\n\n media clip. event: ' + JSON.stringify(ev))
   }, true)
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     navigator.mediaDevices.getUserMedia(constraints)
-      .then(function (stream) {
+      .then((stream) => {
         resolve(handleSuccess(stream))
       })
+      .catch((err) => {
+        reject(err)
+      })      
   })
 }

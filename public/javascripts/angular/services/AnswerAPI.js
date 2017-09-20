@@ -16,6 +16,9 @@ oddin.factory('AnswerAPI', ['$http', 'env', function ($http, env) {
   var _reject = function (id) {
     return $http.delete(`${env.ws_url}/answers/${id}/accept`)
   }
+  var _createMaterial = function (id) {
+    return $http.post(`${env.ws_url}/answers/${id}/materials`)
+  }
 
   return {
     upvote: _upvote,
@@ -23,5 +26,6 @@ oddin.factory('AnswerAPI', ['$http', 'env', function ($http, env) {
     destroyVote: _destroyVote,
     accept: _accept,
     reject: _reject,
+    createMaterial: _createMaterial,
   }
 }])
