@@ -19,6 +19,9 @@ oddin.factory('AnswerAPI', ['$http', 'env', function ($http, env) {
   var _createMaterial = function (id) {
     return $http.post(`${env.ws_url}/answers/${id}/materials`)
   }
+  var _createVideo = function (id) {
+    return $http.post(`${env.ws_url}/answers/${id}/video`)
+  }
 
   return {
     upvote: _upvote,
@@ -27,5 +30,6 @@ oddin.factory('AnswerAPI', ['$http', 'env', function ($http, env) {
     accept: _accept,
     reject: _reject,
     createMaterial: _createMaterial,
+    createVideo: _createVideo,
   }
 }])

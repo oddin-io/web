@@ -4,7 +4,7 @@ var gumVideo
 var recordedVideo
 var recordButton
 var playButton
-var downloadButton
+var uploadButton
 
 // Media handlers
 var mediaSource = new MediaSource()
@@ -55,13 +55,13 @@ function toggleRecording() {
     stopRecording()
     recordButton.textContent = 'Gravar'
     playButton.disabled = false
-    downloadButton.disabled = false
+    uploadButton.disabled = false
   }
 }
 
 function startRecording() {
   var options = { mimeType: 'video/webm;codecs=vp9' }
-  recordedBlobs = []
+  window.recordedBlobs = recordedBlobs = []
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     console.log(options.mimeType + ' is not Supported')
     options = { mimeType: 'video/webm;codecs=vp8' }
@@ -85,7 +85,7 @@ function startRecording() {
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options)
   recordButton.textContent = 'Parar'
   playButton.disabled = true
-  downloadButton.disabled = true
+  uploadButton.disabled = true
   mediaRecorder.onstop = handleStop
   mediaRecorder.ondataavailable = handleDataAvailable
   mediaRecorder.start(10) // collect 10ms of data
@@ -103,7 +103,7 @@ function play() {
   recordedVideo.src = window.URL.createObjectURL(superBuffer)
 }
 
-function download() {
+function upload() {
   var blob = new Blob(recordedBlobs, { type: 'video/webm' })
   var url = window.URL.createObjectURL(blob)
   var a = document.createElement('a')
@@ -127,12 +127,12 @@ export default function () {
   recordedVideo = document.querySelector('video#recorded')
   recordButton = document.querySelector('button#record')
   playButton = document.querySelector('button#play')
-  downloadButton = document.querySelector('button#download')
+  uploadButton = document.querySelector('button#upload')
 
   mediaSource.addEventListener('sourceopen', handleSourceOpen, false)
   recordButton.onclick = toggleRecording
   playButton.onclick = play
-  downloadButton.onclick = download
+  uploadButton.onclick = upload
 
   /*if (!isSecureOrigin) {
     alert('getUserMedia() must be run from a secure origin: HTTPS or localhost.' +

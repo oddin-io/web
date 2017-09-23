@@ -8,7 +8,7 @@ var gumAudio
 var recordedAudio
 var recordButton
 var playButton
-var downloadButton
+var uploadButton
 
 var constraints = window.constraints = {
   audio: true,
@@ -47,12 +47,12 @@ function toggleRecording() {
     stopRecording();
     recordButton.textContent = 'Gravar';
     playButton.disabled = false;
-    downloadButton.disabled = false;
+    uploadButton.disabled = false;
   }
 }
 
 function startRecording() {
-  recordedBlobs = [];
+  window.recordedBlobs = recordedBlobs = [];
   var options = {mimeType: 'audio/mp3;codecs=vp9'};
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     console.log(options.mimeType + ' is not Supported');
@@ -77,7 +77,7 @@ function startRecording() {
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
   recordButton.textContent = 'Parar';
   playButton.disabled = true;
-  downloadButton.disabled = true;
+  uploadButton.disabled = true;
   mediaRecorder.onstop = handleStop;
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start(10); // collect 10ms of data
@@ -100,11 +100,11 @@ export default function () {
   recordedAudio = document.querySelector('audio#recordedAudio');
   recordButton = document.querySelector('button#recordAudio');
   playButton = document.querySelector('button#playAudio');
-  downloadButton = document.querySelector('button#downloadAudio');
+  uploadButton = document.querySelector('button#uploadAudio');
 
   recordButton.onclick = toggleRecording;
   playButton.onclick = play;
-  downloadButton.onclick = download;
+  uploadButton.onclick = upload;
 
   recordedAudio.addEventListener('error', function(ev) {
     console.error('MediaRecording.recordedMedia.error()');
