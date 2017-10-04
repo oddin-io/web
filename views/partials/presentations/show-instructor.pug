@@ -8,7 +8,7 @@ main
 	#modal-create-video.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(ng-submit="createAnswerWithMedia(newAnswer)")
+				form.offset-m2.offset-l3.col.s12.m8.l6
 					h1.modal-criar-item__titulo Criar Video
 					.row
 						.input-field.col.s20
@@ -19,7 +19,7 @@ main
 								button.btn.waves-effect.waves-light( id="record" class="__web-inspector-hide-shortcut__") Gravar
 								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="play" disabled) Visualizar
 						.col.s12.m3
-							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="upload" type="submit" name="action" disabled) Enviar
+							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="upload" type="submit" name="action" disabled ng-click="createAnswerWithMedia(newAnswer)") Enviar
 
 	#modal-create-audio.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta
@@ -35,7 +35,7 @@ main
 								button.btn.waves-effect.waves-light(id="recordAudio" class="__web-inspector-hide-shortcut__") Gravar
 								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="playAudio" disabled) Visualizar
 						.col.s12.m3
-							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="uploadAudio" type="submit" name="action" disabled) Enviar
+							button.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(id="uploadAudio" type="submit" name="action" disabled ng-click="createAnswerWithMedia(newAnswer)") Enviar
 
 	#modal-create-material.modal.bottom-sheet
 			.modal-content.modal-criar-item.modal-post-resposta

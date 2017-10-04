@@ -217,16 +217,17 @@ oddin.controller('PresentationShowController',
                 })
       }
 
-      /*$scope.createAnswerWithMedia = function (newAnswer) {
+      $scope.createAnswerWithMedia = function (newAnswer) {
         $scope.load = false
         QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
                 .then((response) => {
                   const answer = response.data
                   return AnswerAPI.createVideo(answer.id)
-                }
+                })
                 .then((response) => {
                   var newMaterial = response.data
-                  var file = recordedBlobs
+                  var file = blob
+                  var url = window.URL.createObjectURL(file)
                   var fd = new FormData()
 
                   for (var key in newMaterial.fields) {
@@ -256,6 +257,9 @@ oddin.controller('PresentationShowController',
                 .finally(function () {
                   document.getElementById('new-material-file').value = ''
                   document.getElementById('new-material-description').value = ''
+                  setTimeout(function () {
+                    window.URL.revokeObjectURL(url)
+                  }, 100)
                   $scope.load = true
                 })
       }
@@ -266,7 +270,7 @@ oddin.controller('PresentationShowController',
                 .then((response) => {
                   const answer = response.data
                   return AnswerAPI.createMaterial(answer.id)
-                }
+                })
                 .then((response) => {
                   var newMaterial = response.data
                   var file = document.forms.uploadArchive.file.files[0]
@@ -301,7 +305,7 @@ oddin.controller('PresentationShowController',
                   document.getElementById('new-material-description').value = ''
                   $scope.load = true
                 })
-      }*/
+      }
 
 
       $scope.modalCreateAnswer = function (question) {

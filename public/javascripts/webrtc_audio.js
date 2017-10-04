@@ -95,6 +95,11 @@ function play() {
   recordedAudio.src = window.URL.createObjectURL(superBuffer);
 }
 
+function upload() {
+  var blob 
+  window.blob = blob = new Blob(recordedBlobs, { type: 'audio/mp3' })
+}
+
 export default function () {
   gumAudio = document.querySelector('audio#gumAudio');
   recordedAudio = document.querySelector('audio#recordedAudio');
