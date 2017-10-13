@@ -1,8 +1,8 @@
 import oddin from '../app'
 
 oddin.controller('TestsController',
-  ['$scope', '$stateParams', 'InstructionAPI', 'CurrentUser',
-    function ($scope, $stateParams, InstructionAPI, CurrentUser) {
+  ['$scope', '$stateParams', '$filter', 'InstructionAPI', 'CurrentUser', 'TestAPI',
+    function ($scope, $stateParams, $filter, InstructionAPI, CurrentUser, TestAPI) {
       $scope.user = CurrentUser
       $scope.newTest = {
         questions: [{
@@ -39,9 +39,11 @@ oddin.controller('TestsController',
         $scope.newTest.questions.push(angular.copy({}));
         $scope.addNewTooltip();
       }
+
       $scope.removeQuestion = function (questionPosition) {
         $scope.newTest.questions.splice(questionPosition, 1);
       }
+
       $scope.addNewAlternative = function (questionPosition) {
         if ($scope.newTest.questions[questionPosition].alternatives == undefined) {
           $scope.newTest.questions[questionPosition].alternatives = []
@@ -50,13 +52,15 @@ oddin.controller('TestsController',
           $scope.newTest.questions[questionPosition].alternatives.push(angular.copy({}))
         }
       }
+
       $scope.removeAlternative = function (questionPosition) {
         var lastItem = $scope.newTest.questions[questionPosition].alternatives.length - 1
 
         $scope.newTest.questions[questionPosition].alternatives.splice(lastItem)
       }
-      $scope.dissertativeQuestion = function (questionPositionT) {
-        var value = $('#kind-question-' + questionPositionT).prop('checked')
+
+      $scope.dissertativeQuestion = function (questionPosition) {
+        var value = $('#kind-question-' + questionPosition).prop('checked')
 
         switch (value) {
           case true:
@@ -65,6 +69,36 @@ oddin.controller('TestsController',
             $scope.addNewTooltip();
             return false
         }
+      }
+
+      $scope.createTest = function (newTest) {
+        var date_available = $filter('toDate')(newTest.date_available)
+        var available_at = $filter('toDate')(newTest.date_available, newTest.available_at)
+        var closes_at = $filter('toDate')(newTest.date_available, newTest.closes_at)
+        
+        newTest.date_available = date_available
+        newTest.available_at = available_at
+        newTest.closes_at = closes_at
+
+        $scope.load = false
+        InstructionAPI.createTest($stateParams.instructionID, newTest)
+                  .then(function (response) {
+                    $scope.tests.push(response.data)
+                    Materialize.toast('Teste criado', 3000)
+                    console.log(newTest)
+                  })
+                  .catch(function () {
+                    Materialize.toast('Não foi possível criar o teste', 3000)
+                    console.log(newTest)
+                  })
+                  .finally(function () {
+                    $scope.newTest = {
+                      questions: [{
+                        alternatives: [{}],
+                      }],
+                    };
+                    $scope.load = true
+                  })
       }
     },
   ])

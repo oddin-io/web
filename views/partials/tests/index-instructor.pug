@@ -14,13 +14,13 @@ main
 							input#new-test-title(type="text" ng-model="newTest.title" required)
 							label(for="new-test-title") Título
 						.input-field.col.s6
-							input#new-test-date(type="text" ng-model="newTest.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+							input#new-test-date(type="text" ng-model="newTest.date_available" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
 							label(for="new-test-date") Disponível em
 						.input-field.col.s2
-							input#new-test-available-time(type="text" ng-model="newTest.availableTime" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
+							input#new-test-available-time(type="text" ng-model="newTest.available_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
 							label(for="new-test-available-time") À partir das
 						.input-field.col.s2
-							input#new-test-time-closed(type="text" ng-model="newTest.timeClosed" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
+							input#new-test-time-closed(type="text" ng-model="newTest.closes_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
 							label(for="new-test-time-closed") Encerra às
 			.row
 				form.offset-m2.offset-l2.col.s12.m8.l8
@@ -79,7 +79,7 @@ main
 			.row
 				.col.s12
 					.input-field.col.s1.offset-s2
-						button.btn.waves-effect.waves-light.modal-close(type="submit", name="action") Enviar
+						button.btn.waves-effect.waves-light.modal-close(type="submit", ng-click="createTest(newTest)" name="action") Enviar
 	//- Main Content
 	.container
 		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
