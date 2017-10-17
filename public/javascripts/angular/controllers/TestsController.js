@@ -71,6 +71,46 @@ oddin.controller('TestsController',
         }
       }
 
+      $scope.correctAlternative = function (newTest, questionPosition, alternativePosition) {
+        var value = $('#radio-question-'+ questionPosition + "-alternative-" + alternativePosition).prop('checked')
+
+        newTest.questions[questionPosition-1].alternatives[alternativePosition-1].correct = true
+      }
+
+      $scope.testando = function(newTest) {
+
+        console.log("Data disponível: " + newTest.date_available)
+        console.log("À partir: " + newTest.available_at)
+        console.log("Encerra às: " + newTest.closes_at)
+
+        for (var questionIndex = 0; questionIndex < $scope.newTest.questions.length; questionIndex++) {
+          newTest.questions[questionIndex].number = questionIndex + 1
+
+          console.log("Número da Questão: " + newTest.questions[questionIndex].number)
+          console.log("Descrição da Questão: " + newTest.questions[questionIndex].description)
+          console.log("Nota: " + newTest.questions[questionIndex].value)
+
+          if(!$scope.dissertativeQuestion(questionIndex)) {
+            newTest.questions[questionIndex].kind = false
+
+            for (var alternativeIndex = 0; alternativeIndex < $scope.newTest.questions[questionIndex].alternatives.length; alternativeIndex++) {
+              console.log("Texto: " + newTest.questions[questionIndex].alternatives[alternativeIndex].text)
+
+              if(!newTest.questions[questionIndex].alternatives[alternativeIndex].correct)
+                newTest.questions[questionIndex].alternatives[alternativeIndex].correct = false
+
+              console.log("É a correta: " + newTest.questions[questionIndex].alternatives[alternativeIndex].correct)
+            }
+          }
+          else {
+            newTest.questions[questionIndex].kind = true
+            console.log("Resposta: " + newTest.questions[questionIndex].answer)
+          }
+          console.log("Dissertativa: " + newTest.questions[questionIndex].kind)
+          console.log("Comentário: " + newTest.questions[questionIndex].comment)
+        }
+      }
+
       $scope.createTest = function (newTest) {
         var date_available = $filter('toDate')(newTest.date_available)
         var available_at = $filter('toDate')(newTest.date_available, newTest.available_at)
@@ -79,6 +119,23 @@ oddin.controller('TestsController',
         newTest.date_available = date_available
         newTest.available_at = available_at
         newTest.closes_at = closes_at
+
+        for (var questionIndex = 0; questionIndex < $scope.newTest.questions.length; questionIndex++) {
+          newTest.questions[questionIndex].number = questionIndex + 1
+
+          if(!$scope.dissertativeQuestion(questionIndex)) {
+            newTest.questions[questionIndex].kind = false
+            
+            for (var alternativeIndex = 0; alternativeIndex < $scope.newTest.questions[questionIndex].alternatives.length; alternativeIndex++) {
+
+              if(!newTest.questions[questionIndex].alternatives[alternativeIndex].correct)
+                newTest.questions[questionIndex].alternatives[alternativeIndex].correct = false
+            }
+          }
+          else {
+            newTest.questions[questionIndex].kind = true
+          }
+        }
 
         $scope.load = false
         InstructionAPI.createTest($stateParams.instructionID, newTest)

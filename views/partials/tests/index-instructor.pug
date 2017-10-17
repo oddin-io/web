@@ -17,10 +17,10 @@ main
 							input#new-test-date(type="text" ng-model="newTest.date_available" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
 							label(for="new-test-date") Disponível em
 						.input-field.col.s2
-							input#new-test-available-time(type="text" ng-model="newTest.available_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
+							input#new-test-available-time(type="text" ng-model="newTest.available_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required)
 							label(for="new-test-available-time") À partir das
 						.input-field.col.s2
-							input#new-test-time-closed(type="text" ng-model="newTest.closes_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}")
+							input#new-test-time-closed(type="text" ng-model="newTest.closes_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required)
 							label(for="new-test-time-closed") Encerra às
 			.row
 				form.offset-m2.offset-l2.col.s12.m8.l8
@@ -31,10 +31,10 @@ main
 									i.material-icons close
 						.row
 							.input-field.col.s10
-								textarea.materialize-textarea(id="text-question-{{newTest.questions.indexOf(question)+1}}" ng-maxlength="500" data-length="500")
-								label(for="text-question-{{newTest.questions.indexOf(question)+1}}") Pergunta {{newTest.questions.indexOf(question) + 1}}
+								textarea.materialize-textarea(id="text-question-{{newTest.questions.indexOf(question)+1}}" ng-maxlength="500" data-length="500" ng-model="newTest.questions[newTest.questions.indexOf(question)].description")
+								label(for="text-question-{{newTest.questions.indexOf(question)+1}}" required) Pergunta {{newTest.questions.indexOf(question) + 1}}
 							.input-field.col.s1
-								input(id="note-question-{{newTest.questions.indexOf(question)+1}}" name="note" type="number" min="1" max="10")
+								input(id="note-question-{{newTest.questions.indexOf(question)+1}}" name="note" type="number" min="1" max="10" ng-model="newTest.questions[newTest.questions.indexOf(question)].value" required)
 								label(for="note-question-{{newTest.questions.indexOf(question)+1}}") Nota
 						form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="" name="uploadArchive")
 							.file-field.input-field.col.s10
@@ -46,20 +46,20 @@ main
 							.input-field.col.s2
 								.switch
 									label
-										input(type="checkbox" id="kind-question-{{newTest.questions.indexOf(question)}}" ng-click="dissertativeQuestion(newTest.questions.indexOf(question))")
+										input(type="checkbox" id="kind-question-{{newTest.questions.indexOf(question)}}" ng-click="dissertativeQuestion(newTest.questions.indexOf(question))" ng-model="newTest.questions[newTest.questions.indexOf(question)].kind")
 										.lever
 										span Dissertativa
 						.row
 							.input-field.col.s10(ng-if="dissertativeQuestion(newTest.questions.indexOf(question))")
-								textarea.materialize-textarea(id="text-dissertative-question-{{newTest.questions.indexOf(question)+1}}" data-length="500")
-								label(for="text-dissertative-question-{{newTest.questions.indexOf(question)+1}}") Resposta
+								textarea.materialize-textarea(id="text-dissertative-question-{{newTest.questions.indexOf(question)+1}}" data-length="500" ng-model="newTest.questions[newTest.questions.indexOf(question)].answer")
+								label(for="text-dissertative-question-{{newTest.questions.indexOf(question)+1}}" required) Resposta
 						.row
 							.col.s12(ng-repeat="alternative in question.alternatives" ng-if="!dissertativeQuestion(newTest.questions.indexOf(question))")
 								.input-field.col.s12.m8.l2(action="#")
-									input.with-gap(name="radio-question-{{newTest.questions.indexOf(question)+1}}" type="radio" id="radio-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}")
-									label(for="radio-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}") Correta
+									input.with-gap(name="radio-question-{{newTest.questions.indexOf(question)+1}}" ng-click="correctAlternative(newTest, newTest.questions.indexOf(question)+1, question.alternatives.indexOf(alternative)+1)" type="radio" id="radio-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}")
+									label(for="radio-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}" ng-model="newTest.questions[newTest.questions.indexOf(question)].alternatives[question.alternatives.indexOf(alternative)].correct" required) Correta
 								.input-field.col.s8
-									input(id="new-test-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}" type="text")
+									input(id="new-test-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}" type="text" ng-model="newTest.questions[newTest.questions.indexOf(question)].alternatives[question.alternatives.indexOf(alternative)].text" required)
 									label(for="new-test-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}") Alternativa {{question.alternatives.indexOf(alternative)+1}}
 								.input-field.col.s1.remove-choice-button(ng-show="$last")
 									a.right(href="" ng-click="removeAlternative(newTest.questions.indexOf(question))")
@@ -70,7 +70,7 @@ main
 									i.material-icons add
 						.row
 							.input-field.col.s10
-								textarea.materialize-textarea(id="comment-question-{{newTest.questions.indexOf(question)+1}}" data-length="500")
+								textarea.materialize-textarea(id="comment-question-{{newTest.questions.indexOf(question)+1}}" ng-model="newTest.questions[newTest.questions.indexOf(question)].comment" data-length="500")
 								label(for="comment-question-{{newTest.questions.indexOf(question)+1}}") Comentário
 			.row
 				.col.s10
