@@ -1,8 +1,8 @@
 import oddin from '../app'
 
 oddin.controller('TestsController',
-  ['$scope', '$stateParams', '$filter', 'InstructionAPI', 'CurrentUser', 'TestAPI',
-    function ($scope, $stateParams, $filter, InstructionAPI, CurrentUser, TestAPI) {
+  ['$scope', '$stateParams', '$filter', 'InstructionAPI', 'CurrentUser', 'TestQuestionAPI','TestAPI',
+    function ($scope, $stateParams, $filter, InstructionAPI, CurrentUser, TestQuestionAPI, TestAPI) {
       $scope.user = CurrentUser
       $scope.newTest = {
         questions: [{
@@ -112,41 +112,59 @@ oddin.controller('TestsController',
       }
 
       $scope.createTest = function (newTest) {
-        var date_available = $filter('toDate')(newTest.date_available)
-        var available_at = $filter('toDate')(newTest.date_available, newTest.available_at)
-        var closes_at = $filter('toDate')(newTest.date_available, newTest.closes_at)
         
-        newTest.date_available = date_available
-        newTest.available_at = available_at
-        newTest.closes_at = closes_at
+        try {
+          var date_available = $filter('toDate')(newTest.date_available)
+          var available_at = $filter('toDate')(newTest.date_available, newTest.available_at)
+          var closes_at = $filter('toDate')(newTest.date_available, newTest.closes_at)
+          
+          newTest.date_available = date_available
+          newTest.available_at = available_at
+          newTest.closes_at = closes_at
+        }
+        catch(err) {
+          Materialize.toast('Insira a data e os horários corretamente', 5000)
+        }
 
-        for (var questionIndex = 0; questionIndex < $scope.newTest.questions.length; questionIndex++) {
-          newTest.questions[questionIndex].number = questionIndex + 1
+        try {
+          for (var questionIndex = 0; questionIndex < $scope.newTest.questions.length; questionIndex++) {
+            newTest.questions[questionIndex].number = questionIndex + 1
 
-          if(!$scope.dissertativeQuestion(questionIndex)) {
-            newTest.questions[questionIndex].kind = false
-            
-            for (var alternativeIndex = 0; alternativeIndex < $scope.newTest.questions[questionIndex].alternatives.length; alternativeIndex++) {
+            if(!$scope.dissertativeQuestion(questionIndex)) {
+              newTest.questions[questionIndex].kind = false
+              
+              for (var alternativeIndex = 0; alternativeIndex < $scope.newTest.questions[questionIndex].alternatives.length; alternativeIndex++) {
 
-              if(!newTest.questions[questionIndex].alternatives[alternativeIndex].correct)
-                newTest.questions[questionIndex].alternatives[alternativeIndex].correct = false
+                if(!newTest.questions[questionIndex].alternatives[alternativeIndex].correct)
+                  newTest.questions[questionIndex].alternatives[alternativeIndex].correct = false
+              }
+            }
+            else {
+              newTest.questions[questionIndex].kind = true
             }
           }
-          else {
-            newTest.questions[questionIndex].kind = true
-          }
+        }
+        catch(err) {
+          Materialize.toast('Insira os dados corretamente', 5000)
         }
 
         $scope.load = false
         InstructionAPI.createTest($stateParams.instructionID, newTest)
                   .then(function (response) {
-                    $scope.tests.push(response.data)
-                    Materialize.toast('Teste criado', 3000)
-                    console.log(newTest)
+                    InstructionAPI.getTests($stateParams.instructionID)
+                        .then(function (response) {
+                          $scope.test = response.data
+                          TestQuestionAPI.create($stateParams.testeID, newTest.questions)
+                            .then(function(){
+                              Materialize.toast('Teste criado', 3000)
+                            })
+                            .catch(function () {
+                              Materialize.toast('Não foi possível criar o teste', 3000)
+                            })
+                        })
                   })
                   .catch(function () {
                     Materialize.toast('Não foi possível criar o teste', 3000)
-                    console.log(newTest)
                   })
                   .finally(function () {
                     $scope.newTest = {
