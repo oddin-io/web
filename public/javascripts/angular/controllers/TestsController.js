@@ -113,6 +113,9 @@ oddin.controller('TestsController',
 
       $scope.createTest = function (newTest) {
         
+        var questions = new Object()
+        questions.alternatives = new Object()
+
         try {
           var date_available = $filter('toDate')(newTest.date_available)
           var available_at = $filter('toDate')(newTest.date_available, newTest.available_at)
@@ -131,12 +134,22 @@ oddin.controller('TestsController',
             newTest.questions[questionIndex].number = questionIndex + 1
 
             if(!$scope.dissertativeQuestion(questionIndex)) {
-              newTest.questions[questionIndex].kind = false
+              newTest.questions[questionIndex].kind = false     
+
+              questions.number = newTest.questions[questionIndex].number
+              questions.kind = newTest.questions[questionIndex].kind
+              questions.description = newTest.questions[questionIndex].description
+              questions.answer = newTest.questions[questionIndex].answer
+              questions.value = newTest.questions[questionIndex].value
+              questions.comment = newTest.questions[questionIndex].comment
               
               for (var alternativeIndex = 0; alternativeIndex < $scope.newTest.questions[questionIndex].alternatives.length; alternativeIndex++) {
 
                 if(!newTest.questions[questionIndex].alternatives[alternativeIndex].correct)
-                  newTest.questions[questionIndex].alternatives[alternativeIndex].correct = false
+                  newTest.questions[questionIndex].alternatives[alternativeIndex].correct = false          
+
+                questions.alternatives.text = newTest.questions[questionIndex].alternatives[alternativeIndex].text
+                questions.alternatives.correct = newTest.questions[questionIndex].alternatives[alternativeIndex].correct
               }
             }
             else {
@@ -150,16 +163,16 @@ oddin.controller('TestsController',
 
         $scope.load = false
         InstructionAPI.createTest($stateParams.instructionID, newTest)
-                  .then(function (response) {
+                  .then(function () {
                     InstructionAPI.getTests($stateParams.instructionID)
                         .then(function (response) {
-                          $scope.test = response.data
-                          TestQuestionAPI.create($stateParams.testeID, newTest.questions)
+                          var testID = response.data.pop().id
+                          TestQuestionAPI.create(testID, questions)
                             .then(function(){
                               Materialize.toast('Teste criado', 3000)
                             })
                             .catch(function () {
-                              Materialize.toast('Não foi possível criar o teste', 3000)
+                              Materialize.toast('Não foi possível criar o teste (2)', 3000)
                             })
                         })
                   })
