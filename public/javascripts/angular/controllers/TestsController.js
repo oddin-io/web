@@ -140,9 +140,9 @@ oddin.controller('TestsController',
               questions.kind = newTest.questions[questionIndex].kind
               questions.description = newTest.questions[questionIndex].description
               questions.answer = newTest.questions[questionIndex].answer
-              questions.value = newTest.questions[questionIndex].value
+              questions.value = parseFloat(newTest.questions[questionIndex].value)
               questions.comment = newTest.questions[questionIndex].comment
-              
+
               for (var alternativeIndex = 0; alternativeIndex < $scope.newTest.questions[questionIndex].alternatives.length; alternativeIndex++) {
 
                 if(!newTest.questions[questionIndex].alternatives[alternativeIndex].correct)
