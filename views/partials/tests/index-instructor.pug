@@ -79,8 +79,21 @@ main
 			.row
 				.col.s12
 					.input-field.col.s1.offset-s2
-						button.btn.waves-effect.waves-light.modal-close(type="submit", ng-click="createTest(newTest)" name="action") Enviar
+						button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="createTest(newTest)" name="action") Enviar
 	//- Main Content
 	.container
 		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
-		p.empty-message.center-align Nenhum teste foi criado
+		p.empty-message.center-align(ng-if="tests.length == 0") Nenhum teste foi criado
+		.card.pergunta(ng-repeat="test in tests | orderBy: 'created_at' : true")
+			.card-content
+				.custom-card__header
+					span.title {{test.title}}
+					span.secondary-info
+						span.secondary-info--leading {{test.date_available | date:"dd/MM/yyyy"}}
+			.card-action.custom-card__action
+				.row
+					.col.s12
+						a(href="" ng-click="modalDelete(test)")
+							i.material-icons delete
+						a(href="" ng-click="modalEdit(test)")
+							i.material-icons edit
