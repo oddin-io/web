@@ -1,8 +1,8 @@
 import oddin from '../app'
 
 oddin.controller('TestsController',
-  ['$scope', '$stateParams', '$filter', 'InstructionAPI', 'CurrentUser', 'TestQuestionAPI','TestAPI',
-    function ($scope, $stateParams, $filter, InstructionAPI, CurrentUser, TestQuestionAPI, TestAPI) {
+  ['$scope', '$stateParams', '$filter', 'InstructionAPI', 'CurrentUser', 'TestQuestionAPI','TestAPI','ManageList',
+    function ($scope, $stateParams, $filter, InstructionAPI, CurrentUser, TestQuestionAPI, TestAPI, ManageList) {
       $scope.user = CurrentUser
       $scope.newTest = {
         questions: [{
@@ -164,7 +164,8 @@ oddin.controller('TestsController',
 
         $scope.load = false
         InstructionAPI.createTest($stateParams.instructionID, newTest)
-          .then(function(){
+          .then(function(response){
+            $scope.tests.push(response.data)
             InstructionAPI.getTests($stateParams.instructionID)
               .then(function(response){
 
@@ -179,6 +180,11 @@ oddin.controller('TestsController',
                     })
                     .catch(function(){
                       status = false
+                      InstructionAPI.getTests($stateParams.instructionID)
+                      .then(function(response){
+                        var testID = response.data.pop().id
+                        TestAPI.destroy(testID)
+                      })
                       Materialize.toast('Não foi possível criar as questões', 3000)
                     })
                 }
@@ -189,15 +195,50 @@ oddin.controller('TestsController',
                   Materialize.toast('Ops! Algo inesperado ocorreu', 3000)
               })
               .catch(function(){
+                InstructionAPI.getTests($stateParams.instructionID)
+                  .then(function(response){
+                    var testID = response.data.pop().id
+                    TestAPI.destroy(testID)
+                  })
                 Materialize.toast('Não foi possível procurar os testes', 3000)
               })
           })
           .catch(function(){
+            InstructionAPI.getTests($stateParams.instructionID)
+              .then(function(response){
+                var testID = response.data.pop().id
+                TestAPI.destroy(testID)
+              })
             Materialize.toast('Não foi possível criar o teste ', 3000)
           })
           .finally(function(){
+            $scope.newTest = {
+              questions: [{
+                alternatives: [{}],
+              }],
+            };
             $scope.load = true
           })
+      }
+
+      $scope.deleteTest = function (modalTest) {
+        $scope.load = false
+        TestAPI.destroy(modalTest.id)
+                .then(function () {
+                  ManageList.deleteItem($scope.tests, modalTest)
+                  Materialize.toast('Teste deletado', 3000)
+                })
+                .catch(function () {
+                  Materialize.toast('Erro ao excluir teste', 3000)
+                })
+                .finally(function () {
+                  $scope.load = true
+                })
+      }
+
+      $scope.modalDelete = function (test) {
+        $scope.modalTest = angular.copy(test)
+        $('#modal-delete').openModal()
       }
     },
   ])

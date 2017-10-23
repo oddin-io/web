@@ -80,6 +80,13 @@ main
 				.col.s12
 					.input-field.col.s1.offset-s2
 						button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="createTest(newTest)" name="action") Enviar
+	#modal-delete.modal
+		.modal-content
+			h4.custom-modal__header Excluir Teste
+			p Tem certeza que deseja excluir "{{modalTest.title}}"?
+		.modal-footer
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteTest(modalTest)") Confirmar
+			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
 	//- Main Content
 	.container
 		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
@@ -89,7 +96,7 @@ main
 				.custom-card__header
 					span.title {{test.title}}
 					span.secondary-info
-						span.secondary-info--leading {{test.date_available | date:"dd/MM/yyyy"}}
+						span.secondary-info--leading {{test.created_at | date:"dd/MM/yyyy"}}
 			.card-action.custom-card__action
 				.row
 					.col.s12
