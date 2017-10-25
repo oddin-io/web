@@ -164,51 +164,20 @@ oddin.controller('TestsController',
 
         $scope.load = false
         InstructionAPI.createTest($stateParams.instructionID, newTest)
-          .then(function(response){
-            $scope.tests.push(response.data)
-            InstructionAPI.getTests($stateParams.instructionID)
-              .then(function(response){
-
-                var testID = response.data.pop().id
-                var status = true
-
-                for (var questionIndex = 0; questionIndex < $scope.newTest.questions.length; questionIndex++) {
-
-                  TestQuestionAPI.create(testID, newTest.questions[questionIndex])
-                    .then(function(){
-                      status = true
-                    })
-                    .catch(function(){
-                      status = false
-                      InstructionAPI.getTests($stateParams.instructionID)
-                      .then(function(response){
-                        var testID = response.data.pop().id
-                        TestAPI.destroy(testID)
-                      })
-                      Materialize.toast('Não foi possível criar as questões', 3000)
-                    })
-                }
-
-                if(status===true)
-                  Materialize.toast('Teste criado', 3000)
-                else
-                  Materialize.toast('Ops! Algo inesperado ocorreu', 3000)
+          .then(function(response){        
+            for (var questionIndex = 0; questionIndex < $scope.newTest.questions.length; questionIndex++) {
+              TestQuestionAPI.create(response.data.id, newTest.questions[questionIndex])
+              .then(function(){
+                $scope.tests.push(response.data)
+                Materialize.toast('Teste criado', 3000)
               })
               .catch(function(){
-                InstructionAPI.getTests($stateParams.instructionID)
-                  .then(function(response){
-                    var testID = response.data.pop().id
-                    TestAPI.destroy(testID)
-                  })
-                Materialize.toast('Não foi possível procurar os testes', 3000)
+                TestAPI.destroy(response.data.id)
+                Materialize.toast('Erro ao criar as questões. Teste não criado', 3000)
               })
+            }
           })
           .catch(function(){
-            InstructionAPI.getTests($stateParams.instructionID)
-              .then(function(response){
-                var testID = response.data.pop().id
-                TestAPI.destroy(testID)
-              })
             Materialize.toast('Não foi possível criar o teste ', 3000)
           })
           .finally(function(){
