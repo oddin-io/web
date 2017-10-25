@@ -227,7 +227,7 @@ oddin.controller('PresentationShowController',
         // TODO: Put the material inside an answer, not in the root scope
         const materials = $scope.materials = []
 
-        QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
+        QuestionAPI.createAnswer($scope.selectedQuestion.id, answer)
                 .then((response) => {
                   const answer = response.data
                   console.log(response)
@@ -258,6 +258,7 @@ oddin.controller('PresentationShowController',
                 })
                 .then(function (response) {
                   materials.push(response.data.material)
+                  // TODO: file.name is `undefined`
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
                 .catch(function (err) {
@@ -276,14 +277,16 @@ oddin.controller('PresentationShowController',
         let newMaterial = null;
         const file = document.forms.uploadArchive.file.files[0]
 
-        QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
+        // TODO: Put the material inside an answer, not in the root scope
+        QuestionAPI.createAnswer($scope.selectedQuestion.id, answer)
                 .then((response) => {
-                  answer = response.data
+                  const answer = response.data
                   console.log(response)
                   return AnswerAPI.createMaterial(answer.id)
                 })
                 .then((response) => {
                   newMaterial = response.data
+                  // TODO: Generate a random file name for blob
                   var fd = new FormData()
 
                   for (var key in newMaterial.fields) {
@@ -304,7 +307,8 @@ oddin.controller('PresentationShowController',
                   })
                 })
                 .then(function (response) {
-                  $scope.materials.push(response.data.material)
+                  materials.push(response.data.material)
+                  // TODO: file.name is `undefined`
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
                 .catch(function (err) {
