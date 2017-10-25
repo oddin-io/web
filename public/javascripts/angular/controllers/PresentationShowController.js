@@ -4,8 +4,8 @@ import webRtcVideo from '../../webrtc_video'
 import webRtcAudio from '../../webrtc_audio'
 
 oddin.controller('PresentationShowController',
-  ['$scope', '$stateParams', 'PresentationAPI', 'QuestionAPI', 'AnswerAPI', 'CurrentUser',
-    function ($scope, $stateParams, PresentationAPI, QuestionAPI, AnswerAPI, CurrentUser) {
+  ['$scope', '$http', '$stateParams', 'PresentationAPI', 'MaterialAPI', 'QuestionAPI', 'AnswerAPI', 'CurrentUser',
+    function ($scope, $http, $stateParams, PresentationAPI, MaterialAPI, QuestionAPI, AnswerAPI, CurrentUser) {
       $scope.user = CurrentUser
       $scope.filter = false
       const socket = io.connect('http://socket-oddin.rhcloud.com:8000/presentation');
@@ -217,17 +217,25 @@ oddin.controller('PresentationShowController',
                 })
       }
 
+      // TODO: Check why newAnswer is coming as `undefined`
       $scope.createAnswerWithMedia = function (newAnswer) {
         $scope.load = false
-        QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
+        let newMaterial = null
+        let file = null
+        const answer = { text: ' ' }
+        // TODO: Put the material inside an answer, not in the root scope
+        const materials = $scope.materials = []
+
+        QuestionAPI.createAnswer($scope.selectedQuestion.id, answer)
                 .then((response) => {
                   const answer = response.data
-                  return AnswerAPI.createVideo(answer.id)
+                  console.log(response)
+                  return AnswerAPI.createMaterial(answer.id)
                 })
                 .then((response) => {
-                  var newMaterial = response.data
-                  var file = blob
-                  var url = window.URL.createObjectURL(file)
+                  newMaterial = response.data
+                  // TODO: Generate a random file name for blob
+                  file = blob
                   var fd = new FormData()
 
                   for (var key in newMaterial.fields) {
@@ -242,24 +250,25 @@ oddin.controller('PresentationShowController',
                   })
                 })
                 .then(function () {
+                  debugger;
                   return MaterialAPI.update(newMaterial.id, {
-                    name: file.name,
+                    name: 'Recorded video',
                     mime: file.type,
                   })
                 })
                 .then(function (response) {
-                  $scope.materials.push(response.data.material)
+                  materials.push(response.data.material)
+                  // TODO: file.name is `undefined`
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
-                .catch(function () {
+                .catch(function (err) {
+                  console.log('Olha o erro aqui', err);
+
                   Materialize.toast('Erro ao fazer upload de material', 3000)
                 })
                 .finally(function () {
                   document.getElementById('new-material-file').value = ''
                   document.getElementById('new-material-description').value = ''
-                  setTimeout(function () {
-                    window.URL.revokeObjectURL(url)
-                  }, 100)
                   $scope.load = true
                 })
       }
@@ -319,7 +328,6 @@ oddin.controller('PresentationShowController',
       }
 
       $scope.modalCreateVideo = function (question) {
-        $scope.selectedQuestion = question
         $('#modal-create-video').openModal({
           complete: function(){
             $scope.stopStream()
@@ -336,7 +344,6 @@ oddin.controller('PresentationShowController',
       }
 
       $scope.modalCreateAudio = function (question) {
-        $scope.selectedQuestion = question
         $('#modal-create-audio').openModal({
           complete: function(){
             $scope.stopStream()
@@ -353,7 +360,6 @@ oddin.controller('PresentationShowController',
       }
 
       $scope.modalCreateMaterial = function (question) {
-        $scope.selectedQuestion = question
         $('#modal-create-material').openModal()
         $('#modal-create-answer').closeModal()
       }

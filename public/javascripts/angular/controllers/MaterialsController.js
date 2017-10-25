@@ -57,10 +57,12 @@ oddin.controller('MaterialsController',
 
       $scope.createMaterial = function () {
         $scope.load = false
+        let newMaterial = null;
+        const file = document.forms.uploadArchive.file.files[0]
+
         InstructionAPI.createMaterial($stateParams.instructionID)
                 .then(function (response) {
-                  var newMaterial = response.data
-                  var file = document.forms.uploadArchive.file.files[0]
+                  newMaterial = response.data
                   var fd = new FormData()
 
                   for (var key in newMaterial.fields) {
@@ -84,7 +86,8 @@ oddin.controller('MaterialsController',
                   $scope.materials.push(response.data.material)
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
-                .catch(function () {
+                .catch(function (err) {
+                  console.log('pega o erro', err)
                   Materialize.toast('Erro ao fazer upload de arquivo', 3000)
                 })
                 .finally(function () {

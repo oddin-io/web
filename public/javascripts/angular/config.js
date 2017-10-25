@@ -260,8 +260,9 @@ oddin.factory('AuthorizationInterceptor', ['$cookies', function ($cookies) {
   return {
     request: function (config) {
       var authToken = $cookies.get('token')
+      var isAmazon = config.url.indexOf('amazonaws.com') != -1;
 
-      if (authToken) {
+      if (authToken && !isAmazon) {
         Object.assign(config.headers, {
           Authorization: authToken,
         })
