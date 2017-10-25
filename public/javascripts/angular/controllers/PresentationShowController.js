@@ -223,10 +223,11 @@ oddin.controller('PresentationShowController',
         let newMaterial = null
         let file = null
         const answer = { text: ' ' }
+
         // TODO: Put the material inside an answer, not in the root scope
         const materials = $scope.materials = []
 
-        QuestionAPI.createAnswer($scope.selectedQuestion.id, answer)
+        QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
                 .then((response) => {
                   const answer = response.data
                   console.log(response)
@@ -250,7 +251,6 @@ oddin.controller('PresentationShowController',
                   })
                 })
                 .then(function () {
-                  debugger;
                   return MaterialAPI.update(newMaterial.id, {
                     name: 'Recorded video',
                     mime: file.type,
@@ -258,12 +258,10 @@ oddin.controller('PresentationShowController',
                 })
                 .then(function (response) {
                   materials.push(response.data.material)
-                  // TODO: file.name is `undefined`
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
                 .catch(function (err) {
-                  console.log('Olha o erro aqui', err);
-
+                  console.log('Erro: ', err);
                   Materialize.toast('Erro ao fazer upload de material', 3000)
                 })
                 .finally(function () {
@@ -275,14 +273,17 @@ oddin.controller('PresentationShowController',
 
       $scope.createAnswerWithMaterial = function (newAnswer) {
         $scope.load = false
+        let newMaterial = null;
+        const file = document.forms.uploadArchive.file.files[0]
+
         QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
                 .then((response) => {
-                  const answer = response.data
+                  answer = response.data
+                  console.log(response)
                   return AnswerAPI.createMaterial(answer.id)
                 })
                 .then((response) => {
-                  var newMaterial = response.data
-                  var file = document.forms.uploadArchive.file.files[0]
+                  newMaterial = response.data
                   var fd = new FormData()
 
                   for (var key in newMaterial.fields) {
@@ -306,7 +307,8 @@ oddin.controller('PresentationShowController',
                   $scope.materials.push(response.data.material)
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
-                .catch(function () {
+                .catch(function (err) {
+                  console.log('Erro: ', err)
                   Materialize.toast('Erro ao fazer upload de material', 3000)
                 })
                 .finally(function () {
@@ -327,7 +329,7 @@ oddin.controller('PresentationShowController',
         delete $scope.stream
       }
 
-      $scope.modalCreateVideo = function (question) {
+      $scope.modalCreateVideo = function () {
         $('#modal-create-video').openModal({
           complete: function(){
             $scope.stopStream()
@@ -343,7 +345,7 @@ oddin.controller('PresentationShowController',
           })
       }
 
-      $scope.modalCreateAudio = function (question) {
+      $scope.modalCreateAudio = function () {
         $('#modal-create-audio').openModal({
           complete: function(){
             $scope.stopStream()
@@ -359,7 +361,7 @@ oddin.controller('PresentationShowController',
           })
       }
 
-      $scope.modalCreateMaterial = function (question) {
+      $scope.modalCreateMaterial = function () {
         $('#modal-create-material').openModal()
         $('#modal-create-answer').closeModal()
       }

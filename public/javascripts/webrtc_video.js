@@ -61,7 +61,7 @@ function toggleRecording() {
 
 function startRecording() {
   var options = { mimeType: 'video/webm;codecs=vp9' }
-  window.recordedBlobs = recordedBlobs = []
+  recordedBlobs = []
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     console.log(options.mimeType + ' is not Supported')
     options = { mimeType: 'video/webm;codecs=vp8' }
