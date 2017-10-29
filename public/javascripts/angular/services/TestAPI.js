@@ -7,13 +7,13 @@ oddin.factory('TestAPI', ['$http', 'env', function ($http, env) {
   var _destroy = function (id) {
     return $http.delete(`${env.ws_url}/tests/${id}`)
   }
-  var _close = function (id) {
-    return $http.post(`${env.ws_url}/tests/${id}/close`)
+  var _getQuestions = function (id) {
+    return $http.get(`${env.ws_url}/tests/${id}/test_questions`)
   }
 
   return {
     update: _update,
     destroy: _destroy,
-    close: _close,
+    getQuestions: _getQuestions,
   }
 }])

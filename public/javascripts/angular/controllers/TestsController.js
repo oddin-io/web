@@ -1,5 +1,4 @@
 import oddin from '../app'
-
 oddin.controller('TestsController',
   ['$scope', '$stateParams', '$filter', 'InstructionAPI', 'CurrentUser', 'TestQuestionAPI','TestAPI','ManageList',
     function ($scope, $stateParams, $filter, InstructionAPI, CurrentUser, TestQuestionAPI, TestAPI, ManageList) {
@@ -25,17 +24,17 @@ oddin.controller('TestsController',
       }());
 
       (function findTests() {
-      $scope.load = false
-      InstructionAPI.getTests($stateParams.instructionID)
-                .then(function (response) {
-                  $scope.tests = response.data
-                })
-                .catch(function () {
-                  Materialize.toast('Erro ao carregar Testes', 3000)
-                })
-                .finally(function () {
-                  $scope.load = true
-                })
+        $scope.load = false
+        InstructionAPI.getTests($stateParams.instructionID)
+                  .then(function (response) {
+                    $scope.tests = response.data
+                  })
+                  .catch(function () {
+                    Materialize.toast('Erro ao carregar Testes', 3000)
+                  })
+                  .finally(function () {
+                    $scope.load = true
+                  })
       }());
 
       $scope.addNewTooltip = function(){
@@ -88,41 +87,13 @@ oddin.controller('TestsController',
       $scope.correctAlternative = function (newTest, questionPosition, alternativePosition) {
         var value = $('#radio-question-'+ questionPosition + "-alternative-" + alternativePosition).prop('checked')
 
-        newTest.questions[questionPosition-1].alternatives[alternativePosition-1].correct = true
+        newTest.questions[questionPosition].alternatives[alternativePosition].correct = true
       }
 
-      $scope.testando = function(newTest) {
+      $scope.correctAlternativeModalEdit = function (modalTest, questionPosition, alternativePosition) {
+        var value = $('#modal-radio-question-'+ questionPosition + "-alternative-" + alternativePosition).prop('checked')
 
-        console.log("Data disponível: " + newTest.date_available)
-        console.log("À partir: " + newTest.available_at)
-        console.log("Encerra às: " + newTest.closes_at)
-
-        for (var questionIndex = 0; questionIndex < $scope.newTest.questions.length; questionIndex++) {
-          newTest.questions[questionIndex].number = questionIndex + 1
-
-          console.log("Número da Questão: " + newTest.questions[questionIndex].number)
-          console.log("Descrição da Questão: " + newTest.questions[questionIndex].description)
-          console.log("Nota: " + newTest.questions[questionIndex].value)
-
-          if(!$scope.dissertativeQuestion(questionIndex)) {
-            newTest.questions[questionIndex].kind = false
-
-            for (var alternativeIndex = 0; alternativeIndex < $scope.newTest.questions[questionIndex].alternatives.length; alternativeIndex++) {
-              console.log("Texto: " + newTest.questions[questionIndex].alternatives[alternativeIndex].text)
-
-              if(!newTest.questions[questionIndex].alternatives[alternativeIndex].correct)
-                newTest.questions[questionIndex].alternatives[alternativeIndex].correct = false
-
-              console.log("É a correta: " + newTest.questions[questionIndex].alternatives[alternativeIndex].correct)
-            }
-          }
-          else {
-            newTest.questions[questionIndex].kind = true
-            console.log("Resposta: " + newTest.questions[questionIndex].answer)
-          }
-          console.log("Dissertativa: " + newTest.questions[questionIndex].kind)
-          console.log("Comentário: " + newTest.questions[questionIndex].comment)
-        }
+        modalTest.questions[questionPosition].test_alternatives[alternativePosition].correct = true
       }
 
       $scope.createTest = function (newTest) {
@@ -208,6 +179,27 @@ oddin.controller('TestsController',
       $scope.modalDelete = function (test) {
         $scope.modalTest = angular.copy(test)
         $('#modal-delete').openModal()
+      }
+
+      $scope.modalEdit = function (test) {
+        $scope.modalTest = angular.copy(test)
+        $scope.modalTest.date_available = $filter('date')($scope.modalTest.date_available,'ddMMyyyy')
+        $scope.modalTest.available_at = $filter('date')($scope.modalTest.available_at, 'HHmm')
+        $scope.modalTest.closes_at = $filter('date')($scope.modalTest.closes_at, 'HHmm')
+        TestAPI.getQuestions($scope.modalTest.id)
+          .then(function(response){
+            $scope.modalTest.questions = response.data
+              setTimeout(function(){
+                for (var questionIndex = 0; questionIndex < $scope.modalTest.questions.length; questionIndex++) {
+                  for (var alternativeIndex = 0; alternativeIndex < $scope.modalTest.questions[questionIndex].test_alternatives.length; alternativeIndex++) {
+                    if($scope.modalTest.questions[questionIndex].test_alternatives[alternativeIndex].correct === true) {
+                      $('#modal-radio-question-'+ questionIndex + "-alternative-" + alternativeIndex).attr('checked', true);                       
+                    }
+                  }
+                }
+              },700);
+          })
+        $('#modal-edit').openModal()
       }
     },
   ])
