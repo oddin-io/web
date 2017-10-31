@@ -136,17 +136,15 @@ oddin.controller('TestsController',
         $scope.load = false
         InstructionAPI.createTest($stateParams.instructionID, newTest)
           .then(function(response){        
-            for (var questionIndex = 0; questionIndex < $scope.newTest.questions.length; questionIndex++) {
-              TestQuestionAPI.create(response.data.id, newTest.questions[questionIndex])
-              .then(function(){
-                $scope.tests.push(response.data)
-                Materialize.toast('Teste criado', 3000)
-              })
-              .catch(function(){
-                TestAPI.destroy(response.data.id)
-                Materialize.toast('Erro ao criar as questões. Teste não criado', 3000)
-              })
-            }
+              TestQuestionAPI.create(response.data.id, newTest)
+                .then(function(){
+                  $scope.tests.push(response.data)
+                  Materialize.toast('Teste criado', 3000)
+                })
+                .catch(function(){
+                  TestAPI.destroy(response.data.id)
+                  Materialize.toast('Erro ao criar as questões. Teste não criado', 3000)
+                })
           })
           .catch(function(){
             Materialize.toast('Não foi possível criar o teste ', 3000)
