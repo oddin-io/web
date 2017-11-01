@@ -109,6 +109,7 @@ oddin.controller('TestsController',
         }
         catch(err) {
           Materialize.toast('Insira a data e os horários corretamente', 5000)
+          throw err
         }
 
         try {
