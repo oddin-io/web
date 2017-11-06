@@ -35,10 +35,12 @@ oddin.controller('PresentationMaterialController',
 
       $scope.createMaterial = function () {
         $scope.load = false
+        let newMaterial = null;
+        const file = document.forms.uploadArchive.file.files[0]
+
         PresentationAPI.createMaterial($stateParams.presentationID)
                 .then(function (response) {
-                  var newMaterial = response.data
-                  var file = document.forms.uploadArchive.file.files[0]
+                  newMaterial = response.data
                   var fd = new FormData()
 
                   for (var key in newMaterial.fields) {
@@ -62,7 +64,8 @@ oddin.controller('PresentationMaterialController',
                   $scope.materials.push(response.data.material)
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
-                .catch(function () {
+                .catch(function (err) {
+                  onsole.log('Erro: ', err)
                   Materialize.toast('Erro ao fazer upload de material', 3000)
                 })
                 .finally(function () {
@@ -76,7 +79,9 @@ oddin.controller('PresentationMaterialController',
         $scope.load = false
         MaterialAPI.show(material.id)
                 .then(function (response) {
+                  var hiddenLink = document.getElementById('hidden-link')
                   var link = document.createElement('a')
+
                   link.setAttribute('href', response.data.url)
                   link.setAttribute('download', true)
                   hiddenLink = document.getElementById('hidden-link')
@@ -85,7 +90,8 @@ oddin.controller('PresentationMaterialController',
                   Materialize.toast('Fazendo download de ' + material.name, 3000)
                   hiddenLink.removeChild(link)
                 })
-                .catch(function () {
+                .catch(function (err) {
+                  console.log('Erro: ', err)
                   Materialize.toast('Erro ao fazer download de material', 3000)
                 })
                 .finally(function () {

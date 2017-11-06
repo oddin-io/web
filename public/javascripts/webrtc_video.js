@@ -95,17 +95,17 @@ function startRecording() {
 function stopRecording() {
   mediaRecorder.stop()
   console.log('Recorded Blobs: ', recordedBlobs)
-  recordedVideo.controls = true
 }
 
 function play() {
   var superBuffer = new Blob(recordedBlobs, { type: 'video/webm' })
   recordedVideo.src = window.URL.createObjectURL(superBuffer)
+  recordedVideo.controls = true
 }
 
 function upload() {
   var blob 
-  window.blob = blob = new Blob(recordedBlobs, { type: 'video/webm' })
+  window.blob = new Blob(recordedBlobs, { type: 'video/webm' })
   /*var url = window.URL.createObjectURL(blob)
   var a = document.createElement('a')
   a.style.display = 'none'

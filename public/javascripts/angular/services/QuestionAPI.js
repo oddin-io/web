@@ -13,11 +13,15 @@ oddin.factory('QuestionAPI', ['$http', 'env', function ($http, env) {
   var _destroyVote = function (id) {
     return $http.delete(`${env.ws_url}/questions/${id}/vote`)
   }
+  var _getMaterials = function (id) {
+    return $http.get(`${env.ws_url}/questions/${id}/materials`)
+  }
 
   return {
     getAnswers: _getAnswers,
     createAnswer: _createAnswer,
     upvote: _upvote,
     destroyVote: _destroyVote,
+    getMaterials: _getMaterials,
   }
 }])

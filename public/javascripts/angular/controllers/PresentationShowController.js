@@ -99,6 +99,20 @@ oddin.controller('PresentationShowController',
                 })
       }
 
+      $scope.findMaterials = function (question) {
+        $scope.load = false
+        QuestionAPI.getMaterials(question.id)
+                .then(function (response) {
+                  question.material = response.data
+                })
+                .catch(function () {
+                  Materialize.toast('Erro ao carregar material', 3000)
+                })
+                .finally(function () {
+                  $scope.load = true
+                })
+      }
+
       $scope.closeAnswers = function (question) {
         question.answers = undefined
       }
@@ -217,19 +231,47 @@ oddin.controller('PresentationShowController',
                 })
       }
 
-      // TODO: Check why newAnswer is coming as `undefined`
-      $scope.createAnswerWithMedia = function (newAnswer) {
+      $scope.downloadMaterial = function (material) {
+        $scope.load = false
+        MaterialAPI.show(material.id)
+                .then(function (response) {
+                  var hiddenLink = document.getElementById('hidden-link')
+                  var link = document.createElement('a')
+   
+                  link.setAttribute('href', response.data.url)
+                  link.setAttribute('download', true)
+                  hiddenLink = document.getElementById('hidden-link')
+                  hiddenLink.appendChild(link)
+                  link.click()
+                  hiddenLink.removeChild(link)
+                  Materialize.toast('Fazendo download de ' + material.name, 3000)
+                })
+                .catch(function (err) {
+                  console.log('Erro: ',err)
+                  Materialize.toast("Erro ao baixar '" + material.name, 3000)
+                })
+                .finally(function () {
+                  $scope.load = true
+                })
+      }
+
+      $scope.createAnswerWithMedia = function (newAnswer, material) {
         $scope.load = false
         let newMaterial = null
         let file = null
-        const answer = { text: ' ' }
+        var answerID = null
+
+        if(!newAnswer){
+          newAnswer = { text: ' ' }
+        }
 
         // TODO: Put the material inside an answer, not in the root scope
         const materials = $scope.materials = []
 
-        QuestionAPI.createAnswer($scope.selectedQuestion.id, answer)
+        QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
                 .then((response) => {
                   const answer = response.data
+                  answerID = response.data.id
                   console.log(response)
                   return AnswerAPI.createMaterial(answer.id)
                 })
@@ -238,6 +280,7 @@ oddin.controller('PresentationShowController',
                   // TODO: Generate a random file name for blob
                   file = blob
                   var fd = new FormData()
+                  file.name = material.name
 
                   for (var key in newMaterial.fields) {
                     fd.append(key, newMaterial.fields[key])
@@ -252,18 +295,29 @@ oddin.controller('PresentationShowController',
                 })
                 .then(function () {
                   return MaterialAPI.update(newMaterial.id, {
-                    name: 'Recorded video',
+                    name: file.name,
                     mime: file.type,
                   })
                 })
                 .then(function (response) {
                   materials.push(response.data.material)
-                  // TODO: file.name is `undefined`
+                  $('#modal-create-audio').closeModal({
+                    complete: function(){
+                      $scope.stopStream()
+                    }
+                  })
+                  $('#modal-create-video').closeModal({
+                    complete: function(){
+                      $scope.stopStream()
+                    }
+                  })
+                  $scope.findAnswers($scope.selectedQuestion)
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
                 .catch(function (err) {
                   console.log('Erro: ', err);
-                  Materialize.toast('Erro ao fazer upload de material', 3000)
+                  AnswerAPI.destroy(answerID)
+                  Materialize.toast('Erro ao fazer upload de material de mídia', 3000)
                 })
                 .finally(function () {
                   document.getElementById('new-material-file').value = ''
@@ -276,17 +330,24 @@ oddin.controller('PresentationShowController',
         $scope.load = false
         let newMaterial = null;
         const file = document.forms.uploadArchive.file.files[0]
+        var answerID = null
+
+        if(!newAnswer){
+          newAnswer = { text: ' ' }
+        }
 
         // TODO: Put the material inside an answer, not in the root scope
-        QuestionAPI.createAnswer($scope.selectedQuestion.id, answer)
+        const materials = $scope.materials = []
+
+        QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
                 .then((response) => {
                   const answer = response.data
+                  answerID = response.data.id
                   console.log(response)
                   return AnswerAPI.createMaterial(answer.id)
                 })
                 .then((response) => {
                   newMaterial = response.data
-                  // TODO: Generate a random file name for blob
                   var fd = new FormData()
 
                   for (var key in newMaterial.fields) {
@@ -308,11 +369,13 @@ oddin.controller('PresentationShowController',
                 })
                 .then(function (response) {
                   materials.push(response.data.material)
-                  // TODO: file.name is `undefined`
+                  $('#modal-create-material').closeModal()
+                  $scope.findAnswers($scope.selectedQuestion)
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
                 .catch(function (err) {
                   console.log('Erro: ', err)
+                  AnswerAPI.destroy(answerID)
                   Materialize.toast('Erro ao fazer upload de material', 3000)
                 })
                 .finally(function () {

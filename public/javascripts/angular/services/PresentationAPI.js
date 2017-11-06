@@ -8,13 +8,13 @@ oddin.factory('PresentationAPI', ['$http', 'env', function ($http, env) {
     return $http.post(`${env.ws_url}/presentations/${id}/close`)
   }
   var _getMaterials = function (id) {
-    return $http.get(`${env.ws_url}/presentation/${id}/materials`)
+    return $http.get(`${env.ws_url}/presentations/${id}/materials`)
   }
   var _getQuestions = function (id) {
     return $http.get(`${env.ws_url}/presentations/${id}/questions`)
   }
   var _createMaterial = function (id) {
-    return $http.post(`${env.ws_url}/presentation/${id}/materials`)
+    return $http.post(`${env.ws_url}/presentations/${id}/materials`)
   }
   var _createQuestion = function (id, question) {
     return $http.post(`${env.ws_url}/presentations/${id}/questions`, question)
