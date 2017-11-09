@@ -52,14 +52,14 @@ function toggleRecording() {
 }
 
 function startRecording() {
-  window.recordedBlobs = recordedBlobs = [];
-  var options = {mimeType: 'audio/mp3;codecs=vp9'};
+  var options = {mimeType: 'audio/webm;codecs=vp9'};
+  recordedBlobs = [];
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     console.log(options.mimeType + ' is not Supported');
-    options = {mimeType: 'audio/mp3;codecs=vp9'};
+    options = {mimeType: 'audio/webm;codecs=vp8'};
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
       console.log(options.mimeType + ' is not Supported');
-      options = {mimeType: 'audio/mp3'};
+      options = {mimeType: 'audio/webm'};
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         console.log(options.mimeType + ' is not Supported');
         options = {mimeType: ''};
@@ -91,13 +91,13 @@ function stopRecording() {
 }
 
 function play() {
-  var superBuffer = new Blob(recordedBlobs, {type: 'audio/mp3'});
+  var superBuffer = new Blob(recordedBlobs, {type: 'audio/webm'});
   recordedAudio.src = window.URL.createObjectURL(superBuffer);
 }
 
 function upload() {
   var blob 
-  window.blob = blob = new Blob(recordedBlobs, { type: 'audio/mp3' })
+  window.blob = new Blob(recordedBlobs, { type: 'audio/webm' })
 }
 
 export default function () {

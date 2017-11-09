@@ -281,6 +281,9 @@ oddin.controller('PresentationShowController',
                   file = blob
                   var fd = new FormData()
                   file.name = material.name
+                  console.log(material.name)
+                  console.log(material)
+                  console.log(file.type)
 
                   for (var key in newMaterial.fields) {
                     fd.append(key, newMaterial.fields[key])
@@ -301,16 +304,10 @@ oddin.controller('PresentationShowController',
                 })
                 .then(function (response) {
                   materials.push(response.data.material)
-                  $('#modal-create-audio').closeModal({
-                    complete: function(){
-                      $scope.stopStream()
-                    }
-                  })
-                  $('#modal-create-video').closeModal({
-                    complete: function(){
-                      $scope.stopStream()
-                    }
-                  })
+                  console.log(response.data.material)
+                  $('#modal-create-audio').closeModal()
+                  $('#modal-create-video').closeModal()
+                  $scope.stopStream()
                   $scope.findAnswers($scope.selectedQuestion)
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
@@ -385,15 +382,14 @@ oddin.controller('PresentationShowController',
                 })
       }
 
+      $scope.stopStream = function () {
+        $scope.stream.getTracks().forEach(track => track.stop())
+        delete $scope.stream
+      }
 
       $scope.modalCreateAnswer = function (question) {
         $scope.selectedQuestion = question
         $('#modal-create-answer').openModal()
-      }
-
-      $scope.stopStream = function () {
-        $scope.stream.getTracks().forEach(track => track.stop())
-        delete $scope.stream
       }
 
       $scope.modalCreateVideo = function () {

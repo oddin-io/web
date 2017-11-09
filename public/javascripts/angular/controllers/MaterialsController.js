@@ -87,7 +87,7 @@ oddin.controller('MaterialsController',
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
                 .catch(function (err) {
-                  onsole.log('Erro: ', err)
+                  console.log('Erro: ', err)
                   Materialize.toast('Erro ao fazer upload de arquivo', 3000)
                 })
                 .finally(function () {
