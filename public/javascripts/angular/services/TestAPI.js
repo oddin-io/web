@@ -10,10 +10,14 @@ oddin.factory('TestAPI', ['$http', 'env', function ($http, env) {
   var _getQuestions = function (id) {
     return $http.get(`${env.ws_url}/tests/${id}/test_questions`)
   }
+  var _show = function (id) {
+    return $http.get(`${env.ws_url}/tests/${id}`)
+  }
 
   return {
     update: _update,
     destroy: _destroy,
     getQuestions: _getQuestions,
+    show: _show,
   }
 }])

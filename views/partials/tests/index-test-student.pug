@@ -7,52 +7,37 @@ main
 				h1.modal-criar-item__titulo Responder Teste
 				.row
 					.input-field.col.s12
-						input#test-title(type="text" ng-model="studentTest.title" required)
-						label(for="test-title") Título {{studentTest.title}}
+						input#test-title(type="text" ng-model="test.title" disabled)
+						label(for="test-title") Título
 					.input-field.col.s6
-						input#test-date(type="text" ng-model="studentTest.date_available" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required)
+						input#test-date(type="text" ng-model="test.date_available" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" disabled)
 						label(for="test-date") Disponível em
 					.input-field.col.s2
-						input#test-available-time(type="text" ng-model="studentTest.available_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required)
+						input#test-available-time(type="text" ng-model="test.available_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" disabled)
 						label(for="test-available-time") À partir das 
 					.input-field.col.s2
-						input#test-time-closed(type="text" ng-model="studentTest.closes_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required)
+						input#test-time-closed(type="text" ng-model="test.closes_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" disabled)
 						label(for="test-time-closed") Encerra às
 			.row
 				form.offset-m2.offset-l2.col.s12.m8.l8
-					.card(ng-repeat="question in studentTest.questions")
+					.card(ng-repeat="question in test.questions")
 						.row
 							.input-field.col.s2
+								label Pergunta {{test.questions.indexOf(question) + 1}}
 						.row
 							.input-field.col.s10
-								textarea.materialize-textarea(id="text-question-{{studentTest.questions.indexOf(question)+1}}" ng-maxlength="500" data-length="500" ng-model="studentTest.questions[studentTest.questions.indexOf(question)].description" required)
-								label(for="text-question-{{studentTest.questions.indexOf(question)+1}}") Pergunta {{studentTest.questions.indexOf(question) + 1}}
+								label {{test.questions[test.questions.indexOf(question)].description}}
 							.input-field.col.s1
-								input(id="note-question-{{studentTest.questions.indexOf(question)+1}}" name="note" type="number" min="1" max="10" ng-model="studentTest.questions[studentTest.questions.indexOf(question)].value" required)
-								label(for="note-question-{{studentTest.questions.indexOf(question)+1}}") Nota
-						form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="" name="uploadArchive")
-							.file-field.input-field.col.s10
-								.btn.modal-criar-item__file-button
-									span Arquivo
-									input#new-test-file(name="file" type="file")
-								.file-path-wrapper
-									input#new-test-description.file-path.validate(type="text" placeholder="Faça Upload de um arquivo")
+								label Vale {{test.questions[test.questions.indexOf(question)].value}}
 						.row
 							.input-field.col.s10(ng-if="question.kind == true")
-								textarea.materialize-textarea(id="text-dissertative-question-{{studentTest.questions.indexOf(question)+1}}" data-length="500" ng-model="studentTest.questions[studentTest.questions.indexOf(question)].answer" required)
-								label(for="text-dissertative-question-{{studentTest.questions.indexOf(question)+1}}") Resposta
+								textarea.materialize-textarea(id="text-dissertative-question-{{test.questions.indexOf(question)+1}}" data-length="500" ng-model="answerTest.questions[test.questions.indexOf(question)].answer" required)
+								label(for="text-dissertative-question-{{test.questions.indexOf(question)+1}}" style="margin-top: 1%") Resposta
 						.row
 							.col.s12(ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false")
-								.input-field.col.s12.m8.l2(action="#")
-									input.with-gap(name="radio-question-{{studentTest.questions.indexOf(question)}}" ng-click="correctAlternativeModalEdit(studentTest, studentTest.questions.indexOf(question), question.test_alternatives.indexOf(alternative))" type="radio" id="radio-question-{{studentTest.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required)
-									label(for="radio-question-{{studentTest.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" ng-model="studentTest.questions[studentTest.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].correct") Correta
-								.input-field.col.s8
-									input(id="test-question-{{studentTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}" type="text" ng-model="studentTest.questions[studentTest.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text" required)
-									label(for="test-question-{{studentTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}") Alternativa {{question.test_alternatives.indexOf(alternative)+1}}
-						.row
-							.input-field.col.s10
-								textarea.materialize-textarea(id="comment-question-{{studentTest.questions.indexOf(question)+1}}" ng-model="studentTest.questions[studentTest.questions.indexOf(question)].comment" data-length="500")
-								label(for="comment-question-{{studentTest.questions.indexOf(question)+1}}") Comentário
+								.input-field.col.s10.m8.l10(action="#")
+									input.with-gap(name="radio-question-{{test.questions.indexOf(question)}}" type="radio" id="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required)
+									label(for="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" style="margin-bottom: 3%") {{test.questions[test.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text}}
 			.row
 				.col.s12
 					.input-field.col.s1.offset-s2

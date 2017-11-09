@@ -181,7 +181,7 @@ oddin.config(['$stateProvider', function ($stateProvider) {
     .state('test-student', {
       url: '/disciplinas/:instructionID/testes/:testID/realizar-teste',
       templateUrl: '/partials/tests/index-test-student.html',
-      controller: 'TestsController',
+      controller: 'StudentTestsController',
       authenticate: true,
     })
     .state('admin-events', {

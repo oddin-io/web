@@ -200,18 +200,5 @@ oddin.controller('TestsController',
           })
         $('#modal-edit').openModal()
       }
-
-      $scope.performTest = function(test){
-        $scope.studentTest = angular.copy(test)
-        $scope.studentTest.date_available = $filter('date')($scope.studentTest.date_available,'ddMMyyyy')
-        $scope.studentTest.available_at = $filter('date')($scope.studentTest.available_at, 'HHmm')
-        $scope.studentTest.closes_at = $filter('date')($scope.studentTest.closes_at, 'HHmm')
-        TestAPI.getQuestions($scope.studentTest.id)
-          .then(function(response){
-            $scope.studentTest.questions = response.data
-            console.log($scope.studentTest.questions)
-            $state.go('test-student',{instructionID: $stateParams.instructionID, testID: test.id})
-          })
-      }
     },
   ])

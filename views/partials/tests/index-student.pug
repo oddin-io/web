@@ -15,7 +15,7 @@ main
 			.card-action.custom-card__action
 				.row
 					.col.s12
-						a(href="" ng-click="performTest(test)")
+						a(ui-sref="test-student({instructionID: instruction.id, testID: test.id})")
 							i.material-icons create
 						a(href="" id="" ng-click="")
 							i.material-icons info
