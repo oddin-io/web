@@ -9,20 +9,6 @@ oddin.controller('StudentTestsController',
         }],
       };
 
-      (function getInfo() {
-        $scope.load = false
-        InstructionAPI.show($stateParams.instructionID)
-                .then(function (response) {
-                  $scope.instruction = response.data
-                })
-                .catch(function () {
-                  Materialize.toast('Erro ao carregar informações da disciplina', 3000)
-                })
-                .finally(function () {
-                  $scope.load = true
-                })
-      }());
-
       (function findTest() {
         $scope.load = false
         TestAPI.show($stateParams.testID)

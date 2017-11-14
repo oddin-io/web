@@ -124,7 +124,7 @@ main
 						.row
 							.col.s12(ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false")
 								.input-field.col.s12.m8.l2(action="#")
-									input.with-gap(name="modal-radio-question-{{modalTest.questions.indexOf(question)}}" ng-click="correctAlternativeModalEdit(modalTest, modalTest.questions.indexOf(question), question.test_alternatives.indexOf(alternative))" type="radio" id="modal-radio-question-{{modalTest.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required)
+									input.with-gap(name="modal-radio-question-{{modalTest.questions.indexOf(question)}}" type="radio" id="modal-radio-question-{{modalTest.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required)
 									label(for="modal-radio-question-{{modalTest.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" ng-model="modalTest.questions[modalTest.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].correct") Correta
 								.input-field.col.s8
 									input(id="modal-test-question-{{modalTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}" type="text" ng-model="modalTest.questions[modalTest.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text" required)
@@ -136,7 +136,7 @@ main
 			.row
 				.col.s12
 					.input-field.col.s1.offset-s2
-						button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="" name="action") Atualizar
+						button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="updateSurvey(modalTest)" name="action") Atualizar
 	#modal-delete.modal
 		.modal-content
 			h4.custom-modal__header Excluir Teste

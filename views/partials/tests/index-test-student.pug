@@ -1,7 +1,7 @@
 doctype html
 
 main
-	.card(style="width: 90%; bottom: 10%; max-height: 90%; padding:15px;")
+	.card.card-student-test
 		.row
 			form.offset-m2.offset-l2.col.s12.m8.l8
 				h1.modal-criar-item__titulo Responder Teste
@@ -20,7 +20,7 @@ main
 						label(for="test-time-closed") Encerra às
 			.row
 				form.offset-m2.offset-l2.col.s12.m8.l8
-					.card(ng-repeat="question in test.questions")
+					.card.card-student-test-question(ng-repeat="question in test.questions")
 						.row
 							.input-field.col.s2
 								label Pergunta {{test.questions.indexOf(question) + 1}}
@@ -32,12 +32,12 @@ main
 						.row
 							.input-field.col.s10(ng-if="question.kind == true")
 								textarea.materialize-textarea(id="text-dissertative-question-{{test.questions.indexOf(question)+1}}" data-length="500" ng-model="answerTest.questions[test.questions.indexOf(question)].answer" required)
-								label(for="text-dissertative-question-{{test.questions.indexOf(question)+1}}" style="margin-top: 1%") Resposta
+								label.label-textarea-student-test(for="text-dissertative-question-{{test.questions.indexOf(question)+1}}") Resposta
 						.row
 							.col.s12(ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false")
 								.input-field.col.s10.m8.l10(action="#")
 									input.with-gap(name="radio-question-{{test.questions.indexOf(question)}}" type="radio" id="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required)
-									label(for="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" style="margin-bottom: 3%") {{test.questions[test.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text}}
+									label(for="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}") {{test.questions[test.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text}}
 			.row
 				.col.s12
 					.input-field.col.s1.offset-s2

@@ -84,18 +84,6 @@ oddin.controller('TestsController',
         }
       }
 
-      $scope.correctAlternative = function (newTest, questionPosition, alternativePosition) {
-        var value = $('#radio-question-'+ questionPosition + "-alternative-" + alternativePosition).prop('checked')
-
-        newTest.questions[questionPosition].alternatives[alternativePosition].correct = true
-      }
-
-      $scope.correctAlternativeModalEdit = function (modalTest, questionPosition, alternativePosition) {
-        var value = $('#modal-radio-question-'+ questionPosition + "-alternative-" + alternativePosition).prop('checked')
-
-        modalTest.questions[questionPosition].test_alternatives[alternativePosition].correct = true
-      }
-
       $scope.createTest = function (newTest) {
         
         try {
@@ -121,7 +109,11 @@ oddin.controller('TestsController',
 
               for (var alternativeIndex = 0; alternativeIndex < $scope.newTest.questions[questionIndex].alternatives.length; alternativeIndex++) {
 
-                if(!newTest.questions[questionIndex].alternatives[alternativeIndex].correct)
+                var value = new Boolean($('#radio-question-'+ questionIndex + "-alternative-" + alternativeIndex).is(':checked'))
+
+                if(value == true)
+                  newTest.questions[questionIndex].alternatives[alternativeIndex].correct = true
+                else
                   newTest.questions[questionIndex].alternatives[alternativeIndex].correct = false
               }
             }
@@ -156,6 +148,60 @@ oddin.controller('TestsController',
                 alternatives: [{}],
               }],
             };
+            $scope.load = true
+          })
+      }
+
+      $scope.updateSurvey = function (modalTest) {
+
+        try {
+          var date_available = $filter('toDate')(modalTest.date_available)
+          var available_at = $filter('toDate')(modalTest.date_available, modalTest.available_at)
+          var closes_at = $filter('toDate')(modalTest.date_available, modalTest.closes_at)
+          
+          modalTest.date_available = date_available
+          modalTest.available_at = available_at
+          modalTest.closes_at = closes_at
+        }
+        catch(err) {
+          Materialize.toast('Insira a data e os horários corretamente', 5000)
+          throw err
+        }
+
+        try {
+          for (var questionIndex = 0; questionIndex < modalTest.questions.length; questionIndex++) {
+              for (var alternativeIndex = 0; alternativeIndex < $scope.modalTest.questions[questionIndex].test_alternatives.length; alternativeIndex++) {
+                var value = new Boolean($('#modal-radio-question-'+ questionIndex + "-alternative-" + alternativeIndex).is(':checked'))
+                if(value == true)
+                  modalTest.questions[questionIndex].test_alternatives[alternativeIndex].correct = true
+                else
+                  modalTest.questions[questionIndex].test_alternatives[alternativeIndex].correct = false
+            }
+          }
+        }
+        catch(err) {
+          Materialize.toast('Preencha todos os campos corretamente', 5000)
+        }
+
+        $scope.load = false
+        TestAPI.update(modalTest.id, modalTest)
+          .then(function(response){
+              ManageList.updateItem($scope.tests, response.data)       
+              TestQuestionAPI.update(response.data.id, modalTest)
+                .then(function(response){   
+                  ManageList.updateItem($scope.modalTest.questions, response.data)
+                  Materialize.toast('Teste atualizado', 3000)
+                })
+                .catch(function(err){
+                  console.log(err)
+                  Materialize.toast('Erro ao atualizar as questões', 3000)
+                })
+          })
+          .catch(function(err){
+            console.log(err)
+            Materialize.toast('Erro ao atualizar o teste ', 3000)
+          })
+          .finally(function(){
             $scope.load = true
           })
       }
