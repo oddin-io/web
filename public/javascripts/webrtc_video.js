@@ -106,17 +106,6 @@ function play() {
 function upload() {
   var blob 
   window.blob = new Blob(recordedBlobs, { type: 'video/webm' })
-  /*var url = window.URL.createObjectURL(blob)
-  var a = document.createElement('a')
-  a.style.display = 'none'
-  a.href = url
-  a.download = 'video'
-  document.body.appendChild(a)
-  a.click()
-  setTimeout(function () {
-    document.body.removeChild(a)
-    window.URL.revokeObjectURL(url)
-  }, 100)*/
 }
 
 export default function () {

@@ -272,7 +272,6 @@ oddin.controller('PresentationShowController',
                 .then((response) => {
                   const answer = response.data
                   answerID = response.data.id
-                  console.log(response)
                   return AnswerAPI.createMaterial(answer.id)
                 })
                 .then((response) => {
@@ -280,16 +279,13 @@ oddin.controller('PresentationShowController',
                   // TODO: Generate a random file name for blob
                   file = blob
                   var fd = new FormData()
-                  file.name = material.name
-                  console.log(material.name)
-                  console.log(material)
-                  console.log(file.type)
+                  file.name = material.name + '.webm'
 
                   for (var key in newMaterial.fields) {
                     fd.append(key, newMaterial.fields[key])
                   }
 
-                  fd.append('file', file)
+                  fd.append('file', file, file.name)
                   return $http.post(newMaterial.url, fd, {
                     headers: {
                       'Content-Type': undefined,
@@ -304,7 +300,6 @@ oddin.controller('PresentationShowController',
                 })
                 .then(function (response) {
                   materials.push(response.data.material)
-                  console.log(response.data.material)
                   $('#modal-create-audio').closeModal()
                   $('#modal-create-video').closeModal()
                   $scope.stopStream()
@@ -340,7 +335,6 @@ oddin.controller('PresentationShowController',
                 .then((response) => {
                   const answer = response.data
                   answerID = response.data.id
-                  console.log(response)
                   return AnswerAPI.createMaterial(answer.id)
                 })
                 .then((response) => {
