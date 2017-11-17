@@ -266,7 +266,7 @@ oddin.controller('PresentationShowController',
         }
 
         // TODO: Put the material inside an answer, not in the root scope
-        const materials = $scope.materials = []
+        //var materials = $scope.materials = []
 
         QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
                 .then((response) => {
@@ -275,8 +275,8 @@ oddin.controller('PresentationShowController',
                   return AnswerAPI.createMaterial(answer.id)
                 })
                 .then((response) => {
+                  $scope.materials = []
                   newMaterial = response.data
-                  // TODO: Generate a random file name for blob
                   file = blob
                   var fd = new FormData()
                   file.name = material.name + '.webm'
@@ -299,7 +299,7 @@ oddin.controller('PresentationShowController',
                   })
                 })
                 .then(function (response) {
-                  materials.push(response.data.material)
+                  $scope.materials.push(response.data.material)
                   $('#modal-create-audio').closeModal()
                   $('#modal-create-video').closeModal()
                   $scope.stopStream()
@@ -307,6 +307,8 @@ oddin.controller('PresentationShowController',
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
                 .catch(function (err) {
+                  $('#modal-create-audio').closeModal()
+                  $('#modal-create-video').closeModal()
                   console.log('Erro: ', err);
                   AnswerAPI.destroy(answerID)
                   Materialize.toast('Erro ao fazer upload de material de mídia', 3000)
@@ -329,7 +331,7 @@ oddin.controller('PresentationShowController',
         }
 
         // TODO: Put the material inside an answer, not in the root scope
-        const materials = $scope.materials = []
+        //var materials = $scope.materials = []
 
         QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
                 .then((response) => {
@@ -338,6 +340,7 @@ oddin.controller('PresentationShowController',
                   return AnswerAPI.createMaterial(answer.id)
                 })
                 .then((response) => {
+                  $scope.materials = []
                   newMaterial = response.data
                   var fd = new FormData()
 
@@ -359,7 +362,7 @@ oddin.controller('PresentationShowController',
                   })
                 })
                 .then(function (response) {
-                  materials.push(response.data.material)
+                  $scope.materials.push(response.data.material)
                   $('#modal-create-material').closeModal()
                   $scope.findAnswers($scope.selectedQuestion)
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)

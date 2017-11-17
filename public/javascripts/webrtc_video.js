@@ -83,6 +83,8 @@ function startRecording() {
     return
   }
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options)
+  recordedVideo.style.display = "none"
+  gum.style.width = "68%"
   recordButton.textContent = 'Parar'
   playButton.disabled = true
   uploadButton.disabled = true
@@ -98,6 +100,8 @@ function stopRecording() {
 }
 
 function play() {
+  recordedVideo.style.display = "unset"
+  gum.style.width = "45%"
   var superBuffer = new Blob(recordedBlobs, { type: 'video/webm' })
   recordedVideo.src = window.URL.createObjectURL(superBuffer)
   recordedVideo.controls = true

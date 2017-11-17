@@ -13,12 +13,12 @@ main
 					h1.modal-criar-item__titulo Criar Video
 					.row
 						.input-field.col.s12
-							textarea#material-name.materialize-textarea(ng-model="material.name" required)
+							input#material-name(type="text" ng-model="material.name" required)
 							label(for="material-name") Nome do arquivo
 					.row
 						.input-field.col.s20
-							video(autoplay muted id="gum" style="background: #222; float: left; width: 45%; margin-bottom: 30px;")
-							video(autoplay id="recorded" style="background: #222; float: right; width: 45%; margin-bottom: 30px;")
+							video(autoplay muted id="gum" style="background: #222; float: left; width: 68%; margin-bottom: 30px;")
+							video(autoplay id="recorded" style="display: none; background: #222; float: right; width: 45%; margin-bottom: 30px;")
 						.col.s12.m9
 							.modal-post-respostas__options
 								button.btn.waves-effect.waves-light( id="record" class="__web-inspector-hide-shortcut__") Gravar
@@ -33,7 +33,7 @@ main
 					h1.modal-criar-item__titulo Criar Aúdio
 					.row
 						.input-field.col.s12
-							textarea#material-name.materialize-textarea(ng-model="material.name" required)
+							input#material-name(type="text" ng-model="material.name" required)
 							label(for="material-name") Nome do arquivo					
 					.row
 						.input-field.col.s20
