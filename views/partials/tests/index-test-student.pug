@@ -1,44 +1,44 @@
 doctype html
 
 main
-	.card.card-student-test
-		.row
-			form.offset-m2.offset-l2.col.s12.m8.l8
-				h1.modal-criar-item__titulo Responder Teste
-				.row
-					.input-field.col.s12
-						input#test-title(type="text" ng-model="test.title" disabled)
-						label(for="test-title") Título
-					.input-field.col.s6
-						input#test-date(type="text" ng-model="test.date_available" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" disabled)
-						label(for="test-date") Disponível em
-					.input-field.col.s2
-						input#test-available-time(type="text" ng-model="test.available_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" disabled)
-						label(for="test-available-time") À partir das 
-					.input-field.col.s2
-						input#test-time-closed(type="text" ng-model="test.closes_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" disabled)
-						label(for="test-time-closed") Encerra às
-			.row
-				form.offset-m2.offset-l2.col.s12.m8.l8
-					.card.card-student-test-question(ng-repeat="question in test.questions")
-						.row
-							.input-field.col.s2
-								label Pergunta {{test.questions.indexOf(question) + 1}}
-						.row
-							.input-field.col.s10
-								label {{test.questions[test.questions.indexOf(question)].description}}
-							.input-field.col.s1
-								label Vale {{test.questions[test.questions.indexOf(question)].value}}
-						.row
-							.input-field.col.s10(ng-if="question.kind == true")
-								textarea.materialize-textarea(id="text-dissertative-question-{{test.questions.indexOf(question)+1}}" data-length="500" ng-model="answerTest.questions[test.questions.indexOf(question)].answer" required)
-								label.label-textarea-student-test(for="text-dissertative-question-{{test.questions.indexOf(question)+1}}") Resposta
-						.row
-							.col.s12(ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false")
-								.input-field.col.s10.m8.l10(action="#")
-									input.with-gap(name="radio-question-{{test.questions.indexOf(question)}}" type="radio" id="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required)
-									label(for="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}") {{test.questions[test.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text}}
-			.row
-				.col.s12
-					.input-field.col.s1.offset-s2
-						button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="" name="action") Enviar
+  .card.card-student-test
+    .row
+      form.offset-m2.offset-l2.col.s12.m8.l8
+        h1.modal-criar-item__titulo Responder Teste
+        .row
+          .input-field.col.s12
+            input#test-title(type="text" ng-model="test.title" disabled)
+            label(for="test-title") Título
+          .input-field.col.s6
+            input#test-date(type="text" ng-model="test.date_available" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" disabled)
+            label(for="test-date") Disponível em
+          .input-field.col.s2
+            input#test-available-time(type="text" ng-model="test.available_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" disabled)
+            label(for="test-available-time") À partir das 
+          .input-field.col.s2
+            input#test-time-closed(type="text" ng-model="test.closes_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" disabled)
+            label(for="test-time-closed") Encerra às
+      .row
+        div.offset-m2.offset-l2.col.s12.m8.l8
+          .card.card-student-test-question(ng-repeat="question in test.questions")
+            .row
+              .input-field.col.s2
+                label Pergunta {{test.questions.indexOf(question) + 1}}
+            .row
+              .input-field.col.s10
+                label {{test.questions[test.questions.indexOf(question)].description}}
+              .input-field.col.s1
+                label Vale {{test.questions[test.questions.indexOf(question)].value}}
+            .row
+              .input-field.col.s10(ng-if="question.kind == true")
+                textarea.materialize-textarea(id="text-dissertative-question-{{test.questions.indexOf(question)+1}}" data-length="500" ng-model="answerTest.questions[test.questions.indexOf(question)].answer" required)
+                label.label-textarea-student-test(for="text-dissertative-question-{{test.questions.indexOf(question)+1}}") Resposta
+            .row
+              .col.s12(ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false")
+                .input-field.col.s10.m8.l10(action="#")
+                  input.with-gap(name="radio-question-{{test.questions.indexOf(question)}}" type="radio" id="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required)
+                  label(for="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required) {{test.questions[test.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text}}
+      .row
+        .col.s12
+          .input-field.col.s1.offset-s2
+            button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="createTestResponse(answerTest)" name="action") Enviar
