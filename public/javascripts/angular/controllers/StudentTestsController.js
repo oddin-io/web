@@ -15,7 +15,7 @@ oddin.controller('StudentTestsController',
                     TestAPI.getQuestions($stateParams.testID)
                         .then(function(response){
                           $scope.test.questions = response.data
-                          $scope.answerTest = new Object()
+                          /*$scope.answerTest = new Object()
                           $scope.answerTest.questions = []
 
                           for (var questionIndex = 0; questionIndex < $scope.test.questions.length; questionIndex++) {                                    
@@ -24,7 +24,7 @@ oddin.controller('StudentTestsController',
                             if($scope.test.questions[questionIndex].test_alternatives.length > 0)
                               $scope.answerTest.questions[questionIndex].alternative = new Object()
                           }
-                          console.log("SCOPE.answerTest -> ",$scope.answerTest)
+                          console.log("SCOPE.answerTest -> ",$scope.answerTest)*/
                         })
                         .catch(function(err){
                           console.log(err)
@@ -40,22 +40,23 @@ oddin.controller('StudentTestsController',
       }());
       //$state.go('test-student',{instructionID: $stateParams.instructionID, testID: test.id})
 
-      $scope.createTestResponse = function(answerTest) {
+      $scope.createTestResponse = function(test) {
 
+        
         for (var questionIndex = 0; questionIndex < $scope.test.questions.length; questionIndex++) {
                     
-          if(answerTest.questions[questionIndex].alternative != undefined) {
+          if(test.questions[questionIndex].test_alternatives != undefined) {
           
             for (var alternativeIndex = 0; alternativeIndex < $scope.test.questions[questionIndex].test_alternatives.length; alternativeIndex++) {
             
               var value = new Boolean($('#radio-question-'+ questionIndex + "-alternative-" + alternativeIndex).is(':checked'))
 
               if(value == true)
-                answerTest.questions[questionIndex].alternative.choice = $scope.test.questions[questionIndex].test_alternatives[alternativeIndex].id
+                test.questions[questionIndex].test_alternatives[alternativeIndex].choice = $scope.test.questions[questionIndex].test_alternatives[alternativeIndex].id
             }
           }
         }
-        TestResponseAPI.create($scope.test.id, answerTest)
+        TestResponseAPI.create($scope.test.id, test)
           .then(function(response){
             console.log("Deu certo! response-> ",response.data)
           })
@@ -63,7 +64,7 @@ oddin.controller('StudentTestsController',
             console.log("Não deu! erro-> ",err.data)
           })
 
-        console.log("Click -> ",answerTest)
+        console.log("Click -> ",test)
       }
     },
   ])

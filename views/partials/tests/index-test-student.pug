@@ -31,7 +31,7 @@ main
                 label Vale {{test.questions[test.questions.indexOf(question)].value}}
             .row
               .input-field.col.s10(ng-if="question.kind == true")
-                textarea.materialize-textarea(id="text-dissertative-question-{{test.questions.indexOf(question)+1}}" data-length="500" ng-model="answerTest.questions[test.questions.indexOf(question)].answer" required)
+                textarea.materialize-textarea(id="text-dissertative-question-{{test.questions.indexOf(question)+1}}" data-length="500" ng-model="test.questions[test.questions.indexOf(question)].reponse" required)
                 label.label-textarea-student-test(for="text-dissertative-question-{{test.questions.indexOf(question)+1}}") Resposta
             .row
               .col.s12(ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false")
@@ -41,4 +41,4 @@ main
       .row
         .col.s12
           .input-field.col.s1.offset-s2
-            button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="createTestResponse(answerTest)" name="action") Enviar
+            button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="createTestResponse(test)" name="action") Enviar
