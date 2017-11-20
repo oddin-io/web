@@ -42,9 +42,8 @@ oddin.controller('StudentTestsController',
 
       $scope.createTestResponse = function(test) {
 
-        
         for (var questionIndex = 0; questionIndex < $scope.test.questions.length; questionIndex++) {
-                    
+          
           if(test.questions[questionIndex].test_alternatives != undefined) {
           
             for (var alternativeIndex = 0; alternativeIndex < $scope.test.questions[questionIndex].test_alternatives.length; alternativeIndex++) {
@@ -58,13 +57,16 @@ oddin.controller('StudentTestsController',
         }
         TestResponseAPI.create($scope.test.id, test)
           .then(function(response){
-            console.log("Deu certo! response-> ",response.data)
+            Materialize.toast('Teste enviado', 3000)
+            //console.log("Cadastrado! response.data-> ",response.data)
+            setTimeout(function(){
+              $state.go('tests',{instructionID: $stateParams.instructionID})            
+            },500)
           })
           .catch(function(err){
-            console.log("Não deu! erro-> ",err.data)
+            Materialize.toast('Erro ao enviar o teste', 3000)
+            //console.log("Erro! err.data-> ",err.data)
           })
-
-        console.log("Click -> ",test)
       }
     },
   ])
