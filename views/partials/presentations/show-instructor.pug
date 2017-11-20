@@ -7,7 +7,7 @@ main
 	//- Modals
 
 	#modal-create-video.modal(style="max-height: 100%; width: 100%;")
-		.modal-content.modal-criar-item.modal-post-resposta-video
+		.modal-content.modal-criar-item.modal-post-resposta
 			.row
 				form.offset-m2.offset-l3.col.s12.m8.l6(style="margin-left: 15%; width: 75%;")
 					h1.modal-criar-item__titulo Criar Video
@@ -44,7 +44,7 @@ main
 								button#recordAudio.btn.waves-effect.waves-light Gravar
 								button#playAudio.btn.waves-effect.waves-light(disabled style="margin-left: 16px;") Visualizar
 						.col.s12.m3
-							button.btn.waves-effect.waves-light.modal-post-resposta__submit(id="uploadAudio" type="submit" name="action" disabled ng-click="createAnswerWithMedia(newAnswer, material)") Enviar
+							button#uploadAudio.btn.waves-effect.waves-light.modal-post-resposta__submit(disabled type="submit" name="action" ng-click="createAnswerWithMedia(newAnswer, material)") Enviar
 
 	#modal-create-material.modal.bottom-sheet
 			.modal-content.modal-criar-item.modal-post-resposta
