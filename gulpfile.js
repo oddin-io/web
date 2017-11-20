@@ -51,6 +51,7 @@ gulp.task('watch', () => {
   gulp.watch(fileMappings.views, ['compile-views'])
   gulp.watch(fileMappings.styles, ['compile-styles'])
   gulp.watch(['public/javascripts/**/*.*'], ['compile-modules'])
+  gulp.watch(['public/stylesheets/*.*'], ['compile-modules'])
   gulp.watch(['public/fonts/**/*.*', 'public/images/**/*.*'], ['move-public'])
 })
 

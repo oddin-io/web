@@ -7,7 +7,7 @@ main
 	//- Modals
 
 	#modal-create-video.modal(style="max-height: 100%; width: 100%;")
-		.modal-content.modal-criar-item.modal-post-resposta
+		.modal-content.modal-criar-item.modal-post-resposta-video
 			.row
 				form.offset-m2.offset-l3.col.s12.m8.l6(style="margin-left: 15%; width: 75%;")
 					h1.modal-criar-item__titulo Criar Video
@@ -17,14 +17,14 @@ main
 							label(for="material-name") Nome do arquivo
 					.row
 						.input-field.col.s20
-							video(autoplay muted id="gum" style="background: #222; float: left; width: 68%; margin-bottom: 30px;")
-							video(autoplay id="recorded" style="display: none; background: #222; float: right; width: 45%; margin-bottom: 30px;")
+							video#gum(autoplay muted style="background: #222; float: left; width: 75%; min-width: 45%; max-width: 100%; margin-bottom: 30px;")
+							video#recorded(autoplay style="display: none; background: #222; float: right; width: 45%; margin-bottom: 30px;")
 						.col.s12.m9
 							.modal-post-respostas__options
-								button.btn.waves-effect.waves-light( id="record" class="__web-inspector-hide-shortcut__") Gravar
-								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="play" disabled) Visualizar
+								button#record.btn.waves-effect.waves-light Gravar
+								button#play.btn.waves-effect.waves-light(disabled style="margin-left: 16px;") Visualizar
 						.col.s12.m3
-							button.btn.waves-effect.waves-light.modal-post-resposta__submit(id="upload" type="submit" name="action" disabled ng-click="createAnswerWithMedia(newAnswer, material)") Enviar
+							button#upload.btn.waves-effect.waves-light.modal-post-resposta__submit(disabled type="submit" name="action" ng-click="createAnswerWithMedia(newAnswer, material)") Enviar
 
 	#modal-create-audio.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta
@@ -37,12 +37,12 @@ main
 							label(for="material-name") Nome do arquivo					
 					.row
 						.input-field.col.s20
-							audio(muted id="gumAudio")
-							audio(autoplay controls id="recordedAudio")
+							audio#gumAudio(muted)
+							audio#recordedAudio(autoplay controls)
 						.col.s12.m9
 							.modal-post-respostas__options
-								button.btn.waves-effect.waves-light(id="recordAudio" class="__web-inspector-hide-shortcut__") Gravar
-								button.btn.waves-effect.waves-light(style="margin-left: 16px;" id="playAudio" disabled) Visualizar
+								button#recordAudio.btn.waves-effect.waves-light Gravar
+								button#playAudio.btn.waves-effect.waves-light(disabled style="margin-left: 16px;") Visualizar
 						.col.s12.m3
 							button.btn.waves-effect.waves-light.modal-post-resposta__submit(id="uploadAudio" type="submit" name="action" disabled ng-click="createAnswerWithMedia(newAnswer, material)") Enviar
 
@@ -50,7 +50,7 @@ main
 			.modal-content.modal-criar-item.modal-post-resposta
 				.row
 					form.offset-m2.offset-l3.col.s12.m8.l6(enctype="multipart/form-data" ng-submit="createAnswerWithMaterial(newAnswer)" name="uploadArchive")
-						h1.modal-criar-item__titulo Upload de material de resposta
+						h1.modal-criar-item__titulo Upload de material da resposta
 						.file-field.input-field
 							.btn.modal-criar-item__file-button
 								span Arquivo

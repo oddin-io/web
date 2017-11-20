@@ -84,7 +84,7 @@ function startRecording() {
   }
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options)
   recordedVideo.style.display = "none"
-  gum.style.width = "68%"
+  gum.style.width = "75%"
   recordButton.textContent = 'Parar'
   playButton.disabled = true
   uploadButton.disabled = true
