@@ -51,7 +51,7 @@ oddin.controller('StudentTestsController',
               var value = new Boolean($('#radio-question-'+ questionIndex + "-alternative-" + alternativeIndex).is(':checked'))
 
               if(value == true)
-                test.questions[questionIndex].test_alternatives[alternativeIndex].choice = $scope.test.questions[questionIndex].test_alternatives[alternativeIndex].id
+                test.questions[questionIndex].choice = $scope.test.questions[questionIndex].test_alternatives[alternativeIndex].id
             }
           }
         }
