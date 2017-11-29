@@ -6,10 +6,10 @@ main
 	oddin-preloader(load-var="load" side-bar="true")
 	//- Modals
 
-	#modal-create-video.modal(style="max-height: 100%; width: 100%;")
+	#modal-create-video.modal
 		.modal-content.modal-criar-item.modal-post-resposta
 			.row
-				form.offset-m2.offset-l3.col.s12.m8.l6(style="margin-left: 15%; width: 75%;")
+				form#form-video.offset-m2.offset-l3.col.s12.m8.l6
 					h1.modal-criar-item__titulo Criar Video
 					.row
 						.input-field.col.s12
@@ -17,14 +17,19 @@ main
 							label(for="material-name") Nome do arquivo
 					.row
 						.input-field.col.s20
-							video#gum(autoplay muted style="background: #222; float: left; width: 75%; min-width: 45%; max-width: 100%; margin-bottom: 30px;")
-							video#recorded(autoplay style="display: none; background: #222; float: right; width: 45%; margin-bottom: 30px;")
+							video#gum(autoplay muted)
+							video#recorded(autoplay)
+						.col.s6
+							div#recording
+								p#pRecording Gravando
+								div.progress
+									div.indeterminate
 						.col.s12.m9
 							.modal-post-respostas__options
 								button#record.btn.waves-effect.waves-light Gravar
-								button#play.btn.waves-effect.waves-light(disabled style="margin-left: 16px;") Visualizar
+								button#play.btn.waves-effect.waves-light(disabled) Visualizar
 						.col.s12.m3
-							button#upload.btn.waves-effect.waves-light.modal-post-resposta__submit(disabled type="submit" name="action" ng-click="createAnswerWithMedia(newAnswer, material)") Enviar
+							button#upload.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(disabled type="submit" name="action" ng-click="createAnswerWithMedia(newAnswer, material)") Enviar
 
 	#modal-create-audio.modal.bottom-sheet
 		.modal-content.modal-criar-item.modal-post-resposta
@@ -39,12 +44,17 @@ main
 						.input-field.col.s20
 							audio#gumAudio(muted)
 							audio#recordedAudio(autoplay controls)
+						.col.s6
+							div#recordingAudio
+								p#pRecording Gravando
+								div.progress
+									div.indeterminate
 						.col.s12.m9
 							.modal-post-respostas__options
 								button#recordAudio.btn.waves-effect.waves-light Gravar
-								button#playAudio.btn.waves-effect.waves-light(disabled style="margin-left: 16px;") Visualizar
+								button#playAudio.btn.waves-effect.waves-light(disabled) Visualizar
 						.col.s12.m3
-							button#uploadAudio.btn.waves-effect.waves-light.modal-post-resposta__submit(disabled type="submit" name="action" ng-click="createAnswerWithMedia(newAnswer, material)") Enviar
+							button#uploadAudio.btn.waves-effect.waves-light.modal-post-resposta__submit.modal-close(disabled type="submit" name="action" ng-click="createAnswerWithMedia(newAnswer, material)") Enviar
 
 	#modal-create-material.modal.bottom-sheet
 			.modal-content.modal-criar-item.modal-post-resposta

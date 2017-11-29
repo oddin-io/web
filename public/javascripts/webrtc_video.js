@@ -5,6 +5,7 @@ var recordedVideo
 var recordButton
 var playButton
 var uploadButton
+var recording
 
 // Media handlers
 var mediaSource = new MediaSource()
@@ -85,6 +86,7 @@ function startRecording() {
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options)
   recordedVideo.style.display = "none"
   gum.style.width = "75%"
+  recording.style.display = ""
   recordButton.textContent = 'Parar'
   playButton.disabled = true
   uploadButton.disabled = true
@@ -96,6 +98,7 @@ function startRecording() {
 
 function stopRecording() {
   mediaRecorder.stop()
+  recording.style.display = "none"
   console.log('Recorded Blobs: ', recordedBlobs)
 }
 
@@ -122,6 +125,8 @@ export default function () {
   recordButton = document.querySelector('button#record')
   playButton = document.querySelector('button#play')
   uploadButton = document.querySelector('button#upload')
+  recording = document.querySelector('div#recording');
+  recording.style.display = "none"
 
   mediaSource.addEventListener('sourceopen', handleSourceOpen, false)
   recordButton.onclick = toggleRecording

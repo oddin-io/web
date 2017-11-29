@@ -265,9 +265,6 @@ oddin.controller('PresentationShowController',
           newAnswer = { text: ' ' }
         }
 
-        // TODO: Put the material inside an answer, not in the root scope
-        //var materials = $scope.materials = []
-
         QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
                 .then((response) => {
                   const answer = response.data
@@ -300,23 +297,23 @@ oddin.controller('PresentationShowController',
                 })
                 .then(function (response) {
                   $scope.materials.push(response.data.material)
-                  $('#modal-create-audio').closeModal()
-                  $('#modal-create-video').closeModal()
-                  $scope.stopStream()
-                  $scope.findAnswers($scope.selectedQuestion)
+                  $scope.findAnswers($scope.selectedQuestion)           
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })
                 .catch(function (err) {
-                  $('#modal-create-audio').closeModal()
-                  $('#modal-create-video').closeModal()
                   console.log('Erro: ', err);
                   AnswerAPI.destroy(answerID)
-                  Materialize.toast('Erro ao fazer upload de material de mídia', 3000)
+                  if(file.name == undefined){
+                    Materialize.toast('Erro - O nome do arquivo não foi definido', 3000)
+                  } else {
+                    Materialize.toast('Erro ao fazer upload de material de mídia', 3000)
+                  }
                 })
                 .finally(function () {
                   document.getElementById('new-material-file').value = ''
                   document.getElementById('new-material-description').value = ''
                   $scope.load = true
+                  $scope.stopStream()
                 })
       }
 
@@ -329,9 +326,6 @@ oddin.controller('PresentationShowController',
         if(!newAnswer){
           newAnswer = { text: ' ' }
         }
-
-        // TODO: Put the material inside an answer, not in the root scope
-        //var materials = $scope.materials = []
 
         QuestionAPI.createAnswer($scope.selectedQuestion.id, newAnswer)
                 .then((response) => {
@@ -363,7 +357,6 @@ oddin.controller('PresentationShowController',
                 })
                 .then(function (response) {
                   $scope.materials.push(response.data.material)
-                  $('#modal-create-material').closeModal()
                   $scope.findAnswers($scope.selectedQuestion)
                   Materialize.toast('O arquivo ' + file.name + ' foi postado', 3000)
                 })

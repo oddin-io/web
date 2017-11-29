@@ -570,9 +570,55 @@
   }
 }
 
-.modal-create-video{
+// CSS dos modais de mídias
+#modal-create-video{
   max-height: 100%; 
   width: 100%;
+}
+
+#form-video{
+  margin-left: 15%; 
+  width: 75%;
+}
+
+#gum{
+  background: #222; 
+  float: left; 
+  width: 75%; 
+  min-width: 45%; 
+  max-width: 100%; 
+  margin-bottom: 20px;
+}
+
+#recorded{
+  display: none; 
+  background: #222; 
+  float: right; 
+  width: 45%; 
+  margin-bottom: 20px;
+}
+
+#recording, #recordingAudio{
+  margin-top: -25px;
+  margin-bottom: 15px;
+}
+
+#pRecording{
+  font-weight: bold;
+  color: #ff9850;
+  text-align: center;
+}
+
+.progress .indeterminate {
+  background-color: #ff9850;
+}
+
+#play{
+  margin-left: 16px;
+}
+
+#playAudio{
+  margin-left: 16px;
 }
 
 .modal-post-resposta {

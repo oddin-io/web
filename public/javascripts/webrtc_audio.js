@@ -9,6 +9,7 @@ var recordedAudio
 var recordButton
 var playButton
 var uploadButton
+var recording
 
 var constraints = window.constraints = {
   audio: true,
@@ -76,6 +77,7 @@ function startRecording() {
   }
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
   recordButton.textContent = 'Parar';
+  recording.style.display = ""
   playButton.disabled = true;
   uploadButton.disabled = true;
   mediaRecorder.onstop = handleStop;
@@ -86,6 +88,7 @@ function startRecording() {
 
 function stopRecording() {
   mediaRecorder.stop();
+  recording.style.display = "none"
   console.log('Recorded Blobs: ', recordedBlobs);
   recordedAudio.controls = true;
 }
@@ -106,6 +109,8 @@ export default function () {
   recordButton = document.querySelector('button#recordAudio');
   playButton = document.querySelector('button#playAudio');
   uploadButton = document.querySelector('button#uploadAudio');
+  recording = document.querySelector('div#recordingAudio');
+  recording.style.display = "none"
 
   recordButton.onclick = toggleRecording;
   playButton.onclick = play;
