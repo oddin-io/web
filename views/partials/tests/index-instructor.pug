@@ -137,6 +137,21 @@ main
 				.col.s12
 					.input-field.col.s1.offset-s2
 						button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="updateSurvey(modalTest)" name="action") Atualizar
+	//- Modal Participants
+	#modal-participants.modal
+		.modal-content
+			ul.collection
+				p.empty-message.center-align(ng-if="responseTests.length == 0") Ninguém respondeu esse teste
+				li.collection-item.avatar(ng-repeat="participant in responseTests")
+					i.material-icons.circle person
+					span.title {{responseTests[responseTests.indexOf(participant)].person.name}}
+					.right-align
+						a(href="" ng-if="responseTests[responseTests.indexOf(participant)].closed == false")
+							i.material-icons(style="color:#ff9850") edit
+						span(style="color:green" ng-if="responseTests[responseTests.indexOf(participant)].closed != false")
+							i.material-icons done
+
+	//- Modal Delete
 	#modal-delete.modal
 		.modal-content
 			h4.custom-modal__header Excluir Teste
@@ -144,6 +159,7 @@ main
 		.modal-footer
 			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="" ng-click="deleteTest(modalTest)") Confirmar
 			a.modal-action.modal-close.waves-effect.btn-flat.custom-modal__button(href="") Cancelar
+
 	//- Main Content
 	.container
 		oddin-fab(trigger="modal-create" modal-trigger="true" icon="add")
@@ -159,7 +175,7 @@ main
 					.col.s12
 						a(href="" ng-click="modalDelete(test)")
 							i.material-icons delete
-						a(href="" id="" ng-click="modalEdit(test)")
+						a(href="" ng-click="modalEdit(test)")
 							i.material-icons edit
-						a(href="" id="" ng-click="")
+						a(href="" ng-click="modalParticipants(test)")
 							i.material-icons person

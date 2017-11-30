@@ -15,16 +15,6 @@ oddin.controller('StudentTestsController',
                     TestAPI.getQuestions($stateParams.testID)
                         .then(function(response){
                           $scope.test.questions = response.data
-                          /*$scope.answerTest = new Object()
-                          $scope.answerTest.questions = []
-
-                          for (var questionIndex = 0; questionIndex < $scope.test.questions.length; questionIndex++) {                                    
-                            $scope.answerTest.questions.push(angular.copy({}));
-
-                            if($scope.test.questions[questionIndex].test_alternatives.length > 0)
-                              $scope.answerTest.questions[questionIndex].alternative = new Object()
-                          }
-                          console.log("SCOPE.answerTest -> ",$scope.answerTest)*/
                         })
                         .catch(function(err){
                           console.log(err)
@@ -38,7 +28,6 @@ oddin.controller('StudentTestsController',
                     $scope.load = true
                   })
       }());
-      //$state.go('test-student',{instructionID: $stateParams.instructionID, testID: test.id})
 
       $scope.createTestResponse = function(test) {
 
@@ -58,14 +47,12 @@ oddin.controller('StudentTestsController',
         TestResponseAPI.create($scope.test.id, test)
           .then(function(response){
             Materialize.toast('Teste enviado', 3000)
-            //console.log("Cadastrado! response.data-> ",response.data)
             setTimeout(function(){
               $state.go('tests',{instructionID: $stateParams.instructionID})            
             },500)
           })
           .catch(function(err){
             Materialize.toast('Erro ao enviar o teste', 3000)
-            //console.log("Erro! err.data-> ",err.data)
           })
       }
     },

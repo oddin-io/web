@@ -1,7 +1,7 @@
 import oddin from '../app'
 oddin.controller('TestsController',
-  ['$scope', '$stateParams', '$state', '$filter', 'InstructionAPI', 'CurrentUser', 'TestQuestionAPI','TestAPI','ManageList',
-    function ($scope, $stateParams, $state, $filter, InstructionAPI, CurrentUser, TestQuestionAPI, TestAPI, ManageList) {
+  ['$scope', '$stateParams', '$state', '$filter','TestResponseAPI', 'InstructionAPI', 'CurrentUser', 'TestQuestionAPI','TestAPI','ManageList',
+    function ($scope, $stateParams, $state, $filter, TestResponseAPI, InstructionAPI, CurrentUser, TestQuestionAPI, TestAPI, ManageList) {
       $scope.user = CurrentUser
       $scope.newTest = {
         questions: [{
@@ -29,7 +29,8 @@ oddin.controller('TestsController',
                   .then(function (response) {
                     $scope.tests = response.data
                   })
-                  .catch(function () {
+                  .catch(function (err) {
+                    console.log(err)
                     Materialize.toast('Erro ao carregar Testes', 3000)
                   })
                   .finally(function () {
@@ -245,6 +246,23 @@ oddin.controller('TestsController',
               },700);
           })
         $('#modal-edit').openModal()
+      }
+
+      $scope.modalParticipants = function (test) {
+        $scope.load = false
+        TestResponseAPI.show(test.id)
+          .then(function (response) {
+            $scope.responseTests = response.data
+            //console.log($scope.responseTests)
+          })
+          .catch(function (err) {
+            //console.log(err)
+            Materialize.toast('Erro ao carregar as respostas', 3000)
+          })
+          .finally(function () {
+            $scope.load = true
+          })
+        $('#modal-participants').openModal()
       }
     },
   ])
