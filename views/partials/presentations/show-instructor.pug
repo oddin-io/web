@@ -19,11 +19,11 @@ main
 						.input-field.col.s20
 							video#gum(autoplay muted)
 							video#recorded(autoplay)
-						.col.s6
-							div#recording
-								p#pRecording Gravando
-								div.progress
-									div.indeterminate
+					.row
+						#recording
+							p#pRecording Gravando
+							.progress
+								.indeterminate
 						.col.s12.m9
 							.modal-post-respostas__options
 								button#record.btn.waves-effect.waves-light Gravar
@@ -41,14 +41,13 @@ main
 							input#material-name(type="text" ng-model="material.name" required)
 							label(for="material-name") Nome do arquivo					
 					.row
-						.input-field.col.s20
+						.input-field.col.s12
 							audio#gumAudio(muted)
 							audio#recordedAudio(autoplay controls)
-						.col.s6
-							div#recordingAudio
-								p#pRecording Gravando
-								div.progress
-									div.indeterminate
+						#recordingAudio
+							p#pRecording Gravando
+							.progress
+								.indeterminate
 						.col.s12.m9
 							.modal-post-respostas__options
 								button#recordAudio.btn.waves-effect.waves-light Gravar

@@ -394,7 +394,8 @@ oddin.controller('PresentationShowController',
             $scope.stream = stream
           })
           .catch((err) => {
-            alert('Desculpe-me mas não é possível detectar sua câmera!')
+            alert('Desculpe, mas não é possível detectar sua câmera!')
+            $('#modal-create-video').closeModal()
           })
       }
 
@@ -410,7 +411,8 @@ oddin.controller('PresentationShowController',
             $scope.stream = stream
           })
           .catch((err) => {
-            alert('Desculpe-me mas não é possível detectar sua câmera!')
+            alert('Desculpe, mas não é possível detectar seu microfone!')
+            $('#modal-create-audio').closeModal()
           })
       }
 
