@@ -253,7 +253,7 @@ oddin.controller('TestsController',
         TestResponseAPI.show(test.id)
           .then(function (response) {
             $scope.responseTests = response.data
-            //console.log($scope.responseTests)
+            console.log($scope.responseTests)
           })
           .catch(function (err) {
             //console.log(err)
@@ -263,6 +263,22 @@ oddin.controller('TestsController',
             $scope.load = true
           })
         $('#modal-participants').openModal()
+      }
+
+      $scope.modalTestReponse = function (testResponse) {
+         $scope.testResponse = testResponse
+         //console.log(testResponse)
+
+         TestAPI.getQuestions($scope.testResponse.test.id)
+          .then(function(response){
+            $scope.testResponse.questions = response.data
+            $('#modal-testResponse').openModal()
+          })
+          .catch(function(err){
+            Materialize.toast('Erro ao carregar as respostas', 3000)
+            console.log(err)
+          })
+         
       }
     },
   ])
