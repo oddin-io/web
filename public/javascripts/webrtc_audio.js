@@ -1,5 +1,6 @@
 'use strict';
 
+var mediaSource = new MediaSource()
 var mediaRecorder
 var recordedBlobs
 var sourceBuffer
@@ -11,9 +12,9 @@ var playButton
 var uploadButton
 var recording
 
-var constraints = window.constraints = {
+var constraints = {
   audio: true,
-  video: false
+  video: false,
 };
 
 function handleSuccess(stream) {
@@ -29,6 +30,12 @@ function handleSuccess(stream) {
 
 function handleError(error) {
   console.log('navigator.getUserMedia error: ', error);
+}
+
+function handleSourceOpen() {
+  console.log('MediaSource opened')
+  sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"')
+  console.log('Source buffer: ', sourceBuffer)
 }
 
 function handleDataAvailable(event) {
@@ -49,6 +56,7 @@ function toggleRecording() {
     recordButton.textContent = 'Gravar';
     playButton.disabled = false;
     uploadButton.disabled = false;
+    recordButton.style.backgroundColor = "#2e7d32";
   }
 }
 
@@ -76,6 +84,7 @@ function startRecording() {
     return;
   }
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
+  recordButton.style.backgroundColor = "#c62828";
   recordButton.textContent = 'Parar';
   recording.style.display = ""
   playButton.disabled = true;
@@ -104,6 +113,10 @@ function upload() {
 }
 
 export default function () {
+  //window.isSecureContext could be used for Chrome
+  //var isSecureOrigin = location.protocol === 'https:' ||
+  //location.hostname === 'localhost'
+
   gumAudio = document.querySelector('audio#gumAudio');
   recordedAudio = document.querySelector('audio#recordedAudio');
   recordButton = document.querySelector('button#recordAudio');
@@ -112,9 +125,16 @@ export default function () {
   recording = document.querySelector('div#recordingAudio');
   recording.style.display = "none"
 
+  mediaSource.addEventListener('sourceopen', handleSourceOpen, false)
   recordButton.onclick = toggleRecording;
   playButton.onclick = play;
   uploadButton.onclick = upload;
+
+  //if (!isSecureOrigin) {
+  //  alert('getUserMedia() must be run from a secure origin: HTTPS or localhost.' +
+  //    '\n\nChanging protocol to HTTPS')
+  //  location.protocol = 'HTTPS'
+  //}
 
   recordedAudio.addEventListener('error', function(ev) {
     console.error('MediaRecording.recordedMedia.error()');

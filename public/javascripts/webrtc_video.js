@@ -57,6 +57,7 @@ function toggleRecording() {
     recordButton.textContent = 'Gravar'
     playButton.disabled = false
     uploadButton.disabled = false
+    recordButton.style.backgroundColor = "#2e7d32";
   }
 }
 
@@ -87,6 +88,7 @@ function startRecording() {
   recordedVideo.style.display = "none"
   gum.style.width = "500px"
   recording.style.display = ""
+  recordButton.style.backgroundColor = "#c62828";
   recordButton.textContent = 'Parar'
   playButton.disabled = true
   uploadButton.disabled = true

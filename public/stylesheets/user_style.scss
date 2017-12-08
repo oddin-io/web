@@ -574,6 +574,7 @@
 #modal-create-video{
   max-height: 100%; 
   width: 100%;
+  margin-top: -28px;
 }
 
 #form-video{
@@ -614,12 +615,12 @@
 
 #pRecording{
   font-weight: bold;
-  color: #ff9850;
+  color: #c62828;
   text-align: center;
 }
 
 .progress .indeterminate {
-  background-color: #ff9850;
+  background-color: #c62828;
 }
 
 #play{
@@ -628,6 +629,14 @@
 
 #playAudio{
   margin-left: 16px;
+}
+
+#record, #recordAudio {
+  background-color: #2e7d32;
+}
+
+#play, #playAudio {
+  background-color: #0277bd;
 }
 
 .modal-post-resposta {

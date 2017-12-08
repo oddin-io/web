@@ -411,8 +411,8 @@ oddin.controller('PresentationShowController',
             $scope.stream = stream
           })
           .catch((err) => {
-            alert('Desculpe, mas não é possível detectar seu microfone!')
             $('#modal-create-audio').closeModal()
+            alert('Desculpe, mas não é possível detectar seu microfone!')
           })
       }
 
