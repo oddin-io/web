@@ -253,7 +253,7 @@ oddin.controller('TestsController',
         TestResponseAPI.show(test.id)
           .then(function (response) {
             $scope.responseTests = response.data
-            console.log($scope.responseTests)
+            //console.log(response.data)
           })
           .catch(function (err) {
             //console.log(err)
@@ -267,8 +267,7 @@ oddin.controller('TestsController',
 
       $scope.modalTestReponse = function (testResponse) {
          $scope.testResponse = testResponse
-         //console.log(testResponse)
-
+         console.log(testResponse)
          TestAPI.getQuestions($scope.testResponse.test.id)
           .then(function(response){
             $scope.testResponse.questions = response.data
