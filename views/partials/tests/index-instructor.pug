@@ -149,10 +149,11 @@ main
 					i.material-icons.circle person
 					span.title {{responseTests[responseTests.indexOf(participant)].person.name}}
 					.right-align
-						a(href="" ng-click="modalTestReponse(participant)" ng-if="responseTests[responseTests.indexOf(participant)].closed == false")
-							i.material-icons(style="color:#ff9850") edit
-						span(style="color:green" ng-if="responseTests[responseTests.indexOf(participant)].closed != false")
+						span(style="color:green; margin-right: 10px;" ng-if="responseTests[responseTests.indexOf(participant)].closed != false")
 							i.material-icons done
+						a(href="" ng-click="modalTestResponse(participant)")
+							i.material-icons(style="color:#ff9850") edit
+
 
 	//- Modal Test Response
 	#modal-testResponse.modal(style="width: 90%; bottom: 10%; max-height: 90%;")
@@ -161,25 +162,24 @@ main
 				form.offset-m2.offset-l2.col.s12.m8.l8
 					h1.modal-criar-item__titulo Corrigir Teste
 					.row
-						.input-field.col.s6
-							input#test-title(type="text" ng-model="testResponse.test.title" disabled)
-							label(for="test-title") Título
-						.input-field.col.s4
-							input#test-person(type="text" ng-model="testResponse.person.name" disabled)
-							label(for="test-person") Participante
-						.input-field.col.s2
-							input#test-score(type="text" ng-model="testResponse.score" disabled)
-							label(for="test-score") Nota final
+						.input-field.col.s12
+							label(for="test-title") Título - {{testResponse.test.title}}
+					.row
+						.input-field.col.s12
+							label(for="test-person") Participante - {{testResponse.person.name}}
+					.row(style="margin-bottom: 40px;")
+						.input-field.col.s12
+							label(for="test-score") Nota final: {{testResponse.score}}
 					.row
 						.col.s12
 							.card.card-student-test-question(ng-repeat="question in testResponse.questions")
 								.row
-									.offset-m10.col.s2(style="margin-bottom: -30px;")
+									.offset-m10.col.s2(style="margin-bottom: -30px;" ng-if="question.kind == false")
 										label Nota {{testResponse.test_answers[testResponse.questions.indexOf(question)].value}}
 									.offset-m11.col.s2(style="margin-bottom: -30px;")
 										span(style="color:green" ng-if="testResponse.test_answers[testResponse.questions.indexOf(question)].value > 0")
 											i.material-icons done
-									.offset-m11.col.s2(style="margin-bottom: -30px;")
+									.offset-m11.col.s2(style="margin-bottom: -30px;" ng-if="question.kind == false")
 										span(style="color:red" ng-if="testResponse.test_answers[testResponse.questions.indexOf(question)].value == 0")
 											i.material-icons clear
 								.row
@@ -190,21 +190,29 @@ main
 								.row
 									.input-field.col.s10
 										label {{testResponse.questions[testResponse.questions.indexOf(question)].description}}
-									.input-field.col.s2(id="note-question-{{testResponse.questions.indexOf(question)+1}}" ng-if="question.kind == true")
-										input(type="number" min="1" max="10" ng-model="testResponse.test_answers[testResponse.questions.indexOf(question)].correctValue" required)
-										label(style="margin-top:10px;" for="note-question-{{testResponse.questions.indexOf(question)+1}}") Nota
+									.input-field.col.s2(ng-if="question.kind == true")
+										input(id="response-note-question-{{testResponse.questions.indexOf(question)+1}}" type="number" min="1" max="10" ng-model="testResponse.test_answers[testResponse.questions.indexOf(question)].newValue" required)
+										label(for="response-note-question-{{testResponse.questions.indexOf(question)+1}}" style="margin-top:10px;") Nota
 								.row
 									.input-field.col.s10(ng-if="question.kind == true")
-										textarea.materialize-textarea(id="text-dissertative-question-{{testResponse.questions.indexOf(question)+1}}" data-length="500" ng-model="testResponse.test_answers[testResponse.questions.indexOf(question)].response" disabled)
-										label.label-textarea-student-test(for="text-dissertative-question-{{testResponse.questions.indexOf(question)+1}}") Resposta
+										.row
+											.input-field.col.s3
+												label Resposta
+										.row
+											.input-field.col.s12
+												label {{testResponse.test_answers[testResponse.questions.indexOf(question)].response}}
 								.row
 									.col.s12(ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false")
 										.input-field.col.s10.m8.l10(style="margin-bottom:20px;")
 											label {{testResponse.questions[testResponse.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text}}
+								.row
+									.input-field.col.s10
+										textarea.materialize-textarea(id="response-comment-question-{{testResponse.questions.indexOf(question)+1}}" ng-model="testResponse.test_answers[testResponse.questions.indexOf(question)].comment" data-length="500")
+										label(for="response-comment-question-{{testResponse.questions.indexOf(question)+1}}") Comentário
 					.row
 						.col.s12
-							.input-field.col.s1.offset-s2
-								button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="createTestResponse(test)" name="action") Enviar
+							.input-field.col.s3
+								button.btn.waves-effect.waves-light.modal-close(type="submit" ng-click="correctTest(testResponse)" name="action") Corrigir
 
 	//- Modal Delete
 	#modal-delete.modal

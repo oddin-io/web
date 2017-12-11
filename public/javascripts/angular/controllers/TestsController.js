@@ -253,31 +253,44 @@ oddin.controller('TestsController',
         TestResponseAPI.show(test.id)
           .then(function (response) {
             $scope.responseTests = response.data
-            //console.log(response.data)
+            $('#modal-participants').openModal()
           })
           .catch(function (err) {
-            //console.log(err)
+            console.log(err)
             Materialize.toast('Erro ao carregar as respostas', 3000)
           })
           .finally(function () {
             $scope.load = true
           })
-        $('#modal-participants').openModal()
       }
 
-      $scope.modalTestReponse = function (testResponse) {
+      $scope.modalTestResponse = function (testResponse) {
          $scope.testResponse = testResponse
-         console.log(testResponse)
          TestAPI.getQuestions($scope.testResponse.test.id)
           .then(function(response){
             $scope.testResponse.questions = response.data
             $('#modal-testResponse').openModal()
+            $('#modal-participants').closeModal()
           })
           .catch(function(err){
-            Materialize.toast('Erro ao carregar as respostas', 3000)
             console.log(err)
+            Materialize.toast('Erro ao carregar as respostas', 3000)
+          })   
+      }
+
+      $scope.correctTest = function(testResponse) {
+        $scope.load = false
+        TestResponseAPI.update(testResponse.id, testResponse)
+          .then(function(response){
+             Materialize.toast('Teste corrigido', 3000)
           })
-         
+          .catch(function(err){
+            console.log(err)
+            Materialize.toast('Não foi possível corrigir o teste', 3000)
+          })
+          .finally(function () {
+            $scope.load = true
+          })
       }
     },
   ])
