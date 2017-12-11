@@ -174,9 +174,9 @@ main
 						.col.s12
 							.card.card-student-test-question(ng-repeat="question in testResponse.questions")
 								.row
-									.offset-m10.col.s2(style="margin-bottom: -30px;" ng-if="question.kind == false")
+									.offset-m10.col.s2(style="margin-bottom: -30px;")
 										label Nota {{testResponse.test_answers[testResponse.questions.indexOf(question)].value}}
-									.offset-m11.col.s2(style="margin-bottom: -30px;")
+									.offset-m11.col.s2(style="margin-bottom: -30px;" ng-if="question.kind == false")
 										span(style="color:green" ng-if="testResponse.test_answers[testResponse.questions.indexOf(question)].value > 0")
 											i.material-icons done
 									.offset-m11.col.s2(style="margin-bottom: -30px;" ng-if="question.kind == false")
