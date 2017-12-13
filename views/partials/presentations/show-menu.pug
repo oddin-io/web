@@ -1,5 +1,5 @@
 header
-	oddin-header(title="{{presentation.subject}}", btn-type="back", to-state-url="/disciplinas/{{presentation.instruction.id}}/aulas")
+	oddin-header(title="{{presentation.subject}} - Dúvidas", btn-type="back", to-state-url="/disciplinas/{{presentation.instruction.id}}/aulas")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -15,6 +15,8 @@ header
 								p Dúvidas
 							li.barra-lateral__subitem
 								a(ui-sref="presentation-materials({presentationID: presentation.id})") Material
+							li.barra-lateral__subitem
+								a(ui-sref="presentation-request({presentationID: presentation.id})") Atendimento presencial
 		li.hide-on-large-only.no-padding.barra-lateral__item
 			a(ui-sref="presentations({instructionID: presentation.instruction.id})") Aulas
 		li.no-padding.barra-lateral__item

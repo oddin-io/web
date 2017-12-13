@@ -13,11 +13,17 @@ oddin.factory('PresentationAPI', ['$http', 'env', function ($http, env) {
   var _getQuestions = function (id) {
     return $http.get(`${env.ws_url}/presentations/${id}/questions`)
   }
+  var _getRequests = function (id) {
+    return $http.get(`${env.ws_url}/presentations/${id}/requests`)
+  }
   var _createMaterial = function (id) {
     return $http.post(`${env.ws_url}/presentations/${id}/materials`)
   }
   var _createQuestion = function (id, question) {
     return $http.post(`${env.ws_url}/presentations/${id}/questions`, question)
+  }
+  var _createRequest = function (id) {
+    return $http.post(`${env.ws_url}/presentations/${id}/requests`)
   }
 
   return {
@@ -25,7 +31,9 @@ oddin.factory('PresentationAPI', ['$http', 'env', function ($http, env) {
     close: _close,
     getMaterials: _getMaterials,
     getQuestions: _getQuestions,
+    getRequests: _getRequests,
     createMaterial: _createMaterial,
     createQuestion: _createQuestion,
+    createRequest: _createRequest,
   }
 }])

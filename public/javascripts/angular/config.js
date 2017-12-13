@@ -67,6 +67,20 @@ oddin.config(['$stateProvider', function ($stateProvider) {
       controller: 'PresentationMaterialController',
       authenticate: true,
     })
+    .state('presentation-request', {
+      url: '/aulas/:presentationID/atendimento',
+      templateProvider: function ($cookies, $templateFactory) {
+        if ($cookies.get('profile') == 0) {
+          return $templateFactory.fromUrl('/partials/presentations/request-student.html')
+        }
+
+        if ($cookies.get('profile') == 1) {
+          return $templateFactory.fromUrl('/partials/presentations/request-instructor.html')
+        }
+      },
+      controller: 'PresentationRequestController',
+      authenticate: true,
+    })
     .state('notices', {
       url: '/disciplinas/:instructionID/avisos',
       templateProvider: function ($cookies, $templateFactory) {

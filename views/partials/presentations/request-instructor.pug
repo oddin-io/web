@@ -1,0 +1,23 @@
+doctype html
+div(ng-include="'partials/presentations/request-menu.html'")
+
+main
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Main Content
+	.container
+		.row
+			.col.s12.lista-aulas
+				p.empty-message.center-align(ng-if="requests.length == 0") Nenhum atendimento foi solicitado
+				.card(ng-repeat="request in requests | orderBy : 'created_at' : false")
+					.card-content
+						.custom-card__header
+							span.title {{request.person.name}}
+							span.secondary-info
+								span.secondary-info--leading Atendimento postado em: {{request.created_at | date:"dd/MM/yyyy à's' HH:mm"}}
+					.card-content(style="border-top: 1px solid rgba(160, 160, 160, 0.2);")
+						span(style="color:green" ng-if="request.status == true")
+							i.material-icons done
+						span(style="color:red" ng-if="request.status == false")
+							i.material-icons clear
+						a.btn-floating.green.tooltipped.right(data-position="left" data-tooltip="Confirmar Atendimento")
+							i.material-icons done
