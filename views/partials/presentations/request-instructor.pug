@@ -8,7 +8,15 @@ main
 		.row
 			.col.s12.lista-aulas
 				p.empty-message.center-align(ng-if="requests.length == 0") Nenhum atendimento foi solicitado
-				.card(ng-repeat="request in requests | orderBy : 'created_at' : false")
+				.card(ng-if="requests.length > 0")
+					.card-content
+						.custom-card__header
+							.card-tabs
+								ul.tabs.tabs-fixed-width
+									li.tab Total de requisições: {{requests.length}}
+									li.tab Atendidas: {{requests.true}}
+									li.tab Não atendidas: {{requests.false}}
+				.card(ng-repeat="request in requests | orderBy : 'created_at' && 'status' : false")
 					.card-content
 						.custom-card__header
 							span.title {{request.person.name}}
@@ -19,5 +27,5 @@ main
 							i.material-icons done
 						span(style="color:red" ng-if="request.status == false")
 							i.material-icons clear
-						a.btn-floating.green.tooltipped.right(data-position="left" data-tooltip="Confirmar Atendimento")
+						a.btn-floating.green.tooltipped.right(data-position="left" data-tooltip="Confirmar Atendimento" ng-if="request.status == false" ng-click="updateRequest(request)")
 							i.material-icons done

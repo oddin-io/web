@@ -86,7 +86,7 @@ function startRecording() {
   }
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options)
   recordedVideo.style.display = "none"
-  gum.style.width = "500px"
+  gum.style.width = "400px"
   recording.style.display = ""
   recordButton.style.backgroundColor = "#c62828";
   recordButton.textContent = 'Parar'

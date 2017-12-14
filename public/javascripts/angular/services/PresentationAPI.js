@@ -25,6 +25,9 @@ oddin.factory('PresentationAPI', ['$http', 'env', function ($http, env) {
   var _createRequest = function (id) {
     return $http.post(`${env.ws_url}/presentations/${id}/requests`)
   }
+  var _updateRequest = function (id) {
+    return $http.put(`${env.ws_url}/requests/${id}`)
+  }
 
   return {
     show: _show,
@@ -35,5 +38,6 @@ oddin.factory('PresentationAPI', ['$http', 'env', function ($http, env) {
     createMaterial: _createMaterial,
     createQuestion: _createQuestion,
     createRequest: _createRequest,
+    updateRequest: _updateRequest,
   }
 }])
