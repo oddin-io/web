@@ -56,7 +56,7 @@ main
 						.row
 							.col.s12(ng-repeat="alternative in question.alternatives" ng-if="!dissertativeQuestion(newTest.questions.indexOf(question))")
 								.input-field.col.s12.m8.l2(action="#")
-									input.with-gap(name="radio-question-{{newTest.questions.indexOf(question)}}" ng-click="correctAlternative(newTest, newTest.questions.indexOf(question), question.alternatives.indexOf(alternative))" type="radio" id="radio-question-{{newTest.questions.indexOf(question)}}-alternative-{{question.alternatives.indexOf(alternative)}}" required)
+									input.with-gap(name="radio-question-{{newTest.questions.indexOf(question)}}" type="radio" id="radio-question-{{newTest.questions.indexOf(question)}}-alternative-{{question.alternatives.indexOf(alternative)}}" required)
 									label(for="radio-question-{{newTest.questions.indexOf(question)}}-alternative-{{question.alternatives.indexOf(alternative)}}" ng-model="newTest.questions[newTest.questions.indexOf(question)].alternatives[question.alternatives.indexOf(alternative)].correct") Correta
 								.input-field.col.s8
 									input(id="new-test-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}" type="text" ng-model="newTest.questions[newTest.questions.indexOf(question)].alternatives[question.alternatives.indexOf(alternative)].text" required)
@@ -146,8 +146,10 @@ main
 			ul.collection
 				p.empty-message.center-align(ng-if="responseTests.length == 0") Ninguém respondeu esse teste
 				li.collection-item.avatar(ng-repeat="participant in responseTests")
-					i.material-icons.circle person
+					i.material-icons.circle(style="margin-top: 11px;") person
 					span.title {{responseTests[responseTests.indexOf(participant)].person.name}}
+					.center-align(style="margin-bottom: -25px;")
+						span NOTA FINAL: {{participant.score}}
 					.right-align
 						span(style="color:green; margin-right: 10px;" ng-if="responseTests[responseTests.indexOf(participant)].closed != false")
 							i.material-icons done
@@ -163,10 +165,10 @@ main
 					h1.modal-criar-item__titulo Corrigir Teste
 					.row
 						.input-field.col.s12
-							label(for="test-title") Título - {{testResponse.test.title}}
+							label(for="test-title") Título: {{testResponse.test.title}}
 					.row
 						.input-field.col.s12
-							label(for="test-person") Participante - {{testResponse.person.name}}
+							label(for="test-person") Participante: {{testResponse.person.name}}
 					.row(style="margin-bottom: 40px;")
 						.input-field.col.s12
 							label(for="test-score") Nota final: {{testResponse.score}}
@@ -203,10 +205,10 @@ main
 												label {{testResponse.test_answers[testResponse.questions.indexOf(question)].response}}
 								.row
 									.col.s12(ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false")
-										.input-field.col.s10.m8.l10(style="margin-bottom:20px;")
-											label {{testResponse.questions[testResponse.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text}}
+										.input-field.col.s10.m8.l10(style="margin-bottom:35px;")
+											label(id="label-question-{{testResponse.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" style="width: 100%; padding: 10px;") {{testResponse.questions[testResponse.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text}}
 								.row
-									.input-field.col.s10
+									.input-field.col.s10(style="margin-top: 55px;")
 										textarea.materialize-textarea(id="response-comment-question-{{testResponse.questions.indexOf(question)+1}}" ng-model="testResponse.test_answers[testResponse.questions.indexOf(question)].comment" data-length="500")
 										label(for="response-comment-question-{{testResponse.questions.indexOf(question)+1}}") Comentário
 					.row

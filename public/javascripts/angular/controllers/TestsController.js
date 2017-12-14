@@ -38,12 +38,6 @@ oddin.controller('TestsController',
                   })
       }());
 
-      $scope.addNewTooltip = function(){
-        setTimeout(function(){
-            $('.tooltipped').tooltip();
-        },200);
-      };
-
       $(document).ready(function(){
         $('.tooltipped').tooltip();
         $('.materialize-textarea').characterCounter();
@@ -51,7 +45,6 @@ oddin.controller('TestsController',
 
       $scope.addNewQuestion = function () {
         $scope.newTest.questions.push(angular.copy({}));
-        $scope.addNewTooltip();
       }
 
       $scope.removeQuestion = function (questionPosition) {
@@ -80,7 +73,6 @@ oddin.controller('TestsController',
           case true:
             return true
           case false:
-            $scope.addNewTooltip();
             return false
         }
       }
@@ -102,13 +94,13 @@ oddin.controller('TestsController',
         }
 
         try {
-          for (var questionIndex = 0; questionIndex < $scope.newTest.questions.length; questionIndex++) {
+          for (var questionIndex in $scope.newTest.questions) {
             newTest.questions[questionIndex].number = questionIndex + 1
 
             if(!$scope.dissertativeQuestion(questionIndex)) {
               newTest.questions[questionIndex].kind = false
 
-              for (var alternativeIndex = 0; alternativeIndex < $scope.newTest.questions[questionIndex].alternatives.length; alternativeIndex++) {
+              for (var alternativeIndex in $scope.newTest.questions[questionIndex].alternatives) {
 
                 var value = new Boolean($('#radio-question-'+ questionIndex + "-alternative-" + alternativeIndex).is(':checked'))
 
@@ -170,8 +162,8 @@ oddin.controller('TestsController',
         }
 
         try {
-          for (var questionIndex = 0; questionIndex < modalTest.questions.length; questionIndex++) {
-              for (var alternativeIndex = 0; alternativeIndex < $scope.modalTest.questions[questionIndex].test_alternatives.length; alternativeIndex++) {
+          for (var questionIndex in modalTest.questions) {
+              for (var alternativeIndex in $scope.modalTest.questions[questionIndex].test_alternatives) {
                 var value = new Boolean($('#modal-radio-question-'+ questionIndex + "-alternative-" + alternativeIndex).is(':checked'))
                 if(value == true)
                   modalTest.questions[questionIndex].test_alternatives[alternativeIndex].correct = true
@@ -235,17 +227,17 @@ oddin.controller('TestsController',
         TestAPI.getQuestions($scope.modalTest.id)
           .then(function(response){
             $scope.modalTest.questions = response.data
-              setTimeout(function(){
-                for (var questionIndex = 0; questionIndex < $scope.modalTest.questions.length; questionIndex++) {
-                  for (var alternativeIndex = 0; alternativeIndex < $scope.modalTest.questions[questionIndex].test_alternatives.length; alternativeIndex++) {
-                    if($scope.modalTest.questions[questionIndex].test_alternatives[alternativeIndex].correct === true) {
-                      $('#modal-radio-question-'+ questionIndex + "-alternative-" + alternativeIndex).attr('checked', true);                       
-                    }
+            $('#modal-edit').openModal()
+            setTimeout(function(){
+              for (var questionIndex in $scope.modalTest.questions) {
+                for (var alternativeIndex in $scope.modalTest.questions[questionIndex].test_alternatives) {
+                  if($scope.modalTest.questions[questionIndex].test_alternatives[alternativeIndex].correct === true) {
+                    $('#modal-radio-question-'+ questionIndex + "-alternative-" + alternativeIndex).attr('checked', true);                       
                   }
                 }
-              },700);
-          })
-        $('#modal-edit').openModal()
+              }
+            },700);
+          }) 
       }
 
       $scope.modalParticipants = function (test) {
@@ -270,12 +262,24 @@ oddin.controller('TestsController',
           .then(function(response){
             $scope.testResponse.questions = response.data
             $('#modal-testResponse').openModal()
-            $('#modal-participants').closeModal()
+            //$('#modal-participants').closeModal()
+            setTimeout(function(){
+              for(var questionIndex in $scope.testResponse.questions){
+                for(var alternativeIndex in $scope.testResponse.questions[questionIndex].test_alternatives) {
+                  
+                  if($scope.testResponse.test_answers[questionIndex].choice == $scope.testResponse.questions[questionIndex].test_alternatives[alternativeIndex].id)
+                    $('#label-question-'+ questionIndex + "-alternative-" + alternativeIndex).css("background-color", "#ffcccc")
+
+                  if($scope.testResponse.questions[questionIndex].test_alternatives[alternativeIndex].correct == true)
+                    $('#label-question-'+ questionIndex + "-alternative-" + alternativeIndex).css("background-color", "#b3ffb3")
+                }
+              }
+            },700)
           })
           .catch(function(err){
             console.log(err)
             Materialize.toast('Erro ao carregar as respostas', 3000)
-          })   
+          })
       }
 
       $scope.correctTest = function(testResponse) {
