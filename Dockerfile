@@ -1,23 +1,14 @@
-FROM node
+FROM node:8.16-jessie
 
-RUN useradd --user-group --shell /bin/sh --create-home app &&\
-    npm install -g webpack
+RUN npm install -g webpack
 
-ENV INSTALL_PATH=/home/app
-
-WORKDIR $INSTALL_PATH
+WORKDIR /home/app
 COPY ["package.json", "package-lock.json", "gulpfile.js", "webpack.config.js", "fileMappings.js", "./"]
-RUN chown -R app:app ./*
 
-USER app
-WORKDIR $INSTALL_PATH
 RUN npm install
 
-USER root
 COPY . .
-RUN chown -R app:app ./*
 EXPOSE 3000
 
-USER app
 RUN npm run build
 CMD npm start
