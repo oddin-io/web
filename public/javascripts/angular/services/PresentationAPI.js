@@ -16,6 +16,18 @@ oddin.factory('PresentationAPI', ['$http', 'env', function ($http, env) {
   var _getRequests = function (id) {
     return $http.get(`${env.ws_url}/presentations/${id}/requests`)
   }
+  var _getClusters = function(id){
+    return $http.get(`${env.ws_url}/presentations/${id}/cluster`);
+  }
+  var _getFaqs = function(id){
+    return $http.get(`${env.ws_url}/presentations/${id}/faqs`);
+  }
+  var _createQuestionToFaq = function(id, question){
+    return $http.post(`${env.ws_url}/presentations/${id}/faqs`, question);
+  }
+  var _createFaqs = function (id, isfaq) {
+    return $http.put(`${env.ws_url}/questions/${id}`, isfaq);
+  }
   var _createMaterial = function (id) {
     return $http.post(`${env.ws_url}/presentations/${id}/materials`)
   }
@@ -35,8 +47,12 @@ oddin.factory('PresentationAPI', ['$http', 'env', function ($http, env) {
     getMaterials: _getMaterials,
     getQuestions: _getQuestions,
     getRequests: _getRequests,
+    getClusters: _getClusters,
+    getFaq: _getFaqs,
     createMaterial: _createMaterial,
     createQuestion: _createQuestion,
+    createQuestionToFaq: _createQuestionToFaq,
+    createFaq: _createFaqs,
     createRequest: _createRequest,
     updateRequest: _updateRequest,
   }
