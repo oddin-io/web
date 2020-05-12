@@ -1,5 +1,5 @@
 header
-	oddin-header(title="{{presentation.subject}} - Dúvidas", btn-type="back", to-state-url="/disciplinas/{{presentation.instruction.id}}/aulas")
+	oddin-header(title="{{presentation.subject}} - Faq", btn-type="back", to-state-url="/disciplinas/{{presentation.instruction.id}}/aulas")
 	ul#slide-out.side-nav.fixed.barra-lateral
 		.barra-lateral__header
 			i.barra-lateral__user-avatar.material-icons account_circle
@@ -11,14 +11,14 @@ header
 					a.barra-lateral__item--collapsible.collapsible-header.active.truncate {{presentation.subject}}
 					.collapsible-body
 						ul
-							li.barra-lateral__subitem.active
-								p Dúvidas
 							li.barra-lateral__subitem
-								a(ui-sref="presentation-faq({presentationID: presentation.id})") FAQ
+								a(ui-sref="presentation-show({presentationID: presentation.id})") Dúvidas
+							li.barra-lateral__subitem.active
+								p FAQ
 							li.barra-lateral__subitem
 								a(ui-sref="presentation-materials({presentationID: presentation.id})") Material
 							li.barra-lateral__subitem
-								a(ui-sref="presentation-request({presentationID: presentation.id})") Atendimento presencial
+								a(ui-sref="presentation-request({presentationID: presentation.id})") Atendimento Presencial
 		li.hide-on-large-only.no-padding.barra-lateral__item
 			a(ui-sref="presentations({instructionID: presentation.instruction.id})") Aulas
 		li.no-padding.barra-lateral__item

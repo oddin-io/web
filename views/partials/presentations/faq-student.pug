@@ -1,0 +1,57 @@
+doctype html
+div(ng-include="'partials/presentations/faq-menu.html'")
+
+main
+	#hidden-link
+	oddin-preloader(load-var="load" side-bar="true")
+	//- Main Content
+	.container
+		.row.dropdown-row
+			.offset-m3.col.m6.s12
+				a.dropdown-button.btn.custom-dropdown(href="" data-activates="dropdownOrderBy" data-beloworigin="true" data-alignment="right" data-hover="true" dropdown) Ordenar Dúvidas
+				ul#dropdownOrderBy.dropdown-content
+					li
+						a#post-order.filter-item-active(href="" ng-click="disableFilter()") Por Postagem
+					li
+						a#ranking-order(href="" ng-click="enableFilter()") Por Ranking
+		p.empty-message.center-align(ng-if="question.length == 0") Nenhuma dúvida foi postada
+		.card.pergunta(ng-repeat="q in question | orderBy: ((filter || '') && '(upvotes - downvotes)') : true")
+			.card-content
+				.pergunta__content
+					p {{q.text}}
+			.card-action.pergunta__action
+				.row
+					.col.s6.m4
+						.upvote(ng-class="{'upvote-disabled': q.person.id == user.id, 'upvote-voted': q.my_vote == 1}")
+							a(href="" ng-click="q.my_vote == 0 ? upvoteQuestion(question) : unvoteQuestion(question)")
+								i.material-icons keyboard_arrow_up
+							span(ng-class="{'custom-badge': q.my_vote == 0, 'custom-badge-voted': q.my_vote != 0, 'custom-badge-disabled': user.id == q.person.id}") {{q.upvotes - q.downvotes}}
+					.col.s6.m4
+							div(ng-class="{'check-entendi': q.answered, 'check-nao-entendi': !q.answered}")
+								i.material-icons check
+					.col.s6.m4
+							.ver-resposta(ng-if="q.has_answer")
+								a.waves-effect.btn-flat(id="button_{{q.id}}" ng-click="q.answers ? closeAnswers(q) : findAnswers(q)") Ver Respostas
+			.resposta(ng-attr-id="{{answer.id}}" ng-repeat="answer in q.answers")
+				.resposta__header
+						span.autor {{answer.person.name}}
+						span.datahora {{answer.created_at | date:"dd/MM/yyyy à's' HH:mm"}}
+				.resposta__content
+						p  {{answer.text}}
+						ul.collection.with-header.lista-material(ng-repeat="material in answer.materials")
+							li.collection-item.avatar.lista-material__item(ng-if="material.id")
+								i.material-icons.circle insert_drive_file
+								span.title
+									a(href="" ng-click="downloadMaterial(material)") {{material.name}}
+								p {{material.mime}}
+				.resposta__action
+						div(ng-class="{'upvote-voted': answer.my_vote == 1, 'upvote': answer.my_vote != 1}")
+								a(href="" ng-click="answer.my_vote != 1 ? upvoteAnswer(answer) : unvoteAnswer(answer)")
+										i.material-icons keyboard_arrow_up
+						div(ng-class="{'upvote-voted': answer.my_vote == -1, 'upvote': answer.my_vote != -1}")
+								a(href="" ng-click="answer.my_vote != -1 ? downvoteAnswer(answer) : unvoteAnswer(answer)")
+										i.material-icons.downvote-margin keyboard_arrow_down
+								span(ng-class="{'custom-badge': answer.my_vote == 0, 'custom-badge-voted': answer.my_vote != 0}") {{answer.upvotes - answer.downvotes}}
+						div(ng-class="{'check-disabled': question.person.id != user.id || question.answered && !answer.accepted, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}")
+								a.material-icons(href="" ng-if="!answer.accepted" ng-click="acceptAnswer(answer)" tooltipped  data-position="right" data-tooltip="Selecionar resposta") check
+								a.material-icons(href="" ng-if="answer.accepted" ng-click="rejectAnswer(answer)" tooltipped  data-position="right" data-tooltip="Recusar resposta") check
