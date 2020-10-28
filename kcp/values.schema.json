@@ -1,13 +1,11 @@
 {
-  "$schema": "http://json-schema.org/schema#",
-  "title": "parameters",
-  "description": "Format expected by templates when importing `values.json`",
-  "type": "object",
-  "additionalProperties": false,
-  "required": ["ws_url"],
-  "properties": {
-    "ws_url": {
-      "type": "string"
-    }
-  }
+	"type": "object",
+	"additionalProperties": false,
+	"required": ["ws_url"],
+	"properties": {
+		"domain": { "type": "string", "format": "hostname" },
+		"tag": { "type": "string" },
+		"tls_secret": { "type": "string" },
+		"ws_url": { "type": "string" }
+	}
 }

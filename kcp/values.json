@@ -1,0 +1,6 @@
+{
+	"domain": "oddin.localhost",
+	"tag": "latest",
+	"tls_secret": "domain-tls",
+	"ws_url": "https://api.oddin.localhost"
+}
