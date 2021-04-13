@@ -1,0 +1,13 @@
+
+<header>
+  <oddin-header title="{{work.subject}} - Submissão de Tarefa" btn-type="back" to-state-url="disciplinas/{{work.instruction.id}}/tarefas"></oddin-header>
+  <ul class="side-nav fixed barra-lateral" id="slide-out">
+    <div class="barra-lateral__header"><i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">{{user.name}}</p>
+      <p class="barra-lateral__user-email">{{user.email}}</p>
+    </div>
+    <li class="hide-on-large-only no-padding barra-lateral__item"><a ui-sref="works({instructionID: work.instruction.id})">Tarefas</a></li>
+    <li class="no-padding barra-lateral__item"><a ui-sref="instructions">Disciplinas</a></li>
+    <li class="no-padding barra-lateral__item" ng-controller="LoginController"><a href="" ng-click="logout()">Logout</a></li>
+  </ul>
+</header>

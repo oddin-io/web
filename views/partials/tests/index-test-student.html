@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<main>
+  <div class="card card-student-test">
+    <div class="row">
+      <form class="offset-m2 offset-l2 col s12 m8 l8">
+        <h1 class="modal-criar-item__titulo">Responder Teste</h1>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="test-title" type="text" ng-model="test.title" disabled>
+            <label for="test-title">Título</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="test-date" type="text" ng-model="test.date_available" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" disabled>
+            <label for="test-date">Disponível em</label>
+          </div>
+          <div class="input-field col s2">
+            <input id="test-available-time" type="text" ng-model="test.available_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" disabled>
+            <label for="test-available-time">À partir das </label>
+          </div>
+          <div class="input-field col s2">
+            <input id="test-time-closed" type="text" ng-model="test.closes_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" disabled>
+            <label for="test-time-closed">Encerra às</label>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="offset-m2 offset-l2 col s12 m8 l8">
+          <div class="card card-student-test-question" ng-repeat="question in test.questions">
+            <div class="row">
+              <div class="input-field col s2">
+                <label>Pergunta {{test.questions.indexOf(question) + 1}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s10">
+                <label>{{test.questions[test.questions.indexOf(question)].description}}</label>
+              </div>
+              <div class="input-field col s1">
+                <label>Vale {{test.questions[test.questions.indexOf(question)].value}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s10" ng-if="question.kind == true">
+                <textarea class="materialize-textarea" id="text-dissertative-question-{{test.questions.indexOf(question)+1}}" data-length="500" ng-model="test.questions[test.questions.indexOf(question)].response" required></textarea>
+                <label class="label-textarea-student-test" for="text-dissertative-question-{{test.questions.indexOf(question)+1}}">Resposta</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12" ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false">
+                <div class="input-field col s10 m8 l10">
+                  <input class="with-gap" name="radio-question-{{test.questions.indexOf(question)}}" type="radio" id="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required>
+                  <label for="radio-question-{{test.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required>{{test.questions[test.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <div class="input-field col s1 offset-s2">
+            <button class="btn waves-effect waves-light modal-close" type="submit" ng-click="createTestResponse(test)" name="action">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

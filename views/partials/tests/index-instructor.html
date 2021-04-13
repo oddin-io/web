@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<div ng-include="'partials/tests/index-menu.html'"></div>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal" id="modal-create" style="width: 90%; bottom: 10%; max-height: 90%;">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l2 col s12 m8 l8">
+          <h1 class="modal-criar-item__titulo">Criar Teste</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="new-test-title" type="text" ng-model="newTest.title" required>
+              <label for="new-test-title">Título</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="new-test-date" type="text" ng-model="newTest.date_available" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="new-test-date">Disponível em</label>
+            </div>
+            <div class="input-field col s2">
+              <input id="new-test-available-time" type="text" ng-model="newTest.available_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="new-test-available-time">À partir das</label>
+            </div>
+            <div class="input-field col s2">
+              <input id="new-test-time-closed" type="text" ng-model="newTest.closes_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="new-test-time-closed">Encerra às</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <form class="offset-m2 offset-l2 col s12 m8 l8">
+          <div class="card" ng-repeat="question in newTest.questions">
+            <div class="row">
+              <div class="input-field col s2 remove-choice-button"><a class="rigth" href="" ng-click="removeQuestion(newTest.questions.indexOf(question))"><i class="material-icons">close</i></a></div>
+            </div>
+            <div class="row">
+              <div class="input-field col s10">
+                <textarea class="materialize-textarea" id="text-question-{{newTest.questions.indexOf(question)+1}}" ng-maxlength="500" data-length="500" ng-model="newTest.questions[newTest.questions.indexOf(question)].description" required></textarea>
+                <label for="text-question-{{newTest.questions.indexOf(question)+1}}">Pergunta {{newTest.questions.indexOf(question) + 1}}</label>
+              </div>
+              <div class="input-field col s1">
+                <input id="note-question-{{newTest.questions.indexOf(question)+1}}" name="note" type="number" min="1" max="10" ng-model="newTest.questions[newTest.questions.indexOf(question)].value" required>
+                <label for="note-question-{{newTest.questions.indexOf(question)+1}}">Nota</label>
+              </div>
+            </div>
+            <form class="offset-m2 offset-l3 col s12 m8 l6" enctype="multipart/form-data" ng-submit="" name="uploadArchive">
+              <div class="file-field input-field col s10">
+                <div class="btn modal-criar-item__file-button"><span>Arquivo</span>
+                  <input id="new-test-file" name="file" type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" id="new-test-description" type="text" placeholder="Faça Upload de um arquivo">
+                </div>
+              </div>
+              <div class="input-field col s2">
+                <div class="switch">
+                  <label>
+                    <input type="checkbox" id="kind-question-{{newTest.questions.indexOf(question)}}" ng-click="dissertativeQuestion(newTest.questions.indexOf(question))" ng-model="newTest.questions[newTest.questions.indexOf(question)].kind">
+                    <div class="lever"></div><span>Dissertativa</span>
+                  </label>
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <div class="input-field col s10" ng-if="dissertativeQuestion(newTest.questions.indexOf(question))">
+                <textarea class="materialize-textarea" id="text-dissertative-question-{{newTest.questions.indexOf(question)+1}}" data-length="500" ng-model="newTest.questions[newTest.questions.indexOf(question)].answer" required></textarea>
+                <label for="text-dissertative-question-{{newTest.questions.indexOf(question)+1}}">Resposta</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12" ng-repeat="alternative in question.alternatives" ng-if="!dissertativeQuestion(newTest.questions.indexOf(question))">
+                <div class="input-field col s12 m8 l2" action="#">
+                  <input class="with-gap" name="radio-question-{{newTest.questions.indexOf(question)}}" type="radio" id="radio-question-{{newTest.questions.indexOf(question)}}-alternative-{{question.alternatives.indexOf(alternative)}}" required>
+                  <label for="radio-question-{{newTest.questions.indexOf(question)}}-alternative-{{question.alternatives.indexOf(alternative)}}" ng-model="newTest.questions[newTest.questions.indexOf(question)].alternatives[question.alternatives.indexOf(alternative)].correct">Correta</label>
+                </div>
+                <div class="input-field col s8">
+                  <input id="new-test-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}" type="text" ng-model="newTest.questions[newTest.questions.indexOf(question)].alternatives[question.alternatives.indexOf(alternative)].text" required>
+                  <label for="new-test-question-{{newTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}">Alternativa {{question.alternatives.indexOf(alternative)+1}}</label>
+                </div>
+                <div class="input-field col s1 remove-choice-button" ng-show="$last"><a class="right" href="" ng-click="removeAlternative(newTest.questions.indexOf(question))"><i class="material-icons">close</i></a></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s11" ng-if="!dissertativeQuestion(newTest.questions.indexOf(question))"><a class="btn-floating tooltipped right" data-position="left" data-tooltip="Adicionar alternativa" ng-click="addNewAlternative(newTest.questions.indexOf(question))"><i class="material-icons">add</i></a></div>
+            </div>
+            <div class="row">
+              <div class="input-field col s10">
+                <textarea class="materialize-textarea" id="comment-question-{{newTest.questions.indexOf(question)+1}}" ng-model="newTest.questions[newTest.questions.indexOf(question)].comment" data-length="500"></textarea>
+                <label for="comment-question-{{newTest.questions.indexOf(question)+1}}">Comentário</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col s10"><a class="btn-floating tooltipped right" id="btn2" data-position="left" data-tooltip="Adicionar pergunta" type="submit" ng-click="addNewQuestion()"><i class="material-icons">add</i></a></div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <div class="input-field col s1 offset-s2">
+            <button class="btn waves-effect waves-light modal-close" type="submit" ng-click="createTest(newTest)" name="action">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-edit" style="width: 90%; bottom: 10%; max-height: 90%;">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l2 col s12 m8 l8">
+          <h1 class="modal-criar-item__titulo">Editar Teste</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="modal-test-title" type="text" ng-model="modalTest.title" required>
+              <label for="modal-test-title">Título</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="modal-test-date" type="text" ng-model="modalTest.date_available" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="modal-test-date">Disponível em</label>
+            </div>
+            <div class="input-field col s2">
+              <input id="modal-test-available-time" type="text" ng-model="modalTest.available_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="modal-test-available-time">À partir das </label>
+            </div>
+            <div class="input-field col s2">
+              <input id="modal-test-time-closed" type="text" ng-model="modalTest.closes_at" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="modal-test-time-closed">Encerra às</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <form class="offset-m2 offset-l2 col s12 m8 l8">
+          <div class="card" ng-repeat="question in modalTest.questions">
+            <div class="row">
+              <div class="input-field col s2"></div>
+            </div>
+            <div class="row">
+              <div class="input-field col s10">
+                <textarea class="materialize-textarea" id="modal-text-question-{{modalTest.questions.indexOf(question)+1}}" ng-maxlength="500" data-length="500" ng-model="modalTest.questions[modalTest.questions.indexOf(question)].description" required></textarea>
+                <label for="modal-text-question-{{modalTest.questions.indexOf(question)+1}}">Pergunta {{modalTest.questions.indexOf(question) + 1}}</label>
+              </div>
+              <div class="input-field col s1">
+                <input id="modal-note-question-{{modalTest.questions.indexOf(question)+1}}" name="note" type="number" min="1" max="10" ng-model="modalTest.questions[modalTest.questions.indexOf(question)].value" required>
+                <label for="modal-note-question-{{modalTest.questions.indexOf(question)+1}}">Nota</label>
+              </div>
+            </div>
+            <form class="offset-m2 offset-l3 col s12 m8 l6" enctype="multipart/form-data" ng-submit="" name="uploadArchive">
+              <div class="file-field input-field col s10">
+                <div class="btn modal-criar-item__file-button"><span>Arquivo</span>
+                  <input id="new-test-file" name="file" type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" id="new-test-description" type="text" placeholder="Faça Upload de um arquivo">
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <div class="input-field col s10" ng-if="question.kind == true">
+                <textarea class="materialize-textarea" id="modal-text-dissertative-question-{{modalTest.questions.indexOf(question)+1}}" data-length="500" ng-model="modalTest.questions[modalTest.questions.indexOf(question)].answer" required></textarea>
+                <label for="text-dissertative-question-{{modalTest.questions.indexOf(question)+1}}">Resposta</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12" ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false">
+                <div class="input-field col s12 m8 l2" action="#">
+                  <input class="with-gap" name="modal-radio-question-{{modalTest.questions.indexOf(question)}}" type="radio" id="modal-radio-question-{{modalTest.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" required>
+                  <label for="modal-radio-question-{{modalTest.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" ng-model="modalTest.questions[modalTest.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].correct">Correta</label>
+                </div>
+                <div class="input-field col s8">
+                  <input id="modal-test-question-{{modalTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}" type="text" ng-model="modalTest.questions[modalTest.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text" required>
+                  <label for="modal-test-question-{{modalTest.questions.indexOf(question)+1}}-alternative-{{question.alternatives.indexOf(alternative)+1}}">Alternativa {{question.test_alternatives.indexOf(alternative)+1}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s10">
+                <textarea class="materialize-textarea" id="modal-comment-question-{{modalTest.questions.indexOf(question)+1}}" ng-model="modalTest.questions[modalTest.questions.indexOf(question)].comment" data-length="500"></textarea>
+                <label for="modal-comment-question-{{modalTest.questions.indexOf(question)+1}}">Comentário</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <div class="input-field col s1 offset-s2">
+            <button class="btn waves-effect waves-light modal-close" type="submit" ng-click="updateSurvey(modalTest)" name="action">Atualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-participants">
+    <div class="modal-content">
+      <ul class="collection">
+        <p class="empty-message center-align" ng-if="responseTests.length == 0">Ninguém respondeu esse teste</p>
+        <li class="collection-item avatar" ng-repeat="participant in responseTests"><i class="material-icons circle" style="margin-top: 11px;">person</i><span class="title">{{responseTests[responseTests.indexOf(participant)].person.name}}</span>
+          <div class="center-align" style="margin-bottom: -25px;"><span>NOTA FINAL: {{participant.score}}</span></div>
+          <div class="right-align"><span style="color:green; margin-right: 10px;" ng-if="responseTests[responseTests.indexOf(participant)].closed != false"><i class="material-icons">done</i></span><a href="" ng-click="modalTestResponse(participant)"><i class="material-icons" style="color:#ff9850">edit</i></a></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="modal" id="modal-testResponse" style="width: 90%; bottom: 10%; max-height: 90%;">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l2 col s12 m8 l8">
+          <h1 class="modal-criar-item__titulo">Corrigir Teste</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <label for="test-title">Título: {{testResponse.test.title}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <label for="test-person">Participante: {{testResponse.person.name}}</label>
+            </div>
+          </div>
+          <div class="row" style="margin-bottom: 40px;">
+            <div class="input-field col s12">
+              <label for="test-score">Nota final: {{testResponse.score}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="card card-student-test-question" ng-repeat="question in testResponse.questions">
+                <div class="row">
+                  <div class="offset-m10 col s2" style="margin-bottom: -30px;">
+                    <label>Nota {{testResponse.test_answers[testResponse.questions.indexOf(question)].value}}</label>
+                  </div>
+                  <div class="offset-m11 col s2" style="margin-bottom: -30px;" ng-if="question.kind == false"><span style="color:green" ng-if="testResponse.test_answers[testResponse.questions.indexOf(question)].value &gt; 0"><i class="material-icons">done</i></span></div>
+                  <div class="offset-m11 col s2" style="margin-bottom: -30px;" ng-if="question.kind == false"><span style="color:red" ng-if="testResponse.test_answers[testResponse.questions.indexOf(question)].value == 0"><i class="material-icons">clear</i></span></div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s10">
+                    <label>Pergunta {{testResponse.questions.indexOf(question) + 1}}</label>
+                  </div>
+                  <div class="input-field col s2">
+                    <label>Vale {{testResponse.questions[testResponse.questions.indexOf(question)].value}}</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s10">
+                    <label>{{testResponse.questions[testResponse.questions.indexOf(question)].description}}</label>
+                  </div>
+                  <div class="input-field col s2" ng-if="question.kind == true">
+                    <input id="response-note-question-{{testResponse.questions.indexOf(question)+1}}" type="number" min="1" max="10" ng-model="testResponse.test_answers[testResponse.questions.indexOf(question)].newValue" required>
+                    <label for="response-note-question-{{testResponse.questions.indexOf(question)+1}}" style="margin-top:10px;">Nota</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s10" ng-if="question.kind == true">
+                    <div class="row">
+                      <div class="input-field col s3">
+                        <label>Resposta</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <label>{{testResponse.test_answers[testResponse.questions.indexOf(question)].response}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12" ng-repeat="alternative in question.test_alternatives" ng-if="question.kind == false">
+                    <div class="input-field col s10 m8 l10" style="margin-bottom:35px;">
+                      <label id="label-question-{{testResponse.questions.indexOf(question)}}-alternative-{{question.test_alternatives.indexOf(alternative)}}" style="width: 100%; padding: 10px;">{{testResponse.questions[testResponse.questions.indexOf(question)].test_alternatives[question.test_alternatives.indexOf(alternative)].text}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s10" style="margin-top: 55px;">
+                    <textarea class="materialize-textarea" id="response-comment-question-{{testResponse.questions.indexOf(question)+1}}" ng-model="testResponse.test_answers[testResponse.questions.indexOf(question)].comment" data-length="500"></textarea>
+                    <label for="response-comment-question-{{testResponse.questions.indexOf(question)+1}}">Comentário</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="input-field col s3">
+                <button class="btn waves-effect waves-light modal-close" type="submit" ng-click="correctTest(testResponse)" name="action">Corrigir</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-delete">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Excluir Teste</h4>
+      <p>Tem certeza que deseja excluir "{{modalTest.title}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteTest(modalTest)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <p class="empty-message center-align" ng-if="tests.length == 0">Nenhum teste foi criado</p>
+    <div class="card pergunta" ng-repeat="test in tests | orderBy: 'created_at' : true">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title">{{test.title}}</span><span class="secondary-info"><span class="secondary-info--leading">{{test.created_at | date:"dd/MM/yyyy"}}</span></span></div>
+      </div>
+      <div class="card-action custom-card__action">
+        <div class="row">
+          <div class="col s12"><a href="" ng-click="modalDelete(test)"><i class="material-icons">delete</i></a><a href="" ng-click="modalEdit(test)"><i class="material-icons">edit</i></a><a href="" ng-click="modalParticipants(test)"><i class="material-icons">person</i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

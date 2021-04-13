@@ -14,8 +14,7 @@
     "dev": "nodemon",
     "build": "gulp",
     "start": "node ./bin/www",
-    "lint-js": "eslint --quiet **/*.js",
-    "postinstall": "gulp"
+    "lint-js": "eslint --quiet **/*.js"
   },
   "engines": {
     "node": "~8.4.0",
@@ -33,7 +32,6 @@
     "express": "~4.13.4",
     "file-loader": "^0.11.2",
     "gulp": "^3.9.1",
-    "gulp-pug": "^3.3.0",
     "gulp-sass": "^3.1.0",
     "jquery": "^3.2.1",
     "materialize-css": "^0.97.7",

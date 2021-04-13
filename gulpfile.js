@@ -1,5 +1,4 @@
 const gulp = require('gulp')
-const pug = require('gulp-pug')
 const sass = require('gulp-sass')
 const bluebird = require('bluebird')
 const fileMappings = require('./fileMappings')
@@ -26,9 +25,8 @@ gulp.task('move-public', ['move-vendor'], () => {
     .pipe(gulp.dest(fileMappings.distDir))
 })
 
-gulp.task('compile-views', () => {
+gulp.task('move-views', () => {
   gulp.src(fileMappings.views)
-    .pipe(pug())
     .pipe(gulp.dest(fileMappings.distDir))
 })
 
@@ -48,11 +46,11 @@ gulp.task('compile-modules', ['move-vendor'], () => {
 })
 
 gulp.task('watch', () => {
-  gulp.watch(fileMappings.views, ['compile-views'])
+  gulp.watch(fileMappings.views, ['move-views'])
   gulp.watch(fileMappings.styles, ['compile-styles'])
   gulp.watch(['public/javascripts/**/*.*'], ['compile-modules'])
   gulp.watch(['public/stylesheets/*.*'], ['compile-styles'])
   gulp.watch(['public/fonts/**/*.*', 'public/images/**/*.*'], ['move-public'])
 })
 
-gulp.task('default', ['compile-views', 'compile-styles', 'compile-modules', 'move-public'])
+gulp.task('default', ['move-views', 'compile-styles', 'compile-modules', 'move-public'])

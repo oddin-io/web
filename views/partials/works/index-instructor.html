@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<div ng-include="'partials/works/index-menu.html'"></div>
+<main>
+  <div id="hidden-link"></div>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" enctype="multipart/form-data" ng-submit="createWork(newWork)" name="uploadArchive">
+          <h1 class="modal-criar-item__titulo">Criar tarefa</h1>
+          <div class="row">
+            <div class="input-field col s12 m8">
+              <input id="new-work-subject" type="text" ng-model="newWork.subject" required>
+              <label for="new-work-subject">Assunto</label>
+            </div>
+            <div class="input-field col s12 m4">
+              <input id="new-work-deadline" type="text" ng-model="newWork.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="new-work-deadline">Data de Entrega</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="new-work-description" ng-model="newWork.description" required></textarea>
+              <label for="new-work-description">Descrição</label>
+            </div>
+            <div class="file-field input-field col s12">
+              <div class="btn modal-criar-item__file-button"><span>Anexo</span>
+                <input id="new-work-file" name="file" type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" ng-model="newWork.materials[0]" placeholder="Acresente um arquivo com a descrição do trabalho">
+              </div>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Criar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal bottom-sheet" id="modal-edit">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" enctype="multipart/form-data" ng-submit="updateWork(modalWork)" name="updateArchive">
+          <h1 class="modal-criar-item__titulo">Editar tarefa</h1>
+          <div class="row">
+            <div class="input-field col s12 m8">
+              <input id="modal-work-subject" type="text" ng-model="modalWork.subject" required>
+              <label for="modal-work-subject">Assunto</label>
+            </div>
+            <div class="input-field col s12 m4">
+              <input id="modal-work-deadline" type="text" ng-model="modalWork.deadline" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="modal-work-deadline">Data de Entrega</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="modal-work-description" ng-model="modalWork.description" required></textarea>
+              <label for="modal-work-description">Descrição</label>
+            </div>
+            <div class="file-field input-field col s12">
+              <div class="btn modal-criar-item__file-button"><span>Anexo</span>
+                <input id="modal-work-file" name="file" type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" ng-model="modalWork.materialName" placeholder="Acresente um arquivo com a descrição do trabalho">
+              </div>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Atualizar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-delete">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Excluir Tarefa</h4>
+      <p>Tem certeza que deseja excluir "{{modalWork.subject}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteWork(modalWork)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <p class="empty-message center-align" ng-if="works.length == 0">Nenhuma tarefa foi criada</p>
+    <div class="card custom-card" ng-repeat="work in works | orderBy: 'deadline'">
+      <div class="card-content">
+        <div class="custom-card__header"><a ui-sref="work-show({workID: work.id})"><span class="title link-title">{{work.subject}}</span></a><span class="secondary-info">Entrega:&nbsp<span class="secondary-info--leading">{{work.deadline | date:"dd/MM/yyyy"}}</span></span></div>
+        <p>{{work.description}}</p>
+      </div>
+      <div class="card-action custom-card__action">
+        <div class="row">
+          <div class="col m6"><a href="" ng-click="modalDelete(work)"><i class="material-icons">delete</i></a><a href="" ng-click="modalEdit(work)"><i class="material-icons">edit</i></a></div>
+          <div class="col m6 s12">
+            <div class="card-attachment" ng-if="work.materials[0]">
+              <p>Especificação:&nbsp</p><a href="" ng-click="downloadDescription(work)"><span class="card-filename" ng-if="work.materials">{{work.materials[0].name}}</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

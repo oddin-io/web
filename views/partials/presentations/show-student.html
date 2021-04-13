@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<div ng-include="'partials/presentations/show-menu.html'"></div>
+<main>
+  <div id="hidden-link"></div>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item modal-post-duvida">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="createQuestion(newQuestion)">
+          <h1 class="modal-criar-item__titulo">Postar Dúvida</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="new-question-text" ng-model="newQuestion.text"></textarea>
+              <label for="new-question-text">Dúvida</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 m9">
+              <p class="modal-post-duvida__checkbox">
+                <input class="filled-in" id="new-question-anonymous" type="checkbox" ng-model="newQuestion.anonymous">
+                <label for="new-question-anonymous">Enviar como anônimo</label>
+              </p>
+            </div>
+            <div class="col s12 m3">
+              <button class="btn waves-effect waves-light modal-post-duvida__submit modal-close" type="submit" name="action">Enviar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <div class="row dropdown-row">
+      <div class="offset-m3 col m6 s12"><a class="dropdown-button btn custom-dropdown" href="" data-activates="dropdownOrderBy" data-beloworigin="true" data-alignment="right" data-hover="true" dropdown>Ordenar Dúvidas</a>
+        <ul class="dropdown-content" id="dropdownOrderBy">
+          <li><a class="filter-item-active" id="post-order" href="" ng-click="disableFilter()">Por Postagem</a></li>
+          <li><a id="ranking-order" href="" ng-click="enableFilter()">Por Ranking</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="empty-message center-align" ng-if="questions.length == 0">Nenhuma dúvida foi postada</p>
+    <div class="card pergunta" ng-repeat="question in questions | orderBy: ((filter || '') &amp;&amp; '(upvotes - downvotes)') : true">
+      <div class="card-content">
+        <div class="pergunta__header"><span class="autor">{{question.anonymous ? "Anônimo" : question.person.name}}</span><span class="datahora">{{question.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span></div>
+        <div class="pergunta__content">
+          <p>{{question.text}}</p>
+        </div>
+      </div>
+      <div class="card-action pergunta__action">
+        <div class="row">
+          <div class="col s6 m4">
+            <div class="upvote" ng-class="{'upvote-disabled': question.person.id == user.id, 'upvote-voted': question.my_vote == 1}"><a href="" ng-click="question.my_vote == 0 ? upvoteQuestion(question) : unvoteQuestion(question)"><i class="material-icons">keyboard_arrow_up</i></a><span ng-class="{'custom-badge': question.my_vote == 0, 'custom-badge-voted': question.my_vote != 0, 'custom-badge-disabled': user.id == question.person.id}">{{question.upvotes - question.downvotes}}</span></div>
+          </div>
+          <div class="col s6 m4">
+            <div ng-class="{'check-entendi': question.answered, 'check-nao-entendi': !question.answered}"><i class="material-icons">check</i></div>
+          </div>
+          <div class="col s6 m4">
+            <div class="ver-resposta" ng-if="question.has_answer"><a class="waves-effect btn-flat" id="button_{{question.id}}" ng-click="question.answers ? closeAnswers(question) : findAnswers(question)">Ver Respostas</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="resposta" ng-attr-id="{{answer.id}}" ng-repeat="answer in question.answers">
+        <div class="resposta__header"><span class="autor">{{answer.person.name}}</span><span class="datahora">{{answer.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span></div>
+        <div class="resposta__content">
+          <p> {{answer.text}}</p>
+          <ul class="collection with-header lista-material" ng-repeat="material in answer.materials">
+            <li class="collection-item avatar lista-material__item" ng-if="material.id"><i class="material-icons circle">insert_drive_file</i><span class="title"><a href="" ng-click="downloadMaterial(material)">{{material.name}}</a></span>
+              <p>{{material.mime}}</p>
+            </li>
+          </ul>
+        </div>
+        <div class="resposta__action">
+          <div ng-class="{'upvote-voted': answer.my_vote == 1, 'upvote': answer.my_vote != 1}"><a href="" ng-click="answer.my_vote != 1 ? upvoteAnswer(answer) : unvoteAnswer(answer)"><i class="material-icons">keyboard_arrow_up</i></a></div>
+          <div ng-class="{'upvote-voted': answer.my_vote == -1, 'upvote': answer.my_vote != -1}"><a href="" ng-click="answer.my_vote != -1 ? downvoteAnswer(answer) : unvoteAnswer(answer)"><i class="material-icons downvote-margin">keyboard_arrow_down</i></a><span ng-class="{'custom-badge': answer.my_vote == 0, 'custom-badge-voted': answer.my_vote != 0}">{{answer.upvotes - answer.downvotes}}</span></div>
+          <div ng-class="{'check-disabled': question.person.id != user.id || question.answered &amp;&amp; !answer.accepted, 'check-entendi': answer.accepted, 'check-nao-entendi': !answer.accepted}"><a class="material-icons" href="" ng-if="!answer.accepted" ng-click="acceptAnswer(answer)" tooltipped data-position="right" data-tooltip="Selecionar resposta">check</a><a class="material-icons" href="" ng-if="answer.accepted" ng-click="rejectAnswer(answer)" tooltipped data-position="right" data-tooltip="Recusar resposta">check</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

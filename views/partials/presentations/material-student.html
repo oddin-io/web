@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<div ng-include="'partials/presentations/material-menu.html'"></div>
+<main>
+  <div id="hidden-link"></div>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="container">
+    <ul class="collection with-header lista-material">
+      <li class="collection-header lista-material__header">
+        <h2>Material da Aula</h2>
+      </li>
+      <p class="empty-message center-align" ng-if="notices.length == 0">Nenhum material foi postado</p>
+      <li class="collection-item avatar lista-material__item" ng-repeat="material in materials | orderBy: 'name'"><i class="material-icons circle">insert_drive_file</i><span class="title"><a href="" ng-click="downloadMaterial(material)">{{material.name}}</a></span>
+        <p>{{material.mime}}</p>
+      </li>
+    </ul>
+  </div>
+</main>

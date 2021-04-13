@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<div ng-include="'partials/materials/index-menu.html'"></div>
+<main>
+  <div id="hidden-link"></div>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" enctype="multipart/form-data" ng-submit="createMaterial()" name="uploadArchive">
+          <h1 class="modal-criar-item__titulo">Upload de material da disciplina</h1>
+          <div class="file-field input-field">
+            <div class="btn modal-criar-item__file-button"><span>Arquivo</span>
+              <input id="new-material-file" name="file" type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" id="new-material-description" type="text" placeholder="Faça Upload de um ou mais arquivos">
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-delete">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Excluir Material</h4>
+      <p>Tem certeza que deseja excluir "{{modalMaterial.name}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteMaterial(modalMaterial)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <ul class="collection with-header lista-material">
+      <li class="collection-header lista-material__header">
+        <h2>Material da Disciplina</h2>
+      </li>
+      <p class="empty-message center-align" ng-if="materials.length == 0">Nenhum material foi postado</p>
+      <li class="collection-item avatar lista-material__item" ng-repeat="material in materials | orderBy: 'name'"><i class="material-icons circle">insert_drive_file</i><span class="title"><a href="" ng-click="downloadMaterial(material)">{{material.name}}</a></span>
+        <p>{{material.mime}}</p><a class="secondary-content" href="" ng-click="modalDelete(material)"><i class="material-icons">delete</i></a>
+      </li>
+    </ul>
+  </div>
+</main>

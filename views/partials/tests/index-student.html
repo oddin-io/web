@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<div ng-include="'partials/tests/index-menu.html'"></div>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="container">
+    <p class="empty-message center-align" ng-if="tests.length == 0">Nenhum teste foi criado</p>
+    <div class="card" ng-repeat="test in tests | orderBy: 'created_at' : true">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title">{{test.title}}</span><span class="secondary-info"><span class="secondary-info--leading">Disponível em: {{test.date_available | date:"dd/MM/yyyy"}} - À partir das: {{test.available_at | date:"HH:mm"}} - Encerra às: {{test.closes_at | date:"HH:mm"}}    </span></span></div>
+      </div>
+      <div class="card-action custom-card__action">
+        <div class="row">
+          <div class="col s12"><a ui-sref="test-student({instructionID: instruction.id, testID: test.id})"><i class="material-icons">create</i></a><a href="" id="" ng-click=""><i class="material-icons">info</i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

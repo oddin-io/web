@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<div ng-include="'partials/notices/index-menu.html'"></div>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="container">
+    <p class="empty-message center-align" ng-if="notices.length == 0">Nenhum aviso foi postado</p>
+    <div class="card custom-card" data-ng-repeat="notice in notices | orderBy : 'created_at' : true">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title">{{notice.subject}}</span><span class="secondary-info">{{notice.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span></div>
+        <p>{{notice.text}}</p>
+      </div>
+    </div>
+  </div>
+</main>

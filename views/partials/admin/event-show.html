@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<header>
+  <oddin-header title="{{event.name}}" btn-type="back" to-state-url="/admin-cursos"></oddin-header>
+  <ul class="side-nav fixed barra-lateral" id="slide-out">
+    <div class="barra-lateral__header"><i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">{{user.name}}</p>
+      <p class="barra-lateral__user-email">{{user.email}}</p>
+    </div>
+    <li class="no-padding">
+      <ul class="collapsible" data-collapsible="expandable">
+        <li class="barra-lateral__item"><a class="barra-lateral__item--collapsible collapsible-header active truncate">Principal</a>
+          <div class="collapsible-body">
+            <ul>
+              <li class="barra-lateral__subitem"><a ui-sref="admin-events">Cursos</a></li>
+              <li class="barra-lateral__subitem"><a ui-sref="admin-lectures">Disciplinas</a></li>
+              <li class="barra-lateral__subitem"><a ui-sref="admin-users">Usuarios</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li class="no-padding barra-lateral__item" ng-controller="LoginController"><a href="" ng-click="logout()">Logout</a></li>
+  </ul>
+</header>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal" id="modal-remove">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Remover Disciplina</h4>
+      <p>Tem certeza que deseja remover "{{modalInstruction.lecture.name}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteInstruction(modalInstruction)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="/add-instructions/{{event.id}}" icon="add"></oddin-fab>
+    <div class="card custom-card">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title info-title">Informações do curso</span></div>
+        <div class="custom-card__content">
+          <ul class="info">
+            <li><span>Nome:</span>
+              <p>{{event.name}}</p>
+            </li>
+            <li><span>Código:</span>
+              <p>{{event.code}}</p>
+            </li>
+            <li><span>Carga Horária:</span>
+              <p>{{event.workload}}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="empty-message center-align" ng-if="instructions.length == 0">Nenhuma disciplina foi adicionada a este curso</p>
+    <ul class="collection with-header custom-list" ng-if="instructions.length &gt; 0">
+      <li class="collection-header custom-list__header">
+        <h2>Disciplinas do curso</h2>
+      </li>
+      <li class="collection-item avatar custom-list__item one-option" ng-repeat="instruction in instructions | orderBy : 'season' : true"><i class="material-icons circle">book</i><a ui-sref="admin-instruction-show({instructionID: instruction.id})"><span class="title">{{instruction.lecture.name}}</span>
+          <p>{{instruction.class_code}}<br>{{instruction.season}}</p></a><a class="secondary-content" href="" ng-click="modalRemove(instruction)"><i class="material-icons">remove_circle</i></a></li>
+    </ul>
+  </div>
+</main>

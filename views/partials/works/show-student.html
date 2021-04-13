@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<div ng-include="'partials/works/show-menu.html'"></div>
+<main ng-init="buscaSubmissoesAluno()">
+  <div id="hidden-link"></div>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" enctype="multipart/form-data" ng-submit="createSubmission(newSubmission)" name="uploadArchive">
+          <h1 class="modal-criar-item__titulo">Submeter trabalho</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="new-submission-text" ng-model="newSubmission.text" required></textarea>
+              <label for="new-submission-text">Descrição</label>
+            </div>
+            <div class="file-field input-field col s12">
+              <div class="btn modal-criar-item__file-button"><span>Arquivo</span>
+                <input id="new-submission-file" name="file" type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" ng-model="newSubmission.materials[0]" placeholder="Adicione o arquivo com o seu trabalho">
+              </div>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal bottom-sheet" id="modal-edit">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" enctype="multipart/form-data" ng-submit="updateSubmission(modalMySubmission)" name="updateArchive">
+          <h1 class="modal-criar-item__titulo">Editar trabalho</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="modal-my-submission-text" ng-model="modalMySubmission.text" required></textarea>
+              <label for="modal-my-submission-text">Descrição</label>
+            </div>
+            <div class="file-field input-field col s12">
+              <div class="btn modal-criar-item__file-button"><span>Arquivo</span>
+                <input id="modal-my-submission-file" name="file" type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" ng-model="modalMySubmission.materialName" placeholder="Adicione o arquivo com o seu trabalho">
+              </div>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Atualizar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-delete">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Excluir Trabalho</h4>
+      <p>Tem certeza que deseja excluir "{{modalMySubmission.materials[0].name}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteSubmission(modalMySubmission)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <div class="card custom-card" ng-if="!mySubmission">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title">Nenhum arquivo foi postado</span><span class="secondary-info">Entrega:&nbsp<span class="secondary-info--leading">{{work.deadline | date:"dd/MM/yyyy"}}</span></span></div>
+      </div>
+      <div class="card-action custom-card__action">
+        <div class="row">
+          <div class="offset-m6 col m6">
+            <div class="card-right-button"><a class="btn-flat" href="#modal-create" modal>Postar trabalho</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card custom-card" ng-if="mySubmission">
+      <div class="card-content">
+        <div class="custom-card__header"><a href="" ng-click="downloadSubmission(mySubmission)"><span class="title file-title">{{mySubmission.materials[0].name}}</span><span class="datahora">{{mySubmission.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span></a></div>
+        <p>{{mySubmission.text}}</p>
+      </div>
+      <div class="card-action custom-card__action">
+        <div class="row">
+          <div class="col m4"><a href="" ng-click="modalDelete(mySubmission)"><i class="material-icons">delete</i></a><a href="" ng-click="modalEdit(mySubmission)"><i class="material-icons">edit</i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

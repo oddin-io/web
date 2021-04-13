@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<div ng-include="'partials/dates/index-menu.html'"></div>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="container">
+    <p class="empty-message center-align" ng-if="dates.length == 0">Nenhuma data foi postada</p>
+    <div class="card custom-card" ng-repeat="date in dates | orderBy : 'date'">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title">{{date.subject}}</span><span class="secondary-info--leading">{{date.date | date:"dd/MM/yyyy à's' HH:mm"}}</span></div>
+        <p>{{date.text}}</p>
+      </div>
+    </div>
+  </div>
+</main>

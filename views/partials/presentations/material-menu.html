@@ -1,0 +1,28 @@
+
+<header>
+  <oddin-header title="{{presentation.subject}} - Material" btn-type="back" to-state-url="/disciplinas/{{presentation.instruction.id}}/aulas"></oddin-header>
+  <ul class="side-nav fixed barra-lateral" id="slide-out">
+    <div class="barra-lateral__header"><i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">{{user.name}}</p>
+      <p class="barra-lateral__user-email">{{user.email}}</p>
+    </div>
+    <li class="no-padding">
+      <ul class="collapsible" data-collapsible="expandable">
+        <li class="barra-lateral__item"><a class="barra-lateral__item--collapsible collapsible-header active truncate">{{presentation.subject}}</a>
+          <div class="collapsible-body">
+            <ul>
+              <li class="barra-lateral__subitem"><a ui-sref="presentation-show({presentationID: presentation.id})">Dúvidas</a></li>
+              <li class="barra-lateral__subitem active">
+                <p>Material</p>
+              </li>
+              <li class="barra-lateral__subitem"><a ui-sref="presentation-request({presentationID: presentation.id})">Atendimento presencial</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li class="hide-on-large-only no-padding barra-lateral__item"><a ui-sref="presentations({instructionID: presentation.instruction.id})">Aulas</a></li>
+    <li class="no-padding barra-lateral__item"><a ui-sref="instructions">Disciplinas</a></li>
+    <li class="no-padding barra-lateral__item" ng-controller="LoginController"><a href="" ng-click="logout()">Logout</a></li>
+  </ul>
+</header>

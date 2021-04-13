@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<div ng-include="'partials/works/show-menu.html'"></div>
+<main>
+  <div id="hidden-link"></div>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="container">
+    <p class="empty-message center-align" ng-if="submissions.length == 0">Nenhum trabalho foi postado</p>
+    <div class="card custom-card" ng-repeat="submission in submissions | orderBy: 'created_at'">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title">{{submission.person.name}}</span><span class="datahora">{{submission.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span></div>
+        <p>{{submission.text}}</p>
+      </div>
+      <div class="card-action custom-card__action">
+        <div class="row">
+          <div class="col m6">
+            <div class="card-attachment attachment-unique" ng-if="submission.materials[0]">
+              <p>Baixar trabalho:&nbsp</p><a href="" ng-click="downloadSubmission(submission)"><span class="card-filename">{{submission.materials[0].name}}</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

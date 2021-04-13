@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="oddin">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Oddin</title>
+    <link rel="stylesheet" href="/index.css">
+  </head>
+  <body>
+    <header class="login-header"><img class="login-header__logo" src="/images/main_logo.png"/></header>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="offset-m2 offset-l3 col s12 m8 l6">
+            <div class="card">
+              <div class="login-box">
+                <div class="div" ui-view></div>
+              </div>
+            </div>
+            <p class="login-info">IFSP São Carlos &#169;</p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/materialize/dist/js/materialize.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
+    <script type="application/javascript" src="/config?callback=setEnvironment"></script>
+    <script src="/index.js"></script>
+  </body>
+</html>

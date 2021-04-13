@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<header>
+  <oddin-header title="Disciplinas"></oddin-header>
+  <ul class="side-nav fixed barra-lateral" id="slide-out">
+    <div class="barra-lateral__header"><i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">{{user.name}}</p>
+      <p class="barra-lateral__user-email">{{user.email}}</p>
+    </div>
+    <li class="no-padding barra-lateral__item" ng-controller="LoginController"><a href="" ng-click="logout()">Logout</a></li>
+  </ul>
+</header>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="container">
+    <p class="empty-message center-align" ng-if="seasons.length == 0">Você não está cadastrado(a) em nenhuma disciplina</p>
+    <ul class="collapsible lista-disciplinas" data-collapsible="expandable" ng-repeat="season in seasons | orderBy : 'label' : true">
+      <li>
+        <div class="collapsible-header lista-disciplinas__header"><i class="material-icons">collections_bookmark</i> {{season.label}}</div>
+        <div class="collection collapsible-body lista-disciplinas__body"><a class="collection-item" href="" ng-click="enterInstruction(instruction)" ng-repeat="instruction in season.instructions">{{instruction.lecture.name}} - Turma: {{instruction.class_code}}</a></div>
+      </li>
+    </ul>
+  </div>
+</main>

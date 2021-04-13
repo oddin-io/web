@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<div ng-include="'partials/faqs/index-menu.html'"></div>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="container">
+    <p class="empty-message center-align" ng-if="faqs.length == 0">Nenhuma FAQ foi postada</p>
+    <ul class="collapsible" data-collapsible="acordion" ng-if="faqs.length &gt; 0">
+      <li ng-repeat="faq in faqs">
+        <div class="collapsible-header">
+          <p class="faq-question"><span class="faq-index">{{faqs.indexOf(faq) + 1}}) &nbsp;</span>{{faq.question}}</p>
+        </div>
+        <div class="collapsible-body">
+          <p>{{faq.answer}}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</main>

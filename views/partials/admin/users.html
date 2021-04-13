@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<header>
+  <oddin-header title="Usuários"></oddin-header>
+  <ul class="side-nav fixed barra-lateral" id="slide-out">
+    <div class="barra-lateral__header"><i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">{{user.name}}</p>
+      <p class="barra-lateral__user-email">{{user.email}}</p>
+    </div>
+    <li class="no-padding barra-lateral__item"><a ui-sref="admin-events">Cursos</a></li>
+    <li class="no-padding barra-lateral__item"><a ui-sref="admin-lectures">Disciplinas</a></li>
+    <li class="no-padding barra-lateral__item">
+      <p class="active">Usuários</p>
+    </li>
+    <li class="no-padding barra-lateral__item" ng-controller="LoginController"><a href="" ng-click="logout()">Logout</a></li>
+  </ul>
+</header>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="createUser(newUser)">
+          <h1 class="modal-criar-item__titulo">Criar novo usuário</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="new-user-name" type="text" ng-model="newUser.name">
+              <label for="new-user-name">Nome</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="new-user-email" type="text" ng-model="newUser.email">
+              <label for="new-user-email">Email</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="new-user-password" type="password" ng-model="newUser.password">
+              <label for="new-user-password">Password</label>
+              <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Criar Usuário</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal bottom-sheet" id="modal-edit">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="updateUser(modalUser)">
+          <h1 class="modal-criar-item__titulo">Editar Usuário</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="modal-user-name" type="text" ng-model="modalUser.name">
+              <label for="modal-user-name">Nome</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="modal-user-email" type="text" ng-model="modalUser.email">
+              <label for="modal-user-email">Email</label>
+              <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Atualizar Usuário</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-delete">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Excluir Usuário</h4>
+      <p>Tem certeza que deseja excluir "{{modalUser.name}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteUser(modalUser)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <p class="empty-message center-align" ng-if="users.length == 0">Não há usuários cadastrados</p>
+    <ul class="collection with-header custom-list" ng-if="users.length &gt; 0">
+      <li class="collection-header custom-list__header">
+        <h2>Usuários cadastrados</h2>
+      </li>
+      <li class="collection-item avatar custom-list__item two-options" ng-repeat="user in users | orderBy: 'name'"><i class="material-icons circle">person</i><span class="title">{{user.name}}</span>
+        <p class="truncate">{{user.email}}</p>
+        <div class="secondary-content"><a class="list-double-secondary" href="" ng-click="modalEdit(user)"><i class="material-icons">edit</i></a><a href="" ng-click="modalDelete(user)"><i class="material-icons">delete</i></a></div>
+      </li>
+    </ul>
+  </div>
+</main>

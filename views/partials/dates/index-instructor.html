@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<div ng-include="'partials/dates/index-menu.html'"></div>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="createDate(newDate)">
+          <h1 class="modal-criar-item__titulo">Postar Data</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="new-date-subject" type="text" ng-model="newDate.subject" required>
+              <label for="new-date-subject">Assunto</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="new-date-text" ng-model="newDate.text" required></textarea>
+              <label for="textarea_data">Descrição</label>
+            </div>
+            <div class="input-field col m6">
+              <input id="new-date-date" type="text" ng-model="newDate.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="new-date-date">Data</label>
+            </div>
+            <div class="input-field col m6">
+              <input id="new-date-time" type="text" ng-model="newDate.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}">
+              <label for="new-date-time">Hora</label>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal bottom-sheet" id="modal-edit">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="updateDate(modalDate)">
+          <h1 class="modal-criar-item__titulo">Editar Data</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="modal-date-subject" type="text" ng-model="modalDate.subject" required>
+              <label for="modal-date-subject">Assunto</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="modal-date-text" ng-model="modalDate.text" required></textarea>
+              <label for="modal-date-text">Descrição</label>
+            </div>
+            <div class="input-field col m6">
+              <input id="modal-date-date" type="text" ng-model="modalDate.date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="modal-date-date">Data</label>
+            </div>
+            <div class="input-field col m6">
+              <input id="modal-date-time" type="text" ng-model="modalDate.time" ui-mask="99:99" ui-options="{addDefaultPlaceholder:false}" required>
+              <label for="modal-date-time">Hora</label>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close modal-criar-item__multiple-button" type="button" name="action">Cancelar</button>
+          <button class="btn waves-effect waves-light modal-close modal-criar-item__multiple-button" type="submit" name="action">Atualizar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-delete">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Excluir Data</h4>
+      <p>Tem certeza que deseja excluir "{{modalDate.subject}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteDate(modalDate)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <p class="empty-message center-align" ng-if="dates.length == 0">Nenhuma data foi postada</p>
+    <div class="card custom-card" ng-repeat="date in dates | orderBy : 'date'">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title">{{date.subject}}</span><span class="secondary-info--leading">{{date.date | date:"dd/MM/yyyy à's' HH:mm"}}</span></div>
+        <p>{{date.text}}</p>
+      </div>
+      <div class="card-action custom-card__action">
+        <div class="row">
+          <div class="col m4"><a href="" ng-click="modalDelete(date)"><i class="material-icons">delete</i></a><a href="" ng-click="modalEdit(date)"><i class="material-icons">edit</i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

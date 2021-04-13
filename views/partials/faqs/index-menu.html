@@ -1,0 +1,33 @@
+
+<header>
+  <oddin-header title="{{instruction.lecture.name}} - FAQs" btn-type="back" to-state-url="/disciplinas"></oddin-header>
+  <ul class="side-nav fixed barra-lateral" id="slide-out">
+    <div class="barra-lateral__header"><i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">{{user.name}}</p>
+      <p class="barra-lateral__user-email">{{user.email}}</p>
+    </div>
+    <li class="no-padding">
+      <ul class="collapsible" data-collapsible="expandable">
+        <li class="barra-lateral__item"><a class="barra-lateral__item--collapsible collapsible-header active truncate">{{instruction.lecture.name}}</a>
+          <div class="collapsible-body">
+            <ul>
+              <li class="barra-lateral__subitem"><a ui-sref="presentations({instructionID: instruction.id})">Aulas</a></li>
+              <li class="barra-lateral__subitem"><a ui-sref="notices({instructionID: instruction.id})">Avisos</a></li>
+              <li class="barra-lateral__subitem"><a ui-sref="dates({instructionID: instruction.id})">Datas Importantes</a></li>
+              <li class="barra-lateral__subitem"><a ui-sref="works({instructionID: instruction.id})">Tarefas</a></li>
+              <li class="barra-lateral__subitem"><a ui-sref="materials({instructionID: instruction.id})">Material</a></li>
+              <li class="barra-lateral__subitem"><a ui-sref="participants({instructionID: instruction.id})">Participantes</a></li>
+              <li class="barra-lateral__subitem active">
+                <p>FAQs</p>
+              </li>
+              <li class="barra-lateral__subitem"><a ui-sref="surveys({instructionID: instruction.id})">Enquetes</a></li>
+              <li class="barra-lateral__subitem"><a ui-sref="tests({instructionID: instruction.id})">Testes</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li class="hide-on-large-only no-padding barra-lateral__item"><a ui-sref="instructions">Disciplinas</a></li>
+    <li class="no-padding barra-lateral__item" ng-controller="LoginController"><a href="" ng-click="logout()">Logout</a></li>
+  </ul>
+</header>

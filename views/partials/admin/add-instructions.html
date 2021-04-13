@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<header class="add-header">
+  <oddin-header title="Adicionar Disciplinas" btn-type="close" to-state-url="/admin-cursos/{{event.id}}" logo="false" side-bar="none"></oddin-header>
+</header>
+<main class="add-main">
+  <oddin-preloader load-var="load"></oddin-preloader>
+  <div class="modal modal-fixed-footer" id="modal-add">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Adicionar "{{modalInstruction.lecture.name}}"</h4>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="modal-instruction-class-code" type="text" ng-model="modalInstruction.class_code">
+          <label for="modal-instruction-class-code">Código da Turma</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="modal-instruction-start-date" type="text" ng-model="modalInstruction.start_date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}">
+          <label for="modal-instruction-start-date">Data de Início</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="modal-instruction-end-date" type="text" ng-model="modalInstruction.end_date" ui-mask="99/99/9999" ui-options="{addDefaultPlaceholder:false}">
+          <label for="modal-instruction-end-date">Data de Encerramento</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="createInstruction(modalInstruction)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="modal" id="modal-remove">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Remover Disciplina</h4>
+      <p>Tem certeza que deseja remover "{{modalInstruction.lecture.name}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteInstruction(modalInstruction)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="/admin-cursos/{{event.id}}" icon="check"></oddin-fab>
+    <h5 class="main-title">{{event.name}}</h5>
+    <div class="row">
+      <div class="col l6 s12">
+        <ul class="collection with-header custom-list" ng-init="findLectures()">
+          <li class="collection-header custom-list__header">
+            <h2>Disciplinas Disponíveis</h2>
+          </li>
+          <p class="empty-message add-menu center-align" ng-if="lectures.length == 0">Não há disciplinas cadastradas</p>
+          <li class="collection-item avatar custom-list__item one-option" ng-repeat="lecture in lectures | orderBy: 'name'"><i class="material-icons circle">book</i><span class="title">{{lecture.name}}</span>
+            <p>{{lecture.code}}</p><a class="secondary-content" href="" ng-click="modalAdd(lecture)"><i class="material-icons">add_circle</i></a>
+          </li>
+        </ul>
+      </div>
+      <div class="col l6 s12">
+        <ul class="collection with-header custom-list">
+          <li class="collection-header custom-list__header">
+            <h2>Disciplinas do Curso</h2>
+          </li>
+          <p class="empty-message add-menu center-align" ng-if="instructions.length == 0">Nenhuma disciplina foi adicionada a este curso</p>
+          <li class="collection-item avatar custom-list__item one-option" ng-repeat="instruction in instructions | orderBy : 'season' : true"><i class="material-icons circle">book</i><span class="title">{{instruction.lecture.name}}</span>
+            <p>Turma: {{instruction.class_code}}<br>{{instruction.season}}</p><a class="secondary-content" href="" ng-click="modalRemove(instruction)"><i class="material-icons">remove_circle</i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>

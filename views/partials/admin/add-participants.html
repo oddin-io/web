@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<header class="add-header">
+  <oddin-header title="Adicionar Participantes" btn-type="close" to-state-url="/admin-disciplinas-cadastradas/{{instruction.id}}" logo="false" side-bar="none"></oddin-header>
+</header>
+<main class="add-main" ng-init="findAvailableParticipants()">
+  <oddin-preloader load-var="load"></oddin-preloader>
+  <div class="modal" id="modal-remove">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Remover Usuário</h4>
+      <p>Tem certeza que deseja remover "{{modalParticipant.person.name}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteEnroll(modalParticipant)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="/admin-disciplinas-cadastradas/{{instruction.id}}" icon="check"></oddin-fab>
+    <h5 class="main-title">{{instruction.lecture.name}} - Turma {{instruction.class_code}}</h5>
+    <div class="row">
+      <div class="col l6 s12">
+        <ul class="collection with-header custom-list">
+          <li class="collection-header custom-list__header">
+            <h2>Usuários Disponíveis</h2>
+          </li>
+          <p class="empty-message add-menu center-align" ng-if="availableUsers.length == 0">Não há usuários cadastrados no sistema</p>
+          <li class="collection-item avatar custom-list__item one-option" ng-repeat="availableUser in availableUsers | orderBy : 'name'"><i class="material-icons circle">person</i><span class="title">{{availableUser.name}}</span>
+            <p>{{availableUser.email}}</p>
+            <p class="list-checkbox">
+              <input class="filled-in" id="user-{{availableUser.id}}" type="checkbox" ng-model="availableUser.enrollProfile"/>
+              <label for="user-{{availableUser.id}}">Professor</label>
+            </p><a class="secondary-content" href="" ng-click="createEnroll(availableUser)"><i class="material-icons">add_circle</i></a>
+          </li>
+        </ul>
+      </div>
+      <div class="col l6 s12">
+        <ul class="collection with-header custom-list">
+          <li class="collection-header custom-list__header">
+            <h2>Professores Cadastrados</h2>
+          </li>
+          <p class="empty-message add-menu center-align" ng-if="participants.length == 0">Não há usuários cadastrados nessa disciplina</p>
+          <li class="collection-item avatar custom-list__item one-option" ng-repeat="participant in participants | orderBy: 'person.name'" ng-if="participant.profile == 1"><i class="material-icons circle">person</i><span class="title">{{participant.person.name}}</span>
+            <p>{{participant.person.email}}</p><a class="secondary-content" href="" ng-click="modalRemove(participant)"><i class="material-icons">remove_circle</i></a>
+          </li>
+        </ul>
+        <ul class="collection with-header custom-list">
+          <li class="collection-header custom-list__header">
+            <h2>Alunos Matriculados</h2>
+          </li>
+          <p class="empty-message add-menu center-align" ng-if="participants.length == 0">Não há usuários cadastrados nessa disciplina</p>
+          <li class="collection-item avatar custom-list__item one-option" ng-repeat="participant in participants | orderBy: 'person.name'" ng-if="participant.profile == 0"><i class="material-icons circle">person</i><span class="title">{{participant.person.name}}</span>
+            <p>{{participant.person.email}}</p><a class="secondary-content" href="" ng-click="modalRemove(participant)"><i class="material-icons">remove_circle</i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>

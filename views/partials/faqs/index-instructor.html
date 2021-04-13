@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<div ng-include="'partials/faqs/index-menu.html'"></div>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="createFAQ(newFAQ)">
+          <h1 class="modal-criar-item__titulo">Adicionar FAQ</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="new-faq-question" ng-model="newFAQ.question" required></textarea>
+              <label for="new-faq-question">Pergunta</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="new-faq-answer" ng-model="newFAQ.answer" required></textarea>
+              <label for="new-faq-answer">Resposta</label>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal bottom-sheet" id="modal-edit">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="updateFAQ(modalFAQ)">
+          <h1 class="modal-criar-item__titulo">Editar FAQ</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="modal-faq-question" ng-model="modalFAQ.question" required></textarea>
+              <label for="modal-faq-question">Pergunta</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="modal-faq-answer" ng-model="modalFAQ.answer" required></textarea>
+              <label for="modal-faq-answer">Resposta</label>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Atualizar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-delete">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Excluir FAQ</h4>
+      <p>Tem certeza que deseja excluir FAQ?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteFAQ(modalFAQ)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <p class="empty-message center-align" ng-if="faqs.length == 0">Nenhuma FAQ foi postada</p>
+    <div class="card pergunta" ng-repeat="faq in faqs">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title">{{faqs.indexOf(faq) + 1}}</span></div>
+        <p>{{faq.question}}</p>
+      </div>
+      <div class="card-action custom-card__action">
+        <div class="row">
+          <div class="col s12"><a href="" ng-click="modalDelete(faq)"><i class="material-icons">delete</i></a><a href="" ng-click="modalEdit(faq)"><i class="material-icons">edit</i></a>
+            <div class="ver-resposta--prof faq-button-answer"><a class="waves-effect btn-flat" ng-click="displayAnswer(faq)"><span>{{answerButtonText}}</span></a></div>
+          </div>
+        </div>
+      </div>
+      <div class="resposta faq-answer-container" ng-attr-id="answer-{{faq.id}}">
+        <div class="resposta__content faq-answer">
+          <p> {{faq.answer}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

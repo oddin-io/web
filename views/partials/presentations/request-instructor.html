@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<div ng-include="'partials/presentations/request-menu.html'"></div>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 lista-aulas">
+        <p class="empty-message center-align" ng-if="requests.length == 0">Nenhum atendimento foi solicitado</p>
+        <div class="card" ng-if="requests.length &gt; 0">
+          <div class="card-content">
+            <div class="custom-card__header">
+              <div class="card-tabs">
+                <ul class="tabs tabs-fixed-width">
+                  <li class="tab">Total de requisições: {{requests.length}}</li>
+                  <li class="tab">Atendidas: {{requests.true}}</li>
+                  <li class="tab">Não atendidas: {{requests.false}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" ng-repeat="request in requests | orderBy : 'created_at' &amp;&amp; 'status' : false">
+          <div class="card-content">
+            <div class="custom-card__header"><span class="title">{{request.person.name}}</span><span class="secondary-info"><span class="secondary-info--leading">Atendimento postado em: {{request.created_at | date:"dd/MM/yyyy à's' HH:mm"}}</span></span></div>
+          </div>
+          <div class="card-content" style="border-top: 1px solid rgba(160, 160, 160, 0.2);"><span style="color:green" ng-if="request.status == true"><i class="material-icons">done</i></span><span style="color:red" ng-if="request.status == false"><i class="material-icons">clear</i></span><a class="btn-floating green tooltipped right" data-position="left" data-tooltip="Confirmar Atendimento" ng-if="request.status == false" ng-click="updateRequest(request)"><i class="material-icons">done</i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

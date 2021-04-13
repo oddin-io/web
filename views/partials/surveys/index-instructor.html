@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<div ng-include="'partials/surveys/index-menu.html'"></div>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="createSurvey(newSurvey)">
+          <h1 class="modal-criar-item__titulo">Criar Enquete</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="new-survey-title" type="text" ng-model="newSurvey.title" required>
+              <label for="new-survey-title">Título</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="new-survey-question" ng-model="newSurvey.question" required></textarea>
+              <label for="new-survey-question">Pergunta</label>
+            </div>
+            <div class="choices" ng-repeat="alternative in newSurvey.alternatives">
+              <div class="input-field col s11 remove-choice-field">
+                <input id="alternative-{{newSurvey.alternatives.indexOf(alternative)}}" type="text" ng-model="newSurvey.alternatives[newSurvey.alternatives.indexOf(alternative)].description" required>
+                <label for="alternative-{{newSurvey.alternatives.indexOf(alternative)}}">Alternativa {{newSurvey.alternatives.indexOf(alternative) + 1}}</label>
+              </div>
+              <div class="input-field col s1 remove-choice-button" ng-show="$last"><a class="right" href="" ng-click="removeAlternative(newSurvey)"><i class="material-icons">close</i></a></div>
+            </div>
+            <div class="input-field col s12"><a class="btn-floating waves-effect waves-light right" ng-click="addNewAlternative(newSurvey)"><i class="material-icons">add</i></a></div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal bottom-sheet" id="modal-edit">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="updateSurvey(modalSurvey)">
+          <h1 class="modal-criar-item__titulo">Editar Enquete</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="modal-survey-title" type="text" ng-model="modalSurvey.title" required>
+              <label for="modal-survey-title">Título</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea class="materialize-textarea" id="modal-survey-question" ng-model="modalSurvey.question" required></textarea>
+              <label for="modal-survey-question">Pergunta</label>
+            </div>
+            <div class="choices" ng-repeat="alternative in modalSurvey.alternatives">
+              <div class="input-field col s12 remove-choice-field">
+                <input ng-attr-id="alternative-{{modalSurvey.alternatives.indexOf(alternative)}}" type="text" ng-model="modalSurvey.alternatives[modalSurvey.alternatives.indexOf(alternative)].description" required>
+                <label for="alternative-{{modalSurvey.alternatives.indexOf(alternative)}}">Alternativa {{modalSurvey.alternatives.indexOf(alternative) + 1}}</label>
+              </div>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Atualizar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-delete">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Excluir Enquete</h4>
+      <p>Tem certeza que deseja excluir "{{modalSurvey.title}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteSurvey(modalSurvey)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="modal" id="modal-close">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Encerrar Enquete</h4>
+      <p>Tem certeza que deseja encerrar "{{modalSurvey.title}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="closeSurvey(modalSurvey)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <p class="empty-message center-align" ng-if="surveys.length == 0">Nenhuma enquete foi criada</p>
+    <div class="card pergunta" ng-repeat="survey in surveys | orderBy: 'created_at' : true">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title">{{survey.title}}</span><span class="secondary-info"><span class="secondary-info--leading" ng-if="!survey.closed">{{survey.created_at | date:"dd/MM/yyyy"}}</span><span class="closed-tag" ng-if="survey.closed">Encerrada</span></span>
+          <p class="survey-question">{{survey.question}}</p>
+        </div>
+      </div>
+      <div class="card-action custom-card__action">
+        <div class="row">
+          <div class="col s12"><a href="" ng-click="modalDelete(survey)"><i class="material-icons">delete</i></a><a href="" ng-click="modalEdit(survey)"><i class="material-icons">edit</i></a><a href="" ng-click="modalClose(survey)" ng-if="!survey.closed"><i class="material-icons">close</i></a>
+            <div class="ver-resposta--prof survey-button-answer"><a class="waves-effect btn-flat" ng-click="displayAnswers(survey)"><span>{{displayAlternativesButton(survey)}}</span></a></div>
+          </div>
+        </div>
+      </div>
+      <div class="resposta survey-answer-container" ng-attr-id="answers-{{survey.id}}">
+        <div class="resposta__content survey-answer-content">
+          <ul class="collection survey-answer-list">
+            <li class="collection-item" ng-repeat="alternative in survey.alternatives">{{alternative.description}}<span class="new badge" data-badge-caption="Votos">{{alternative.choice_count}}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<div ng-include="'partials/presentations/index-menu.html'"></div>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="createPresentation(newPresentation)">
+          <h1 class="modal-criar-item__titulo">Criar Nova Aula</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="new-presentation-subject" type="text" ng-model="newPresentation.subject">
+              <label for="new-presentation-subject">Tema</label>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Criar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-close">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Finalizar Aula</h4>
+      <p>Tem certeza que deseja finalizar "{{modalPresentation.subject}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="closePresentation(modalPresentation)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs lista-tab" tabs reload="allTabContentLoaded">
+          <li class="tab col s6 lista-tab__item"><a href="#opened-presentations">Abertas</a></li>
+          <li class="tab col s6 lista-tab__item"><a href="#closed-presentations">Encerradas</a></li>
+        </ul>
+      </div>
+      <div class="col s12" id="opened-presentations">
+        <ul class="collection lista-aulas">
+          <p class="empty-message center-align" ng-if="presentations.length == 0">Nenhuma aula foi iniciada</p>
+          <li class="collection-item avatar lista-aulas__item" ng-repeat="presentation in presentations | filter: {status: 0}: true | orderBy : 'created_at' : true"><a href="" ng-click="modalClose(presentation)"><i class="material-icons circle">lock_open</i></a><a ui-sref="presentation-show({presentationID: presentation.id})"><span class="title">{{presentation.subject}}</span>
+              <p>{{presentation.created_at | date:"dd/MM/yyyy"}}<br>{{presentation.created_at | date:"HH:mm"}}</p></a></li>
+        </ul>
+      </div>
+      <div class="col s12" id="closed-presentations">
+        <ul class="collection lista-aulas">
+          <p class="empty-message center-align" ng-if="presentations.length == 0">Nenhuma aula foi iniciada</p>
+          <li class="collection-item avatar lista-aulas__item" ng-repeat="presentation in presentations | filter: {status: 1}: true | orderBy : 'created_at' : true"><i class="material-icons circle red lighten-2">lock_outline</i><a ui-sref="presentation-show({presentationID: presentation.id})"><span class="title">{{presentation.subject}}</span>
+              <p>{{presentation.created_at | date:"dd/MM/yyyy"}}<br>{{presentation.created_at | date:"HH:mm"}}</p></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>

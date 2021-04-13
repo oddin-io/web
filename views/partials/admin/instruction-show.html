@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<header>
+  <oddin-header title="{{instruction.lecture.name}}" btn-type="back" to-state-url="/admin-cursos/{{instruction.event.id}}"></oddin-header>
+  <ul class="side-nav fixed barra-lateral" id="slide-out">
+    <div class="barra-lateral__header"><i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">{{user.name}}</p>
+      <p class="barra-lateral__user-email">{{user.email}}</p>
+    </div>
+    <li class="no-padding">
+      <ul class="collapsible" data-collapsible="expandable">
+        <li class="barra-lateral__item"><a class="barra-lateral__item--collapsible collapsible-header active truncate">Principal</a>
+          <div class="collapsible-body">
+            <ul>
+              <li class="barra-lateral__subitem"><a ui-sref="admin-events">Cursos</a></li>
+              <li class="barra-lateral__subitem"><a ui-sref="admin-lectures">Disciplinas</a></li>
+              <li class="barra-lateral__subitem"><a ui-sref="admin-users">Usuarios</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li class="no-padding barra-lateral__item"><a class="truncate" ui-sref="admin-event-show({eventID: instruction.event.id})">{{instruction.event.name}}</a></li>
+    <li class="no-padding barra-lateral__item" ng-controller="LoginController"><a href="" ng-click="logout()">Logout</a></li>
+  </ul>
+</header>
+<main ng-init="findParticipants()">
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal" id="modal-remove">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Remover Usuário</h4>
+      <p>Tem certeza que deseja remover "{{modalParticipant.person.name}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteEnroll(modalParticipant)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="/add-participants/{{instruction.id}}" icon="add"></oddin-fab>
+    <div class="card custom-card">
+      <div class="card-content">
+        <div class="custom-card__header"><span class="title info-title">Informações da disciplina</span></div>
+        <div class="custom-card__content">
+          <ul class="info">
+            <li><span>Nome:</span>
+              <p>{{instruction.lecture.name}}</p>
+            </li>
+            <li><span>Turma:</span>
+              <p>{{instruction.class_code}}</p>
+            </li>
+            <li><span>Código:</span>
+              <p>{{instruction.lecture.code}}</p>
+            </li>
+            <li><span>Carga Horária:</span>
+              <p>{{instruction.lecture.workload}}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="empty-message center-align" ng-if="participants.length == 0">Nenhum participante foi adicionado a esta disciplina</p>
+    <div ng-if="participants.length &gt; 0">
+      <ul class="collection with-header custom-list">
+        <li class="collection-header custom-list__header">
+          <h2>Professor da disciplina</h2>
+        </li>
+        <li class="collection-item avatar custom-list__item one-option" ng-repeat="participant in participants | orderBy: 'person.name'" ng-if="participant.profile == 1"><i class="material-icons circle">person</i><span class="title">{{participant.person.name}}</span>
+          <p>{{participant.person.email}}</p><a class="secondary-content" href="" ng-click="modalRemove(participant)"><i class="material-icons">remove_circle</i></a>
+        </li>
+      </ul>
+      <ul class="collection with-header custom-list">
+        <li class="collection-header custom-list__header">
+          <h2>Alunos da disciplina</h2>
+        </li>
+        <li class="collection-item avatar custom-list__item one-option" ng-repeat="participant in participants | orderBy: 'person.name'" ng-if="participant.profile == 0"><i class="material-icons circle">person</i><span class="title">{{participant.person.name}}</span>
+          <p>{{participant.person.email}}</p><a class="secondary-content" href="" ng-click="modalRemove(participant)"><i class="material-icons">remove_circle</i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</main>

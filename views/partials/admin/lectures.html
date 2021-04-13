@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<header>
+  <oddin-header title="Disciplinas"></oddin-header>
+  <ul class="side-nav fixed barra-lateral" id="slide-out">
+    <div class="barra-lateral__header"><i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">{{user.name}}</p>
+      <p class="barra-lateral__user-email">{{user.email}}</p>
+    </div>
+    <li class="no-padding barra-lateral__item"><a ui-sref="admin-events">Cursos</a></li>
+    <li class="no-padding barra-lateral__item">
+      <p class="active">Disciplinas</p>
+    </li>
+    <li class="no-padding barra-lateral__item"><a ui-sref="admin-users">Usuários</a></li>
+    <li class="no-padding barra-lateral__item" ng-controller="LoginController"><a href="" ng-click="logout()">Logout</a></li>
+  </ul>
+</header>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="createLecture(newLecture)">
+          <h1 class="modal-criar-item__titulo">Cadastrar disciplina</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="new-lecture-name" type="text" ng-model="newLecture.name">
+              <label for="new-lecture-name">Nome</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="new-lecture-code" type="text" ng-model="newLecture.code">
+              <label for="new-lecture-code">Código</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="new-lecture-workload" type="text" ng-model="newLecture.workload">
+              <label for="new-lecture-workload">Carga Horária</label>
+              <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Cadastrar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal bottom-sheet" id="modal-edit">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="updateLecture(modalLecture)">
+          <h1 class="modal-criar-item__titulo">Editar disciplina</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="modal-lecture-name" type="text" ng-model="modalLecture.name">
+              <label for="modal-lecture-name">Nome</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="modal-lecture-code" type="text" ng-model="modalLecture.code">
+              <label for="modal-lecture-code">Código</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="modal-lecture-workload" type="text" ng-model="modalLecture.workload">
+              <label for="modal-lecture-workload">Carga Horária</label>
+              <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Atualizar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-delete">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Excluir Disciplina</h4>
+      <p>Tem certeza que deseja excluir "{{modalLecture.name}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteLecture(modalLecture)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <p class="empty-message center-align" ng-if="lectures.length == 0">Não há disciplinas cadastradas</p>
+    <ul class="collection with-header custom-list" ng-if="lectures.length &gt; 0">
+      <li class="collection-header custom-list__header">
+        <h2>Disciplinas cadastradas</h2>
+      </li>
+      <li class="collection-item avatar custom-list__item two-options" ng-repeat="lecture in lectures | orderBy : 'name'"><i class="material-icons circle">book</i><span class="title">{{lecture.name}}</span>
+        <p>{{lecture.code}}</p>
+        <div class="secondary-content"><a class="list-double-secondary" href="" ng-click="modalEdit(lecture)"><i class="material-icons">edit</i></a><a href="" ng-click="modalDelete(lecture)"><i class="material-icons">delete</i></a></div>
+      </li>
+    </ul>
+  </div>
+</main>

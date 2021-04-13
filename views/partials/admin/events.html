@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<header>
+  <oddin-header title="Cursos"></oddin-header>
+  <ul class="side-nav fixed barra-lateral" id="slide-out">
+    <div class="barra-lateral__header"><i class="barra-lateral__user-avatar material-icons">account_circle</i>
+      <p class="barra-lateral__user-name">{{user.name}}</p>
+      <p class="barra-lateral__user-email">{{user.email}}</p>
+    </div>
+    <li class="no-padding barra-lateral__item">
+      <p class="active">Cursos</p>
+    </li>
+    <li class="no-padding barra-lateral__item"><a ui-sref="admin-lectures">Disciplinas</a></li>
+    <li class="no-padding barra-lateral__item"><a ui-sref="admin-users">Usuários</a></li>
+    <li class="no-padding barra-lateral__item" ng-controller="LoginController"><a href="" ng-click="logout()">Logout</a></li>
+  </ul>
+</header>
+<main>
+  <oddin-preloader load-var="load" side-bar="true"></oddin-preloader>
+  <div class="modal bottom-sheet" id="modal-create">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="createEvent(newEvent)">
+          <h1 class="modal-criar-item__titulo">Cadastrar curso</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="new-event-name" type="text" ng-model="newEvent.name">
+              <label for="new-event-name">Nome</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="new-event-code" type="text" ng-model="newEvent.code">
+              <label for="new-event-code">Código</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="new-event-workload" type="text" ng-model="newEvent.workload">
+              <label for="new-event-workload">Carga Horária</label>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Cadastrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal bottom-sheet" id="modal-edit">
+    <div class="modal-content modal-criar-item">
+      <div class="row">
+        <form class="offset-m2 offset-l3 col s12 m8 l6" ng-submit="updateEvent(modalEvent)">
+          <h1 class="modal-criar-item__titulo">Editar curso</h1>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="modal-event-name" type="text" ng-model="modalEvent.name">
+              <label for="modal-event-name">Nome</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="modal-event-code" type="text" ng-model="modalEvent.code">
+              <label for="modal-event-code">Código</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="modal-event-workload" type="text" ng-model="modalEvent.workload">
+              <label for="modal-event-workload">Carga Horária</label>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light modal-close" type="submit" name="action">Atualizar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-delete">
+    <div class="modal-content">
+      <h4 class="custom-modal__header">Excluir Curso</h4>
+      <p>Tem certeza que deseja excluir "{{modalEvent.name}}"?</p>
+    </div>
+    <div class="modal-footer"><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="" ng-click="deleteEvent(modalEvent)">Confirmar</a><a class="modal-action modal-close waves-effect btn-flat custom-modal__button" href="">Cancelar</a></div>
+  </div>
+  <div class="container">
+    <oddin-fab trigger="modal-create" modal-trigger="true" icon="add"></oddin-fab>
+    <p class="empty-message center-align" ng-if="events.length == 0">Não há cursos cadastrados</p>
+    <ul class="collection with-header custom-list" ng-if="events.length &gt; 0">
+      <li class="collection-header custom-list__header">
+        <h2>Cursos cadastrados</h2>
+      </li>
+      <li class="collection-item avatar custom-list__item two-options" ng-repeat="event in events | orderBy : 'name'"><i class="material-icons circle">collections_bookmark</i><a ui-sref="admin-event-show({eventID: event.id})"><span class="title">{{event.name}}</span>
+          <p>{{event.code}}</p></a>
+        <div class="secondary-content"><a class="list-double-secondary" href="" ng-click="modalEdit(event)"><i class="material-icons">edit</i></a><a href="" ng-click="modalDelete(event)"><i class="material-icons">delete</i></a></div>
+      </li>
+    </ul>
+  </div>
+</main>
